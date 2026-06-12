@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FAF6EF;
+  color: #16161D;
+  font-family: 'Inter', sans-serif;
+}
+
+.channel-stack {
+  position: relative;
+}
+
+.channel-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+}
+
+.channel-stack:hover .channel-card:nth-child(1),
+.channel-stack:focus-within .channel-card:nth-child(1) {
+  transform: rotate(-3deg) translateY(-6px);
+}
+.channel-stack:hover .channel-card:nth-child(2),
+.channel-stack:focus-within .channel-card:nth-child(2) {
+  transform: rotate(0deg) translateY(-2px);
+}
+.channel-stack:hover .channel-card:nth-child(3),
+.channel-stack:focus-within .channel-card:nth-child(3) {
+  transform: rotate(3deg) translateY(-6px);
+}
+
+@media (max-width: 768px) {
+  .channel-stack:hover .channel-card,
+  .channel-stack:focus-within .channel-card {
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+a:focus-visible, button:focus-visible {
+  outline: 3px solid #6E5BFF;
+  outline-offset: 2px;
+}
+
+.text-stroke {
+  -webkit-text-stroke: 1.5px #16161D;
+  -webkit-text-fill-color: transparent;
+}
+
+.noise-card {
+  background-image: radial-gradient(circle at 1px 1px, rgba(22,22,29,0.04) 1px, transparent 0);
+  background-size: 12px 12px;
+}
