@@ -10,7 +10,7 @@ const roles = [
     period: '2024 — 2025',
     title: 'Founder — Creators & Hackers Residency Africa',
     org: 'CTNG House',
-    desc: 'Built Africa's first Creators & Hackers Residency, bridging creative and technical communities.',
+    desc: "Built Africa's first Creators & Hackers Residency, bridging creative and technical communities.",
   },
   {
     period: '2024',
