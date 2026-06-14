@@ -1,164 +1,176 @@
 import { useState } from 'react'
-
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/your-link-here'
-const CRYPTO_ADDRESS = '0xYourWalletAddressHere'
-
-const offers = [
-  {
-    title: 'Hire me as your Creative Director',
-    desc:
-      'I lead creative strategy end-to-end. Community direction, content voice, brand narrative, campaign concepts, and the ideas that make people actually care.',
-    cta: 'mailto:bigqinggg@gmail.com?subject=Creative Director inquiry',
-    ctaLabel: 'Start a conversation',
-    badge: 'Ongoing / Retainer',
-  },
-  {
-    title: 'Hire me as your Content or Creative Ambassador',
-    desc:
-      'I help projects become easier to understand, easier to trust, and easier to talk about. From ambassador videos to product storytelling, campaign content, community education, and creative direction.',
-    cta: 'mailto:bigqinggg@gmail.com?subject=Content or Creative Ambassador inquiry',
-    ctaLabel: 'Hire me as ambassador',
-    badge: 'Campaign / Monthly',
-  },
-  {
-    title: 'Join your hackathon team as Chief of Idea',
-    desc:
-      'I join as the ideas person. I help frame the concept, sharpen the pitch, shape the story, and make the memo judges remember.',
-    cta: 'mailto:bigqinggg@gmail.com?subject=Hackathon team inquiry',
-    ctaLabel: 'Pitch me your team',
-    badge: 'Equity / Prize split',
-  },
-  {
-    title: 'Host your Twitter Space or event',
-    desc:
-      'Live moderation and community engagement. Founder AMAs, fireside chats, ecosystem conversations, conference hosting, and spaces people do not sleep through.',
-    cta: 'mailto:bigqinggg@gmail.com?subject=Host my Twitter Space or event',
-    ctaLabel: 'Book a host',
-    badge: 'Per-event / Retainer',
-  },
-  {
-    title: 'I build your product for you',
-    desc:
-      'Full product build support for AI tools, Web3 integrations, autonomous agents, landing pages, MVPs, and hackathon products.',
-    cta: 'mailto:bigqinggg@gmail.com?subject=Build for hire',
-    ctaLabel: 'Send me the brief',
-    badge: 'Fixed fee / Retainer',
-  },
-]
-
-export default function Hire() {
-  const [copied, setCopied] = useState(false)
-
-  const copyAddress = () => {
-    navigator.clipboard.writeText(CRYPTO_ADDRESS)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
-
-  return (
-    <div className="pt-10 sm:pt-12 pb-20 sm:pb-24 animate-fadeUp">
-      <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
-        Let&apos;s work together
-      </p>
-
-      <h1 className="font-display text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
-        Five ways in.
-      </h1>
-
-      <p className="text-mid max-w-2xl mb-12 sm:mb-16 leading-relaxed">
-        Creative direction. Content ambassadorship. Hackathon teams. Event
-        hosting. Product builds. Pick the lane that fits, or email me and we can
-        shape the right thing together.
-      </p>
-
-      <div className="grid sm:grid-cols-2 gap-5 sm:gap-6 mb-16 sm:mb-20">
-        {offers.map((offer, index) => (
-          <div
-            key={offer.title}
-            className="noise-card border border-ink rounded-blob p-6 sm:p-7 flex flex-col hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300"
-            style={{ animationDelay: `${index * 80}ms` }}
-          >
-            <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink self-start mb-4">
-              {offer.badge}
-            </span>
-
-            <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 leading-tight">
-              {offer.title}
-            </h2>
-
-            <p className="text-sm text-mid mb-6 leading-relaxed">
-              {offer.desc}
-            </p>
-
+  const EMAIL = 'bigqinggg@gmail.com'
+  const X_PROFILE = 'https://x.com/qingthecreator_'
+  const offers = [
+    {
+      title: 'Creative Director',
+      desc: 'I help shape the campaign, the story, the creative direction, and the reason people should care.',
+      badge: 'Retainer / Project',
+      subject: 'Creative Director inquiry',
+    },
+    {
+      title: 'Content Ambassador',
+      desc: 'I create educational content, threads, videos, explainers, and campaign stories that make your product easier to understand.',
+      badge: 'Monthly / Campaign',
+      subject: 'Content Ambassador inquiry',
+    },
+    {
+      title: 'Creative Ambassador',
+      desc: 'I represent your brand through content, culture, community engagement, events, music, and story-led campaigns.',
+      badge: 'Partnership',
+      subject: 'Creative Ambassador inquiry',
+    },
+    {
+      title: 'Event or Twitter Space Host',
+      desc: 'I host AMAs, panels, fireside chats, launches, ecosystem conversations, and live events people actually stay for.',
+      badge: 'Per event',
+      subject: 'Event Hosting inquiry',
+    },
+    {
+      title: 'Hackathon Idea Partner',
+      desc: 'I help teams sharpen the idea, pitch, story, product angle, demo flow, and final submission.',
+      badge: 'Prize split / Team',
+      subject: 'Hackathon inquiry',
+    },
+    {
+      title: 'Product Builder',
+      desc: 'I help build and shape MVPs, AI tools, landing pages, vibecoded products, and product narratives.',
+      badge: 'Fixed fee / Scope',
+      subject: 'Product Build inquiry',
+    },
+  ]
+  const consultations = [
+    {
+      title: 'Project Creative Direction',
+      price: '$300',
+      desc: 'A pick-my-brain hour for founders and product builders who need positioning, storytelling, launch angles, or campaign direction from someone who has been in the trenches.',
+      subject: 'Creative Direction session booking',
+    },
+    {
+      title: 'Creative to Creative',
+      price: '$30/hr',
+      desc: 'For creators who need help with personal branding, content strategy, storytelling, and positioning your audience the right way.',
+      subject: 'Creative consultation booking',
+    },
+    {
+      title: 'Vibecoding Products',
+      price: '$50/hr',
+      desc: 'For builders using AI tools to ship MVPs, hackathon products, landing pages, or early-stage product ideas. I help you think clearer and move faster.',
+      subject: 'Vibecoding session booking',
+    },
+  ]
+  function ContactModal({ offer, onClose }) {
+    return (
+      <div className="fixed inset-0 z-[100] bg-ink/60 flex items-center justify-center px-5" onClick={onClose}>
+        <div className="bg-paper border border-ink rounded-blob p-6 max-w-md w-full shadow-[8px_8px_0_0_#16161D]" onClick={e => e.stopPropagation()}>
+          <h3 className="font-display text-2xl font-bold mb-3">
+            Contact Qing
+          </h3>
+          <p className="text-mid text-sm mb-6 leading-relaxed">
+            Reach out about <strong>{offer.title}</strong> — choose how you want to connect.
+          </p>
+          <div className="flex flex-col gap-3">
             <a
-              href={offer.cta}
-              className="mt-auto px-4 py-3 rounded-full bg-ink text-paper font-mono text-xs uppercase text-center hover:bg-electric transition-colors"
+              href={`mailto:${EMAIL}?subject=${encodeURIComponent(offer.subject)}`}
+              className="px-5 py-3 rounded-full bg-ink text-paper font-mono text-xs uppercase text-center hover:bg-electric transition-colors"
             >
-              {offer.ctaLabel}
+              Email me
             </a>
-          </div>
-        ))}
-      </div>
-
-      <div className="border border-ink rounded-blob p-6 sm:p-10 noise-card">
-        <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">
-          1:1 consultation
-        </p>
-
-        <h2 className="font-display text-3xl font-bold mb-3 leading-tight">
-          Book a strategy session
-        </h2>
-
-        <p className="text-mid max-w-2xl mb-8 leading-relaxed">
-          One hour on your content strategy, brand voice, hackathon pitch,
-          product idea, or community growth. You pick the focus. Pay with card
-          or crypto.
-        </p>
-
-        <div className="grid sm:grid-cols-2 gap-5 sm:gap-6">
-          <div className="border border-ink rounded-blob p-5 sm:p-6 bg-white/60">
-            <h3 className="font-display text-lg font-bold mb-2">
-              Pay with card
-            </h3>
-
-            <p className="text-sm text-mid mb-4 leading-relaxed">
-              Secure Stripe checkout. You will get a confirmation email with a
-              scheduling link.
-            </p>
-
             <a
-              href={STRIPE_PAYMENT_LINK}
+              href={X_PROFILE}
               target="_blank"
               rel="noreferrer"
-              className="inline-block px-5 py-3 rounded-full bg-ink text-paper font-mono text-xs uppercase hover:bg-electric transition-colors"
+              className="px-5 py-3 rounded-full border border-ink font-mono text-xs uppercase text-center hover:bg-lime transition-colors"
             >
-              Pay with Stripe
+              DM me on X
             </a>
-          </div>
-
-          <div className="border border-ink rounded-blob p-5 sm:p-6 bg-white/60">
-            <h3 className="font-display text-lg font-bold mb-2">
-              Pay with crypto
-            </h3>
-
-            <p className="text-sm text-mid mb-4 leading-relaxed">
-              Send to the address below, then email me the transaction hash and
-              your preferred time.
-            </p>
-
-            <div className="flex items-center gap-2 font-mono text-xs bg-paper border border-ink rounded-full px-4 py-3 overflow-x-auto">
-              <span className="truncate">{CRYPTO_ADDRESS}</span>
-
-              <button
-                onClick={copyAddress}
-                className="ml-auto px-3 py-1 rounded-full border border-ink uppercase shrink-0 hover:bg-lime transition-colors"
-              >
-                {copied ? 'Copied' : 'Copy'}
-              </button>
-            </div>
+            <button
+              onClick={onClose}
+              className="px-5 py-3 rounded-full font-mono text-xs uppercase text-center hover:bg-line transition-colors"
+            >
+              Cancel
+            </button>
           </div>
         </div>
       </div>
-    </div>
-  )
-}
+    )
+  }
+  export default function Hire() {
+    const [selected, setSelected] = useState(null)
+    return (
+      <div className="pt-10 sm:pt-12 pb-20 sm:pb-24 animate-fadeUp">
+        <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
+          Work with Qing
+        </p>
+        <h1 className="font-display text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
+          Bring me in when the idea needs shape, voice, and fire.
+        </h1>
+        <p className="text-mid max-w-2xl mb-12 sm:mb-16 leading-relaxed">
+          I work with founders, creators, teams, and communities that need sharper
+          stories, better campaigns, stronger content, and products people can
+          understand quickly.
+        </p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-16">
+          {offers.map((offer) => (
+            <div
+              key={offer.title}
+              className="noise-card border border-ink rounded-blob p-6 sm:p-7 flex flex-col hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300"
+            >
+              <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink self-start mb-4">
+                {offer.badge}
+              </span>
+              <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 leading-tight">
+                {offer.title}
+              </h2>
+              <p className="text-sm text-mid mb-6 leading-relaxed">
+                {offer.desc}
+              </p>
+              <button
+                onClick={() => setSelected(offer)}
+                className="mt-auto px-4 py-3 rounded-full bg-ink text-paper font-mono text-xs uppercase text-center hover:bg-electric transition-colors"
+              >
+                Contact me
+              </button>
+            </div>
+          ))}
+        </div>
+        <section className="mb-16">
+          <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">
+            Consultations
+          </p>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-3 leading-tight">
+            Book the session that fits.
+          </h2>
+          <p className="text-mid max-w-2xl mb-8 leading-relaxed">
+            These are focused, high-signal sessions. Come with the problem. Leave with a plan.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-5">
+            {consultations.map((session) => (
+              <div
+                key={session.title}
+                className="border border-ink rounded-blob p-6 bg-white/60 noise-card hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300 flex flex-col"
+              >
+                <h3 className="font-display text-xl font-bold mb-2">
+                  {session.title}
+                </h3>
+                <p className="font-display text-4xl font-extrabold mb-4 text-electric">
+                  {session.price}
+                </p>
+                <p className="text-sm text-mid leading-relaxed mb-6">
+                  {session.desc}
+                </p>
+                <button
+                  onClick={() => setSelected(session)}
+                  className="mt-auto px-4 py-3 rounded-full bg-ink text-paper font-mono text-xs uppercase text-center hover:bg-electric transition-colors"
+                >
+                  Book session
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+        {selected && <ContactModal offer={selected} onClose={() => setSelected(null)} />}
+      </div>
+    )
+  }
+  
