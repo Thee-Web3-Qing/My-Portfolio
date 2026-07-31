@@ -59,42 +59,8 @@ import { useState } from 'react'
       subject: 'Vibecoding session booking',
     },
   ]
-  function ContactModal({ offer, onClose }) {
-    return (
-      <div className="fixed inset-0 z-[100] bg-ink/60 flex items-center justify-center px-5" onClick={onClose}>
-        <div className="bg-paper border border-ink rounded-blob p-6 max-w-md w-full shadow-[8px_8px_0_0_#16161D]" onClick={e => e.stopPropagation()}>
-          <h3 className="font-display text-2xl font-bold mb-3">
-            Contact Qing
-          </h3>
-          <p className="text-mid text-sm mb-6 leading-relaxed">
-            Reach out about <strong>{offer.title}</strong> — choose how you want to connect.
-          </p>
-          <div className="flex flex-col gap-3">
-            <a
-              href={`mailto:${EMAIL}?subject=${encodeURIComponent(offer.subject)}`}
-              className="px-5 py-3 rounded-full bg-ink text-paper font-mono text-xs uppercase text-center hover:bg-electric transition-colors"
-            >
-              Email me
-            </a>
-            <a
-              href={X_PROFILE}
-              target="_blank"
-              rel="noreferrer"
-              className="px-5 py-3 rounded-full border border-ink font-mono text-xs uppercase text-center hover:bg-lime transition-colors"
-            >
-              DM me on X
-            </a>
-            <button
-              onClick={onClose}
-              className="px-5 py-3 rounded-full font-mono text-xs uppercase text-center hover:bg-line transition-colors"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
-    )
-  }
+  import BookingModal from './BookingModal.jsx'
+
   export default function Hire() {
     const [selected, setSelected] = useState(null)
     return (
@@ -169,7 +135,7 @@ import { useState } from 'react'
             ))}
           </div>
         </section>
-        {selected && <ContactModal offer={selected} onClose={() => setSelected(null)} />}
+        {selected && <BookingModal offer={selected} onClose={() => setSelected(null)} />}
       </div>
     )
   }
