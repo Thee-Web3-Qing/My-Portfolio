@@ -30,6 +30,26 @@ const products = [
       },
     },
     {
+      name: 'Spenda Advert',
+      tagline: 'A focused advertising landing page built to present the Spenda offer clearly and turn visitors into customers.',
+      tags: ['Web Design', 'Landing Page', 'Business'],
+      status: 'Live',
+      links: {
+        demo: 'https://spendaadvert.vercel.app/',
+        repo: null,
+      },
+    },
+    {
+      name: 'Val Gadgets',
+      tagline: 'A customer-facing website for a gadget brand, designed to showcase products and make the business easy to discover online.',
+      tags: ['Web Design', 'Business Website', 'E-commerce'],
+      status: 'Live',
+      links: {
+        demo: 'https://val-gadgets-one.vercel.app/',
+        repo: null,
+      },
+    },
+    {
       name: 'Tracium',
       tagline: 'AI task manager and team tracker for Slack. Keeps distributed teams in sync with contextual reminders and progress updates.',
       tags: ['Slack Integration', 'Task Management', 'AI'],
@@ -47,11 +67,11 @@ const products = [
           Shipped under pressure
         </p>
         <h1 className="font-display text-4xl sm:text-5xl font-extrabold mb-4">
-          Products & hackathon builds
+          Products, websites & hackathon builds
         </h1>
         <p className="text-mid max-w-2xl mb-16">
-          AI-powered tools, autonomous pipelines, and creative products. Most
-          built in hackathons or personal projects. All live and demo-ready.
+          AI-powered tools, customer-facing websites, landing pages, and creative
+          products built for real businesses, brands, hackathons, and communities.
         </p>
         <div className="grid sm:grid-cols-2 gap-6">
           {products.map((p) => (

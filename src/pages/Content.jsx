@@ -42,6 +42,16 @@ const channels = [
     desc: 'Creator education, community management lessons, ideation systems, and content strategy.',
     pieces: [
       {
+        title: 'Vibecoding Series 1',
+        format: 'Vibecoding',
+        link: 'https://x.com/QingTheCreator_/status/2079488973613773201/video/1?s=46',
+      },
+      {
+        title: 'Vibecoding Series 2',
+        format: 'Vibecoding',
+        link: 'https://x.com/QingTheCreator_/status/2080589653208432655/video/1?s=46',
+      },
+      {
         title: 'Ideation Content on Time',
         format: 'Creator Education',
         link: 'https://x.com/qingthecreator/status/1892892146593591682?s=46',

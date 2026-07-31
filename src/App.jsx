@@ -6,12 +6,10 @@ import { Routes, Route } from 'react-router-dom'
   import Products from './pages/Products.jsx'
   import Hire from './pages/Hire.jsx'
   import Experience from './pages/Experience.jsx'
-  import Admin from './pages/Admin.jsx'
 
   export default function App() {
     return (
       <Routes>
-        <Route path="/admin" element={<Admin />} />
         <Route
           path="*"
           element={
