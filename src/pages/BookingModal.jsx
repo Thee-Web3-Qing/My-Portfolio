@@ -1,7 +1,10 @@
 import { useState } from 'react'
 
   const EMAIL = 'bigqinggg@gmail.com'
-  const X_PROFILE = 'https://x.com/qingthecreator_'
+  const X_PROFILE = 'https://x.com/QingTheCreator_'
+  const WHATSAPP = 'https://wa.me/2348149364576'
+  const TELEGRAM = 'https://t.me/+2348149364576'
+  const PHONE = 'tel:+2348149364576'
   const API_BASE = import.meta.env.VITE_API_BASE || ''
 
   export default function BookingModal({ offer, onClose }) {
@@ -87,6 +90,31 @@ import { useState } from 'react'
                   className="px-5 py-3 rounded-full border border-ink font-mono text-xs uppercase text-center hover:bg-lime transition-colors"
                 >
                   Email me
+                </a>
+                <a
+                  href={WHATSAPP}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track('reach_out', 'whatsapp')}
+                  className="px-5 py-3 rounded-full border border-ink font-mono text-xs uppercase text-center hover:bg-lime transition-colors"
+                >
+                  WhatsApp me
+                </a>
+                <a
+                  href={TELEGRAM}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={() => track('reach_out', 'telegram')}
+                  className="px-5 py-3 rounded-full border border-ink font-mono text-xs uppercase text-center hover:bg-lime transition-colors"
+                >
+                  Message me on Telegram
+                </a>
+                <a
+                  href={PHONE}
+                  onClick={() => track('reach_out', 'phone')}
+                  className="px-5 py-3 rounded-full border border-ink font-mono text-xs uppercase text-center hover:bg-lime transition-colors"
+                >
+                  Call +234 814 936 4576
                 </a>
                 <a
                   href={X_PROFILE}
