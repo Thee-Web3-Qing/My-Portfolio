@@ -33,6 +33,12 @@ import { useState } from 'react'
       subject: 'Hackathon inquiry',
     },
     {
+      title: 'Website & Landing Page Builder',
+      desc: 'I design and build responsive websites and high-converting landing pages for brands, businesses, campaigns, and product launches.',
+      badge: 'Fixed fee / Scope',
+      subject: 'Website or landing page inquiry',
+    },
+    {
       title: 'Product Builder',
       desc: 'I help build and shape MVPs, AI tools, landing pages, vibecoded products, and product narratives.',
       badge: 'Fixed fee / Scope',
@@ -73,8 +79,8 @@ import { useState } from 'react'
         </h1>
         <p className="text-mid max-w-2xl mb-12 sm:mb-16 leading-relaxed">
           I work with founders, creators, teams, and communities that need sharper
-          stories, better campaigns, stronger content, and products people can
-          understand quickly.
+          stories, better campaigns, stronger content, websites, landing pages, and
+          products people can understand quickly.
         </p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-16">
           {offers.map((offer) => (
