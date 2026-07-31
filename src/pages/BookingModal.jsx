@@ -13,7 +13,7 @@ import { useState } from 'react'
 
     async function track(event, label) {
       try {
-        await fetch(API_BASE + '/api/bookings/../analytics', {
+        await fetch(API_BASE + '/api/analytics', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ event, label, page: 'hire' }),
