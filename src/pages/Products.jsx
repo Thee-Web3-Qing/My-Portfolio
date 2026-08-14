@@ -17,7 +17,7 @@
       tags: ["Product Website", "Public Directory", "Next.js"],
       status: "Live",
       links: {
-        demo: "https://poysis.com",
+        demo: "https://poysis.vercel.app/",
         repo: "https://github.com/Thee-Web3-Qing/Poysis",
       },
     },
@@ -69,21 +69,19 @@
             {url.replace(/^https?:\/\//, '')}
           </span>
         </div>
-        <div className="relative h-56 bg-line">
+        <div className="relative h-52 sm:h-60 overflow-hidden bg-line">
           <iframe
             src={url}
-            title={`${title} website preview`}
+            title={`${title} desktop website preview`}
             loading="lazy"
             tabIndex="-1"
-            className="absolute inset-0 h-full w-full pointer-events-none bg-white"
+            width="1440"
+            height="900"
+            className="absolute left-0 top-0 h-[900px] w-[1440px] origin-top-left scale-[0.24] sm:scale-[0.38] lg:scale-[0.31] pointer-events-none bg-white"
           />
-          <a
-            href={url}
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Open ${title} deployed website`}
-            className="absolute inset-0"
-          />
+          <span className="absolute bottom-3 right-3 rounded-full bg-ink px-3 py-2 font-mono text-[10px] uppercase text-paper shadow-md">
+            Open project ↗
+          </span>
         </div>
       </div>
     )
@@ -108,6 +106,26 @@
       links: {
         demo: 'https://bountypilot.xyz',
         repo: 'https://github.com/Thee-Web3-Qing/BountyPilot-Ai',
+      },
+    },
+    {
+      name: 'My Authors Room',
+      tagline: 'A Nigerian reading, writing, and e-book marketplace where readers build communities, authors publish stories, and books can be sold in naira.',
+      tags: ['Creator Marketplace', 'E-books', 'Community'],
+      status: 'Live Prototype',
+      links: {
+        demo: 'https://my-authors-room.vercel.app/',
+        repo: 'https://github.com/Thee-Web3-Qing/My-Authors-Room',
+      },
+    },
+    {
+      name: 'AssetDNA',
+      tagline: 'An AI and real-world asset platform that analyses business evidence, identifies valuable assets, and prepares verified asset records for onchain registration on X Layer.',
+      tags: ['AI + RWA', 'X Layer', 'Asset Intelligence'],
+      status: 'Live Prototype',
+      links: {
+        demo: 'https://asset-dna-gules.vercel.app/',
+        repo: 'https://github.com/Thee-Web3-Qing/AssetDNA',
       },
     },
     {
@@ -167,7 +185,14 @@
           </div>
           <div className="grid lg:grid-cols-2 gap-6">
             {recentClientBuilds.map((project) => (
-              <article key={project.name} className="noise-card border border-ink rounded-blob p-7 flex flex-col">
+              <article
+                key={project.name}
+                role="link"
+                tabIndex={0}
+                onClick={() => window.open(project.links.demo || project.links.repo, "_blank", "noopener,noreferrer")}
+                onKeyDown={(event) => event.key === "Enter" && window.open(project.links.demo || project.links.repo, "_blank", "noopener,noreferrer")}
+                className="noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
+              >
                 <WebsitePreview url={project.links.demo} title={project.name} />
                 <div className="flex items-start justify-between gap-4 mb-5">
                   <h3 className="font-display text-2xl font-bold">{project.name}</h3>
@@ -210,7 +235,14 @@
         </section>
         <div className="grid sm:grid-cols-2 gap-6">
           {products.map((p) => (
-            <div key={p.name} className="noise-card border border-ink rounded-blob p-7 flex flex-col">
+            <div
+              key={p.name}
+              role="link"
+              tabIndex={0}
+              onClick={() => window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
+              onKeyDown={(event) => event.key === "Enter" && window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
+              className="noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
+            >
               <WebsitePreview url={p.links.demo} title={p.name} />
               <div className="flex items-center justify-between mb-3">
                 <h2 className="font-display text-2xl font-bold">{p.name}</h2>
@@ -240,6 +272,7 @@
                     href={p.links.repo}
                     target="_blank"
                     rel="noreferrer"
+                    onClick={(event) => event.stopPropagation()}
                     className="px-4 py-2 rounded-full border border-ink hover:bg-line transition-colors"
                   >
                     Code
