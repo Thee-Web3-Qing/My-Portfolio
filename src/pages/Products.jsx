@@ -39,7 +39,7 @@
       tags: ["Event Platform", "Ticketing", "Product Design"],
       status: "First Build",
       links: {
-        demo: null,
+        demo: "https://moment-blush.vercel.app/",
         repo: "https://github.com/Thee-Web3-Qing/Moment",
       },
     },
@@ -127,16 +127,6 @@
       status: 'Live',
       links: {
         demo: 'https://spendaadvert.vercel.app/',
-        repo: null,
-      },
-    },
-    {
-      name: 'Val Gadgets',
-      tagline: 'A customer-facing website for a gadget brand, designed to showcase products and make the business easy to discover online.',
-      tags: ['Web Design', 'Business Website', 'E-commerce'],
-      status: 'Live',
-      links: {
-        demo: 'https://val-gadgets-one.vercel.app/',
         repo: null,
       },
     },
