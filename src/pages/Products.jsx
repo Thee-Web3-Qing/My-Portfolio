@@ -1,4 +1,62 @@
-const products = [
+  const recentClientBuilds = [
+    {
+      name: "The Author's Room",
+      clientWanted: "An artsy author marketplace where readers and writers can create profiles, discover books, and use the platform from either a reader or author perspective.",
+      delivered: "I designed and built a responsive marketplace prototype with role-based sign-up, reader and author dashboards, profile switching, book discovery, community features, and a Vercel-ready Next.js build.",
+      tags: ["Marketplace Prototype", "Next.js", "Responsive Design"],
+      status: "Prototype",
+      links: {
+        demo: "https://authors-room.qinglidah.chatgpt.site",
+        repo: "https://github.com/Thee-Web3-Qing/The-Authors-Room",
+      },
+    },
+    {
+      name: "Poysis",
+      clientWanted: "A public-facing website that could move beyond a simple landing page and help people discover Poysis knowledge notebooks and understand the platform quickly.",
+      delivered: "I turned the concept into a functional, mobile-friendly public directory with searchable notebook listings, categories, detail views, contributor submissions, and clear product positioning.",
+      tags: ["Product Website", "Public Directory", "Next.js"],
+      status: "Live",
+      links: {
+        demo: "https://poysis.com",
+        repo: "https://github.com/Thee-Web3-Qing/Poysis",
+      },
+    },
+    {
+      name: "Val Gadgets",
+      clientWanted: "A modern gadget-store website that could showcase devices, support product discovery, and prepare the business for checkout, payments, orders, and an owner dashboard.",
+      delivered: "I designed and built a responsive e-commerce storefront with product categories, search and filtering, product pages, a cart and checkout flow, and a structure prepared for Salesive payment and order-management integration.",
+      tags: ["E-commerce Design", "Gadget Store", "Responsive UI"],
+      status: "Live",
+      links: {
+        demo: "https://val-gadgets-one.vercel.app/",
+        repo: "https://github.com/Thee-Web3-Qing/ValGadgets",
+      },
+    },
+    {
+      name: "Moment",
+      clientWanted: "An event platform where people can discover events, buy tickets, vote or nominate talents, while organisers can market and manage their events from a dedicated dashboard.",
+      delivered: "I created an expressive product landing experience for the first phase, with event discovery, ticketing, voting, nomination, and organiser-dashboard flows represented in a polished, responsive interface ready for Paystack integration.",
+      tags: ["Event Platform", "Ticketing", "Product Design"],
+      status: "First Build",
+      links: {
+        demo: null,
+        repo: "https://github.com/Thee-Web3-Qing/Moment",
+      },
+    },
+    {
+      name: "22Energy",
+      clientWanted: "A solar distributor landing page for households and companies that could explain high-capacity products, generate qualified enquiries, and support both individual and bulk buyers.",
+      delivered: "I built a responsive solar sales website with a guided system-sizing calculator, inverter and battery catalogue, dealer and distributor pricing, WhatsApp quote handoff, bulk-order enquiries, and location and contact details.",
+      tags: ["Solar Website", "Lead Generation", "Interactive Calculator"],
+      status: "First Build",
+      links: {
+        demo: null,
+        repo: "https://github.com/Thee-Web3-Qing/22Energy",
+      },
+    },
+  ]
+
+  const products = [
     {
       name: 'Verniq',
       tagline: 'Your voice, repurposed everywhere. AI agent that extracts voice DNA from your writing and videos, then generates platform-native content.',
@@ -73,6 +131,59 @@ const products = [
           AI-powered tools, customer-facing websites, landing pages, and creative
           products built for real businesses, brands, hackathons, and communities.
         </p>
+        <section className="mb-20">
+          <div className="flex items-end justify-between gap-6 mb-7">
+            <div>
+              <p className="font-mono text-xs uppercase tracking-widest text-electric mb-2">
+                Recent client builds
+              </p>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold">
+                The brief and the build.
+              </h2>
+            </div>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-6">
+            {recentClientBuilds.map((project) => (
+              <article key={project.name} className="noise-card border border-ink rounded-blob p-7 flex flex-col">
+                <div className="flex items-start justify-between gap-4 mb-5">
+                  <h3 className="font-display text-2xl font-bold">{project.name}</h3>
+                  <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink whitespace-nowrap">
+                    {project.status}
+                  </span>
+                </div>
+                <div className="space-y-5 mb-5">
+                  <div>
+                    <p className="font-mono text-xs uppercase text-coral mb-2">What the client wanted</p>
+                    <p className="text-sm text-mid leading-relaxed">{project.clientWanted}</p>
+                  </div>
+                  <div>
+                    <p className="font-mono text-xs uppercase text-electric mb-2">What I delivered</p>
+                    <p className="text-sm text-mid leading-relaxed">{project.delivered}</p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="font-mono text-xs uppercase px-2 py-1 bg-lime/60 rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-auto flex gap-3 font-mono text-xs uppercase flex-wrap">
+                  {project.links.demo && (
+                    <a href={project.links.demo} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-full bg-ink text-paper hover:bg-electric transition-colors">
+                      View deployed site
+                    </a>
+                  )}
+                  {project.links.repo && (
+                    <a href={project.links.repo} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-full border border-ink hover:bg-line transition-colors">
+                      View code
+                    </a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
         <div className="grid sm:grid-cols-2 gap-6">
           {products.map((p) => (
             <div key={p.name} className="noise-card border border-ink rounded-blob p-7 flex flex-col">
