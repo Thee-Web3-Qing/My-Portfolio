@@ -50,11 +50,44 @@
       tags: ["Solar Website", "Lead Generation", "Interactive Calculator"],
       status: "First Build",
       links: {
-        demo: null,
+        demo: "https://22-energy-rho.vercel.app/",
         repo: "https://github.com/Thee-Web3-Qing/22Energy",
       },
     },
   ]
+
+  function WebsitePreview({ url, title }) {
+    if (!url) return null
+
+    return (
+      <div className="mb-6 overflow-hidden rounded-[1.2rem] border border-ink bg-white shadow-[4px_4px_0_0_#16161D]">
+        <div className="flex items-center gap-2 border-b border-ink bg-paper px-3 py-2">
+          <span className="h-2.5 w-2.5 rounded-full bg-coral" />
+          <span className="h-2.5 w-2.5 rounded-full bg-lime" />
+          <span className="h-2.5 w-2.5 rounded-full bg-electric" />
+          <span className="ml-2 min-w-0 flex-1 truncate rounded-full border border-line bg-white/80 px-3 py-1 font-mono text-[10px] text-mid">
+            {url.replace(/^https?:\/\//, '')}
+          </span>
+        </div>
+        <div className="relative h-56 bg-line">
+          <iframe
+            src={url}
+            title={`${title} website preview`}
+            loading="lazy"
+            tabIndex="-1"
+            className="absolute inset-0 h-full w-full pointer-events-none bg-white"
+          />
+          <a
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Open ${title} deployed website`}
+            className="absolute inset-0"
+          />
+        </div>
+      </div>
+    )
+  }
 
   const products = [
     {
@@ -145,6 +178,7 @@
           <div className="grid lg:grid-cols-2 gap-6">
             {recentClientBuilds.map((project) => (
               <article key={project.name} className="noise-card border border-ink rounded-blob p-7 flex flex-col">
+                <WebsitePreview url={project.links.demo} title={project.name} />
                 <div className="flex items-start justify-between gap-4 mb-5">
                   <h3 className="font-display text-2xl font-bold">{project.name}</h3>
                   <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink whitespace-nowrap">
@@ -187,6 +221,7 @@
         <div className="grid sm:grid-cols-2 gap-6">
           {products.map((p) => (
             <div key={p.name} className="noise-card border border-ink rounded-blob p-7 flex flex-col">
+              <WebsitePreview url={p.links.demo} title={p.name} />
               <div className="flex items-center justify-between mb-3">
                 <h2 className="font-display text-2xl font-bold">{p.name}</h2>
                 <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink">
