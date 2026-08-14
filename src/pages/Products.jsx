@@ -77,10 +77,10 @@
             tabIndex="-1"
             width="1440"
             height="900"
-            className="absolute left-0 top-0 h-[900px] w-[1440px] origin-top-left scale-[0.24] sm:scale-[0.38] lg:scale-[0.31] pointer-events-none bg-white"
+            className="absolute left-0 top-0 h-[900px] w-[1440px] origin-top-left scale-[0.24] sm:scale-[0.38] lg:scale-[0.31] pointer-events-auto bg-white"
           />
-          <span className="absolute bottom-3 right-3 rounded-full bg-ink px-3 py-2 font-mono text-[10px] uppercase text-paper shadow-md">
-            Open project ↗
+          <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-ink px-3 py-2 font-mono text-[10px] uppercase text-paper shadow-md">
+            Interactive preview · use the menu
           </span>
         </div>
       </div>
