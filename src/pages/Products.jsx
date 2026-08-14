@@ -6,7 +6,7 @@
       tags: ["Marketplace Prototype", "Next.js", "Responsive Design"],
       status: "Prototype",
       links: {
-        demo: "https://authors-room.qinglidah.chatgpt.site",
+        demo: "https://my-authors-room.vercel.app/",
         repo: "https://github.com/Thee-Web3-Qing/The-Authors-Room",
       },
     },
@@ -106,16 +106,6 @@
       links: {
         demo: 'https://bountypilot.xyz',
         repo: 'https://github.com/Thee-Web3-Qing/BountyPilot-Ai',
-      },
-    },
-    {
-      name: 'My Authors Room',
-      tagline: 'A Nigerian reading, writing, and e-book marketplace where readers build communities, authors publish stories, and books can be sold in naira.',
-      tags: ['Creator Marketplace', 'E-books', 'Community'],
-      status: 'Live Prototype',
-      links: {
-        demo: 'https://my-authors-room.vercel.app/',
-        repo: 'https://github.com/Thee-Web3-Qing/My-Authors-Room',
       },
     },
     {
