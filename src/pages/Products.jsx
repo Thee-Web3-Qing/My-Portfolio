@@ -1,5 +1,16 @@
   const recentClientBuilds = [
     {
+      name: "Beauty by 3lle",
+      clientWanted: "A polished beauty-brand website that could present skincare and makeup as one thoughtful collection, feel credible across different skin tones, and let customers explore products easily.",
+      delivered: "I designed and built an editorial e-commerce demo with a responsive brand landing page, skincare and makeup collections, a filterable 30-product shop, individual product galleries and details, and clear paths into the full catalogue.",
+      tags: ["Beauty E-commerce", "Product Catalogue", "Next.js"],
+      status: "Live Demo",
+      links: {
+        demo: "https://beauty-by3ll3.vercel.app/",
+        repo: "https://github.com/Thee-Web3-Qing/BeautyBy3ll3",
+      },
+    },
+    {
       name: "The Author's Room",
       clientWanted: "An artsy author marketplace where readers and writers can create profiles, discover books, and use the platform from either a reader or author perspective.",
       delivered: "I designed and built a responsive marketplace prototype with role-based sign-up, reader and author dashboards, profile switching, book discovery, community features, and a Vercel-ready Next.js build.",
