@@ -223,6 +223,33 @@ const channels = [
       },
     ],
   },
+  {
+    num: 'CH.08',
+    name: 'Web3 Product Campaigns & Platform Features',
+    desc: 'Campaign videos, product features, and platform storytelling for emerging Web3 brands.',
+    pieces: [
+      {
+        title: 'CodeXero - Product Feature',
+        format: 'Product Video',
+        link: 'https://x.com/QingTheCreator_/status/2071183931710325103/video/1?s=46',
+      },
+      {
+        title: 'Margin Trade - Trading Platform Campaign',
+        format: 'Trading Platform',
+        link: 'https://x.com/QingTheCreator_/status/2073869608415842416/video/1?s=46',
+      },
+      {
+        title: 'Ramphub - Product Spotlight',
+        format: 'Product Video',
+        link: 'https://x.com/QingTheCreator_/status/2065842444415955061/video/1?s=46',
+      },
+      {
+        title: 'Clapmi - Product Campaign',
+        format: 'Brand Video',
+        link: 'https://x.com/QingTheCreator_/status/2068302555482923351/video/1?s=46',
+      },
+    ],
+  },
 ]
 
 export default function Content() {
@@ -233,7 +260,7 @@ export default function Content() {
       </p>
 
       <h1 className="font-display text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
-        Seven content channels.
+        Eight content channels.
       </h1>
 
       <p className="text-mid max-w-2xl mb-12 sm:mb-16 leading-relaxed">
