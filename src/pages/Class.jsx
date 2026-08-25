@@ -3,6 +3,10 @@ import { screenReceipt } from '../lib/receiptScreening'
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://vvniehpzrvgmjdatpxrl.supabase.co'
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable__XVIsG1KQFChirhMMii7rg_dGp-dpYN'
+const PRICING_URL = import.meta.env.VITE_CLASS_PRICING_URL || 'https://qingstv.vercel.app/api/class-pricing'
+const PRICE_TIERS = [1000, 2000, 4000, 8000, 16000]
+
+const formatNaira = (amount) => `₦${Number(amount).toLocaleString('en-NG')}`
 
 const timeline = [
   { date: 'June 2026', title: 'AI agents and automated research', copy: 'Tracium and BountyPilot pushed me from simple AI assistance into systems that score opportunities, review work and keep humans in control.' },
@@ -39,6 +43,7 @@ export default function Class() {
   const [scanning, setScanning] = useState(false)
   const [scanProgress, setScanProgress] = useState(0)
   const [receiptAnalysis, setReceiptAnalysis] = useState(null)
+  const [pricing, setPricing] = useState({ acceptedCount: 0, price: 1000, tierIndex: 0, filledInTier: 0, remainingInTier: 100, soldOut: false })
 
   const detailsComplete = form.fullName.trim().length >= 3 && form.whatsapp.trim().length >= 10 && form.reason.trim().length >= 20
   const missingDetails = [
@@ -54,6 +59,13 @@ export default function Class() {
     setPreviewUrl(url)
     return () => URL.revokeObjectURL(url)
   }, [receipt])
+
+  useEffect(() => {
+    fetch(PRICING_URL)
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error('Pricing unavailable')))
+      .then((data) => setPricing((current) => ({ ...current, ...data })))
+      .catch(() => {})
+  }, [])
 
   const update = (event) => setForm((current) => ({ ...current, [event.target.name]: event.target.value }))
 
@@ -78,7 +90,7 @@ export default function Class() {
     setReceipt(file)
     setScanning(true)
     setScanProgress(0)
-    const analysis = await screenReceipt(file, setScanProgress)
+    const analysis = await screenReceipt(file, setScanProgress, pricing.price || 16000)
     setReceiptAnalysis(analysis)
     setScanning(false)
   }
@@ -132,6 +144,8 @@ export default function Class() {
             ...receiptAnalysis.checks,
             missing: receiptAnalysis.missing,
             scan_completed: receiptAnalysis.scanCompleted,
+            expected_amount: pricing.price,
+            pricing_tier: pricing.tierIndex + 1,
           },
         }),
       })
@@ -164,7 +178,7 @@ export default function Class() {
             Learn the basics of vibecoding, turn your ideas into clear product plans and build useful things without waiting to become a traditional developer first.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#register" className="rounded-full bg-red-600 px-6 py-3 font-mono text-sm uppercase font-bold text-white hover:bg-red-500 transition-colors">Join for ₦1,000</a>
+            <a href="#register" className="rounded-full bg-red-600 px-6 py-3 font-mono text-sm uppercase font-bold text-white hover:bg-red-500 transition-colors">{pricing.soldOut ? 'Join waitlist' : `Join for ${formatNaira(pricing.price)}`}</a>
             <a href="#proof" className="rounded-full border border-[#f5eddf]/40 px-6 py-3 font-mono text-sm uppercase text-[#f5eddf] hover:bg-white/10 transition-colors">See my build history</a>
           </div>
           <p className="mt-5 font-mono text-xs uppercase tracking-wider text-[#948a7e]">Goal: teach 500 curious builders</p>
@@ -180,6 +194,20 @@ export default function Class() {
             </div>
           </div>
         </div>
+      </section>
+
+      <section className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
+        <p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">500 builders · five price tiers</p>
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div><h2 className="class-display text-4xl sm:text-6xl font-bold">The earlier you join, the less you pay.</h2><p className="text-[#b9afa3] mt-3 max-w-2xl">A place is counted only after Qing accepts the payment. Pending registrations do not move the price.</p></div>
+          <div className="text-right"><span className="font-mono text-xs uppercase text-[#948a7e]">Accepted students</span><strong className="block class-display text-5xl text-red-500">{pricing.acceptedCount}<small className="text-xl text-[#948a7e]"> / 500</small></strong></div>
+        </div>
+        <div className="grid sm:grid-cols-5 gap-3 mt-10">{PRICE_TIERS.map((amount, index) => {
+          const complete = pricing.acceptedCount >= (index + 1) * 100
+          const current = !pricing.soldOut && pricing.tierIndex === index
+          return <article key={amount} className={`class-panel p-5 ${current ? 'border-red-600' : ''}`}><span className="font-mono text-xs text-red-500">{index * 100 + 1}–{(index + 1) * 100}</span><strong className="block text-2xl mt-2">{formatNaira(amount)}</strong><span className="text-xs text-[#948a7e]">{complete ? 'Filled' : current ? `${pricing.remainingInTier} places left` : 'Next tier'}</span></article>
+        })}</div>
+        <div className="mt-7"><div className="flex justify-between gap-4 text-sm"><span>{pricing.soldOut ? 'All 500 places filled' : `Tier ${pricing.tierIndex + 1}: ${formatNaira(pricing.price)}`}</span><span>{pricing.soldOut ? '100 / 100' : `${pricing.filledInTier} / 100 accepted`}</span></div><div className="h-3 bg-[#251e1b] mt-3 overflow-hidden border border-[#f5eddf]/15"><span className="block h-full bg-red-600 transition-all duration-500" style={{ width: `${pricing.soldOut ? 100 : pricing.filledInTier}%` }} /></div><p className="text-xs text-[#877d72] mt-3">When a tier reaches 100 accepted payments, this bar resets to zero for the next tier.</p></div>
       </section>
 
       <section id="proof" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
@@ -213,7 +241,7 @@ export default function Class() {
 
       <section id="register" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
         <div className="grid lg:grid-cols-[.78fr_1.22fr] gap-10 items-start">
-          <div className="lg:sticky lg:top-28"><p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">Submission</p><h2 className="class-display text-4xl sm:text-5xl font-bold">Register and submit your receipt.</h2><div className="class-panel p-6 mt-7"><p className="font-mono text-xs uppercase text-red-500">Pay ₦1,000 to</p><p className="text-2xl font-bold mt-3">Moniepoint</p><p className="class-display text-4xl font-bold mt-1">8124320659</p><p className="text-[#b9afa3] mt-1">Giwa Oluwasheedah</p><p className="text-sm text-[#948a7e] mt-5">Take a screenshot or save the successful transaction receipt as an image or PDF before returning to this form.</p></div></div>
+          <div className="lg:sticky lg:top-28"><p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">Submission</p><h2 className="class-display text-4xl sm:text-5xl font-bold">Register and submit your receipt.</h2><div className="class-panel p-6 mt-7"><p className="font-mono text-xs uppercase text-red-500">{pricing.soldOut ? 'Registration is currently full' : `Current fee · ${formatNaira(pricing.price)}`}</p><p className="text-2xl font-bold mt-3">Moniepoint</p><p className="class-display text-4xl font-bold mt-1">8124320659</p><p className="text-[#b9afa3] mt-1">Giwa Oluwasheedah</p><p className="text-sm text-[#948a7e] mt-5">Take a screenshot or save the successful transaction receipt as an image or PDF before returning to this form. Your place counts after the payment is accepted.</p></div></div>
           <form onSubmit={submit} className="class-panel p-6 sm:p-8 space-y-6">
             <div><span className="font-mono text-xs text-red-500">STEP 01</span><h3 className="text-2xl font-bold mt-2">Tell me about yourself</h3></div>
             <label className="block"><span className="block text-sm mb-2">Full name *</span><input className="class-field" name="fullName" value={form.fullName} onChange={update} required placeholder="Your full name" /></label>
@@ -226,7 +254,7 @@ export default function Class() {
             {receiptAnalysis && !scanning && <div className={`border p-4 ${receiptAnalysis.status === 'passed' ? 'border-green-800 bg-green-950/25' : 'border-amber-800 bg-amber-950/25'}`}><p className="font-bold">{receiptAnalysis.status === 'passed' ? 'Receipt checks completed.' : 'Receipt saved for manual review.'}</p><p className="text-sm text-[#cfc6b9] mt-1">{receiptAnalysis.detectedCount} of {receiptAnalysis.totalChecks} expected payment details were detected. Payment is only confirmed after Qing reviews the receipt against the bank account.</p>{receiptAnalysis.missing.length > 0 && <p className="text-xs text-[#b9afa3] mt-3">Not clearly detected: {receiptAnalysis.missing.join(', ')}.</p>}</div>}
             {status.message && <p role="status" className={`rounded-lg p-4 text-sm ${status.type === 'success' ? 'bg-green-950 text-green-200 border border-green-800' : 'bg-red-950 text-red-200 border border-red-800'}`}>{status.message}</p>}
             {(!detailsComplete || !receipt) && <p className="text-sm text-[#b9afa3]">{missingDetails.length ? `To submit, add ${missingDetails.join(', ')}${receipt ? '.' : ', and your receipt file.'}` : 'Choose your receipt image or PDF to submit your registration.'}</p>}
-            <button type="submit" disabled={!detailsComplete || !receipt || !receiptAnalysis || scanning || submitting} className="w-full rounded-full bg-red-600 px-6 py-4 font-mono text-sm uppercase font-bold text-white hover:bg-red-500 disabled:opacity-55 disabled:cursor-not-allowed transition-colors">{scanning ? 'Checking receipt…' : submitting ? 'Submitting…' : 'Submit registration and receipt'}</button>
+            <button type="submit" disabled={pricing.soldOut || !detailsComplete || !receipt || !receiptAnalysis || scanning || submitting} className="w-full rounded-full bg-red-600 px-6 py-4 font-mono text-sm uppercase font-bold text-white hover:bg-red-500 disabled:opacity-55 disabled:cursor-not-allowed transition-colors">{pricing.soldOut ? 'All 500 places are filled' : scanning ? 'Checking receipt…' : submitting ? 'Submitting…' : 'Submit registration and receipt'}</button>
           </form>
         </div>
       </section>

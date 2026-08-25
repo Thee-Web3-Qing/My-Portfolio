@@ -51,13 +51,19 @@ const readPdf = async (file, onProgress) => {
   return recogniseImage(canvas, onProgress)
 }
 
-const evaluateText = (rawText) => {
+const amountPattern = (amount) => {
+  const digits = String(amount)
+  const grouped = Number(amount).toLocaleString('en-NG')
+  return new RegExp(`(?:₦|ngn|\\bn)?\\s*(?:${digits}|${grouped.replace(',', '[\\s,.]?')})(?:[.,]00)?\\b`, 'i')
+}
+
+const evaluateText = (rawText, expectedAmount) => {
   const text = cleanText(rawText)
   const compactDigits = text.replace(/\D/g, '')
   const checks = {
     recipient: /oluwashe+dah/.test(text) && /giwa/.test(text),
     account: compactDigits.includes('8124320659'),
-    amount: /(?:₦|ngn|\bn)\s*1[\s,.]?000(?:[.,]00)?\b/i.test(text),
+    amount: amountPattern(expectedAmount).test(text),
     successful: /successful|success|completed|approved|payment received|received by bank|paid and submitted/.test(text),
     dateOrTime: /\b\d{1,2}[:.]\d{2}\s*(?:am|pm)?\b|\b\d{1,2}[-/.]\d{1,2}[-/.]\d{2,4}\b|\b(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\s+\d{1,2}/.test(text),
     reference: /(?:transaction|session|reference|receipt|transfer)\s*(?:id|no|number|reference)?\s*[:#-]?\s*[a-z0-9-]{6,}/.test(text),
@@ -68,24 +74,24 @@ const evaluateText = (rawText) => {
   const essentialMatch = checks.recipient && checks.amount && checks.successful
   const status = score >= 70 && essentialMatch ? 'passed' : 'review'
   const labels = {
-    recipient: 'Recipient name', account: 'Recipient account number', amount: '₦1,000 amount', successful: 'Successful payment status',
+    recipient: 'Recipient name', account: 'Recipient account number', amount: `₦${Number(expectedAmount).toLocaleString('en-NG')} amount`, successful: 'Successful payment status',
     dateOrTime: 'Transaction date or time', reference: 'Transaction or reference ID', bankContext: 'Bank or transfer details',
   }
   const missing = Object.entries(checks).filter(([, found]) => !found).map(([key]) => labels[key])
   return { checks, score, status, missing, detectedCount: Object.values(checks).filter(Boolean).length, totalChecks: Object.keys(checks).length }
 }
 
-export const screenReceipt = async (file, onProgress) => {
+export const screenReceipt = async (file, onProgress, expectedAmount = 1000) => {
   const hash = await fileHash(file)
   try {
     const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')
     const text = isPdf ? await readPdf(file, onProgress) : await recogniseImage(file, onProgress)
-    return { ...evaluateText(text), hash, scanCompleted: true }
+    return { ...evaluateText(text, expectedAmount), hash, scanCompleted: true, expectedAmount }
   } catch (error) {
     console.error('Receipt screening failed', error)
     return {
       checks: {}, score: 0, status: 'review', missing: ['Automatic text scan unavailable'],
-      detectedCount: 0, totalChecks: 7, hash, scanCompleted: false,
+      detectedCount: 0, totalChecks: 7, hash, scanCompleted: false, expectedAmount,
     }
   }
 }
