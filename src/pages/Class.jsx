@@ -57,15 +57,18 @@ export default function Class() {
     const file = event.target.files?.[0]
     setStatus({ type: '', message: '' })
     if (!file) return setReceipt(null)
-    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+    const fileName = file.name.toLowerCase()
+    const isPdf = file.type === 'application/pdf' || fileName.endsWith('.pdf')
+    const isImage = file.type.startsWith('image/') || /\.(jpe?g|png|heic|heif|webp)$/i.test(fileName)
+    if (!isPdf && !isImage) {
       event.target.value = ''
       setReceipt(null)
-      return setStatus({ type: 'error', message: 'Please save and upload the transaction receipt as a PDF.' })
+      return setStatus({ type: 'error', message: 'Please upload the transaction receipt as an image or PDF.' })
     }
-    if (file.size > 5 * 1024 * 1024) {
+    if (file.size > 10 * 1024 * 1024) {
       event.target.value = ''
       setReceipt(null)
-      return setStatus({ type: 'error', message: 'The PDF must be smaller than 5 MB.' })
+      return setStatus({ type: 'error', message: 'The receipt file must be smaller than 10 MB.' })
     }
     setReceipt(file)
   }
@@ -78,14 +81,16 @@ export default function Class() {
 
     try {
       const cleanPhone = form.whatsapp.replace(/[^0-9+]/g, '')
-      const storageName = `${Date.now()}-${crypto.randomUUID()}.pdf`
+      const originalExtension = receipt.name.split('.').pop()?.toLowerCase()
+      const safeExtension = originalExtension && /^(pdf|jpe?g|png|heic|heif|webp)$/.test(originalExtension) ? originalExtension : 'jpg'
+      const storageName = `${Date.now()}-${crypto.randomUUID()}.${safeExtension}`
       const storagePath = `receipts/${storageName}`
       const upload = await fetch(`${SUPABASE_URL}/storage/v1/object/class-receipts/${storagePath}`, {
         method: 'POST',
         headers: {
           apikey: SUPABASE_KEY,
           Authorization: `Bearer ${SUPABASE_KEY}`,
-          'Content-Type': 'application/pdf',
+          'Content-Type': receipt.type || (safeExtension === 'pdf' ? 'application/pdf' : 'image/jpeg'),
           'x-upsert': 'false',
         },
         body: receipt,
@@ -185,17 +190,17 @@ export default function Class() {
 
       <section id="register" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
         <div className="grid lg:grid-cols-[.78fr_1.22fr] gap-10 items-start">
-          <div className="lg:sticky lg:top-28"><p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">Submission</p><h2 className="class-display text-4xl sm:text-5xl font-bold">Register and submit your receipt.</h2><div className="class-panel p-6 mt-7"><p className="font-mono text-xs uppercase text-red-500">Pay ₦1,000 to</p><p className="text-2xl font-bold mt-3">Moniepoint</p><p className="class-display text-4xl font-bold mt-1">8124320659</p><p className="text-[#b9afa3] mt-1">Giwa Oluwasheedah</p><p className="text-sm text-[#948a7e] mt-5">Download or save the successful transaction receipt as a PDF before returning to this form.</p></div></div>
+          <div className="lg:sticky lg:top-28"><p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">Submission</p><h2 className="class-display text-4xl sm:text-5xl font-bold">Register and submit your receipt.</h2><div className="class-panel p-6 mt-7"><p className="font-mono text-xs uppercase text-red-500">Pay ₦1,000 to</p><p className="text-2xl font-bold mt-3">Moniepoint</p><p className="class-display text-4xl font-bold mt-1">8124320659</p><p className="text-[#b9afa3] mt-1">Giwa Oluwasheedah</p><p className="text-sm text-[#948a7e] mt-5">Take a screenshot or save the successful transaction receipt as an image or PDF before returning to this form.</p></div></div>
           <form onSubmit={submit} className="class-panel p-6 sm:p-8 space-y-6">
             <div><span className="font-mono text-xs text-red-500">STEP 01</span><h3 className="text-2xl font-bold mt-2">Tell me about yourself</h3></div>
             <label className="block"><span className="block text-sm mb-2">Full name *</span><input className="class-field" name="fullName" value={form.fullName} onChange={update} required placeholder="Your full name" /></label>
             <div className="grid sm:grid-cols-2 gap-4"><label className="block"><span className="block text-sm mb-2">WhatsApp number *</span><input className="class-field" name="whatsapp" value={form.whatsapp} onChange={update} required inputMode="tel" placeholder="0800 000 0000" /></label><label className="block"><span className="block text-sm mb-2">Email address</span><input className="class-field" name="email" type="email" value={form.email} onChange={update} placeholder="you@email.com" /></label></div>
             <label className="block"><span className="block text-sm mb-2">Why do you want to join this beginner class? *</span><textarea className="class-field min-h-36 resize-y" name="reason" value={form.reason} onChange={update} required minLength={20} placeholder="Tell me what you want to learn or create." /><span className="flex flex-wrap justify-between gap-2 mt-2 text-xs text-[#887e73]"><span>Your response will be grouped as: {category}.</span><span>{form.reason.trim().length}/20 minimum characters</span></span></label>
             <label className="block"><span className="block text-sm mb-2">Would you like to continue with private mentorship afterwards?</span><select className="class-field" name="mentorship" value={form.mentorship} onChange={update}><option value="">This is optional</option><option value="Yes">Yes, I am interested</option><option value="Maybe">Maybe, tell me more later</option><option value="No">No, the class is enough for now</option></select></label>
-            <div className="border-t border-[#f5eddf]/15 pt-6"><span className="font-mono text-xs text-red-500">STEP 02</span><h3 className="text-2xl font-bold mt-2">Upload and read your PDF</h3><p className="text-sm text-[#b9afa3] mt-2">You can choose and preview your receipt now. Final submission becomes available after the required details above are complete.</p><label className="mt-5 block border border-dashed border-[#f5eddf]/30 p-5 text-center cursor-pointer hover:border-red-600 transition-colors"><input type="file" accept="application/pdf,.pdf" onChange={chooseReceipt} className="sr-only" /><span className="font-bold">{receipt ? receipt.name : 'Choose transaction receipt PDF'}</span><span className="block text-xs text-[#887e73] mt-1">PDF only, maximum 5 MB</span></label></div>
-            {previewUrl && <div className="border border-[#f5eddf]/20 bg-black p-3"><div className="flex items-center justify-between gap-3 mb-3"><span className="font-mono text-xs text-red-500">PDF READER</span><a href={previewUrl} target="_blank" rel="noreferrer" className="text-xs underline">Open full screen</a></div><object data={previewUrl} type="application/pdf" className="w-full h-[480px] bg-white"><p className="text-black p-4">Your browser cannot display the PDF here. Use the full-screen link above.</p></object></div>}
+            <div className="border-t border-[#f5eddf]/15 pt-6"><span className="font-mono text-xs text-red-500">STEP 02</span><h3 className="text-2xl font-bold mt-2">Upload and preview your receipt</h3><p className="text-sm text-[#b9afa3] mt-2">Choose a screenshot, photo, HEIC image, or PDF. Final submission becomes available after the required details above are complete.</p><label className="mt-5 block border border-dashed border-[#f5eddf]/30 p-5 text-center cursor-pointer hover:border-red-600 transition-colors"><input type="file" accept="image/*,application/pdf,.pdf,.jpg,.jpeg,.png,.heic,.heif,.webp" onChange={chooseReceipt} className="sr-only" /><span className="font-bold">{receipt ? receipt.name : 'Choose receipt image or PDF'}</span><span className="block text-xs text-[#887e73] mt-1">JPG, PNG, HEIC, WEBP, or PDF. Maximum 10 MB.</span></label></div>
+            {previewUrl && <div className="border border-[#f5eddf]/20 bg-black p-3"><div className="flex items-center justify-between gap-3 mb-3"><span className="font-mono text-xs text-red-500">RECEIPT PREVIEW</span><a href={previewUrl} target="_blank" rel="noreferrer" className="text-xs underline">Open full screen</a></div>{receipt?.type.startsWith('image/') || /\.(jpe?g|png|heic|heif|webp)$/i.test(receipt?.name || '') ? <img src={previewUrl} alt="Transaction receipt preview" className="w-full max-h-[560px] object-contain bg-white" /> : <object data={previewUrl} type="application/pdf" className="w-full h-[480px] bg-white"><p className="text-black p-4">Your browser cannot display the PDF here. Use the full-screen link above.</p></object>}</div>}
             {status.message && <p role="status" className={`rounded-lg p-4 text-sm ${status.type === 'success' ? 'bg-green-950 text-green-200 border border-green-800' : 'bg-red-950 text-red-200 border border-red-800'}`}>{status.message}</p>}
-            {(!detailsComplete || !receipt) && <p className="text-sm text-[#b9afa3]">{missingDetails.length ? `To submit, add ${missingDetails.join(', ')}${receipt ? '.' : ', and your receipt PDF.'}` : 'Choose your receipt PDF to submit your registration.'}</p>}
+            {(!detailsComplete || !receipt) && <p className="text-sm text-[#b9afa3]">{missingDetails.length ? `To submit, add ${missingDetails.join(', ')}${receipt ? '.' : ', and your receipt file.'}` : 'Choose your receipt image or PDF to submit your registration.'}</p>}
             <button type="submit" disabled={!detailsComplete || !receipt || submitting} className="w-full rounded-full bg-red-600 px-6 py-4 font-mono text-sm uppercase font-bold text-white hover:bg-red-500 disabled:opacity-55 disabled:cursor-not-allowed transition-colors">{submitting ? 'Submitting…' : 'Submit registration and receipt'}</button>
           </form>
         </div>
