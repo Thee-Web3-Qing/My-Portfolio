@@ -105,7 +105,7 @@ export default function Class() {
       const cleanPhone = form.whatsapp.replace(/[^0-9+]/g, '')
       const originalExtension = receipt.name.split('.').pop()?.toLowerCase()
       const safeExtension = originalExtension && /^(pdf|jpe?g|png|heic|heif|webp)$/.test(originalExtension) ? originalExtension : 'jpg'
-      const storageName = `${Date.now()}-${crypto.randomUUID()}.${safeExtension}`
+      const storageName = `${receiptAnalysis.hash}.${safeExtension}`
       const storagePath = `receipts/${storageName}`
       const upload = await fetch(`${SUPABASE_URL}/storage/v1/object/class-receipts/${storagePath}`, {
         method: 'POST',
@@ -135,23 +135,13 @@ export default function Class() {
           reason_category: category,
           mentorship_interest: form.mentorship || 'Not answered',
           receipt_path: storagePath,
-          receipt_name: receipt.name,
+          receipt_name: `[NGN-${pricing.price}][SCAN-${receiptAnalysis.score}-${receiptAnalysis.status.toUpperCase()}][HASH-${receiptAnalysis.hash}] ${receipt.name}`,
           receipt_size: receipt.size,
-          receipt_hash: receiptAnalysis.hash,
-          fraud_score: receiptAnalysis.score,
-          fraud_status: receiptAnalysis.status,
-          fraud_checks: {
-            ...receiptAnalysis.checks,
-            missing: receiptAnalysis.missing,
-            scan_completed: receiptAnalysis.scanCompleted,
-            expected_amount: pricing.price,
-            pricing_tier: pricing.tierIndex + 1,
-          },
         }),
       })
       if (!save.ok) {
         const failure = await save.text()
-        if (/receipt_hash|duplicate key/i.test(failure)) throw new Error('This exact receipt has already been submitted.')
+        if (/receipt_hash|duplicate key|already exists|duplicate/i.test(failure)) throw new Error('This exact receipt has already been submitted.')
         throw new Error('Your details could not be submitted. Please try again.')
       }
 
