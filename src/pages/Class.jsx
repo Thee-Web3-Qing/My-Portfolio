@@ -36,7 +36,12 @@ export default function Class() {
   const [status, setStatus] = useState({ type: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
 
-  const canUpload = form.fullName.trim().length >= 3 && form.whatsapp.trim().length >= 10 && form.reason.trim().length >= 20
+  const detailsComplete = form.fullName.trim().length >= 3 && form.whatsapp.trim().length >= 10 && form.reason.trim().length >= 20
+  const missingDetails = [
+    form.fullName.trim().length < 3 && 'your full name',
+    form.whatsapp.trim().length < 10 && 'a valid WhatsApp number',
+    form.reason.trim().length < 20 && 'at least 20 characters explaining why you want to join',
+  ].filter(Boolean)
   const category = useMemo(() => classifyReason(form.reason), [form.reason])
 
   useEffect(() => {
@@ -67,7 +72,7 @@ export default function Class() {
 
   const submit = async (event) => {
     event.preventDefault()
-    if (!canUpload || !receipt || submitting) return
+    if (!detailsComplete || !receipt || submitting) return
     setSubmitting(true)
     setStatus({ type: '', message: '' })
 
@@ -185,12 +190,13 @@ export default function Class() {
             <div><span className="font-mono text-xs text-red-500">STEP 01</span><h3 className="text-2xl font-bold mt-2">Tell me about yourself</h3></div>
             <label className="block"><span className="block text-sm mb-2">Full name *</span><input className="class-field" name="fullName" value={form.fullName} onChange={update} required placeholder="Your full name" /></label>
             <div className="grid sm:grid-cols-2 gap-4"><label className="block"><span className="block text-sm mb-2">WhatsApp number *</span><input className="class-field" name="whatsapp" value={form.whatsapp} onChange={update} required inputMode="tel" placeholder="0800 000 0000" /></label><label className="block"><span className="block text-sm mb-2">Email address</span><input className="class-field" name="email" type="email" value={form.email} onChange={update} placeholder="you@email.com" /></label></div>
-            <label className="block"><span className="block text-sm mb-2">Why do you want to join this beginner class? *</span><textarea className="class-field min-h-36 resize-y" name="reason" value={form.reason} onChange={update} required minLength={20} placeholder="Tell me what you want to learn or create." /><span className="block mt-2 text-xs text-[#887e73]">Your response will be grouped as: {category}.</span></label>
+            <label className="block"><span className="block text-sm mb-2">Why do you want to join this beginner class? *</span><textarea className="class-field min-h-36 resize-y" name="reason" value={form.reason} onChange={update} required minLength={20} placeholder="Tell me what you want to learn or create." /><span className="flex flex-wrap justify-between gap-2 mt-2 text-xs text-[#887e73]"><span>Your response will be grouped as: {category}.</span><span>{form.reason.trim().length}/20 minimum characters</span></span></label>
             <label className="block"><span className="block text-sm mb-2">Would you like to continue with private mentorship afterwards?</span><select className="class-field" name="mentorship" value={form.mentorship} onChange={update}><option value="">This is optional</option><option value="Yes">Yes, I am interested</option><option value="Maybe">Maybe, tell me more later</option><option value="No">No, the class is enough for now</option></select></label>
-            <div className={`border-t border-[#f5eddf]/15 pt-6 ${canUpload ? '' : 'opacity-50'}`}><span className="font-mono text-xs text-red-500">STEP 02</span><h3 className="text-2xl font-bold mt-2">Upload and read your PDF</h3><p className="text-sm text-[#948a7e] mt-2">Complete the required details above to unlock the PDF receipt uploader.</p><label className="mt-5 block border border-dashed border-[#f5eddf]/30 p-5 text-center cursor-pointer hover:border-red-600 transition-colors"><input type="file" accept="application/pdf,.pdf" onChange={chooseReceipt} disabled={!canUpload} className="sr-only" /><span className="font-bold">{receipt ? receipt.name : 'Choose transaction receipt PDF'}</span><span className="block text-xs text-[#887e73] mt-1">PDF only, maximum 5 MB</span></label></div>
+            <div className="border-t border-[#f5eddf]/15 pt-6"><span className="font-mono text-xs text-red-500">STEP 02</span><h3 className="text-2xl font-bold mt-2">Upload and read your PDF</h3><p className="text-sm text-[#b9afa3] mt-2">You can choose and preview your receipt now. Final submission becomes available after the required details above are complete.</p><label className="mt-5 block border border-dashed border-[#f5eddf]/30 p-5 text-center cursor-pointer hover:border-red-600 transition-colors"><input type="file" accept="application/pdf,.pdf" onChange={chooseReceipt} className="sr-only" /><span className="font-bold">{receipt ? receipt.name : 'Choose transaction receipt PDF'}</span><span className="block text-xs text-[#887e73] mt-1">PDF only, maximum 5 MB</span></label></div>
             {previewUrl && <div className="border border-[#f5eddf]/20 bg-black p-3"><div className="flex items-center justify-between gap-3 mb-3"><span className="font-mono text-xs text-red-500">PDF READER</span><a href={previewUrl} target="_blank" rel="noreferrer" className="text-xs underline">Open full screen</a></div><object data={previewUrl} type="application/pdf" className="w-full h-[480px] bg-white"><p className="text-black p-4">Your browser cannot display the PDF here. Use the full-screen link above.</p></object></div>}
             {status.message && <p role="status" className={`rounded-lg p-4 text-sm ${status.type === 'success' ? 'bg-green-950 text-green-200 border border-green-800' : 'bg-red-950 text-red-200 border border-red-800'}`}>{status.message}</p>}
-            <button type="submit" disabled={!canUpload || !receipt || submitting} className="w-full rounded-full bg-red-600 px-6 py-4 font-mono text-sm uppercase font-bold text-white hover:bg-red-500 disabled:opacity-35 disabled:cursor-not-allowed transition-colors">{submitting ? 'Submitting…' : 'Submit registration and receipt'}</button>
+            {(!detailsComplete || !receipt) && <p className="text-sm text-[#b9afa3]">{missingDetails.length ? `To submit, add ${missingDetails.join(', ')}${receipt ? '.' : ', and your receipt PDF.'}` : 'Choose your receipt PDF to submit your registration.'}</p>}
+            <button type="submit" disabled={!detailsComplete || !receipt || submitting} className="w-full rounded-full bg-red-600 px-6 py-4 font-mono text-sm uppercase font-bold text-white hover:bg-red-500 disabled:opacity-55 disabled:cursor-not-allowed transition-colors">{submitting ? 'Submitting…' : 'Submit registration and receipt'}</button>
           </form>
         </div>
       </section>
