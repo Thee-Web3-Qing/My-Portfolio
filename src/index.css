@@ -61,6 +61,57 @@ a:focus-visible, button:focus-visible {
   background-image: radial-gradient(circle at 1px 1px, rgba(22,22,29,0.04) 1px, transparent 0);
   background-size: 12px 12px;
 }
+
+.class-page {
+  --class-black: #090909;
+  --class-red: #d20b1c;
+  --class-cream: #f5eddf;
+  background:
+    linear-gradient(rgba(210, 11, 28, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(210, 11, 28, 0.09) 1px, transparent 1px),
+    radial-gradient(circle at 82% 12%, rgba(210, 11, 28, 0.2), transparent 28%),
+    var(--class-black);
+  background-size: 72px 72px, 72px 72px, auto, auto;
+  color: var(--class-cream);
+}
+
+.class-display {
+  font-family: 'Bricolage Grotesque', sans-serif;
+  letter-spacing: -0.055em;
+}
+
+.class-panel {
+  border: 1px solid rgba(245, 237, 223, 0.22);
+  background: rgba(17, 17, 17, 0.82);
+  box-shadow: 0 24px 90px rgba(0, 0, 0, 0.26);
+}
+
+.class-field {
+  width: 100%;
+  border: 1px solid rgba(245, 237, 223, 0.28);
+  border-radius: 0.85rem;
+  background: #111;
+  color: #f5eddf;
+  padding: 0.9rem 1rem;
+  outline: none;
+}
+
+.class-field:focus {
+  border-color: #d20b1c;
+  box-shadow: 0 0 0 3px rgba(210, 11, 28, 0.18);
+}
+
+.class-field::placeholder {
+  color: rgba(245, 237, 223, 0.45);
+}
+
+.class-page a:focus-visible,
+.class-page button:focus-visible,
+.class-page input:focus-visible,
+.class-page textarea:focus-visible,
+.class-page select:focus-visible {
+  outline-color: #f5eddf;
+}
 @keyframes fadeUp {
   from {
     opacity: 0;

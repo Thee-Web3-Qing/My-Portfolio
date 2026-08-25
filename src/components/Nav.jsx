@@ -6,6 +6,7 @@ import { useState } from 'react'
     { to: '/products', label: 'Products' },
     { to: '/hire', label: 'Hire Me' },
     { to: '/experience', label: 'Experience' },
+    { to: '/class', label: 'Class' },
   ]
   export default function Nav() {
     const [open, setOpen] = useState(false)

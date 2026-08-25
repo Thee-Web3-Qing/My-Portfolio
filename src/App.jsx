@@ -6,6 +6,7 @@ import { Routes, Route } from 'react-router-dom'
   import Products from './pages/Products.jsx'
   import Hire from './pages/Hire.jsx'
   import Experience from './pages/Experience.jsx'
+  import Class from './pages/Class.jsx'
 
   export default function App() {
     return (
@@ -22,6 +23,7 @@ import { Routes, Route } from 'react-router-dom'
                   <Route path="/products" element={<Products />} />
                   <Route path="/hire" element={<Hire />} />
                   <Route path="/experience" element={<Experience />} />
+                  <Route path="/class" element={<Class />} />
                 </Routes>
               </main>
               <Footer />
