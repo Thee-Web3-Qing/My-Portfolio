@@ -166,7 +166,6 @@ export default function Class() {
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#register" className="rounded-full bg-red-600 px-6 py-3 font-mono text-sm uppercase font-bold text-white hover:bg-red-500 transition-colors">Join for ₦1,000</a>
             <a href="#proof" className="rounded-full border border-[#f5eddf]/40 px-6 py-3 font-mono text-sm uppercase text-[#f5eddf] hover:bg-white/10 transition-colors">See my build history</a>
-            <a href="/classroom" className="rounded-full border border-red-700 px-6 py-3 font-mono text-sm uppercase text-[#f5eddf] hover:bg-red-950 transition-colors">Student login</a>
           </div>
           <p className="mt-5 font-mono text-xs uppercase tracking-wider text-[#948a7e]">Goal: teach 500 curious builders</p>
         </div>

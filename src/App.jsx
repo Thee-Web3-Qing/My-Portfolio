@@ -7,7 +7,6 @@ import { Routes, Route } from 'react-router-dom'
   import Hire from './pages/Hire.jsx'
   import Experience from './pages/Experience.jsx'
   import Class from './pages/Class.jsx'
-  import Classroom from './pages/Classroom.jsx'
 
   export default function App() {
     return (
@@ -25,7 +24,6 @@ import { Routes, Route } from 'react-router-dom'
                   <Route path="/hire" element={<Hire />} />
                   <Route path="/experience" element={<Experience />} />
                   <Route path="/class" element={<Class />} />
-                  <Route path="/classroom" element={<Classroom />} />
                 </Routes>
               </main>
               <Footer />
