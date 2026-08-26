@@ -116,9 +116,7 @@ export default function Class() {
       const cleanPhone = form.whatsapp.replace(/[^0-9+]/g, '')
       const originalExtension = receipt.name.split('.').pop()?.toLowerCase()
       const safeExtension = originalExtension && /^(pdf|jpe?g|png|heic|heif|webp)$/.test(originalExtension) ? originalExtension : 'jpg'
-      const storageName = `${receiptAnalysis.hash}.${safeExtension}`
-      const storagePath = `receipts/${storageName}`
-      const upload = await fetch(`${SUPABASE_URL}/storage/v1/object/class-receipts/${storagePath}`, {
+      const uploadReceipt = (path) => fetch(`${SUPABASE_URL}/storage/v1/object/class-receipts/${path}`, {
         method: 'POST',
         headers: {
           apikey: SUPABASE_KEY,
@@ -128,7 +126,18 @@ export default function Class() {
         },
         body: receipt,
       })
-      if (!upload.ok) throw new Error('The receipt could not be uploaded. Please try again.')
+
+      let storagePath = `receipts/${receiptAnalysis.hash}.${safeExtension}`
+      let upload = await uploadReceipt(storagePath)
+      if (!upload.ok) {
+        const uploadFailure = await upload.clone().text()
+        const fileAlreadyExists = upload.status === 409 || /already exists|duplicate/i.test(uploadFailure)
+        if (fileAlreadyExists) {
+          storagePath = `receipts/${receiptAnalysis.hash}-${crypto.randomUUID()}.${safeExtension}`
+          upload = await uploadReceipt(storagePath)
+        }
+      }
+      if (!upload.ok) throw new Error('The receipt could not be uploaded. Please check your connection and try again.')
 
       const registration = {
         full_name: form.fullName.trim(),
