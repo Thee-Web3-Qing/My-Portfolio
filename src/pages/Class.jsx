@@ -61,10 +61,21 @@ export default function Class() {
   }, [receipt])
 
   useEffect(() => {
-    fetch(PRICING_URL)
-      .then((response) => response.ok ? response.json() : Promise.reject(new Error('Pricing unavailable')))
-      .then((data) => setPricing((current) => ({ ...current, ...data })))
-      .catch(() => {})
+    const loadPricing = () => {
+      fetch(PRICING_URL, { cache: 'no-store' })
+        .then((response) => response.ok ? response.json() : Promise.reject(new Error('Pricing unavailable')))
+        .then((data) => setPricing((current) => ({ ...current, ...data })))
+        .catch(() => {})
+    }
+
+    loadPricing()
+    window.addEventListener('focus', loadPricing)
+    const interval = window.setInterval(loadPricing, 30000)
+
+    return () => {
+      window.removeEventListener('focus', loadPricing)
+      window.clearInterval(interval)
+    }
   }, [])
 
   const update = (event) => setForm((current) => ({ ...current, [event.target.name]: event.target.value }))
@@ -119,7 +130,22 @@ export default function Class() {
       })
       if (!upload.ok) throw new Error('The receipt could not be uploaded. Please try again.')
 
-      const save = await fetch(`${SUPABASE_URL}/rest/v1/class_registrations`, {
+      const registration = {
+        full_name: form.fullName.trim(),
+        whatsapp: cleanPhone,
+        email: form.email.trim() || null,
+        reason: form.reason.trim(),
+        reason_category: category,
+        mentorship_interest: form.mentorship || 'Not answered',
+        receipt_path: storagePath,
+        receipt_name: `[NGN-${pricing.price}][SCAN-${receiptAnalysis.score}-${receiptAnalysis.status.toUpperCase()}][HASH-${receiptAnalysis.hash}] ${receipt.name}`,
+        receipt_size: receipt.size,
+        amount_paid: pricing.price,
+        currency: 'NGN',
+        payment_source: 'Portfolio class page',
+        payment_reference: receiptAnalysis.hash.slice(0, 16).toUpperCase(),
+      }
+      let save = await fetch(`${SUPABASE_URL}/rest/v1/class_registrations`, {
         method: 'POST',
         headers: {
           apikey: SUPABASE_KEY,
@@ -127,18 +153,20 @@ export default function Class() {
           'Content-Type': 'application/json',
           Prefer: 'return=minimal',
         },
-        body: JSON.stringify({
-          full_name: form.fullName.trim(),
-          whatsapp: cleanPhone,
-          email: form.email.trim() || null,
-          reason: form.reason.trim(),
-          reason_category: category,
-          mentorship_interest: form.mentorship || 'Not answered',
-          receipt_path: storagePath,
-          receipt_name: `[NGN-${pricing.price}][SCAN-${receiptAnalysis.score}-${receiptAnalysis.status.toUpperCase()}][HASH-${receiptAnalysis.hash}] ${receipt.name}`,
-          receipt_size: receipt.size,
-        }),
+        body: JSON.stringify(registration),
       })
+      if (!save.ok) {
+        const firstFailure = await save.clone().text()
+        if (/amount_paid|currency|payment_source|payment_reference|schema cache/i.test(firstFailure)) {
+          const { amount_paid, currency, payment_source, payment_reference, ...legacyRegistration } = registration
+          void amount_paid; void currency; void payment_source; void payment_reference
+          save = await fetch(`${SUPABASE_URL}/rest/v1/class_registrations`, {
+            method: 'POST',
+            headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+            body: JSON.stringify(legacyRegistration),
+          })
+        }
+      }
       if (!save.ok) {
         const failure = await save.text()
         if (/receipt_hash|duplicate key|already exists|duplicate/i.test(failure)) throw new Error('This exact receipt has already been submitted.')
@@ -186,20 +214,6 @@ export default function Class() {
         </div>
       </section>
 
-      <section className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
-        <p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">500 builders · five price tiers</p>
-        <div className="flex flex-wrap items-end justify-between gap-5">
-          <div><h2 className="class-display text-4xl sm:text-6xl font-bold">The earlier you join, the less you pay.</h2><p className="text-[#b9afa3] mt-3 max-w-2xl">A place is counted only after Qing accepts the payment. Pending registrations do not move the price.</p></div>
-          <div className="text-right"><span className="font-mono text-xs uppercase text-[#948a7e]">Accepted students</span><strong className="block class-display text-5xl text-red-500">{pricing.acceptedCount}<small className="text-xl text-[#948a7e]"> / 500</small></strong></div>
-        </div>
-        <div className="grid sm:grid-cols-5 gap-3 mt-10">{PRICE_TIERS.map((amount, index) => {
-          const complete = pricing.acceptedCount >= (index + 1) * 100
-          const current = !pricing.soldOut && pricing.tierIndex === index
-          return <article key={amount} className={`class-panel p-5 ${current ? 'border-red-600' : ''}`}><span className="font-mono text-xs text-red-500">{index * 100 + 1}–{(index + 1) * 100}</span><strong className="block text-2xl mt-2">{formatNaira(amount)}</strong><span className="text-xs text-[#948a7e]">{complete ? 'Filled' : current ? `${pricing.remainingInTier} places left` : 'Next tier'}</span></article>
-        })}</div>
-        <div className="mt-7"><div className="flex justify-between gap-4 text-sm"><span>{pricing.soldOut ? 'All 500 places filled' : `Tier ${pricing.tierIndex + 1}: ${formatNaira(pricing.price)}`}</span><span>{pricing.soldOut ? '100 / 100' : `${pricing.filledInTier} / 100 accepted`}</span></div><div className="h-3 bg-[#251e1b] mt-3 overflow-hidden border border-[#f5eddf]/15"><span className="block h-full bg-red-600 transition-all duration-500" style={{ width: `${pricing.soldOut ? 100 : pricing.filledInTier}%` }} /></div><p className="text-xs text-[#877d72] mt-3">When a tier reaches 100 accepted payments, this bar resets to zero for the next tier.</p></div>
-      </section>
-
       <section id="proof" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
         <p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">The proof is in the shipping</p>
         <h2 className="class-display text-4xl sm:text-6xl font-bold max-w-4xl">I learnt AI by building products that had to work.</h2>
@@ -230,6 +244,19 @@ export default function Class() {
       </section>
 
       <section id="register" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
+        <div className="mb-14">
+          <p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">500 builders · five price tiers</p>
+          <div className="flex flex-wrap items-end justify-between gap-5">
+            <div><h2 className="class-display text-4xl sm:text-6xl font-bold">The earlier you join, the less you pay.</h2><p className="text-[#b9afa3] mt-3 max-w-2xl">A place is counted only after Qing accepts the payment. Pending and declined registrations do not move the price.</p></div>
+            <div className="text-right"><span className="font-mono text-xs uppercase text-[#948a7e]">Accepted students</span><strong className="block class-display text-5xl text-red-500">{pricing.acceptedCount}<small className="text-xl text-[#948a7e]"> / 500</small></strong></div>
+          </div>
+          <div className="grid sm:grid-cols-5 gap-3 mt-10">{PRICE_TIERS.map((amount, index) => {
+            const complete = pricing.acceptedCount >= (index + 1) * 100
+            const current = !pricing.soldOut && pricing.tierIndex === index
+            return <article key={amount} className={`class-panel p-5 ${current ? 'border-red-600' : ''}`}><span className="font-mono text-xs text-red-500">{index * 100 + 1}–{(index + 1) * 100}</span><strong className="block text-2xl mt-2">{formatNaira(amount)}</strong><span className="text-xs text-[#948a7e]">{complete ? 'Filled' : current ? `${pricing.remainingInTier} places left` : 'Next tier'}</span></article>
+          })}</div>
+          <div className="mt-7"><div className="flex justify-between gap-4 text-sm"><span>{pricing.soldOut ? 'All 500 places filled' : `Tier ${pricing.tierIndex + 1}: ${formatNaira(pricing.price)}`}</span><span>{pricing.soldOut ? '100 / 100' : `${pricing.filledInTier} / 100 accepted`}</span></div><div className="h-3 bg-[#251e1b] mt-3 overflow-hidden border border-[#f5eddf]/15"><span className="block h-full bg-red-600 transition-all duration-500" style={{ width: `${pricing.soldOut ? 100 : pricing.filledInTier}%` }} /></div><p className="text-xs text-[#877d72] mt-3">When a tier reaches 100 accepted payments, this bar resets to zero for the next tier.</p></div>
+        </div>
         <div className="grid lg:grid-cols-[.78fr_1.22fr] gap-10 items-start">
           <div className="lg:sticky lg:top-28"><p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">Submission</p><h2 className="class-display text-4xl sm:text-5xl font-bold">Register and submit your receipt.</h2><div className="class-panel p-6 mt-7"><p className="font-mono text-xs uppercase text-red-500">{pricing.soldOut ? 'Registration is currently full' : `Current fee · ${formatNaira(pricing.price)}`}</p><p className="text-2xl font-bold mt-3">Moniepoint</p><p className="class-display text-4xl font-bold mt-1">8124320659</p><p className="text-[#b9afa3] mt-1">Giwa Oluwasheedah</p><p className="text-sm text-[#948a7e] mt-5">Take a screenshot or save the successful transaction receipt as an image or PDF before returning to this form. Your place counts after the payment is accepted.</p></div></div>
           <form onSubmit={submit} className="class-panel p-6 sm:p-8 space-y-6">
