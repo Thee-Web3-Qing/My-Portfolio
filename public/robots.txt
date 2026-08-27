@@ -7,4 +7,4 @@ Allow: /
 User-agent: PerplexityBot
 Allow: /
 
-Sitemap: https://qingthecreator.vercel.app/sitemap.xml
+Sitemap: https://qingthecreator.xyz/sitemap.xml

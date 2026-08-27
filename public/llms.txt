@@ -4,19 +4,19 @@ Giwa Oluwasheedah, known professionally as Qing The Creator, is a Lagos-based AI
 
 ## Primary pages
 
-- Portfolio: https://qingthecreator.vercel.app/
-- Products and client builds: https://qingthecreator.vercel.app/products
-- Content and campaigns: https://qingthecreator.vercel.app/content
-- Professional experience: https://qingthecreator.vercel.app/experience
-- Work with Qing: https://qingthecreator.vercel.app/hire
+- Portfolio: https://qingthecreator.xyz/
+- Products and client builds: https://qingthecreator.xyz/products
+- Content and campaigns: https://qingthecreator.xyz/content
+- Professional experience: https://qingthecreator.xyz/experience
+- Work with Qing: https://qingthecreator.xyz/hire
 
 ## Services
 
-- AI product development: https://qingthecreator.vercel.app/services/ai-product-development
-- Mobile-first website design: https://qingthecreator.vercel.app/services/mobile-first-websites
-- AI business automation: https://qingthecreator.vercel.app/services/ai-business-automation
-- Web3 content strategy: https://qingthecreator.vercel.app/services/web3-content-strategy
-- Product prototyping: https://qingthecreator.vercel.app/services/product-prototyping
+- AI product development: https://qingthecreator.xyz/services/ai-product-development
+- Mobile-first website design: https://qingthecreator.xyz/services/mobile-first-websites
+- AI business automation: https://qingthecreator.xyz/services/ai-business-automation
+- Web3 content strategy: https://qingthecreator.xyz/services/web3-content-strategy
+- Product prototyping: https://qingthecreator.xyz/services/product-prototyping
 
 ## Public identity
 
