@@ -1,6 +1,6 @@
 import { services } from './data/services.js'
 
-export const SITE_URL = 'https://qingthecreator.xyz'
+export const SITE_URL = 'https://www.qingthecreator.xyz'
 export const SOCIAL_IMAGE = `${SITE_URL}/qing-class-portrait.jpg`
 
 const personId = `${SITE_URL}/#qing`
