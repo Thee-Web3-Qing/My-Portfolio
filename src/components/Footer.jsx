@@ -8,7 +8,7 @@ export default function Footer() {
 
         <div className="flex flex-wrap gap-4 font-mono text-sm uppercase">
           <a
-            href="mailto:bigqinggg@gmail.com"
+            href="mailto:qinglidah@gmail.com"
             className="hover:text-electric transition-colors"
           >
             Email

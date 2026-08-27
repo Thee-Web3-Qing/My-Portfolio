@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
   import Nav from './components/Nav.jsx'
+  import RouteMeta from './components/RouteMeta.jsx'
   import Footer from './components/Footer.jsx'
   import Home from './pages/Home.jsx'
   import Content from './pages/Content.jsx'
@@ -7,6 +8,7 @@ import { Routes, Route } from 'react-router-dom'
   import Hire from './pages/Hire.jsx'
   import Experience from './pages/Experience.jsx'
   import Class from './pages/Class.jsx'
+  import Service from './pages/Service.jsx'
 
   export default function App() {
     return (
@@ -15,6 +17,7 @@ import { Routes, Route } from 'react-router-dom'
           path="*"
           element={
             <div className="min-h-screen flex flex-col">
+              <RouteMeta />
               <Nav />
               <main className="flex-1 max-w-6xl mx-auto px-6 w-full">
                 <Routes>
@@ -24,6 +27,7 @@ import { Routes, Route } from 'react-router-dom'
                   <Route path="/hire" element={<Hire />} />
                   <Route path="/experience" element={<Experience />} />
                   <Route path="/class" element={<Class />} />
+                  <Route path="/services/:serviceSlug" element={<Service />} />
                 </Routes>
               </main>
               <Footer />

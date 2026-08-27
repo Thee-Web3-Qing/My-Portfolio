@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-  const EMAIL = 'bigqinggg@gmail.com'
+  const EMAIL = 'qinglidah@gmail.com'
   const X_PROFILE = 'https://x.com/QingTheCreator_'
   const WHATSAPP = 'https://wa.me/2348149364576'
   const TELEGRAM = 'https://t.me/+2348149364576'
@@ -191,4 +191,3 @@ import { useState } from 'react'
       </div>
     )
   }
-  

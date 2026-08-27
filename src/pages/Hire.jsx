@@ -1,6 +1,6 @@
 import { useState } from 'react'
-  const EMAIL = 'bigqinggg@gmail.com'
-  const X_PROFILE = 'https://x.com/qingthecreator_'
+  import { Link } from 'react-router-dom'
+  import { serviceList } from '../data/services'
   const offers = [
     {
       title: 'Creative Director',
@@ -82,6 +82,19 @@ import { useState } from 'react'
           stories, better campaigns, stronger content, websites, landing pages, and
           products people can understand quickly.
         </p>
+        <section className="mb-16">
+          <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">Core services</p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {serviceList.map((service, index) => (
+              <Link key={service.slug} to={`/services/${service.slug}`} className="group border border-ink rounded-blob bg-white/60 p-5 sm:p-6 hover:bg-lime transition-colors">
+                <span className="font-mono text-xs text-electric group-hover:text-ink">0{index + 1}</span>
+                <h2 className="font-display text-xl font-bold mt-5 leading-tight">{service.eyebrow}</h2>
+                <p className="text-sm text-mid group-hover:text-ink mt-3 leading-relaxed">{service.summary}</p>
+                <span className="inline-block font-mono text-xs uppercase mt-5">View service →</span>
+              </Link>
+            ))}
+          </div>
+        </section>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-16">
           {offers.map((offer) => (
             <div
@@ -145,4 +158,3 @@ import { useState } from 'react'
       </div>
     )
   }
-  

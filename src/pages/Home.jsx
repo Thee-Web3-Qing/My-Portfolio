@@ -14,22 +14,22 @@ const services = [
     number: '01',
     title: 'Websites and digital products',
     copy: 'Mobile-first landing pages, marketplaces, dashboards and product prototypes designed around what your users actually need to do.',
-    link: '/products',
-    action: 'Explore product work',
+    link: '/services/mobile-first-websites',
+    action: 'View website service',
   },
   {
     number: '02',
     title: 'AI-powered business systems',
     copy: 'Useful AI workflows that reduce repetitive work, organise information and help businesses move from scattered ideas to working systems.',
-    link: '/products',
-    action: 'See what I build',
+    link: '/services/ai-business-automation',
+    action: 'View AI automation service',
   },
   {
     number: '03',
     title: 'Content and creative direction',
     copy: 'Campaign ideas, scripts, storytelling and launch content that make technical or unfamiliar products easier for people to understand.',
-    link: '/content',
-    action: 'See content work',
+    link: '/services/web3-content-strategy',
+    action: 'View content service',
   },
 ]
 
