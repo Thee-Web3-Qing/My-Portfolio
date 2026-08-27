@@ -110,6 +110,16 @@
       },
     },
     {
+      name: 'Bizora OS',
+      tagline: 'An AI business operating system for SMEs that brings business knowledge, audits, document intelligence, workflows, and practical automation into one workspace.',
+      tags: ['AI for SMEs', 'Business OS', 'Automation'],
+      status: 'Live Prototype',
+      links: {
+        demo: 'https://bizora-os.vercel.app/',
+        repo: null,
+      },
+    },
+    {
       name: 'BountyPilot AI',
       tagline: 'Autonomous web scraper and opportunity scorer for hackathon bounties. Pulls from Superteam, GibWork, DoraHacks, auto-rates by profile fit.',
       tags: ['Web3 Automation', 'SQLite', 'Scraping'],
