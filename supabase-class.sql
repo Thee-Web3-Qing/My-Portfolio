@@ -1,4 +1,4 @@
--- Run this once in the Supabase SQL editor used by Qing's TV.
+-- Run this once in the shared class Supabase project's SQL editor.
 
 create table if not exists public.class_registrations (
   id uuid primary key default gen_random_uuid(),

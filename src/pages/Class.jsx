@@ -3,7 +3,7 @@ import { screenReceipt } from '../lib/receiptScreening'
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://vvniehpzrvgmjdatpxrl.supabase.co'
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable__XVIsG1KQFChirhMMii7rg_dGp-dpYN'
-const PRICING_URL = import.meta.env.VITE_CLASS_PRICING_URL || 'https://qingstv.vercel.app/api/class-pricing'
+const PRICING_URL = '/api/class-pricing'
 const PRICE_TIERS = [1000, 2000, 4000, 8000, 16000]
 
 const formatNaira = (amount) => `₦${Number(amount).toLocaleString('en-NG')}`
