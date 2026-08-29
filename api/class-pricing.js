@@ -24,14 +24,27 @@ export default async function handler(request, response) {
     return response.status(405).json({ error: 'Method not allowed' })
   }
 
-  const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
-  const supabaseSecret = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
-
-  if (!supabaseUrl || !supabaseSecret) {
-    return response.status(503).json({ error: 'Pricing is temporarily unavailable' })
-  }
-
   try {
+    const pricingSourceUrl = process.env.CLASS_PRICING_SOURCE_URL
+    if (pricingSourceUrl) {
+      const pricingSource = await fetch(pricingSourceUrl, { cache: 'no-store' })
+      if (!pricingSource.ok) throw new Error(`Pricing source returned ${pricingSource.status}`)
+
+      const pricing = await pricingSource.json()
+      if (!Number.isFinite(Number(pricing.acceptedCount))) {
+        throw new Error('Pricing source did not return an accepted-payment count')
+      }
+
+      return response.status(200).json(buildPricing(pricing.acceptedCount))
+    }
+
+    const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
+    const supabaseSecret = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
+
+    if (!supabaseUrl || !supabaseSecret) {
+      return response.status(503).json({ error: 'Pricing is temporarily unavailable' })
+    }
+
     const registrations = await fetch(
       `${supabaseUrl.replace(/\/$/, '')}/rest/v1/class_registrations?select=id&payment_status=eq.confirmed`,
       {

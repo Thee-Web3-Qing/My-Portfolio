@@ -4,11 +4,10 @@ My portfolio.
 
 ## Server environment
 
-The server-side `/api/class-pricing` route requires the shared class database URL and one private Supabase server key in Vercel:
+The server-side `/api/class-pricing` route should receive the existing pricing service through a server-only Vercel variable:
 
 ```text
-SUPABASE_URL
-SUPABASE_SECRET_KEY
+CLASS_PRICING_SOURCE_URL
 ```
 
-`SUPABASE_SERVICE_ROLE_KEY` is also supported for projects still using the legacy key name. Private Supabase keys must never use the `VITE_` prefix.
+This variable must not use the `VITE_` prefix. As an alternative, the route can query the shared database with `SUPABASE_URL` and either `SUPABASE_SECRET_KEY` or `SUPABASE_SERVICE_ROLE_KEY`.
