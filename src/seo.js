@@ -32,7 +32,7 @@ export const basePerson = {
   jobTitle: 'AI Product Builder and Creative Strategist',
   description: 'Lagos-based AI product builder and creative strategist creating mobile-first websites, digital products, AI business systems and Web3 content campaigns.',
   email: 'mailto:qinglidah@gmail.com',
-  telephone: '+2348124320659',
+  telephone: '+2348149364576',
   homeLocation: {
     '@type': 'Place',
     name: 'Lagos, Nigeria',
