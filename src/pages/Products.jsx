@@ -1,5 +1,16 @@
   const recentClientBuilds = [
     {
+      name: "FastFlow",
+      clientWanted: "A modern logistics website where staff could register parcels, generate unique tracking codes, record sender and receiver details, update each parcel’s location and status, notify both parties, and let customers follow deliveries without calling the company for every update.",
+      delivered: "I designed and built a responsive logistics platform with a branded public website, no-account parcel tracking, complete delivery timelines, customer sign-in and parcel views, plus an admin workflow for parcel registration, search, sender and receiver records, status updates, and reusable notification templates.",
+      tags: ["Logistics Platform", "Parcel Tracking", "Admin Dashboard"],
+      status: "Live Client Build",
+      links: {
+        demo: "https://fastflow-web.vercel.app/",
+        repo: null,
+      },
+    },
+    {
       name: "Beauty by 3lle",
       clientWanted: "A polished beauty-brand website that could present skincare and makeup as one thoughtful collection, feel credible across different skin tones, and let customers explore products easily.",
       delivered: "I designed and built an editorial e-commerce demo with a responsive brand landing page, skincare and makeup collections, a filterable 30-product shop, individual product galleries and details, and clear paths into the full catalogue.",
@@ -296,4 +307,3 @@
       </div>
     )
   }
-  

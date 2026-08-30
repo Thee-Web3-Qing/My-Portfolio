@@ -7,6 +7,7 @@ const personId = `${SITE_URL}/#qing`
 const websiteId = `${SITE_URL}/#website`
 
 const productWork = [
+  { '@type': 'SoftwareApplication', name: 'FastFlow', applicationCategory: 'BusinessApplication', url: 'https://fastflow-web.vercel.app/' },
   { '@type': 'SoftwareApplication', name: 'Beauty by 3lle', applicationCategory: 'BusinessApplication', url: 'https://beauty-by3ll3.vercel.app/' },
   { '@type': 'SoftwareApplication', name: 'Moment', applicationCategory: 'BusinessApplication', url: 'https://moment-blush.vercel.app/' },
   { '@type': 'SoftwareApplication', name: 'The Authors Room', applicationCategory: 'BusinessApplication', url: 'https://my-authors-room.vercel.app/' },
@@ -79,7 +80,7 @@ const staticRoutes = {
     label: 'Product portfolio',
     heading: 'Websites, AI products and digital platforms built for real goals.',
     paragraphs: [
-      'Selected work includes Beauty by 3lle, Moment, The Authors Room, 22Energy, AssetDNA, BountyPilot AI and Poysis.',
+      'Selected work includes FastFlow, Beauty by 3lle, Moment, The Authors Room, 22Energy, AssetDNA, BountyPilot AI and Poysis.',
       'Each case study explains what the client wanted, what Qing built, the product features and the live deployment.',
     ],
     type: 'CollectionPage',
