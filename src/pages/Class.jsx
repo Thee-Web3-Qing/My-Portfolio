@@ -45,10 +45,12 @@ export default function Class() {
   const [receiptAnalysis, setReceiptAnalysis] = useState(null)
   const [pricing, setPricing] = useState({ acceptedCount: 0, price: 1000, tierIndex: 0, filledInTier: 0, remainingInTier: 100, soldOut: false })
 
-  const detailsComplete = form.fullName.trim().length >= 3 && form.whatsapp.trim().length >= 10 && form.reason.trim().length >= 20
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
+  const detailsComplete = form.fullName.trim().length >= 3 && form.whatsapp.trim().length >= 10 && emailValid && form.reason.trim().length >= 20
   const missingDetails = [
     form.fullName.trim().length < 3 && 'your full name',
     form.whatsapp.trim().length < 10 && 'a valid WhatsApp number',
+    !emailValid && 'a valid email address for your registration code',
     form.reason.trim().length < 20 && 'at least 20 characters explaining why you want to join',
   ].filter(Boolean)
   const category = useMemo(() => classifyReason(form.reason), [form.reason])
@@ -182,7 +184,7 @@ export default function Class() {
         throw new Error('Your details could not be submitted. Please try again.')
       }
 
-      setStatus({ type: 'success', message: 'Registration received. I will confirm your payment and contact you on WhatsApp.' })
+      setStatus({ type: 'success', message: 'Registration received. After your payment is approved, your registration code will be sent to your email. Please keep an eye on your inbox and spam folder.' })
       setForm({ fullName: '', whatsapp: '', email: '', reason: '', mentorship: '' })
       setReceipt(null)
       setReceiptAnalysis(null)
@@ -271,7 +273,7 @@ export default function Class() {
           <form onSubmit={submit} className="class-panel p-6 sm:p-8 space-y-6">
             <div><span className="font-mono text-xs text-red-500">STEP 01</span><h3 className="text-2xl font-bold mt-2">Tell me about yourself</h3></div>
             <label className="block"><span className="block text-sm mb-2">Full name *</span><input className="class-field" name="fullName" value={form.fullName} onChange={update} required placeholder="Your full name" /></label>
-            <div className="grid sm:grid-cols-2 gap-4"><label className="block"><span className="block text-sm mb-2">WhatsApp number *</span><input className="class-field" name="whatsapp" value={form.whatsapp} onChange={update} required inputMode="tel" autoComplete="tel" aria-label="WhatsApp number" placeholder="Your WhatsApp number" /></label><label className="block"><span className="block text-sm mb-2">Email address</span><input className="class-field" name="email" type="email" value={form.email} onChange={update} placeholder="you@email.com" /></label></div>
+            <div className="grid sm:grid-cols-2 gap-4"><label className="block"><span className="block text-sm mb-2">WhatsApp number *</span><input className="class-field" name="whatsapp" value={form.whatsapp} onChange={update} required inputMode="tel" autoComplete="tel" aria-label="WhatsApp number" placeholder="Your WhatsApp number" /></label><label className="block"><span className="block text-sm mb-2">Email address *</span><input className="class-field" name="email" type="email" value={form.email} onChange={update} required autoComplete="email" aria-label="Email address for registration code" placeholder="you@email.com" /></label></div>
             <label className="block"><span className="block text-sm mb-2">Why do you want to join this beginner class? *</span><textarea className="class-field min-h-36 resize-y" name="reason" value={form.reason} onChange={update} required minLength={20} placeholder="Tell me what you want to learn or create." /><span className="flex flex-wrap justify-between gap-2 mt-2 text-xs text-[#887e73]"><span>Your response will be grouped as: {category}.</span><span>{form.reason.trim().length}/20 minimum characters</span></span></label>
             <label className="block"><span className="block text-sm mb-2">Would you like to continue with private mentorship afterwards?</span><select className="class-field" name="mentorship" value={form.mentorship} onChange={update}><option value="">This is optional</option><option value="Yes">Yes, I am interested</option><option value="Maybe">Maybe, tell me more later</option><option value="No">No, the class is enough for now</option></select></label>
             <div className="border-t border-[#f5eddf]/15 pt-6"><span className="font-mono text-xs text-red-500">STEP 02</span><h3 className="text-2xl font-bold mt-2">Upload and preview your receipt</h3><p className="text-sm text-[#b9afa3] mt-2">Choose a screenshot, photo, HEIC image, or PDF. Final submission becomes available after the required details above are complete.</p><label className="mt-5 block border border-dashed border-[#f5eddf]/30 p-5 text-center cursor-pointer hover:border-red-600 transition-colors"><input type="file" accept="image/*,application/pdf,.pdf,.jpg,.jpeg,.png,.heic,.heif,.webp" onChange={chooseReceipt} className="sr-only" /><span className="font-bold">{receipt ? receipt.name : 'Choose receipt image or PDF'}</span><span className="block text-xs text-[#887e73] mt-1">JPG, PNG, HEIC, WEBP, or PDF. Maximum 10 MB.</span></label></div>
