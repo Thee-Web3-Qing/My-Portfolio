@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 
   const EMAIL = 'qinglidah@gmail.com'
   const X_PROFILE = 'https://x.com/QingTheCreator_'
@@ -48,18 +49,22 @@ import { useState } from 'react'
       }
     }
 
-    return (
+    return createPortal(
       <div
-        className="fixed inset-0 z-[100] bg-ink/60 flex items-center justify-center px-5"
+        className="fixed inset-0 z-[100] bg-ink/60 flex overflow-y-auto overscroll-contain p-4 sm:p-6"
         onClick={onClose}
+        role="presentation"
       >
         <div
-          className="bg-paper border border-ink rounded-blob p-6 max-w-md w-full shadow-[8px_8px_0_0_#16161D]"
+          className="bg-paper border border-ink rounded-blob p-5 sm:p-6 max-w-md w-full max-h-[calc(100dvh-2rem)] overflow-y-auto my-auto mx-auto shadow-[8px_8px_0_0_#16161D]"
           onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="booking-modal-title"
         >
           {done ? (
             <>
-              <h3 className="font-display text-2xl font-bold mb-3">You are in.</h3>
+              <h3 id="booking-modal-title" className="font-display text-2xl font-bold mb-3">You are in.</h3>
               <p className="text-mid text-sm mb-6 leading-relaxed">
                 Your booking request for <strong>{offer.title}</strong> was received.
                 Qing will reach out within 48 hours to confirm and set up the session.
@@ -73,7 +78,7 @@ import { useState } from 'react'
             </>
           ) : step === 'contact' ? (
             <>
-              <h3 className="font-display text-2xl font-bold mb-1">Contact Qing</h3>
+              <h3 id="booking-modal-title" className="font-display text-2xl font-bold mb-1">Contact Qing</h3>
               <p className="text-mid text-sm mb-6 leading-relaxed">
                 Reach out about <strong>{offer.title}</strong>.
               </p>
@@ -141,7 +146,7 @@ import { useState } from 'react'
               >
                 Back
               </button>
-              <h3 className="font-display text-2xl font-bold mb-1">Book your session</h3>
+              <h3 id="booking-modal-title" className="font-display text-2xl font-bold mb-1">Book your session</h3>
               <p className="text-mid text-sm mb-6">
                 <strong>{offer.title}</strong>{offer.price ? ' — ' + offer.price : ''}
               </p>
@@ -188,6 +193,7 @@ import { useState } from 'react'
             </>
           )}
         </div>
-      </div>
+      </div>,
+      document.body,
     )
   }
