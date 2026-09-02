@@ -5,8 +5,18 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://vvniehpzrvgmj
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable__XVIsG1KQFChirhMMii7rg_dGp-dpYN'
 const PRICING_URL = '/api/class-pricing'
 const PRICE_TIERS = [1000, 2000, 4000, 8000, 16000]
+const REGISTRATION_STORAGE_KEY = 'qing-class-registration-complete'
 
 const formatNaira = (amount) => `₦${Number(amount).toLocaleString('en-NG')}`
+
+const normaliseEmail = (value) => value.trim().toLowerCase()
+
+const normalisePhone = (value) => {
+  const digits = value.replace(/\D/g, '')
+  if (digits.length === 11 && digits.startsWith('0')) return `234${digits.slice(1)}`
+  if (digits.length === 10) return `234${digits}`
+  return digits
+}
 
 const timeline = [
   { date: 'June 2026', title: 'AI agents and automated research', copy: 'Tracium and BountyPilot pushed me from simple AI assistance into systems that score opportunities, review work and keep humans in control.' },
@@ -115,7 +125,29 @@ export default function Class() {
     setStatus({ type: '', message: '' })
 
     try {
-      const cleanPhone = form.whatsapp.replace(/[^0-9+]/g, '')
+      if (window.localStorage.getItem(REGISTRATION_STORAGE_KEY)) {
+        throw new Error('You have already registered. Please do not submit another registration. Keep an eye on your email for your registration code after payment approval.')
+      }
+
+      const cleanEmail = normaliseEmail(form.email)
+      const cleanPhone = normalisePhone(form.whatsapp)
+      const duplicateCheck = await fetch(`${SUPABASE_URL}/rest/v1/rpc/check_class_registration`, {
+        method: 'POST',
+        headers: {
+          apikey: SUPABASE_KEY,
+          Authorization: `Bearer ${SUPABASE_KEY}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ p_email: cleanEmail, p_whatsapp: cleanPhone }),
+      })
+
+      if (duplicateCheck.ok) {
+        const existingRegistration = await duplicateCheck.json()
+        if (existingRegistration?.exists) {
+          throw new Error('You have already registered with this email address or WhatsApp number. Please do not submit another registration. Keep an eye on your email for your registration code after payment approval.')
+        }
+      }
+
       const originalExtension = receipt.name.split('.').pop()?.toLowerCase()
       const safeExtension = originalExtension && /^(pdf|jpe?g|png|heic|heif|webp)$/.test(originalExtension) ? originalExtension : 'jpg'
       const uploadReceipt = (path) => fetch(`${SUPABASE_URL}/storage/v1/object/class-receipts/${path}`, {
@@ -144,7 +176,7 @@ export default function Class() {
       const registration = {
         full_name: form.fullName.trim(),
         whatsapp: cleanPhone,
-        email: form.email.trim() || null,
+        email: cleanEmail,
         reason: form.reason.trim(),
         reason_category: category,
         mentorship_interest: form.mentorship || 'Not answered',
@@ -180,11 +212,15 @@ export default function Class() {
       }
       if (!save.ok) {
         const failure = await save.text()
+        if (/class_registration_identities|already registered|registration identity/i.test(failure)) {
+          throw new Error('You have already registered with this email address or WhatsApp number. Please do not submit another registration. Keep an eye on your email for your registration code after payment approval.')
+        }
         if (/receipt_hash|duplicate key|already exists|duplicate/i.test(failure)) throw new Error('This exact receipt has already been submitted.')
         throw new Error('Your details could not be submitted. Please try again.')
       }
 
       setStatus({ type: 'success', message: 'Registration received. After your payment is approved, your registration code will be sent to your email. Please keep an eye on your inbox and spam folder.' })
+      window.localStorage.setItem(REGISTRATION_STORAGE_KEY, 'true')
       setForm({ fullName: '', whatsapp: '', email: '', reason: '', mentorship: '' })
       setReceipt(null)
       setReceiptAnalysis(null)
@@ -271,7 +307,7 @@ export default function Class() {
         <div className="grid lg:grid-cols-[.78fr_1.22fr] gap-10 items-start">
           <div className="lg:sticky lg:top-28"><p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">Submission</p><h2 className="class-display text-4xl sm:text-5xl font-bold">Register and submit your receipt.</h2><div className="class-panel p-6 mt-7"><p className="font-mono text-xs uppercase text-red-500">{pricing.soldOut ? 'Registration is currently full' : `Current fee · ${formatNaira(pricing.price)}`}</p><p className="text-2xl font-bold mt-3">Moniepoint</p><p className="class-display text-4xl font-bold mt-1">8124320659</p><p className="text-[#b9afa3] mt-1">Giwa Oluwasheedah</p><p className="text-sm text-[#948a7e] mt-5">Take a screenshot or save the successful transaction receipt as an image or PDF before returning to this form. Your place counts after the payment is accepted.</p></div></div>
           <form onSubmit={submit} className="class-panel p-6 sm:p-8 space-y-6">
-            <div><span className="font-mono text-xs text-red-500">STEP 01</span><h3 className="text-2xl font-bold mt-2">Tell me about yourself</h3></div>
+            <div><span className="font-mono text-xs text-red-500">STEP 01</span><h3 className="text-2xl font-bold mt-2">Tell me about yourself</h3><p className="text-sm text-[#b9afa3] mt-2">One registration per student. Your email address and WhatsApp number cannot be used to register again.</p></div>
             <label className="block"><span className="block text-sm mb-2">Full name *</span><input className="class-field" name="fullName" value={form.fullName} onChange={update} required placeholder="Your full name" /></label>
             <div className="grid sm:grid-cols-2 gap-4"><label className="block"><span className="block text-sm mb-2">WhatsApp number *</span><input className="class-field" name="whatsapp" value={form.whatsapp} onChange={update} required inputMode="tel" autoComplete="tel" aria-label="WhatsApp number" placeholder="Your WhatsApp number" /></label><label className="block"><span className="block text-sm mb-2">Email address *</span><input className="class-field" name="email" type="email" value={form.email} onChange={update} required autoComplete="email" aria-label="Email address for registration code" placeholder="you@email.com" /></label></div>
             <label className="block"><span className="block text-sm mb-2">Why do you want to join this beginner class? *</span><textarea className="class-field min-h-36 resize-y" name="reason" value={form.reason} onChange={update} required minLength={20} placeholder="Tell me what you want to learn or create." /><span className="flex flex-wrap justify-between gap-2 mt-2 text-xs text-[#887e73]"><span>Your response will be grouped as: {category}.</span><span>{form.reason.trim().length}/20 minimum characters</span></span></label>
