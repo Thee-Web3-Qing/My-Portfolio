@@ -15,7 +15,7 @@ const roles = [
     period: "2024",
     title: "Primary Twitter Spaces Host",
     org: "Crypto Community",
-    desc: "Hosted live Web3 conversations with 80K+ attendees. Daily spaces across DeFi, gaming, and ecosystem events.",
+    desc: "Hosted daily live Web3 conversations across DeFi, gaming, and ecosystem events, translating technical topics into accessible community discussions.",
   },
 ]
 const events = [
