@@ -225,6 +225,7 @@ const channels = [
   },
   {
     num: 'CH.08',
+    featured: true,
     name: 'Web3 Product Campaigns & Platform Features',
     desc: 'Campaign videos, product features, and platform storytelling for emerging Web3 brands.',
     pieces: [
@@ -270,8 +271,25 @@ export default function Content() {
       </p>
 
       <div className="space-y-20 sm:space-y-24">
-        {channels.map((channel) => (
-          <div key={channel.num}>
+        {[...channels]
+          .sort(
+            (a, b) =>
+              Number(Boolean(b.featured)) - Number(Boolean(a.featured)),
+          )
+          .map((channel) => (
+          <div
+            key={channel.num}
+            className={
+              channel.featured
+                ? 'rounded-blob border-2 border-electric bg-electric/5 p-5 sm:p-7 shadow-[8px_8px_0_0_#16161D]'
+                : ''
+            }
+          >
+            {channel.featured && (
+              <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-electric mb-4">
+                Best work yet
+              </p>
+            )}
             <div className="flex items-start sm:items-baseline gap-4 mb-6">
               <span className="font-display text-3xl font-extrabold text-electric shrink-0">
                 {channel.num}
