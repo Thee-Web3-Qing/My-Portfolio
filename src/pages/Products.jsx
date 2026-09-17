@@ -111,6 +111,26 @@
 
   const products = [
     {
+      name: 'Civora',
+      tagline: 'An AI-powered civil engineering study companion that connects Year 4 course material, detailed notes and worked examples with camera-based structural analysis, evidence-aware labels, cautious load-path explanations, and a personal field notebook.',
+      tags: ['Civil Engineering', 'AI Study Tool', 'Gemini Vision'],
+      status: 'Live',
+      links: {
+        demo: 'https://civora-dun.vercel.app/',
+        repo: null,
+      },
+    },
+    {
+      name: 'Gigga',
+      tagline: 'A campus economy platform where students can post tasks, earn by completing Giggas, offer their skills, and discover student-run products and businesses through accountable campus profiles.',
+      tags: ['Campus Marketplace', 'Student Economy', 'Next.js'],
+      status: 'Live',
+      links: {
+        demo: 'https://gigga-theta.vercel.app/',
+        repo: null,
+      },
+    },
+    {
       name: 'Verniq',
       tagline: 'Your voice, repurposed everywhere. AI agent that extracts voice DNA from your writing and videos, then generates platform-native content.',
       tags: ['AI Pipeline', 'Creator Tools', 'Multi-Platform'],
