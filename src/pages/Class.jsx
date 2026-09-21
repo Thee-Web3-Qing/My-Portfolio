@@ -248,9 +248,13 @@ export default function Class() {
             <p className="clay-goal">Goal: teach 500 curious builders</p>
           </div>
           <div className="clay-hero-art">
-            <span className="clay-deco clay-deco-browser" aria-hidden="true"><span>● ● ●</span><strong>&lt; / &gt;</strong></span>
-            <span className="clay-deco clay-deco-star" aria-hidden="true">✦</span>
-            <img src="/qing-class-clay.jpg" width="1122" height="1402" alt="Clay-style portrait of Qing surrounded by creative tools" className="clay-portrait" fetchPriority="high" />
+            <div className="clay-object-tile clay-object-browser" aria-hidden="true"><span className="clay-object-browser-frame"><i /><i /><i /><b>◈</b></span></div>
+            <div className="clay-object-tile clay-object-star" aria-hidden="true"><span>✦</span></div>
+            <div className="clay-object-tile clay-object-laptop" aria-hidden="true"><span className="clay-laptop-screen"><b>&lt;/&gt;</b></span><span className="clay-laptop-base" /></div>
+            <div className="clay-portrait-stage"><img src="/qing-class-clay.jpg" width="1122" height="1402" alt="Clay-style portrait of Qing surrounded by creative tools" className="clay-portrait" fetchPriority="high" /></div>
+            <div className="clay-object-tile clay-object-folder" aria-hidden="true"><span className="clay-folder-shape"><i /></span></div>
+            <div className="clay-object-tile clay-object-notebook" aria-hidden="true"><span className="clay-notebook-shape"><i /><i /><i /></span></div>
+            <div className="clay-object-tile clay-object-code" aria-hidden="true"><span>&lt; / &gt;</span></div>
             <span className="clay-instructor"><small>Instructor</small><strong>Qing The Creator</strong><span>AI product builder and creative technologist.</span></span>
           </div>
         </section>
@@ -275,10 +279,10 @@ export default function Class() {
             <h2 id="proof-heading" className="class-display">I learnt AI by building products that had to work.</h2>
           </div>
           <div className="clay-proof-grid">
-            <ClayCard tone="peach" className="clay-proof-card"><span className="clay-proof-icon" aria-hidden="true">↗</span><span className="clay-eyebrow">Fastest commit window</span><strong className="clay-stat">3m 49s</strong><p>Moment, from its initial repository commit to its first complete landing-page build.</p></ClayCard>
-            <ClayCard tone="blue" className="clay-proof-card"><span className="clay-proof-icon" aria-hidden="true">◷</span><span className="clay-eyebrow">Longest active build window</span><strong className="clay-stat">14d 16h</strong><p>The Author’s Room, across marketplace, profile, reading and publishing iterations.</p></ClayCard>
-            <ClayCard tone="lilac" className="clay-proof-card"><span className="clay-proof-icon" aria-hidden="true">✦</span><span className="clay-eyebrow">Most difficult</span><strong className="clay-proof-name">The Author’s Room</strong><p>Role-based access, book uploads, PDF reading, marketplace flows and several connected user journeys.</p></ClayCard>
-            <ClayCard tone="mint" className="clay-proof-card"><span className="clay-proof-icon" aria-hidden="true">⌘</span><span className="clay-eyebrow">Most complex</span><strong className="clay-proof-name">AssetDNA</strong><p>AI evidence analysis, business records, authentication and real-world asset preparation for onchain registration.</p></ClayCard>
+            <ClayCard tone="peach" className="clay-proof-card"><ClayObject kind="stopwatch" /><span className="clay-eyebrow">Fastest commit window</span><strong className="clay-stat">3m 49s</strong><p>Moment, from its initial repository commit to its first complete landing-page build.</p></ClayCard>
+            <ClayCard tone="blue" className="clay-proof-card"><ClayObject kind="calendar" /><span className="clay-eyebrow">Longest active build window</span><strong className="clay-stat">14d 16h</strong><p>The Author’s Room, across marketplace, profile, reading and publishing iterations.</p></ClayCard>
+            <ClayCard tone="lilac" className="clay-proof-card"><ClayObject kind="browser" /><span className="clay-eyebrow">Most difficult</span><strong className="clay-proof-name">The Author’s Room</strong><p>Role-based access, book uploads, PDF reading, marketplace flows and several connected user journeys.</p></ClayCard>
+            <ClayCard tone="mint" className="clay-proof-card"><ClayObject kind="database" /><span className="clay-eyebrow">Most complex</span><strong className="clay-proof-name">AssetDNA</strong><p>AI evidence analysis, business records, authentication and real-world asset preparation for onchain registration.</p></ClayCard>
           </div>
           <p className="clay-footnote">Timeframes are calculated from the first and latest commits in each repository. They describe the recorded build window, not uninterrupted working hours.</p>
         </section>
@@ -291,6 +295,7 @@ export default function Class() {
           <div className="clay-journey-grid">
             {timeline.map((item, index) => (
               <ClayCard key={item.title} tone={['yellow', 'pink', 'blue', 'mint'][index]} className="clay-journey-card">
+                <ClayObject kind={['sheets', 'browser', 'database', 'rocket'][index]} />
                 <div className="clay-journey-top"><ClayBadge>{String(index + 1).padStart(2, '0')}</ClayBadge><span>{item.date}</span></div>
                 <h3>{item.title}</h3>
                 <p>{item.copy}</p>
@@ -307,6 +312,7 @@ export default function Class() {
           <div className="clay-stack-grid">
             {stack.map(([label, value], index) => (
               <ClayCard key={label} tone={['mint', 'blue', 'peach', 'yellow', 'lilac', 'pink'][index]} className="clay-stack-card">
+                <ClayObject kind={['bulb', 'laptop', 'folder', 'rocket', 'database', 'terminal'][index]} />
                 <ClayBadge>{String(index + 1).padStart(2, '0')}</ClayBadge>
                 <span className="clay-eyebrow">{label}</span>
                 <h3>{value}</h3>
@@ -326,8 +332,8 @@ export default function Class() {
             <p>If you cannot afford the pro subscriptions yet, these two videos show a lighter route into vibecoding so you can begin learning with what you have.</p>
           </div>
           <div className="clay-guide-grid">
-            <ClayCard tone="pink" className="clay-guide-card"><ClayBadge>PART 01</ClayBadge><span className="clay-guide-icon" aria-hidden="true">▷</span><h3>Poor Man’s Guide to Vibecoding</h3><ClayButton href="https://vm.tiktok.com/ZN8Nfs4MY/" tone="coral" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></ClayCard>
-            <ClayCard tone="yellow" className="clay-guide-card"><ClayBadge>PART 02</ClayBadge><span className="clay-guide-icon" aria-hidden="true">▷</span><h3>Continue the beginner setup</h3><ClayButton href="https://vm.tiktok.com/ZN8NPYTdu/" tone="cream" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></ClayCard>
+            <ClayCard tone="pink" className="clay-guide-card"><ClayObject kind="video" /><ClayBadge>PART 01</ClayBadge><h3>Poor Man’s Guide to Vibecoding</h3><ClayButton href="https://vm.tiktok.com/ZN8Nfs4MY/" tone="coral" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></ClayCard>
+            <ClayCard tone="yellow" className="clay-guide-card"><ClayObject kind="video" /><ClayBadge>PART 02</ClayBadge><h3>Continue the beginner setup</h3><ClayButton href="https://vm.tiktok.com/ZN8NPYTdu/" tone="cream" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></ClayCard>
           </div>
         </section>
 
@@ -352,6 +358,10 @@ export default function Class() {
 
 function ClayCard({ tone, className = '', children }) {
   return <article className={`clay-surface clay-tone-${tone} ${className}`}>{children}</article>
+}
+
+function ClayObject({ kind }) {
+  return <span className={`clay-object clay-object-${kind}`} aria-hidden="true"><span className="clay-object-body"><i /><i /><i /><b /></span></span>
 }
 
 function ClayBadge({ children }) {
