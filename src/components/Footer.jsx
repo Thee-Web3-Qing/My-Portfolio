@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-line mt-16 sm:mt-24">
+    <footer className="portfolio-footer border-t border-line mt-16 sm:mt-24">
       <div className="max-w-6xl mx-auto px-5 sm:px-6 py-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
         <p className="font-display text-2xl sm:text-3xl font-bold leading-tight">
           Let's move <span className="text-electric">communities</span>.

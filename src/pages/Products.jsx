@@ -82,7 +82,7 @@
     if (!url) return null
 
     return (
-      <div className="mb-6 overflow-hidden rounded-[1.2rem] border border-ink bg-white shadow-[4px_4px_0_0_#16161D]">
+      <div className="portfolio-browser mb-6 overflow-hidden rounded-[1.2rem] border border-ink bg-white shadow-[4px_4px_0_0_#16161D]">
         <div className="flex items-center gap-2 border-b border-ink bg-paper px-3 py-2">
           <span className="h-2.5 w-2.5 rounded-full bg-coral" />
           <span className="h-2.5 w-2.5 rounded-full bg-lime" />
@@ -203,7 +203,7 @@
   ]
   export default function Products() {
     return (
-      <div className="pt-12 pb-24">
+      <div className="portfolio-products pt-12 pb-24">
         <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">
           Shipped under pressure
         </p>
@@ -226,14 +226,15 @@
             </div>
           </div>
           <div className="grid lg:grid-cols-2 gap-6">
-            {recentClientBuilds.map((project) => (
+            {recentClientBuilds.map((project, index) => (
               <article
                 key={project.name}
+                data-clay-tone={index % 4}
                 role="link"
                 tabIndex={0}
                 onClick={() => window.open(project.links.demo || project.links.repo, "_blank", "noopener,noreferrer")}
                 onKeyDown={(event) => event.key === "Enter" && window.open(project.links.demo || project.links.repo, "_blank", "noopener,noreferrer")}
-                className="noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
+                className="portfolio-project-card portfolio-client-card noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
               >
                 <WebsitePreview url={project.links.demo} title={project.name} />
                 <div className="flex items-start justify-between gap-4 mb-5">
@@ -276,14 +277,15 @@
           </div>
         </section>
         <div className="grid sm:grid-cols-2 gap-6">
-          {products.map((p) => (
+          {products.map((p, index) => (
             <div
               key={p.name}
+              data-clay-tone={index % 4}
               role="link"
               tabIndex={0}
               onClick={() => window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
               onKeyDown={(event) => event.key === "Enter" && window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
-              className="noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
+              className="portfolio-project-card portfolio-own-card noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
             >
               <WebsitePreview url={p.links.demo} title={p.name} />
               <div className="flex items-center justify-between mb-3">

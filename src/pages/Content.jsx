@@ -1,3 +1,5 @@
+import ClayArtifact from '../components/ClayArtifact.jsx'
+
 const channels = [
   {
     num: 'CH.01',
@@ -255,7 +257,7 @@ const channels = [
 
 export default function Content() {
   return (
-    <div className="pt-10 sm:pt-12 pb-20 sm:pb-24 animate-fadeUp">
+    <div className="portfolio-content pt-10 sm:pt-12 pb-20 sm:pb-24 animate-fadeUp">
       <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
         Frequencies
       </p>
@@ -279,10 +281,11 @@ export default function Content() {
           .map((channel) => (
           <div
             key={channel.num}
+            data-clay-tone={Number(channel.num.slice(-2)) % 4}
             className={
               channel.featured
-                ? 'rounded-blob border-2 border-electric bg-electric/5 p-5 sm:p-7 shadow-[8px_8px_0_0_#16161D]'
-                : ''
+                ? 'portfolio-channel portfolio-channel-featured rounded-blob border-2 border-electric bg-electric/5 p-5 sm:p-7 shadow-[8px_8px_0_0_#16161D]'
+                : 'portfolio-channel'
             }
           >
             {channel.featured && (
@@ -291,6 +294,7 @@ export default function Content() {
               </p>
             )}
             <div className="flex items-start sm:items-baseline gap-4 mb-6">
+              <ClayArtifact kind={channel.featured ? 'video' : Number(channel.num.slice(-2)) % 3 === 0 ? 'sheets' : 'browser'} className="portfolio-channel-object" />
               <span className="font-display text-3xl font-extrabold text-electric shrink-0">
                 {channel.num}
               </span>
@@ -313,7 +317,7 @@ export default function Content() {
                   href={piece.link}
                   target="_blank"
                   rel="noreferrer"
-                  className="channel-card noise-card border border-ink rounded-blob p-6 bg-white/60 hover:-translate-y-2 hover:rotate-1 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300 block"
+                  className="portfolio-content-card channel-card noise-card border border-ink rounded-blob p-6 bg-white/60 hover:-translate-y-2 hover:rotate-1 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300 block"
                 >
                   <div className="flex items-center justify-between gap-4 mb-3">
                     <span className="font-mono text-xs uppercase text-mid">

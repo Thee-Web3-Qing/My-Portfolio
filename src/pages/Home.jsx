@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import ClayArtifact from '../components/ClayArtifact.jsx'
 
 const WHATSAPP_URL = 'https://wa.me/2348149364576?text=Hi%20Qing%2C%20I%20found%20your%20portfolio%20and%20I%20would%20like%20to%20discuss%20a%20project.'
 
@@ -89,8 +90,8 @@ const creativeWork = [
 
 export default function Home() {
   return (
-    <div>
-      <section className="relative pt-10 sm:pt-20 pb-14 sm:pb-20 grid lg:grid-cols-[1.08fr_.72fr] gap-10 lg:gap-14 items-center animate-fadeUp">
+    <div className="portfolio-home">
+      <section className="portfolio-home-hero relative pt-10 sm:pt-20 pb-14 sm:pb-20 grid lg:grid-cols-[1.08fr_.72fr] gap-10 lg:gap-14 items-center animate-fadeUp">
         <div className="relative z-10">
           <div className="inline-flex items-center gap-2 rounded-full border border-ink bg-white/60 px-3 py-2 mb-5">
             <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
@@ -122,17 +123,19 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative mx-auto w-full max-w-[430px] lg:justify-self-end">
-          <div className="absolute -inset-3 rounded-[2.5rem] border border-ink translate-x-3 translate-y-3 bg-lime" />
-          <div className="relative overflow-hidden rounded-[2.5rem] border border-ink bg-ink aspect-[4/5]">
-            <img src="/qing-class-portrait.jpg" alt="Qing, AI product builder and creative strategist" className="h-full w-full object-cover object-top" />
-            <div className="absolute inset-x-0 bottom-0 bg-ink/90 text-paper p-5 sm:p-6 border-t border-paper/20">
+        <div className="portfolio-home-scene relative mx-auto w-full max-w-[430px] lg:justify-self-end">
+          <ClayArtifact kind="browser" className="portfolio-scene-browser" />
+          <ClayArtifact kind="bulb" className="portfolio-scene-bulb" />
+          <ClayArtifact kind="laptop" className="portfolio-scene-laptop" />
+          <div className="portfolio-character relative overflow-hidden rounded-[2.5rem] border border-ink bg-ink aspect-[4/5]">
+            <img src="/qing-class-clay.jpg" alt="Clay portrait of Qing, AI product builder and creative strategist" className="h-full w-full object-cover object-top" />
+            <div className="portfolio-character-caption absolute inset-x-0 bottom-0 bg-ink/90 text-paper p-5 sm:p-6 border-t border-paper/20">
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-lime">Qing The Creator</p>
               <p className="font-display text-2xl sm:text-3xl font-bold mt-1">Giwa Oluwasheedah</p>
               <p className="text-sm text-paper/70 mt-1">Ideas, products, content and culture.</p>
             </div>
           </div>
-          <div className="absolute -left-4 sm:-left-8 top-8 rotate-[-5deg] rounded-2xl border border-ink bg-paper px-4 py-3 shadow-[4px_4px_0_0_#16161D]">
+          <div className="portfolio-scene-label absolute -left-4 sm:-left-8 top-8 rotate-[-5deg] rounded-2xl border border-ink bg-paper px-4 py-3 shadow-[4px_4px_0_0_#16161D]">
             <p className="font-mono text-[10px] uppercase text-mid">Builder mode</p>
             <p className="font-display font-bold">Idea → Live product</p>
           </div>
@@ -141,7 +144,8 @@ export default function Home() {
 
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pb-16">
         {stats.map((stat) => (
-          <div key={stat.label} className="noise-card border border-ink rounded-blob p-4 sm:p-5 bg-white/60">
+          <div key={stat.label} className="portfolio-stat noise-card border border-ink rounded-blob p-4 sm:p-5 bg-white/60">
+            <ClayArtifact kind={['sheets', 'browser', 'database', 'calendar'][stats.indexOf(stat)]} />
             <strong className="block font-display text-2xl sm:text-3xl font-extrabold leading-none">{stat.value}</strong>
             <p className="mt-2 text-xs sm:text-sm text-mid leading-snug">{stat.label}</p>
           </div>
@@ -156,7 +160,8 @@ export default function Home() {
         </div>
         <div className="grid lg:grid-cols-3 gap-5 mt-10">
           {services.map((service) => (
-            <article key={service.number} className="group border border-ink rounded-blob p-6 sm:p-7 bg-white/60 noise-card hover:-translate-y-2 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
+            <article key={service.number} className="portfolio-service-card group border border-ink rounded-blob p-6 sm:p-7 bg-white/60 noise-card hover:-translate-y-2 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
+              <ClayArtifact kind={['browser','bulb','video'][Number(service.number) - 1]} />
               <span className="font-mono text-xs text-electric">{service.number}</span>
               <h3 className="font-display text-2xl sm:text-3xl font-bold mt-8 leading-tight">{service.title}</h3>
               <p className="text-mid mt-4 leading-relaxed">{service.copy}</p>
@@ -178,7 +183,8 @@ export default function Home() {
         </div>
         <div className="grid md:grid-cols-2 gap-5">
           {caseStudies.map((item, index) => (
-            <a key={item.title} href={item.link} target="_blank" rel="noreferrer" className="group relative overflow-hidden border border-ink rounded-blob bg-white/60 p-6 sm:p-8 min-h-[280px] flex flex-col justify-between hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
+            <a key={item.title} href={item.link} target="_blank" rel="noreferrer" className="portfolio-case-card group relative overflow-hidden border border-ink rounded-blob bg-white/60 p-6 sm:p-8 min-h-[280px] flex flex-col justify-between hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
+              <ClayArtifact kind={['folder','video','browser','bulb'][index]} />
               <div className={`absolute top-0 right-0 h-20 w-20 sm:h-28 sm:w-28 ${item.accent} border-l border-b border-ink rounded-bl-[3rem] transition-transform duration-300 group-hover:scale-110`} />
               <div className="relative pr-16 sm:pr-24">
                 <span className="font-mono text-xs uppercase text-electric">0{index + 1} · {item.type}</span>
@@ -215,7 +221,8 @@ export default function Home() {
         <h2 className="font-display text-4xl sm:text-5xl font-extrabold mb-8">Stories people remember.</h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {creativeWork.map((item) => (
-            <a key={item.title} href={item.link} target="_blank" rel="noreferrer" className="group border border-ink rounded-blob p-6 bg-white/60 noise-card hover:-translate-y-2 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
+            <a key={item.title} href={item.link} target="_blank" rel="noreferrer" className="portfolio-creative-card group border border-ink rounded-blob p-6 bg-white/60 noise-card hover:-translate-y-2 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
+              <ClayArtifact kind={item.type === 'Product' ? 'laptop' : item.type === 'Comic' ? 'sheets' : 'video'} />
               <span className="font-mono text-xs uppercase text-electric">{item.type}</span>
               <h3 className="font-display text-xl font-bold mt-3 mb-8 leading-tight">{item.title}</h3>
               <span className="font-mono text-xs uppercase group-hover:text-electric">View work ↗</span>
@@ -224,7 +231,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="my-8 sm:my-14 mb-16 sm:mb-24 rounded-[2.5rem] border border-ink bg-ink text-paper p-7 sm:p-12 lg:p-16 overflow-hidden relative">
+      <section className="portfolio-end-cta my-8 sm:my-14 mb-16 sm:mb-24 rounded-[2.5rem] border border-ink bg-ink text-paper p-7 sm:p-12 lg:p-16 overflow-hidden relative">
         <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-electric" />
         <div className="absolute right-20 -bottom-20 h-40 w-40 rounded-full bg-lime" />
         <div className="relative max-w-3xl">

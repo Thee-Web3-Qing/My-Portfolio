@@ -66,11 +66,12 @@ import { useState } from 'react'
     },
   ]
   import BookingModal from './BookingModal.jsx'
+  import ClayArtifact from '../components/ClayArtifact.jsx'
 
   export default function Hire() {
     const [selected, setSelected] = useState(null)
     return (
-      <div className="pt-10 sm:pt-12 pb-20 sm:pb-24 animate-fadeUp">
+      <div className="portfolio-hire pt-10 sm:pt-12 pb-20 sm:pb-24 animate-fadeUp">
         <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
           Work with Qing
         </p>
@@ -86,7 +87,8 @@ import { useState } from 'react'
           <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">Core services</p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {serviceList.map((service, index) => (
-              <Link key={service.slug} to={`/services/${service.slug}`} className="group border border-ink rounded-blob bg-white/60 p-5 sm:p-6 hover:bg-lime transition-colors">
+              <Link key={service.slug} to={`/services/${service.slug}`} className="portfolio-hire-service group border border-ink rounded-blob bg-white/60 p-5 sm:p-6 hover:bg-lime transition-colors">
+                <ClayArtifact kind={['laptop','browser','bulb','video','folder'][index]} />
                 <span className="font-mono text-xs text-electric group-hover:text-ink">0{index + 1}</span>
                 <h2 className="font-display text-xl font-bold mt-5 leading-tight">{service.eyebrow}</h2>
                 <p className="text-sm text-mid group-hover:text-ink mt-3 leading-relaxed">{service.summary}</p>
@@ -99,7 +101,7 @@ import { useState } from 'react'
           {offers.map((offer) => (
             <div
               key={offer.title}
-              className="noise-card border border-ink rounded-blob p-6 sm:p-7 flex flex-col hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300"
+              className="portfolio-offer-card noise-card border border-ink rounded-blob p-6 sm:p-7 flex flex-col hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300"
             >
               <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink self-start mb-4">
                 {offer.badge}
@@ -133,7 +135,7 @@ import { useState } from 'react'
             {consultations.map((session) => (
               <div
                 key={session.title}
-                className="border border-ink rounded-blob p-6 bg-white/60 noise-card hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300 flex flex-col"
+                className="portfolio-consult-card border border-ink rounded-blob p-6 bg-white/60 noise-card hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300 flex flex-col"
               >
                 <h3 className="font-display text-xl font-bold mb-2">
                   {session.title}

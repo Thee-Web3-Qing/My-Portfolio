@@ -50,11 +50,11 @@ import { useState } from 'react'
 
     return (
       <div
-        className="fixed inset-0 z-[100] bg-ink/60 flex items-center justify-center px-5"
+        className="portfolio-modal-backdrop fixed inset-0 z-[100] bg-ink/60 flex items-center justify-center px-5"
         onClick={onClose}
       >
         <div
-          className="bg-paper border border-ink rounded-blob p-6 max-w-md w-full shadow-[8px_8px_0_0_#16161D]"
+          className="portfolio-modal bg-paper border border-ink rounded-blob p-6 max-w-md w-full shadow-[8px_8px_0_0_#16161D]"
           onClick={(e) => e.stopPropagation()}
         >
           {done ? (

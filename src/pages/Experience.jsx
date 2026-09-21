@@ -1,3 +1,5 @@
+import ClayArtifact from '../components/ClayArtifact.jsx'
+
 const roles = [
   {
     period: "2025 - Present",
@@ -71,7 +73,7 @@ const awards = [
 ]
 export default function Experience() {
   return (
-    <div className="pt-12 pb-24">
+    <div className="portfolio-experience pt-12 pb-24">
       <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
         Track Record
       </p>
@@ -86,8 +88,9 @@ export default function Experience() {
           {awards.map((award, index) => (
             <div
               key={index}
-              className="noise-card border border-ink rounded-blob p-5 bg-white/60"
+              className="portfolio-award-card noise-card border border-ink rounded-blob p-5 bg-white/60"
             >
+              <ClayArtifact kind={index % 2 ? 'bulb' : 'sheets'} />
               <span className="font-mono text-xs uppercase text-coral">
                 Award
               </span>
@@ -106,7 +109,7 @@ export default function Experience() {
           {roles.map((role, index) => (
             <div
               key={index}
-              className="grid sm:grid-cols-[140px_1fr] gap-4 border-t border-line pt-6"
+              className="portfolio-timeline-row grid sm:grid-cols-[140px_1fr] gap-4 border-t border-line pt-6"
             >
               <span className="font-mono text-xs uppercase text-mid">
                 {role.period}
@@ -137,7 +140,7 @@ export default function Experience() {
               href={event.link}
               target="_blank"
               rel="noreferrer"
-              className="grid sm:grid-cols-[140px_1fr] gap-4 border-t border-line pt-6 group hover:text-electric transition-colors"
+              className="portfolio-timeline-row grid sm:grid-cols-[140px_1fr] gap-4 border-t border-line pt-6 group hover:text-electric transition-colors"
             >
               <span className="font-mono text-xs uppercase text-coral">
                 {event.role} - {event.date}

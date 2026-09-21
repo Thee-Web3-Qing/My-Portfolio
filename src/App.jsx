@@ -16,10 +16,10 @@ import { Routes, Route } from 'react-router-dom'
         <Route
           path="*"
           element={
-            <div className="min-h-screen flex flex-col">
+            <div className="portfolio-clay min-h-screen flex flex-col">
               <RouteMeta />
               <Nav />
-              <main className="flex-1 max-w-6xl mx-auto px-6 w-full">
+              <main className="portfolio-main flex-1 max-w-6xl mx-auto px-6 w-full">
                 <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/content" element={<Content />} />
