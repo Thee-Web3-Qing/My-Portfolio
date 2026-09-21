@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { screenReceipt } from '../lib/receiptScreening'
+import './classClay.css'
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://vvniehpzrvgmjdatpxrl.supabase.co'
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable__XVIsG1KQFChirhMMii7rg_dGp-dpYN'
@@ -53,6 +54,7 @@ export default function Class() {
   const [scanning, setScanning] = useState(false)
   const [scanProgress, setScanProgress] = useState(0)
   const [receiptAnalysis, setReceiptAnalysis] = useState(null)
+  const [pricingLoaded, setPricingLoaded] = useState(false)
   const [pricing, setPricing] = useState({ acceptedCount: 0, price: 1000, tierIndex: 0, filledInTier: 0, remainingInTier: 100, soldOut: false })
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
@@ -76,7 +78,7 @@ export default function Class() {
     const loadPricing = () => {
       fetch(PRICING_URL, { cache: 'no-store' })
         .then((response) => response.ok ? response.json() : Promise.reject(new Error('Pricing unavailable')))
-        .then((data) => setPricing((current) => ({ ...current, ...data })))
+        .then((data) => { setPricing((current) => ({ ...current, ...data })); setPricingLoaded(true) })
         .catch(() => {})
     }
 
@@ -232,79 +234,139 @@ export default function Class() {
   }
 
   return (
-    <div className="class-page relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden">
-      <section className="max-w-6xl mx-auto px-6 pt-14 sm:pt-24 pb-16 grid lg:grid-cols-[1.05fr_.95fr] gap-12 items-center min-h-[760px]">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-[.28em] text-red-500 mb-5">Qing’s Vibecoding Starter Class</p>
-          <h1 className="class-display text-6xl sm:text-7xl lg:text-[6.7rem] font-extrabold leading-[.88] uppercase">
-            Build<br />with <span className="text-red-600">AI.</span>
-          </h1>
-          <p className="mt-8 max-w-xl text-lg sm:text-xl text-[#cfc6b9] leading-relaxed">
-            Learn the basics of vibecoding, turn your ideas into clear product plans and build useful things without waiting to become a traditional developer first.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a href="#registration-hold" className="rounded-full border border-red-600 bg-red-950/30 px-6 py-3 font-mono text-sm uppercase font-bold text-red-300 hover:bg-red-950/50 transition-colors">Payment on hold</a>
-            <a href="#proof" className="rounded-full border border-[#f5eddf]/40 px-6 py-3 font-mono text-sm uppercase text-[#f5eddf] hover:bg-white/10 transition-colors">See my build history</a>
-          </div>
-          <p className="mt-5 font-mono text-xs uppercase tracking-wider text-[#948a7e]">Goal: teach 500 curious builders</p>
-        </div>
-        <div className="relative mx-auto w-full max-w-[470px]">
-          <div className="absolute -inset-5 border border-red-700/40 translate-x-3 translate-y-3" />
-          <div className="relative aspect-[4/5] overflow-hidden border border-[#f5eddf]/30 bg-[#181818]">
-            <img src="/qing-class-portrait.jpg" alt="Qing, product builder and class instructor" className="h-full w-full object-cover object-top" />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-black/45 to-transparent p-6 pt-28">
-              <p className="font-mono text-xs uppercase tracking-widest text-red-500">Instructor</p>
-              <p className="class-display text-3xl font-bold">Qing The Creator</p>
-              <p className="text-sm text-[#cfc6b9]">AI product builder and creative technologist.</p>
+    <div className="class-page clay-class relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+      <div className="clay-shell">
+        <section className="clay-hero clay-surface" aria-labelledby="class-heading">
+          <div className="clay-hero-copy">
+            <span className="clay-kicker">Qing’s Vibecoding Starter Class</span>
+            <h1 id="class-heading" className="class-display clay-hero-title">Build<br />with <span>AI.</span></h1>
+            <p className="clay-hero-lede">Learn the basics of vibecoding, turn your ideas into clear product plans and build useful things without waiting to become a traditional developer first.</p>
+            <div className="clay-hero-actions">
+              <ClayButton href="#registration-hold" tone="coral">Payment on hold <span aria-hidden="true">↘</span></ClayButton>
+              <ClayButton href="#proof" tone="cream">See my build history <span aria-hidden="true">↗</span></ClayButton>
             </div>
+            <p className="clay-goal">Goal: teach 500 curious builders</p>
           </div>
-        </div>
-      </section>
+          <div className="clay-hero-art">
+            <span className="clay-deco clay-deco-browser" aria-hidden="true"><span>● ● ●</span><strong>&lt; / &gt;</strong></span>
+            <span className="clay-deco clay-deco-star" aria-hidden="true">✦</span>
+            <img src="/qing-class-clay.jpg" width="1122" height="1402" alt="Clay-style portrait of Qing surrounded by creative tools" className="clay-portrait" fetchPriority="high" />
+            <span className="clay-instructor"><small>Instructor</small><strong>Qing The Creator</strong><span>AI product builder and creative technologist.</span></span>
+          </div>
+        </section>
 
-      <section id="proof" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
-        <p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">The proof is in the shipping</p>
-        <h2 className="class-display text-4xl sm:text-6xl font-bold max-w-4xl">I learnt AI by building products that had to work.</h2>
-        <div className="grid md:grid-cols-4 gap-4 mt-10">
-          <article className="class-panel p-6 md:col-span-2"><span className="font-mono text-xs text-red-500 uppercase">Fastest commit window</span><strong className="block class-display text-4xl mt-3">3m 49s</strong><p className="text-[#b9afa3] mt-2">Moment, from its initial repository commit to its first complete landing-page build.</p></article>
-          <article className="class-panel p-6 md:col-span-2"><span className="font-mono text-xs text-red-500 uppercase">Longest active build window</span><strong className="block class-display text-4xl mt-3">14d 16h</strong><p className="text-[#b9afa3] mt-2">The Author’s Room, across marketplace, profile, reading and publishing iterations.</p></article>
-          <article className="class-panel p-6 md:col-span-2"><span className="font-mono text-xs text-red-500 uppercase">Most difficult</span><strong className="block class-display text-3xl mt-3">The Author’s Room</strong><p className="text-[#b9afa3] mt-2">Role-based access, book uploads, PDF reading, marketplace flows and several connected user journeys.</p></article>
-          <article className="class-panel p-6 md:col-span-2"><span className="font-mono text-xs text-red-500 uppercase">Most complex</span><strong className="block class-display text-3xl mt-3">AssetDNA</strong><p className="text-[#b9afa3] mt-2">AI evidence analysis, business records, authentication and real-world asset preparation for onchain registration.</p></article>
-        </div>
-        <p className="mt-4 text-xs text-[#877d72]">Timeframes are calculated from the first and latest commits in each repository. They describe the recorded build window, not uninterrupted working hours.</p>
-      </section>
+        <ClayNotice compact>
+          <span className="clay-notice-symbol" aria-hidden="true">✳</span>
+          <div><strong>Payments and registration are currently on hold.</strong><span>Please do not make any payment using previously shared account details.</span></div>
+          <a href="#registration-hold" className="clay-notice-link">Read the class update <span aria-hidden="true">↗</span></a>
+        </ClayNotice>
 
-      <section className="max-w-6xl mx-auto px-6 py-20 grid lg:grid-cols-[.8fr_1.2fr] gap-12 border-t border-[#f5eddf]/15">
-        <div><p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">My AI development history</p><h2 className="class-display text-4xl sm:text-5xl font-bold">From using AI to building with it.</h2></div>
-        <div className="space-y-5">{timeline.map((item, index) => <article key={item.title} className="grid sm:grid-cols-[120px_1fr] gap-4 border-b border-[#f5eddf]/15 pb-5"><span className="font-mono text-xs text-red-500">0{index + 1} · {item.date}</span><div><h3 className="text-xl font-bold">{item.title}</h3><p className="text-[#b9afa3] mt-2 leading-relaxed">{item.copy}</p></div></article>)}</div>
-      </section>
+        <nav className="clay-jump-nav" aria-label="Class page sections">
+          <a href="#proof">Build history</a>
+          <a href="#journey">My AI journey</a>
+          <a href="#tools">Your toolkit</a>
+          <a href="#guides">Free guides</a>
+          <a href="#registration-hold">Class update</a>
+        </nav>
 
-      <section className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
-        <p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">The working stack</p>
-        <h2 className="class-display text-4xl sm:text-5xl font-bold max-w-3xl">The tools students should prepare before class.</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-[#f5eddf]/20 border border-[#f5eddf]/20 mt-10">{stack.map(([label, value]) => <article key={label} className="bg-[#0d0d0d] p-6"><span className="font-mono text-xs uppercase text-red-500">{label}</span><h3 className="text-xl font-bold mt-3">{value}</h3></article>)}</div>
-        <div className="mt-8 class-panel p-6"><h3 className="text-xl font-bold">Required subscriptions and accounts</h3><p className="text-[#b9afa3] mt-2">You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Supabase accounts before class. Payments and registration are currently on hold.</p></div>
-      </section>
+        <section id="proof" className="clay-section" aria-labelledby="proof-heading">
+          <div className="clay-section-head">
+            <p className="clay-kicker">The proof is in the shipping</p>
+            <h2 id="proof-heading" className="class-display">I learnt AI by building products that had to work.</h2>
+          </div>
+          <div className="clay-proof-grid">
+            <ClayCard tone="peach" className="clay-proof-card"><span className="clay-proof-icon" aria-hidden="true">↗</span><span className="clay-eyebrow">Fastest commit window</span><strong className="clay-stat">3m 49s</strong><p>Moment, from its initial repository commit to its first complete landing-page build.</p></ClayCard>
+            <ClayCard tone="blue" className="clay-proof-card"><span className="clay-proof-icon" aria-hidden="true">◷</span><span className="clay-eyebrow">Longest active build window</span><strong className="clay-stat">14d 16h</strong><p>The Author’s Room, across marketplace, profile, reading and publishing iterations.</p></ClayCard>
+            <ClayCard tone="lilac" className="clay-proof-card"><span className="clay-proof-icon" aria-hidden="true">✦</span><span className="clay-eyebrow">Most difficult</span><strong className="clay-proof-name">The Author’s Room</strong><p>Role-based access, book uploads, PDF reading, marketplace flows and several connected user journeys.</p></ClayCard>
+            <ClayCard tone="mint" className="clay-proof-card"><span className="clay-proof-icon" aria-hidden="true">⌘</span><span className="clay-eyebrow">Most complex</span><strong className="clay-proof-name">AssetDNA</strong><p>AI evidence analysis, business records, authentication and real-world asset preparation for onchain registration.</p></ClayCard>
+          </div>
+          <p className="clay-footnote">Timeframes are calculated from the first and latest commits in each repository. They describe the recorded build window, not uninterrupted working hours.</p>
+        </section>
 
-      <section className="max-w-6xl mx-auto px-6 py-20 grid lg:grid-cols-2 gap-8 border-t border-[#f5eddf]/15">
-        <div><p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">Starting without paid tools</p><h2 className="class-display text-4xl sm:text-5xl font-bold">Use the Poor Man’s Guide first.</h2><p className="text-[#b9afa3] mt-4 max-w-xl">If you cannot afford the pro subscriptions yet, these two videos show a lighter route into vibecoding so you can begin learning with what you have.</p></div>
-        <div className="grid gap-4"><a href="https://vm.tiktok.com/ZN8Nfs4MY/" target="_blank" rel="noreferrer" className="class-panel p-6 hover:border-red-600 transition-colors"><span className="font-mono text-xs text-red-500">PART 01</span><h3 className="text-2xl font-bold mt-2">Poor Man’s Guide to Vibecoding</h3><span className="inline-block mt-5 text-sm underline">Watch on TikTok</span></a><a href="https://vm.tiktok.com/ZN8NPYTdu/" target="_blank" rel="noreferrer" className="class-panel p-6 hover:border-red-600 transition-colors"><span className="font-mono text-xs text-red-500">PART 02</span><h3 className="text-2xl font-bold mt-2">Continue the beginner setup</h3><span className="inline-block mt-5 text-sm underline">Watch on TikTok</span></a></div>
-      </section>
+        <section id="journey" className="clay-section" aria-labelledby="journey-heading">
+          <div className="clay-section-head">
+            <p className="clay-kicker">My AI development history</p>
+            <h2 id="journey-heading" className="class-display">From using AI to building with it.</h2>
+          </div>
+          <div className="clay-journey-grid">
+            {timeline.map((item, index) => (
+              <ClayCard key={item.title} tone={['yellow', 'pink', 'blue', 'mint'][index]} className="clay-journey-card">
+                <div className="clay-journey-top"><ClayBadge>{String(index + 1).padStart(2, '0')}</ClayBadge><span>{item.date}</span></div>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </ClayCard>
+            ))}
+          </div>
+        </section>
 
-      <section id="registration-hold" className="max-w-6xl mx-auto px-6 py-20 border-t border-[#f5eddf]/15">
-        <div className="class-panel border-red-700/70 bg-red-950/20 p-7 sm:p-10">
-          <p className="font-mono text-xs uppercase tracking-[.25em] text-red-500 mb-4">Important class update</p>
-          <h2 className="class-display text-4xl sm:text-6xl font-bold max-w-4xl">Payments and registration are currently on hold.</h2>
-          <p className="mt-6 max-w-3xl text-lg text-[#cfc6b9] leading-relaxed">
-            Please do not make any payment using previously shared account details. New registrations, receipt uploads and payment submissions have been disabled until further notice.
-          </p>
-          <p className="mt-4 max-w-3xl text-sm text-[#948a7e]">
-            If you already registered successfully, you do not need to submit another registration. Please wait for the next class update.
-          </p>
-          <span className="mt-8 inline-flex rounded-full border border-red-600 px-5 py-3 font-mono text-xs font-bold uppercase tracking-wider text-red-300">
-            Registration closed for now
-          </span>
-        </div>
-      </section>
+        <section id="tools" className="clay-section" aria-labelledby="tools-heading">
+          <div className="clay-section-head">
+            <p className="clay-kicker">The working stack</p>
+            <h2 id="tools-heading" className="class-display">The tools students should prepare before class.</h2>
+          </div>
+          <div className="clay-stack-grid">
+            {stack.map(([label, value], index) => (
+              <ClayCard key={label} tone={['mint', 'blue', 'peach', 'yellow', 'lilac', 'pink'][index]} className="clay-stack-card">
+                <ClayBadge>{String(index + 1).padStart(2, '0')}</ClayBadge>
+                <span className="clay-eyebrow">{label}</span>
+                <h3>{value}</h3>
+              </ClayCard>
+            ))}
+          </div>
+          <ClayCard tone="cream" className="clay-subscription">
+            <span className="clay-subscription-icon" aria-hidden="true">✎</span>
+            <div><h3>Required subscriptions and accounts</h3><p>You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Supabase accounts before class. Payments and registration are currently on hold.</p></div>
+          </ClayCard>
+        </section>
+
+        <section id="guides" className="clay-section" aria-labelledby="guides-heading">
+          <div className="clay-section-head">
+            <p className="clay-kicker">Starting without paid tools</p>
+            <h2 id="guides-heading" className="class-display">Use the Poor Man’s Guide first.</h2>
+            <p>If you cannot afford the pro subscriptions yet, these two videos show a lighter route into vibecoding so you can begin learning with what you have.</p>
+          </div>
+          <div className="clay-guide-grid">
+            <ClayCard tone="pink" className="clay-guide-card"><ClayBadge>PART 01</ClayBadge><span className="clay-guide-icon" aria-hidden="true">▷</span><h3>Poor Man’s Guide to Vibecoding</h3><ClayButton href="https://vm.tiktok.com/ZN8Nfs4MY/" tone="coral" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></ClayCard>
+            <ClayCard tone="yellow" className="clay-guide-card"><ClayBadge>PART 02</ClayBadge><span className="clay-guide-icon" aria-hidden="true">▷</span><h3>Continue the beginner setup</h3><ClayButton href="https://vm.tiktok.com/ZN8NPYTdu/" tone="cream" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></ClayCard>
+          </div>
+        </section>
+
+        <section id="registration-hold" className="clay-section clay-update" aria-labelledby="update-heading">
+          <ClayNotice>
+            <p className="clay-kicker">Important class update</p>
+            <h2 id="update-heading" className="class-display">Payments and registration are currently on hold.</h2>
+            <p>Please do not make any payment using previously shared account details. New registrations, receipt uploads and payment submissions have been disabled until further notice.</p>
+            <p>If you already registered successfully, you do not need to submit another registration. Please wait for the next class update.</p>
+            <ClayBadge>Registration closed for now</ClayBadge>
+          </ClayNotice>
+          <ClayCard tone="mint" className="clay-progress-card">
+            <div className="clay-progress-heading"><span className="clay-eyebrow">Goal: teach 500 curious builders</span><strong>{pricingLoaded ? `${pricing.acceptedCount} / 500 accepted` : 'Progress temporarily unavailable'}</strong></div>
+            {pricingLoaded && <ClayProgress value={pricing.acceptedCount} max={500} />}
+            <p>Only accepted payments count towards this progress.</p>
+          </ClayCard>
+        </section>
+      </div>
     </div>
   )
+}
+
+function ClayCard({ tone, className = '', children }) {
+  return <article className={`clay-surface clay-tone-${tone} ${className}`}>{children}</article>
+}
+
+function ClayBadge({ children }) {
+  return <span className="clay-badge">{children}</span>
+}
+
+function ClayButton({ href, tone, children, external = false }) {
+  return <a className={`clay-button clay-button-${tone}`} href={href} {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}>{children}</a>
+}
+
+function ClayNotice({ children, compact = false }) {
+  return <aside className={`clay-surface clay-notice ${compact ? 'clay-notice-compact' : ''}`}>{children}</aside>
+}
+
+function ClayProgress({ value, max }) {
+  const percent = Math.max(0, Math.min(100, Number(value) / max * 100))
+  return <div className="clay-progress-track" role="progressbar" aria-label="Accepted students towards 500 student goal" aria-valuenow={value} aria-valuemin={0} aria-valuemax={max}><span className="clay-progress-fill" style={{ width: `${percent}%` }} /></div>
 }
