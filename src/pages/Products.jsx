@@ -111,6 +111,16 @@
 
   const products = [
     {
+      name: 'Tab',
+      tagline: 'A social spending app for friends, couples, roommates, travel groups and teams. Tab records who paid and who benefited, keeps the running debit and credit clear, calculates the final net balances, and lets everyone settle once.',
+      tags: ['Shared Spending', 'Group Expenses', 'Product Design'],
+      status: 'Live',
+      links: {
+        demo: 'https://clearyourtab.xyz/',
+        repo: null,
+      },
+    },
+    {
       name: 'Civora',
       tagline: 'An AI-powered civil engineering study companion that connects Year 4 course material, detailed notes and worked examples with camera-based structural analysis, evidence-aware labels, cautious load-path explanations, and a personal field notebook.',
       tags: ['Civil Engineering', 'AI Study Tool', 'Gemini Vision'],
