@@ -2,9 +2,9 @@ import { useState } from 'react'
 
   const EMAIL = 'qinglidah@gmail.com'
   const X_PROFILE = 'https://x.com/QingTheCreator_'
-  const WHATSAPP = 'https://wa.me/2348149364576'
-  const TELEGRAM = 'https://t.me/+2348149364576'
-  const PHONE = 'tel:+2348149364576'
+  const WHATSAPP = 'https://wa.me/2348124320659'
+  const TELEGRAM = 'https://t.me/+2348124320659'
+  const PHONE = 'tel:+2348124320659'
   const API_BASE = import.meta.env.VITE_API_BASE || ''
 
   export default function BookingModal({ offer, onClose }) {
