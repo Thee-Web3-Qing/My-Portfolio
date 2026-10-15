@@ -1,74 +1,38 @@
-const PRICE_TIERS = [1000, 2000, 4000, 8000, 16000]
+import { neon } from '@neondatabase/serverless'
 
+const BASELINE = 80
+const BATCH_SIZE = 100
 const buildPricing = (count) => {
-  const acceptedCount = Math.max(0, Number(count) || 0)
-  const soldOut = acceptedCount >= 500
-  const tierIndex = soldOut ? PRICE_TIERS.length - 1 : Math.floor(acceptedCount / 100)
-  const filledInTier = soldOut ? 100 : acceptedCount % 100
-
+  const acceptedCount = Math.max(BASELINE, Number(count) || BASELINE)
+  const tierIndex = Math.floor(acceptedCount / BATCH_SIZE)
+  const filledInTier = acceptedCount % BATCH_SIZE
   return {
     acceptedCount,
-    soldOut,
+    soldOut: false,
     tierIndex,
-    price: PRICE_TIERS[tierIndex],
+    price: 1000 * (2 ** tierIndex),
     filledInTier,
-    remainingInTier: soldOut ? 0 : 100 - filledInTier,
+    remainingInTier: BATCH_SIZE - filledInTier,
   }
 }
 
 export default async function handler(request, response) {
-  response.setHeader('Cache-Control', 'no-store')
-
+  response.setHeader('Cache-Control', 'no-store, max-age=0')
   if (request.method !== 'GET') {
     response.setHeader('Allow', 'GET')
     return response.status(405).json({ error: 'Method not allowed' })
   }
-
   try {
-    const pricingSourceUrl = process.env.CLASS_PRICING_SOURCE_URL
-    if (pricingSourceUrl) {
-      const pricingSource = await fetch(pricingSourceUrl, { cache: 'no-store' })
-      if (!pricingSource.ok) throw new Error(`Pricing source returned ${pricingSource.status}`)
-
-      const pricing = await pricingSource.json()
-      if (!Number.isFinite(Number(pricing.acceptedCount))) {
-        throw new Error('Pricing source did not return an accepted-payment count')
-      }
-
-      return response.status(200).json(buildPricing(pricing.acceptedCount))
+    if (!process.env.DATABASE_URL) {
+      return response.status(503).json({ error: 'Pricing database is not configured' })
     }
-
-    const supabaseUrl = process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL
-    const supabaseSecret = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY
-
-    if (!supabaseUrl || !supabaseSecret) {
-      return response.status(503).json({ error: 'Pricing is temporarily unavailable' })
-    }
-
-    const registrations = await fetch(
-      `${supabaseUrl.replace(/\/$/, '')}/rest/v1/class_registrations?select=id&payment_status=eq.confirmed`,
-      {
-        method: 'HEAD',
-        headers: {
-          apikey: supabaseSecret,
-          Authorization: `Bearer ${supabaseSecret}`,
-          Prefer: 'count=exact',
-        },
-      },
-    )
-
-    if (!registrations.ok) {
-      throw new Error(`Supabase returned ${registrations.status}`)
-    }
-
-    const contentRange = registrations.headers.get('content-range') || ''
-    const total = Number(contentRange.split('/').pop())
-
-    if (!Number.isFinite(total)) {
-      throw new Error('Supabase did not return an accepted-payment count')
-    }
-
-    return response.status(200).json(buildPricing(total))
+    const sql = neon(process.env.DATABASE_URL)
+    const rows = await sql`
+      SELECT
+        COALESCE((SELECT integer_value FROM classroom_registration_settings WHERE key = 'legacy_student_offset'), 80)::int
+        + (SELECT count(*)::int FROM class_registrations WHERE payment_status IN ('confirmed', 'approved')) AS accepted_count
+    `
+    return response.status(200).json(buildPricing(rows[0].accepted_count))
   } catch (error) {
     console.error('Class pricing lookup failed', error)
     return response.status(502).json({ error: 'Pricing is temporarily unavailable' })
