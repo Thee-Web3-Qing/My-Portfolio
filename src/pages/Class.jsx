@@ -2,8 +2,6 @@ import { useEffect, useMemo, useState } from 'react'
 import { screenReceipt } from '../lib/receiptScreening'
 import './classClay.css'
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://vvniehpzrvgmjdatpxrl.supabase.co'
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'sb_publishable__XVIsG1KQFChirhMMii7rg_dGp-dpYN'
 const PRICING_URL = '/api/class-pricing'
 const PRICE_TIERS = [1000, 2000, 4000, 8000, 16000]
 const REGISTRATION_STORAGE_KEY = 'qing-class-registration-complete'
@@ -31,7 +29,7 @@ const stack = [
   ['Code editor', 'VS Code with Copilot, or Cursor'],
   ['Source control', 'GitHub'],
   ['Deployment', 'Vercel'],
-  ['Data and storage', 'Supabase'],
+  ['Data and storage', 'Neon PostgreSQL'],
   ['Build layer', 'React, Next.js, TypeScript and Tailwind CSS'],
 ]
 
@@ -107,10 +105,10 @@ export default function Class() {
       setReceipt(null)
       return setStatus({ type: 'error', message: 'Please upload the transaction receipt as an image or PDF.' })
     }
-    if (file.size > 10 * 1024 * 1024) {
+    if (file.size > 5 * 1024 * 1024) {
       event.target.value = ''
       setReceipt(null)
-      return setStatus({ type: 'error', message: 'The receipt file must be smaller than 10 MB.' })
+      return setStatus({ type: 'error', message: 'The receipt file must be smaller than 5 MB.' })
     }
     setReceipt(file)
     setScanning(true)
@@ -133,93 +131,25 @@ export default function Class() {
 
       const cleanEmail = normaliseEmail(form.email)
       const cleanPhone = normalisePhone(form.whatsapp)
-      const duplicateCheck = await fetch(`${SUPABASE_URL}/rest/v1/rpc/check_class_registration`, {
-        method: 'POST',
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ p_email: cleanEmail, p_whatsapp: cleanPhone }),
+      const receiptBase64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader()
+        reader.onload = () => resolve(String(reader.result).split(',')[1])
+        reader.onerror = () => reject(new Error('Could not read receipt.'))
+        reader.readAsDataURL(receipt)
       })
-
-      if (duplicateCheck.ok) {
-        const existingRegistration = await duplicateCheck.json()
-        if (existingRegistration?.exists) {
-          throw new Error('You have already registered with this email address or WhatsApp number. Please do not submit another registration. Keep an eye on your email for your registration code after payment approval.')
-        }
-      }
-
-      const originalExtension = receipt.name.split('.').pop()?.toLowerCase()
-      const safeExtension = originalExtension && /^(pdf|jpe?g|png|heic|heif|webp)$/.test(originalExtension) ? originalExtension : 'jpg'
-      const uploadReceipt = (path) => fetch(`${SUPABASE_URL}/storage/v1/object/class-receipts/${path}`, {
+      const response = await fetch('/api/class-registration', {
         method: 'POST',
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          'Content-Type': receipt.type || (safeExtension === 'pdf' ? 'application/pdf' : 'image/jpeg'),
-          'x-upsert': 'false',
-        },
-        body: receipt,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fullName: form.fullName, whatsapp: cleanPhone, email: cleanEmail,
+          reason: form.reason, reasonCategory: category,
+          mentorshipInterest: form.mentorship, receiptName: receipt.name,
+          receiptType: receipt.type, receiptBase64,
+          fraudScore: receiptAnalysis.score
+        })
       })
-
-      let storagePath = `receipts/${receiptAnalysis.hash}.${safeExtension}`
-      let upload = await uploadReceipt(storagePath)
-      if (!upload.ok) {
-        const uploadFailure = await upload.clone().text()
-        const fileAlreadyExists = upload.status === 409 || /already exists|duplicate/i.test(uploadFailure)
-        if (fileAlreadyExists) {
-          storagePath = `receipts/${receiptAnalysis.hash}-${crypto.randomUUID()}.${safeExtension}`
-          upload = await uploadReceipt(storagePath)
-        }
-      }
-      if (!upload.ok) throw new Error('The receipt could not be uploaded. Please check your connection and try again.')
-
-      const registration = {
-        full_name: form.fullName.trim(),
-        whatsapp: cleanPhone,
-        email: cleanEmail,
-        reason: form.reason.trim(),
-        reason_category: category,
-        mentorship_interest: form.mentorship || 'Not answered',
-        receipt_path: storagePath,
-        receipt_name: `[NGN-${pricing.price}][SCAN-${receiptAnalysis.score}-${receiptAnalysis.status.toUpperCase()}][HASH-${receiptAnalysis.hash}] ${receipt.name}`,
-        receipt_size: receipt.size,
-        amount_paid: pricing.price,
-        currency: 'NGN',
-        payment_source: 'Portfolio class page',
-        payment_reference: receiptAnalysis.hash.slice(0, 16).toUpperCase(),
-      }
-      let save = await fetch(`${SUPABASE_URL}/rest/v1/class_registrations`, {
-        method: 'POST',
-        headers: {
-          apikey: SUPABASE_KEY,
-          Authorization: `Bearer ${SUPABASE_KEY}`,
-          'Content-Type': 'application/json',
-          Prefer: 'return=minimal',
-        },
-        body: JSON.stringify(registration),
-      })
-      if (!save.ok) {
-        const firstFailure = await save.clone().text()
-        if (/amount_paid|currency|payment_source|payment_reference|schema cache/i.test(firstFailure)) {
-          const { amount_paid, currency, payment_source, payment_reference, ...legacyRegistration } = registration
-          void amount_paid; void currency; void payment_source; void payment_reference
-          save = await fetch(`${SUPABASE_URL}/rest/v1/class_registrations`, {
-            method: 'POST',
-            headers: { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
-            body: JSON.stringify(legacyRegistration),
-          })
-        }
-      }
-      if (!save.ok) {
-        const failure = await save.text()
-        if (/class_registration_identities|already registered|registration identity/i.test(failure)) {
-          throw new Error('You have already registered with this email address or WhatsApp number. Please do not submit another registration. Keep an eye on your email for your registration code after payment approval.')
-        }
-        if (/receipt_hash|duplicate key|already exists|duplicate/i.test(failure)) throw new Error('This exact receipt has already been submitted.')
-        throw new Error('Your details could not be submitted. Please try again.')
-      }
+      const result = await response.json().catch(() => ({}))
+      if (!response.ok) throw new Error(result.error || 'Registration failed.')
 
       setStatus({ type: 'success', message: 'Registration received. After your payment is approved, your registration code will be sent to your email. Please keep an eye on your inbox and spam folder.' })
       window.localStorage.setItem(REGISTRATION_STORAGE_KEY, 'true')
@@ -242,7 +172,7 @@ export default function Class() {
             <h1 id="class-heading" className="class-display clay-hero-title">Build<br />with <span>AI.</span></h1>
             <p className="clay-hero-lede">Learn the basics of vibecoding, turn your ideas into clear product plans and build useful things without waiting to become a traditional developer first.</p>
             <div className="clay-hero-actions">
-              <ClayButton href="#registration-hold" tone="coral">Payment on hold <span aria-hidden="true">↘</span></ClayButton>
+              <ClayButton href="#registration" tone="coral">Register now <span aria-hidden="true">↘</span></ClayButton>
               <ClayButton href="#proof" tone="cream">See my build history <span aria-hidden="true">↗</span></ClayButton>
             </div>
             <p className="clay-goal">Goal: teach 500 curious builders</p>
@@ -261,8 +191,8 @@ export default function Class() {
 
         <ClayNotice compact>
           <span className="clay-notice-symbol" aria-hidden="true">✳</span>
-          <div><strong>Payments and registration are currently on hold.</strong><span>Please do not make any payment using previously shared account details.</span></div>
-          <a href="#registration-hold" className="clay-notice-link">Read the class update <span aria-hidden="true">↗</span></a>
+          <div><strong>Registration is open for payment review.</strong><span>Confirm current payment details directly with Qing before paying.</span></div>
+          <a href="#registration" className="clay-notice-link">Read the class update <span aria-hidden="true">↗</span></a>
         </ClayNotice>
 
         <nav className="clay-jump-nav" aria-label="Class page sections">
@@ -270,7 +200,7 @@ export default function Class() {
           <a href="#journey">My AI journey</a>
           <a href="#tools">Your toolkit</a>
           <a href="#guides">Free guides</a>
-          <a href="#registration-hold">Class update</a>
+          <a href="#registration">Registration</a>
         </nav>
 
         <section id="proof" className="clay-section" aria-labelledby="proof-heading">
@@ -321,7 +251,7 @@ export default function Class() {
           </div>
           <ClayCard tone="cream" className="clay-subscription">
             <span className="clay-subscription-icon" aria-hidden="true">✎</span>
-            <div><h3>Required subscriptions and accounts</h3><p>You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Supabase accounts before class. Payments and registration are currently on hold.</p></div>
+            <div><h3>Required subscriptions and accounts</h3><p>You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Neon accounts before class. Payments and registration are currently on hold.</p></div>
           </ClayCard>
         </section>
 
@@ -337,18 +267,28 @@ export default function Class() {
           </div>
         </section>
 
-        <section id="registration-hold" className="clay-section clay-update" aria-labelledby="update-heading">
-          <ClayNotice>
-            <p className="clay-kicker">Important class update</p>
-            <h2 id="update-heading" className="class-display">Payments and registration are currently on hold.</h2>
-            <p>Please do not make any payment using previously shared account details. New registrations, receipt uploads and payment submissions have been disabled until further notice.</p>
-            <p>If you already registered successfully, you do not need to submit another registration. Please wait for the next class update.</p>
-            <ClayBadge>Registration closed for now</ClayBadge>
-          </ClayNotice>
+        <section id="registration" className="clay-section clay-update">
+          <div className="clay-section-head"><p className="clay-kicker">Registration</p><h2 className="class-display">Join the Vibecoding Starter Class.</h2></div>
           <ClayCard tone="mint" className="clay-progress-card">
-            <div className="clay-progress-heading"><span className="clay-eyebrow">Goal: teach 500 curious builders</span><strong>{pricingLoaded ? `${pricing.acceptedCount} / 500 accepted` : 'Progress temporarily unavailable'}</strong></div>
-            {pricingLoaded && <ClayProgress value={pricing.acceptedCount} max={500} />}
-            <p>Only accepted payments count towards this progress.</p>
+            <div className="clay-progress-heading"><span>Batch {pricing.tierIndex + 1}: {formatNaira(pricing.price)}</span><strong>{pricingLoaded ? `${pricing.remainingInTier} spots left` : 'Checking price...'}</strong></div>
+            {pricingLoaded && <ClayProgress value={pricing.filledInTier} max={100} />}
+            <p>{pricing.acceptedCount} confirmed students. The price doubles every 100 students.</p>
+          </ClayCard>
+          <ClayCard tone="cream" className="clay-subscription">
+            <form onSubmit={submit} style={{display:'grid',gap:16,width:'100%'}}>
+              <h3>Registration and payment receipt</h3>
+              <p>Confirm the payment account details directly with Qing before paying. Qing's TV reviews receipts and issues Classroom access codes after approval.</p>
+              <label>Full name<input name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
+              <label>WhatsApp number<input name="whatsapp" required value={form.whatsapp} onChange={update} /></label>
+              <label>Email address<input name="email" type="email" required value={form.email} onChange={update} /></label>
+              <label>Why do you want to join?<textarea name="reason" required minLength={20} rows={4} value={form.reason} onChange={update} /></label>
+              <label>Interested in mentorship?<select name="mentorship" value={form.mentorship} onChange={update}><option value="">Select</option><option>Yes</option><option>No</option><option>Maybe</option></select></label>
+              <label>Payment receipt (PDF, JPEG, PNG or WebP, up to 5 MB)<input type="file" required accept=".pdf,.png,.jpg,.jpeg,.webp" onChange={chooseReceipt} /></label>
+              {scanning && <p>Screening receipt: {scanProgress}%</p>}
+              {receiptAnalysis && <p>Receipt checked. Payment is subject to manual approval.</p>}
+              {status.message && <p role="status">{status.message}</p>}
+              <button type="submit" className="clay-button clay-button-coral" disabled={!pricingLoaded || !detailsComplete || !receiptAnalysis || scanning || submitting}>{submitting ? 'Submitting...' : `Submit registration at ${formatNaira(pricing.price)}`}</button>
+            </form>
           </ClayCard>
         </section>
       </div>
