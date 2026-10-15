@@ -65,28 +65,22 @@ export default async function handler(req, res) {
     const isWebp = bytes.subarray(0, 4).toString() === 'RIFF' && bytes.subarray(8, 12).toString() === 'WEBP'
     if (!(isPdf || isPng || isJpg || isWebp)) return res.status(400).json({ error: 'Upload a PDF, PNG, JPEG or WebP receipt.' })
     const hash = createHash('sha256').update(bytes).digest('hex')
+    const sql = neon(process.env.DATABASE_URL)
+    const existing = await sql`SELECT id FROM class_registrations WHERE lower(email) = ${email} OR whatsapp = ${phone} OR payment_reference = ${hash} LIMIT 1`
+    if (existing.length) return res.status(409).json({ error: 'This email, phone number or receipt has already been registered.' })
+    const count = await sql`SELECT COALESCE((SELECT integer_value FROM classroom_registration_settings WHERE key = 'legacy_student_offset'), 80)::int + (SELECT count(*)::int FROM class_registrations WHERE payment_status IN ('confirmed','approved')) AS total`
+    const amount = 1000 * (2 ** Math.floor(Number(count[0].total) / 100))
     let screening
     try {
       const extractedText = await extractReceiptText(bytes,isPdf)
-      screening = checkReceipt(extractedText,1000)
+      screening = checkReceipt(extractedText,amount)
     } catch(error) {
       console.error('Server receipt OCR failed',error)
       screening = {checks:{},score:0,reference:null,status:'review'}
     }
-    const sql = neon(process.env.DATABASE_URL)
-    const existing = await sql`SELECT id FROM class_registrations WHERE lower(email) = ${email} OR whatsapp = ${phone} OR payment_reference = ${hash} OR (transaction_reference IS NOT NULL AND transaction_reference = ${screening.reference}) LIMIT 1`
-    if (existing.length) return res.status(409).json({ error: 'This email, phone number or receipt has already been registered.' })
-    const count = await sql`SELECT COALESCE((SELECT integer_value FROM classroom_registration_settings WHERE key = 'legacy_student_offset'), 80)::int + (SELECT count(*)::int FROM class_registrations WHERE payment_status IN ('confirmed','approved')) AS total`
-    const amount = 1000 * (2 ** Math.floor(Number(count[0].total) / 100))
     if (screening.reference) {
       const duplicate = await sql`SELECT id FROM class_registrations WHERE transaction_reference = ${screening.reference} LIMIT 1`
       if (duplicate.length) return res.status(409).json({error:'This transaction reference has already been submitted.'})
-    }
-    if (screening.status !== 'review') {
-      try {
-        const extractedText = await extractReceiptText(bytes,isPdf)
-        screening = checkReceipt(extractedText,amount)
-      } catch { screening.status='review' }
     }
     const extension = isPdf ? 'pdf' : isPng ? 'png' : isJpg ? 'jpg' : 'webp'
     const receipt = await put(`class-receipts/${hash}.${extension}`, bytes, { access: 'private', addRandomSuffix: true, contentType: isPdf ? 'application/pdf' : isPng ? 'image/png' : isJpg ? 'image/jpeg' : 'image/webp' })
