@@ -279,7 +279,15 @@ export default function Class() {
           <ClayCard tone="cream" className="clay-subscription">
             <form onSubmit={submit} className="clay-enrollment-form">
               <h3>Secure your spot.</h3>
-              <p>Confirm the payment account details directly with Qing before paying. Qing's TV reviews receipts and issues Classroom access codes after approval.</p>
+              <p>Pay the current batch fee to the account below, then upload your payment receipt. Qing's TV reviews payments and issues Classroom access codes after approval.</p>
+              <div className="clay-payment-details" aria-label="Official class payment details">
+                <span className="clay-payment-eyebrow">Official payment account</span>
+                <strong className="clay-payment-bank">Moniepoint</strong>
+                <span className="clay-payment-number">8124320659</span>
+                <span className="clay-payment-name">Oluwasheedah Giwa</span>
+                <button type="button" className="clay-payment-copy" onClick={() => { navigator.clipboard?.writeText('8124320659'); }}>Copy account number</button>
+                <small>Transfer exactly {formatNaira(pricing.price)}. Use your own payment reference and keep the receipt.</small>
+              </div>
               <label>Full name<input name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
               <label>WhatsApp number<input name="whatsapp" required value={form.whatsapp} onChange={update} /></label>
               <label>Email address<input name="email" type="email" required value={form.email} onChange={update} /></label>
