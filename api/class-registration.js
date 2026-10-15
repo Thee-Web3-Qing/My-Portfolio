@@ -24,6 +24,11 @@ export default async function handler(req, res) {
     const isWebp = bytes.subarray(0, 4).toString() === 'RIFF' && bytes.subarray(8, 12).toString() === 'WEBP'
     if (!(isPdf || isPng || isJpg || isWebp)) return res.status(400).json({ error: 'Upload a PDF, PNG, JPEG or WebP receipt.' })
     const hash = createHash('sha256').update(bytes).digest('hex')
+    const checks = b.fraudChecks && typeof b.fraudChecks === 'object' ? b.fraudChecks : {}
+    const checkNames = ['recipient','account','amount','successful','dateOrTime','reference','bankContext']
+    const verifiedChecks = Object.fromEntries(checkNames.map(key => [key, checks[key] === true]))
+    const score = checkNames.reduce((sum, key) => sum + (verifiedChecks[key] ? ({recipient:25,account:15,amount:20,successful:15,dateOrTime:10,reference:10,bankContext:5})[key] : 0), 0)
+    const status = score >= 70 && verifiedChecks.recipient && verifiedChecks.amount && verifiedChecks.successful ? 'passed' : 'review'
     const sql = neon(process.env.DATABASE_URL)
     const existing = await sql`SELECT id FROM class_registrations WHERE lower(email) = ${email} OR whatsapp = ${phone} OR payment_reference = ${hash} LIMIT 1`
     if (existing.length) return res.status(409).json({ error: 'This email, phone number or receipt has already been registered.' })
@@ -31,7 +36,7 @@ export default async function handler(req, res) {
     const amount = 1000 * (2 ** Math.floor(Number(count[0].total) / 100))
     const extension = isPdf ? 'pdf' : isPng ? 'png' : isJpg ? 'jpg' : 'webp'
     const receipt = await put(`class-receipts/${hash}.${extension}`, bytes, { access: 'private', addRandomSuffix: true, contentType: isPdf ? 'application/pdf' : isPng ? 'image/png' : isJpg ? 'image/jpeg' : 'image/webp' })
-    await sql`INSERT INTO class_registrations (full_name, whatsapp, email, reason, reason_category, mentorship_interest, receipt_path, receipt_name, receipt_size, amount_paid, currency, payment_source, payment_reference, fraud_score, fraud_status, payment_status) VALUES (${name}, ${phone}, ${email}, ${reason}, ${String(b.reasonCategory || 'Other')}, ${String(b.mentorshipInterest || 'Not answered')}, ${receipt.pathname}, ${String(b.receiptName || 'receipt')}, ${bytes.length}, ${amount}, 'NGN', 'Portfolio class page', ${hash}, ${Number(b.fraudScore) || 0}, 'review', 'pending')`
+    await sql`INSERT INTO class_registrations (full_name, whatsapp, email, reason, reason_category, mentorship_interest, receipt_path, receipt_name, receipt_size, amount_paid, currency, payment_source, payment_reference, fraud_score, fraud_status, fraud_checks, payment_status) VALUES (${name}, ${phone}, ${email}, ${reason}, ${String(b.reasonCategory || 'Other')}, ${String(b.mentorshipInterest || 'Not answered')}, ${receipt.pathname}, ${String(b.receiptName || 'receipt')}, ${bytes.length}, ${amount}, 'NGN', 'Portfolio class page', ${hash}, ${score}, ${status}, ${JSON.stringify({checks:verifiedChecks,clientHash:b.receiptHash,serverHash:hash,source:'client_ocr_unverified'})}::jsonb, 'pending')`
     return res.status(201).json({ success: true, message: 'Registration submitted for payment review.' })
   } catch (error) {
     console.error('Class registration failed', error)

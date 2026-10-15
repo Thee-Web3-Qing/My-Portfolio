@@ -145,7 +145,9 @@ export default function Class() {
           reason: form.reason, reasonCategory: category,
           mentorshipInterest: form.mentorship, receiptName: receipt.name,
           receiptType: receipt.type, receiptBase64,
-          fraudScore: receiptAnalysis.score
+          fraudScore: receiptAnalysis.score, fraudStatus: receiptAnalysis.status,
+          fraudChecks: receiptAnalysis.checks, receiptText: receiptAnalysis.extractedText || '',
+          receiptHash: receiptAnalysis.hash
         })
       })
       const result = await response.json().catch(() => ({}))
