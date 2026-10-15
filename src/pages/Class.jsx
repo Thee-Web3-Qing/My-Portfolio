@@ -53,7 +53,7 @@ export default function Class() {
   const [scanProgress, setScanProgress] = useState(0)
   const [receiptAnalysis, setReceiptAnalysis] = useState(null)
   const [pricingLoaded, setPricingLoaded] = useState(false)
-  const [pricing, setPricing] = useState({ acceptedCount: 0, price: 1000, tierIndex: 0, filledInTier: 0, remainingInTier: 100, soldOut: false })
+  const [pricing, setPricing] = useState({ acceptedCount: 80, price: 1000, tierIndex: 0, filledInTier: 80, remainingInTier: 20, soldOut: false })
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
   const detailsComplete = form.fullName.trim().length >= 3 && form.whatsapp.trim().length >= 10 && emailValid && form.reason.trim().length >= 20
@@ -77,7 +77,7 @@ export default function Class() {
       fetch(PRICING_URL, { cache: 'no-store' })
         .then((response) => response.ok ? response.json() : Promise.reject(new Error('Pricing unavailable')))
         .then((data) => { setPricing((current) => ({ ...current, ...data })); setPricingLoaded(true) })
-        .catch(() => {})
+        .catch(() => { setPricingLoaded(false) })
     }
 
     loadPricing()
@@ -251,7 +251,7 @@ export default function Class() {
               </ClayCard>
             ))}
           </div>
-          <ClayCard tone="cream" className="clay-subscription">
+          <ClayCard tone="cream" className="clay-subscription clay-enrollment-card">
             <span className="clay-subscription-icon" aria-hidden="true">✎</span>
             <div><h3>Required subscriptions and accounts</h3><p>You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Neon accounts before class. Payments and registration are currently on hold.</p></div>
           </ClayCard>
@@ -269,16 +269,16 @@ export default function Class() {
           </div>
         </section>
 
-        <section id="registration" className="clay-section clay-update">
+        <section id="registration" className="clay-section clay-update clay-enrollment">
           <div className="clay-section-head"><p className="clay-kicker">Registration</p><h2 className="class-display">Join the Vibecoding Starter Class.</h2></div>
-          <ClayCard tone="mint" className="clay-progress-card">
-            <div className="clay-progress-heading"><span>Batch {pricing.tierIndex + 1}: {formatNaira(pricing.price)}</span><strong>{pricingLoaded ? `${pricing.remainingInTier} spots left` : 'Checking price...'}</strong></div>
-            {pricingLoaded && <ClayProgress value={pricing.filledInTier} max={100} />}
-            <p>{pricing.acceptedCount} confirmed students. The price doubles every 100 students.</p>
+          <ClayCard tone="mint" className="clay-progress-card clay-enrollment-progress">
+            <div className="clay-progress-heading"><span>Batch {pricing.tierIndex + 1}: {formatNaira(pricing.price)}</span><strong>{`${pricing.remainingInTier} spots left`}</strong></div>
+            <ClayProgress value={pricing.filledInTier} max={100} />
+            <p>{pricing.acceptedCount} enrolled students, including the original 80. The price doubles every 100 students.</p>{!pricingLoaded && <p>Live pricing connection unavailable. Submissions remain disabled until it reconnects.</p>}
           </ClayCard>
           <ClayCard tone="cream" className="clay-subscription">
-            <form onSubmit={submit} style={{display:'grid',gap:16,width:'100%'}}>
-              <h3>Registration and payment receipt</h3>
+            <form onSubmit={submit} className="clay-enrollment-form">
+              <h3>Secure your spot.</h3>
               <p>Confirm the payment account details directly with Qing before paying. Qing's TV reviews receipts and issues Classroom access codes after approval.</p>
               <label>Full name<input name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
               <label>WhatsApp number<input name="whatsapp" required value={form.whatsapp} onChange={update} /></label>
@@ -289,7 +289,7 @@ export default function Class() {
               {scanning && <p>Screening receipt: {scanProgress}%</p>}
               {receiptAnalysis && <p>Receipt checked. Payment is subject to manual approval.</p>}
               {status.message && <p role="status">{status.message}</p>}
-              <button type="submit" className="clay-button clay-button-coral" disabled={!pricingLoaded || !detailsComplete || !receiptAnalysis || scanning || submitting}>{submitting ? 'Submitting...' : `Submit registration at ${formatNaira(pricing.price)}`}</button>
+              <button type="submit" className="clay-button clay-button-coral clay-submit-button" disabled={!pricingLoaded || !detailsComplete || !receiptAnalysis || scanning || submitting}>{submitting ? 'Submitting...' : `Submit registration at ${formatNaira(pricing.price)}`}</button>
             </form>
           </ClayCard>
         </section>

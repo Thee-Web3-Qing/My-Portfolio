@@ -348,3 +348,22 @@
   body:has(.clay-class) header button.sm\:hidden { display:block; }
   body:has(.clay-class) header nav.sm\:hidden { display:grid; }
 }
+
+/* Responsive registration form */
+.clay-class .clay-enrollment,.clay-class .clay-enrollment *{box-sizing:border-box}
+.clay-class .clay-enrollment{min-width:0;max-width:100%}
+.clay-class .clay-enrollment .clay-enrollment-progress,.clay-class .clay-enrollment .clay-enrollment-card{width:100%;min-width:0;max-width:100%;overflow:hidden}
+.clay-class .clay-enrollment-progress .clay-progress-heading{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.clay-class .clay-enrollment-progress p{overflow-wrap:anywhere;line-height:1.5}
+.clay-class .clay-enrollment-form{display:grid;grid-template-columns:minmax(0,1fr);gap:18px;width:100%;min-width:0}
+.clay-class .clay-enrollment-form h3{font-size:clamp(1.65rem,5vw,2.4rem);line-height:1.12;margin:0}
+.clay-class .clay-enrollment-form>p{line-height:1.55;overflow-wrap:anywhere}
+.clay-class .clay-enrollment-form label{display:flex;flex-direction:column;align-items:stretch;gap:9px;min-width:0;width:100%;font-size:.95rem;font-weight:650;line-height:1.4}
+.clay-class .clay-enrollment-form :is(input,textarea,select){display:block;width:100%;max-width:100%;min-width:0;min-height:52px;padding:13px 15px;border:1.5px solid #d8cfc3;border-radius:15px;background:#fffdf9;color:#292330;font:inherit;font-size:16px;line-height:1.4;box-shadow:inset 0 2px 4px #2923300b;outline-offset:3px}
+.clay-class .clay-enrollment-form textarea{min-height:120px;resize:vertical}
+.clay-class .clay-enrollment-form input[type=file]{height:auto;min-height:60px;padding:12px;font-size:14px;white-space:normal}
+.clay-class .clay-enrollment-form input[type=file]::file-selector-button{border:0;border-radius:12px;padding:10px 12px;margin-right:10px;background:#e9d9d1;color:#292330;font:inherit;font-weight:650}
+.clay-class .clay-enrollment-form :is(input,textarea,select):focus-visible{outline:3px solid #8abfa9;border-color:#43876c}
+.clay-class .clay-enrollment-form .clay-submit-button{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;max-width:100%;white-space:normal;overflow-wrap:anywhere;min-height:58px;padding:14px 18px;font-size:clamp(.95rem,3.7vw,1.12rem);border:0;cursor:pointer}
+.clay-class .clay-enrollment-form .clay-submit-button:disabled{opacity:.65;cursor:not-allowed}
+@media(max-width:640px){.clay-class .clay-enrollment{padding-inline:0;width:100%}.clay-class .clay-enrollment .clay-enrollment-progress,.clay-class .clay-enrollment .clay-enrollment-card{padding:22px 18px;border-radius:28px}.clay-class .clay-enrollment .clay-section-head{padding-inline:4px}}
