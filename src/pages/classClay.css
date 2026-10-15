@@ -367,3 +367,11 @@
 .clay-class .clay-enrollment-form .clay-submit-button{display:flex;align-items:center;justify-content:center;text-align:center;width:100%;max-width:100%;white-space:normal;overflow-wrap:anywhere;min-height:58px;padding:14px 18px;font-size:clamp(.95rem,3.7vw,1.12rem);border:0;cursor:pointer}
 .clay-class .clay-enrollment-form .clay-submit-button:disabled{opacity:.65;cursor:not-allowed}
 @media(max-width:640px){.clay-class .clay-enrollment{padding-inline:0;width:100%}.clay-class .clay-enrollment .clay-enrollment-progress,.clay-class .clay-enrollment .clay-enrollment-card{padding:22px 18px;border-radius:28px}.clay-class .clay-enrollment .clay-section-head{padding-inline:4px}}
+
+.clay-class .clay-payment-details{display:flex;flex-direction:column;align-items:flex-start;gap:7px;min-width:0;width:100%;padding:22px;border:1px solid #d7e7d9;border-radius:22px;background:linear-gradient(140deg,#e5f8e9,#f9fff5);color:#292330}
+.clay-class .clay-payment-eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:.7rem;font-weight:750;color:#4e705d}
+.clay-class .clay-payment-bank{font-size:1.15rem}
+.clay-class .clay-payment-number{font-size:clamp(1.8rem,7vw,2.6rem);font-weight:850;letter-spacing:.02em;line-height:1.2;overflow-wrap:anywhere}
+.clay-class .clay-payment-name{font-size:1rem;font-weight:650}
+.clay-class .clay-payment-copy{margin:9px 0;padding:11px 17px;border:1px solid #94bba0;border-radius:13px;background:#fff;color:#264e34;font:inherit;font-weight:700;cursor:pointer}
+.clay-class .clay-payment-details small{font-size:.82rem;line-height:1.5}
