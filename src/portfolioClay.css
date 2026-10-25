@@ -228,3 +228,219 @@
   .portfolio-clay :is(.portfolio-service-card,.portfolio-case-card,.portfolio-creative-card,.portfolio-project-card,.portfolio-content-card,.portfolio-hire-service,.portfolio-offer-card,.portfolio-consult-card,.portfolio-timeline-row,.portfolio-nav-link) { transition:none; }
   .portfolio-clay :is(.portfolio-service-card,.portfolio-case-card,.portfolio-creative-card,.portfolio-project-card,.portfolio-content-card,.portfolio-hire-service,.portfolio-offer-card,.portfolio-consult-card,.portfolio-timeline-row):hover { transform:none; }
 }
+
+/* Professional refinement: clay remains an accent, while the interface becomes quieter. */
+.portfolio-clay {
+  --pc-ink:#24212a;
+  --pc-muted:#625d66;
+  --pc-paper:#faf7f1;
+  --pc-surface:#fffdfa;
+  --pc-edge:#e3d9cf;
+  --pc-shadow:rgba(44,36,48,.09);
+  --pc-radius:24px;
+  background:
+    radial-gradient(circle at 9% 7%,rgba(236,210,210,.34),transparent 22rem),
+    linear-gradient(180deg,#fbf8f2 0%,#f8f4ed 100%);
+}
+
+.portfolio-clay .portfolio-main {
+  max-width:1240px;
+}
+
+.portfolio-clay :is(.portfolio-products,.portfolio-content,.portfolio-hire,.portfolio-experience,.portfolio-service-page) {
+  padding-top:clamp(3.25rem,6vw,5.25rem);
+}
+
+.portfolio-clay :is(.portfolio-products,.portfolio-content,.portfolio-hire,.portfolio-experience,.portfolio-service-page) > h1 {
+  max-width:920px;
+  font-size:clamp(2.55rem,5vw,4.4rem);
+  line-height:1.02;
+  letter-spacing:-.045em;
+}
+
+.portfolio-clay :is(.portfolio-products,.portfolio-content,.portfolio-hire,.portfolio-experience,.portfolio-service-page) > p {
+  max-width:720px;
+  font-size:1.02rem;
+  line-height:1.75;
+}
+
+.portfolio-clay :is(.portfolio-stat,.portfolio-service-card,.portfolio-case-card,.portfolio-creative-card,.portfolio-project-card,.portfolio-content-card,.portfolio-award-card,.portfolio-hire-service,.portfolio-offer-card,.portfolio-consult-card,.portfolio-service-fit,.portfolio-deliverable,.portfolio-process-card,.portfolio-faq) {
+  border:1px solid rgba(64,52,65,.1);
+  border-radius:var(--pc-radius);
+  background:
+    radial-gradient(circle at 100% 0,var(--pc-tint,#f5eee7),transparent 38%),
+    rgba(255,253,250,.92);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 30px var(--pc-shadow);
+}
+
+.portfolio-clay :is(.portfolio-service-card,.portfolio-case-card,.portfolio-creative-card,.portfolio-project-card,.portfolio-content-card,.portfolio-hire-service,.portfolio-offer-card,.portfolio-consult-card,.portfolio-timeline-row):hover {
+  transform:translateY(-2px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 16px 38px rgba(44,36,48,.12);
+}
+
+.portfolio-clay :is(.portfolio-stat,.portfolio-service-card,.portfolio-case-card,.portfolio-creative-card,.portfolio-project-card,.portfolio-content-card,.portfolio-award-card,.portfolio-hire-service,.portfolio-offer-card,.portfolio-consult-card,.portfolio-service-fit,.portfolio-deliverable,.portfolio-process-card):nth-child(4n+1) { --pc-tint:rgba(247,220,209,.64);--pc-card-edge:#ead3c8; }
+.portfolio-clay :is(.portfolio-stat,.portfolio-service-card,.portfolio-case-card,.portfolio-creative-card,.portfolio-project-card,.portfolio-content-card,.portfolio-award-card,.portfolio-hire-service,.portfolio-offer-card,.portfolio-consult-card,.portfolio-service-fit,.portfolio-deliverable,.portfolio-process-card):nth-child(4n+2) { --pc-tint:rgba(218,237,246,.65);--pc-card-edge:#d4e4eb; }
+.portfolio-clay :is(.portfolio-stat,.portfolio-service-card,.portfolio-case-card,.portfolio-creative-card,.portfolio-project-card,.portfolio-content-card,.portfolio-award-card,.portfolio-hire-service,.portfolio-offer-card,.portfolio-consult-card,.portfolio-service-fit,.portfolio-deliverable,.portfolio-process-card):nth-child(4n+3) { --pc-tint:rgba(236,221,244,.62);--pc-card-edge:#e2d4e7; }
+.portfolio-clay :is(.portfolio-stat,.portfolio-service-card,.portfolio-case-card,.portfolio-creative-card,.portfolio-project-card,.portfolio-content-card,.portfolio-award-card,.portfolio-hire-service,.portfolio-offer-card,.portfolio-consult-card,.portfolio-service-fit,.portfolio-deliverable,.portfolio-process-card):nth-child(4n) { --pc-tint:rgba(224,241,226,.68);--pc-card-edge:#d7e7da; }
+
+.portfolio-clay .portfolio-home-hero {
+  min-height:620px;
+}
+
+.portfolio-clay .portfolio-home-hero::before {
+  inset:18px -14px 24px;
+  border:1px solid rgba(75,62,70,.08);
+  border-radius:34px;
+  background:
+    radial-gradient(circle at 92% 12%,rgba(248,213,202,.72),transparent 32%),
+    radial-gradient(circle at 15% 96%,rgba(221,239,226,.72),transparent 28%),
+    rgba(255,253,249,.9);
+  box-shadow:0 18px 50px rgba(54,43,49,.08);
+}
+
+.portfolio-clay .portfolio-home-hero h1 {
+  max-width:680px;
+  font-size:clamp(3rem,4.7vw,5.15rem);
+  letter-spacing:-.055em;
+}
+
+.portfolio-clay .portfolio-character {
+  border-width:4px;
+  box-shadow:inset 0 1px 0 white,0 8px 0 #d5b4aa,0 18px 34px rgba(72,53,64,.22);
+}
+
+.portfolio-clay .portfolio-home-scene::before {
+  box-shadow:inset 4px 5px 10px rgba(255,255,255,.7),0 8px 0 #ceb1a9,0 18px 30px rgba(74,56,66,.18);
+}
+
+.portfolio-clay .portfolio-stat {
+  padding:1.25rem;
+}
+
+.portfolio-clay .portfolio-service-card,
+.portfolio-clay .portfolio-hire-service {
+  min-height:300px;
+}
+
+.portfolio-clay .portfolio-browser {
+  border:1px solid rgba(56,47,61,.12);
+  border-radius:18px;
+  box-shadow:0 12px 28px rgba(49,40,55,.12);
+}
+
+.portfolio-clay .portfolio-browser > div:first-child {
+  min-height:36px;
+  background:#f8f4ef;
+}
+
+.portfolio-clay .portfolio-project-card [class*="bg-lime/60"] {
+  border:1px solid rgba(70,62,48,.1);
+  background:#f3edc9;
+  box-shadow:none;
+}
+
+.portfolio-clay .portfolio-project-card [class*="border-ink"][class*="whitespace-nowrap"] {
+  border:1px solid rgba(57,48,58,.12);
+  background:#f8eee8;
+  box-shadow:none;
+}
+
+.portfolio-clay .portfolio-channel-featured {
+  border:1px solid rgba(65,52,62,.1);
+  border-radius:28px;
+  background:radial-gradient(circle at 95% 0,rgba(239,216,232,.7),transparent 36%),#fffdf9;
+  box-shadow:0 16px 42px rgba(54,43,52,.09);
+}
+
+.portfolio-clay .portfolio-timeline-row {
+  border:1px solid rgba(67,56,64,.1);
+  border-radius:18px;
+  background:rgba(255,253,249,.85);
+  box-shadow:0 8px 24px rgba(53,44,49,.06);
+}
+
+.portfolio-clay :is(.portfolio-home,.portfolio-products,.portfolio-hire,.portfolio-service-page,.portfolio-modal) :is(a,button).rounded-full {
+  --pc-button-edge:transparent;
+  border:1px solid rgba(47,39,48,.15);
+  border-radius:14px;
+  background:#fffdfa;
+  box-shadow:0 7px 18px rgba(46,37,46,.09);
+}
+
+.portfolio-clay :is(.portfolio-home,.portfolio-products,.portfolio-hire,.portfolio-service-page,.portfolio-modal) :is(a,button).rounded-full.bg-ink,
+.portfolio-clay :is(.portfolio-home,.portfolio-products,.portfolio-hire,.portfolio-service-page,.portfolio-modal) :is(a,button).rounded-full.bg-lime {
+  background:#292532;
+  border-color:#292532;
+  color:#fffaf4;
+}
+
+.portfolio-clay :is(.portfolio-home,.portfolio-products,.portfolio-hire,.portfolio-service-page,.portfolio-modal) :is(a,button).rounded-full:hover {
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(46,37,46,.14);
+}
+
+.portfolio-clay :is(.portfolio-home,.portfolio-products,.portfolio-hire,.portfolio-service-page,.portfolio-modal) :is(a,button).rounded-full:active {
+  transform:translateY(0);
+  box-shadow:0 3px 8px rgba(46,37,46,.11);
+}
+
+.portfolio-clay .portfolio-nav {
+  border-bottom:1px solid rgba(53,44,53,.08);
+  background:rgba(250,247,241,.9);
+  box-shadow:0 6px 24px rgba(50,42,49,.05);
+}
+
+.portfolio-clay .portfolio-nav-inner {
+  max-width:1240px;
+  padding-top:16px;
+  padding-bottom:16px;
+}
+
+.portfolio-clay .portfolio-desktop-nav {
+  gap:2px;
+  padding:4px;
+  border:1px solid rgba(60,50,58,.1);
+  border-radius:16px;
+  background:rgba(255,253,249,.82);
+  box-shadow:none;
+}
+
+.portfolio-clay .portfolio-nav-link {
+  border:0;
+  border-radius:11px;
+  font-size:.7rem;
+  letter-spacing:.055em;
+}
+
+.portfolio-clay .portfolio-nav-link.bg-ink {
+  border:0;
+  background:#f3d9db;
+  box-shadow:none;
+  transform:none;
+}
+
+.portfolio-clay .portfolio-footer {
+  border-top:1px solid rgba(54,45,53,.08);
+  background:#f4eee8;
+  box-shadow:none;
+}
+
+@media (max-width:640px) {
+  .portfolio-clay :is(.portfolio-products,.portfolio-content,.portfolio-hire,.portfolio-experience,.portfolio-service-page) {
+    padding-top:2.5rem;
+  }
+  .portfolio-clay :is(.portfolio-products,.portfolio-content,.portfolio-hire,.portfolio-experience,.portfolio-service-page) > h1 {
+    font-size:clamp(2.25rem,11vw,3.15rem);
+    line-height:1.04;
+  }
+  .portfolio-clay .portfolio-home-hero {
+    padding-top:2rem;
+  }
+  .portfolio-clay .portfolio-home-hero h1 {
+    font-size:clamp(2.65rem,12vw,3.65rem);
+  }
+  .portfolio-clay .portfolio-service-card,
+  .portfolio-clay .portfolio-hire-service {
+    min-height:0;
+  }
+}
