@@ -22,7 +22,7 @@ export const services = {
       ['Build', 'I turn the agreed scope into a responsive product and connect the required services.'],
       ['Test', 'We check the important user journeys, fix blockers and prepare the product for launch.'],
     ],
-    proof: ['AssetDNA', 'BountyPilot AI', 'Poysis'],
+    proof: ['AssetDNA', 'Bookie', 'Poysis'],
     faq: [
       ['Do I need a complete technical brief?', 'No. You can bring a rough idea, voice note or business problem. I will help turn it into a clear product scope before development starts.'],
       ['Can you build an initial version before I invest in a full product?', 'Yes. A focused prototype or minimum viable product is often the best way to test the idea before expanding it.'],
@@ -80,7 +80,7 @@ export const services = {
       ['Design', 'I plan the smallest reliable workflow, including inputs, outputs and approval points.'],
       ['Implement', 'I build and test the system around real business examples before handoff.'],
     ],
-    proof: ['Qing’s TV', 'BountyPilot AI', 'AI for SMEs'],
+    proof: ['Qing’s TV', 'Bookie', 'AI for SMEs'],
     faq: [
       ['Will AI make decisions without my approval?', 'Not where human review is important. I design approval points so you remain in control of sensitive actions and final outputs.'],
       ['Can this work for a small business?', 'Yes. The best starting point is usually one repetitive workflow with a clear input, output and business benefit.'],
