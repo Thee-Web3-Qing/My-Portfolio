@@ -93,10 +93,6 @@ export default function Home() {
     <div className="portfolio-home">
       <section className="portfolio-home-hero relative pt-10 sm:pt-20 pb-14 sm:pb-20 grid lg:grid-cols-[1.08fr_.72fr] gap-10 lg:gap-14 items-center animate-fadeUp">
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 rounded-full border border-ink bg-white/60 px-3 py-2 mb-5">
-            <span className="h-2 w-2 rounded-full bg-electric animate-pulse" />
-            <p className="font-mono text-[10px] sm:text-xs uppercase tracking-[0.18em]">Available for selected projects</p>
-          </div>
           <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.22em] text-electric mb-4 leading-relaxed">
             AI product builder · Creative strategist · Storyteller
           </p>
