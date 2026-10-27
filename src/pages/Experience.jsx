@@ -65,12 +65,12 @@ const events = [
   },
 ]
 const awards = [
-  "Web3 Creator of the Year 2025 - Onchain Fest Awards",
-  "Web3 Nigeria Creative of the Year 2025",
-  "Content Creator of the Year 2024 - DeFi Tigers",
-  "Content Creator of the Year 2023 - DeFi Tigers",
-  "Base Storyteller - Sponsored to BFF Kenya representing African creators",
+  { title: "Web3 Creator of the Year 2025", organizer: "Onchain Fest Awards", link: "https://x.com/onchainfestival/status/1993585219010458081", year: "2025" },
+  { title: "Web3 Nigeria Creative of the Year 2025", organizer: "Web3 Nigeria Awards", link: "https://x.com/web3nigeria/status/2014977975410655486", year: "2025" },
+  { title: "Content Creator of the Year 2024", organizer: "DeFi Tigers", link: "https://x.com/cwembassy/status/1874712672622481887", year: "2024" },
+  { title: "Content Creator of the Year 2023", organizer: "DeFi Tigers", link: "https://x.com/cwembassy/status/1736740698647298368", year: "2023" },
 ]
+
 export default function Experience() {
   return (
     <div className="portfolio-experience pt-12 pb-24">
@@ -85,19 +85,22 @@ export default function Experience() {
           Awards & Recognition
         </h2>
         <div className="grid sm:grid-cols-2 gap-4">
-          {awards.map((award, index) => (
-            <div
-              key={index}
-              className="portfolio-award-card noise-card border border-ink rounded-blob p-5 bg-white/60"
+          {awards.map((award) => (
+            <a
+              key={award.link}
+              href={award.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="portfolio-award-card portfolio-award-linked group border border-ink rounded-blob p-5 bg-white/60 block"
+              aria-label={`View announcement for ${award.title}`}
             >
-              <ClayArtifact kind={index % 2 ? 'bulb' : 'sheets'} />
-              <span className="font-mono text-xs uppercase text-coral">
-                Award
-              </span>
-              <p className="font-display text-lg font-bold mt-2">
-                {award}
-              </p>
-            </div>
+              <div className="flex items-center justify-between gap-3">
+                <span className="font-mono text-xs uppercase text-coral">{award.organizer}</span>
+                <span className="font-mono text-xs">{award.year} ↗</span>
+              </div>
+              <h3 className="font-display text-xl font-bold mt-5 group-hover:underline">{award.title}</h3>
+              <p className="font-mono text-xs uppercase mt-4">View award announcement ↗</p>
+            </a>
           ))}
         </div>
       </section>
