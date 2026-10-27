@@ -168,26 +168,22 @@ export default function Class() {
   return (
     <div className="class-page clay-class relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
       <div className="clay-shell">
-        <section className="clay-hero clay-surface" aria-labelledby="class-heading">
-          <div className="clay-hero-copy">
-            <span className="clay-kicker">Qing’s Vibecoding Starter Class</span>
-            <h1 id="class-heading" className="class-display clay-hero-title">Build<br />with <span>AI.</span></h1>
-            <p className="clay-hero-lede">Learn the basics of vibecoding, turn your ideas into clear product plans and build useful things without waiting to become a traditional developer first.</p>
-            <div className="clay-hero-actions">
-              <ClayButton href="#registration" tone="coral">Register now <span aria-hidden="true">↘</span></ClayButton>
-              <ClayButton href="#proof" tone="cream">See my build history <span aria-hidden="true">↗</span></ClayButton>
+        <section className="editorial-class-hero" aria-labelledby="class-heading">
+          <div className="editorial-class-intro">
+            <p className="editorial-kicker">THE CLASSROOM / A LEARNING EXPERIENCE BY QING</p>
+            <h1 id="class-heading">Learn it.<br />Build it.<br /><em>Make it real.</em></h1>
+            <p>An inside look at The Classroom, a learning platform built around lessons, practical assignments and a clear path from ideas to working products.</p>
+            <div className="editorial-class-actions">
+              <a href="https://the-classroom-qing.vercel.app/" target="_blank" rel="noopener noreferrer">Explore The Classroom ↗</a>
+              <a href="#registration">Join the class ↓</a>
             </div>
-            <p className="clay-goal">Goal: teach 500 curious builders</p>
           </div>
-          <div className="clay-hero-art">
-            <div className="clay-object-tile clay-object-browser" aria-hidden="true"><span className="clay-object-browser-frame"><i /><i /><i /><b>◈</b></span></div>
-            <div className="clay-object-tile clay-object-star" aria-hidden="true"><span>✦</span></div>
-            <div className="clay-object-tile clay-object-laptop" aria-hidden="true"><span className="clay-laptop-screen"><b>&lt;/&gt;</b></span><span className="clay-laptop-base" /></div>
-            <div className="clay-portrait-stage"><img src="/qing-class-clay.jpg" width="1122" height="1402" alt="Clay-style portrait of Qing surrounded by creative tools" className="clay-portrait" fetchPriority="high" /></div>
-            <div className="clay-object-tile clay-object-folder" aria-hidden="true"><span className="clay-folder-shape"><i /></span></div>
-            <div className="clay-object-tile clay-object-notebook" aria-hidden="true"><span className="clay-notebook-shape"><i /><i /><i /></span></div>
-            <div className="clay-object-tile clay-object-code" aria-hidden="true"><span>&lt; / &gt;</span></div>
-            <span className="clay-instructor"><small>Instructor</small><strong>Qing The Creator</strong><span>AI product builder and creative technologist.</span></span>
+          <div className="editorial-class-showcase">
+            <div className="editorial-class-browser">
+              <div className="editorial-class-browser-bar"><span>● ● ●</span><span>the-classroom-qing.vercel.app</span><a href="https://the-classroom-qing.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open The Classroom in a new tab">↗</a></div>
+              <iframe title="Live preview of The Classroom" src="https://the-classroom-qing.vercel.app/" loading="lazy" referrerPolicy="no-referrer" />
+            </div>
+            <div className="editorial-class-caption"><span>01 / THE STUDENT EXPERIENCE</span><span>20 LESSONS · 5 MODULES · PRACTICAL TASKS</span></div>
           </div>
         </section>
 
