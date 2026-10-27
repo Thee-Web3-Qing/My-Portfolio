@@ -1002,3 +1002,27 @@
     min-height:0;
   }
 }
+
+
+/* Mobile editorial refinement: compact hero, unobstructed portrait and usable navigation. */
+@media (max-width: 767px) {
+  .portfolio-clay .portfolio-nav-inner { padding: .8rem 1rem; }
+  .portfolio-clay .portfolio-nav-inner > div { gap: .55rem; }
+  .portfolio-clay .portfolio-brand { min-width: 0; font-size: clamp(1.05rem, 4.6vw, 1.55rem); letter-spacing: -.045em; white-space: nowrap; }
+  .portfolio-clay .portfolio-menu-button { flex-shrink: 0; padding: .65rem .85rem; font-size: .7rem; }
+  .portfolio-clay .editorial-hero { min-height: 0; }
+  .portfolio-clay .editorial-hero-copy { padding-top: 2.25rem; padding-bottom: 2.25rem; }
+  .portfolio-clay .editorial-hero h1 { font-size: clamp(3rem, 12.5vw, 5.25rem); line-height: .94; letter-spacing: -.065em; overflow-wrap: anywhere; }
+  .portfolio-clay .editorial-intro { font-size: clamp(1rem, 4vw, 1.25rem); line-height: 1.45; }
+  .portfolio-clay .editorial-actions { gap: 1rem; }
+  .portfolio-clay .editorial-portrait-wrap { overflow: hidden; }
+  .portfolio-clay .editorial-orbit, .portfolio-clay .editorial-orbit-dot, .portfolio-clay .editorial-spark { display: none; }
+  .portfolio-clay .editorial-note { z-index: 3; }
+  .portfolio-clay .editorial-section { padding-block: 3.25rem; }
+  .portfolio-clay .editorial-section-head h2 { font-size: clamp(2.2rem, 9vw, 3.8rem); line-height: 1.05; }
+  .portfolio-clay .editorial-project-card { flex-basis: min(82vw, 340px); }
+  .portfolio-clay .editorial-project-visual img { object-fit: contain; background: #fff; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-clay .editorial-portrait-wrap *, .portfolio-clay .editorial-hero * { animation: none !important; }
+}
