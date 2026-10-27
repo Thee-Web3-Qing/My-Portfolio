@@ -273,8 +273,14 @@ export default function Class() {
             <p>If you cannot afford the pro subscriptions yet, these two videos show a lighter route into vibecoding so you can begin learning with what you have.</p>
           </div>
           <div className="clay-guide-grid">
-            <ClayCard tone="pink" className="clay-guide-card"><ClayObject kind="video" /><ClayBadge>PART 01</ClayBadge><h3>Poor Man’s Guide to Vibecoding</h3><ClayButton href="https://vm.tiktok.com/ZN8Nfs4MY/" tone="coral" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></ClayCard>
-            <ClayCard tone="yellow" className="clay-guide-card"><ClayObject kind="video" /><ClayBadge>PART 02</ClayBadge><h3>Continue the beginner setup</h3><ClayButton href="https://vm.tiktok.com/ZN8NPYTdu/" tone="cream" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></ClayCard>
+            <ClayCard tone="pink" className="clay-guide-card">
+              <a className="clay-guide-image" href="https://vm.tiktok.com/ZN8Nfs4MY/" target="_blank" rel="noopener noreferrer"><img src="/class-guides/vibecoding-1.webp" alt="Vibecoding 1, Poor Man’s Guide to Vibecoding" loading="lazy" /></a>
+              <div className="clay-guide-copy"><ClayBadge>VIBECODING 01</ClayBadge><h3>Poor Man’s Guide to Vibecoding</h3><ClayButton href="https://vm.tiktok.com/ZN8Nfs4MY/" tone="coral" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></div>
+            </ClayCard>
+            <ClayCard tone="yellow" className="clay-guide-card">
+              <a className="clay-guide-image" href="https://vm.tiktok.com/ZN8NPYTdu/" target="_blank" rel="noopener noreferrer"><img src="/class-guides/vibecoding-2.webp" alt="Vibecoding 2, Poor Man’s Guide to Vibecoding" loading="lazy" /></a>
+              <div className="clay-guide-copy"><ClayBadge>VIBECODING 02</ClayBadge><h3>Continue the beginner setup</h3><ClayButton href="https://vm.tiktok.com/ZN8NPYTdu/" tone="cream" external>Watch on TikTok <span aria-hidden="true">↗</span></ClayButton></div>
+            </ClayCard>
           </div>
         </section>
 

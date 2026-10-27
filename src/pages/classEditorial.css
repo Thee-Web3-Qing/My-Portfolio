@@ -40,6 +40,12 @@
 .portfolio-clay .editorial-class-page .clay-subscription h3{font:400 1.8rem Georgia,serif;color:var(--ink)}
 .portfolio-clay .editorial-class-page .clay-subscription p{color:#5e5652;line-height:1.65}
 .portfolio-clay .editorial-class-page .clay-button{border-radius:0!important;box-shadow:none!important;transform:none!important;padding:12px 20px!important;font-size:.85rem;font-weight:700;background:var(--red)!important;color:white!important;border:1px solid var(--red)!important;text-decoration:none}
+.portfolio-clay .editorial-class-page .clay-guide-card{display:grid!important;grid-template-columns:minmax(125px,.72fr) minmax(0,1fr);gap:22px!important;align-items:stretch!important;padding-top:24px!important}
+.portfolio-clay .editorial-class-page .clay-guide-image{display:block;min-height:275px;max-height:330px;overflow:hidden;background:#17151a}
+.portfolio-clay .editorial-class-page .clay-guide-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.portfolio-clay .editorial-class-page .clay-guide-copy{display:flex;flex-direction:column;align-items:flex-start;min-width:0;padding:6px 0}
+.portfolio-clay .editorial-class-page .clay-guide-copy h3{margin:16px 0 24px!important}
+.portfolio-clay .editorial-class-page .clay-guide-copy .clay-button{margin-top:auto}
 .portfolio-clay .editorial-class-page .clay-enrollment-progress{padding:25px 0!important;border-top:1px solid var(--ink)!important}
 .portfolio-clay .editorial-class-page .clay-progress-heading{display:flex;justify-content:space-between;gap:20px;font-size:.9rem}
 .portfolio-clay .editorial-class-page .clay-progress-track{height:5px!important;background:#ddd3ca!important;border-radius:0!important;overflow:hidden;margin:16px 0}
@@ -57,6 +63,7 @@
 .portfolio-clay .editorial-class-page .clay-submit-button:disabled{opacity:.45;cursor:not-allowed}
 @media(max-width:900px){.portfolio-clay .editorial-class-page .editorial-class-hero{grid-template-columns:1fr;padding:40px 0}.portfolio-clay .editorial-class-page .editorial-class-browser iframe{height:370px}}
 @media(max-width:620px){.portfolio-clay .editorial-class-page .clay-shell{padding:0 18px 65px}.portfolio-clay .editorial-class-page .editorial-class-intro h1{font-size:clamp(3rem,12vw,4.6rem)}.portfolio-clay .editorial-class-page .editorial-class-browser iframe{height:300px}.portfolio-clay .editorial-class-page .editorial-class-caption{flex-direction:column;gap:5px}.portfolio-clay .editorial-class-page .clay-notice{align-items:flex-start;flex-wrap:wrap}.portfolio-clay .editorial-class-page .clay-jump-nav{gap:14px}.portfolio-clay .editorial-class-page .clay-section{padding-top:54px}.portfolio-clay .editorial-class-page .clay-proof-grid,.portfolio-clay .editorial-class-page .clay-journey-grid,.portfolio-clay .editorial-class-page .clay-stack-grid,.portfolio-clay .editorial-class-page .clay-guide-grid{grid-template-columns:1fr}.portfolio-clay .editorial-class-page :is(.clay-proof-card,.clay-journey-card,.clay-stack-card,.clay-guide-card){padding:24px 0!important;min-height:0!important;border-left:0!important}.portfolio-clay .editorial-class-page .clay-enrollment-form{grid-template-columns:1fr}.portfolio-clay .editorial-class-page .clay-enrollment-form>*{grid-column:1/-1}}
+@media(max-width:620px){.portfolio-clay .editorial-class-page .clay-guide-card{grid-template-columns:minmax(105px,.62fr) minmax(0,1fr);gap:16px!important}.portfolio-clay .editorial-class-page .clay-guide-image{min-height:220px;max-height:260px}.portfolio-clay .editorial-class-page .clay-guide-copy h3{font-size:clamp(1.35rem,7vw,2rem)!important;margin:12px 0 18px!important}.portfolio-clay .editorial-class-page .clay-guide-copy .clay-button{padding:10px 12px!important;font-size:.72rem}}
 
 .portfolio-clay .editorial-class-page .editorial-class-screen{display:block;overflow:auto;max-height:480px;background:#fff;scrollbar-width:thin}
 .portfolio-clay .editorial-class-page .editorial-class-screen img{display:block;width:100%;height:auto}
