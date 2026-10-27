@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useRef, useState } from 'react'
 
 const roles = [
   {
@@ -97,17 +97,9 @@ const selectedMoments = [
 
 export default function Experience() {
   const [active, setActive] = useState(0)
-  const [activeMoment, setActiveMoment] = useState(0)
-  const [activeMomentImage, setActiveMomentImage] = useState(0)
   const touchStart = useRef(null)
-  const momentTouchStart = useRef(null)
   const selectNext = () => setActive(current => (current + 1) % awards.length)
   const selected = awards[active]
-  const moment = selectedMoments[activeMoment]
-  const showMoment = direction => {
-    setActiveMoment(current => (current + direction + selectedMoments.length) % selectedMoments.length)
-    setActiveMomentImage(0)
-  }
   return (
     <div className="editorial-experience">
       <header className="editorial-experience-hero editorial-award-showcase">
@@ -140,35 +132,27 @@ export default function Experience() {
       </header>
       <section className="editorial-experience-section editorial-moments-section">
         <div className="editorial-experience-heading"><span>02 / SELECTED MOMENTS</span><h2>Proof I was <em>in the room.</em></h2></div>
-        <div className="editorial-moment-showcase"
-          onTouchStart={event => { momentTouchStart.current = event.touches[0].clientX }}
-          onTouchEnd={event => { if (momentTouchStart.current !== null && Math.abs(event.changedTouches[0].clientX - momentTouchStart.current) > 45) showMoment(event.changedTouches[0].clientX < momentTouchStart.current ? 1 : -1); momentTouchStart.current = null }}>
-          <div className="editorial-moment-stage-media" key={`${moment.title}-media`}>
-            <img src={moment.images[activeMomentImage]} alt={`${moment.title}${moment.images.length > 1 ? `, photograph ${activeMomentImage + 1} of ${moment.images.length}` : ''}`} />
-            {moment.images.length > 1 && <span className="editorial-moment-image-count">{String(activeMomentImage + 1).padStart(2, '0')} / {String(moment.images.length).padStart(2, '0')}</span>}
-          </div>
-          <div className="editorial-moment-stage-copy" key={`${moment.title}-copy`}>
-            <span>{String(activeMoment + 1).padStart(2, '0')} / {String(selectedMoments.length).padStart(2, '0')} · {moment.label}</span>
-            <h3>{moment.title}</h3>
-            <p>{moment.note}</p>
-            {moment.images.length > 1 && <div className="editorial-moment-image-picker" aria-label={`${moment.title} photographs`}>
-              {moment.images.map((image, imageIndex) => <button key={image} type="button" className={imageIndex === activeMomentImage ? 'is-active' : ''} onClick={() => setActiveMomentImage(imageIndex)} aria-label={`Show photograph ${imageIndex + 1} of ${moment.images.length}`} aria-pressed={imageIndex === activeMomentImage}>
-                <img src={image} alt="" loading="lazy" />
-                <span>{String(imageIndex + 1).padStart(2, '0')}</span>
-              </button>)}
-            </div>}
-            {moment.link && <a href={moment.link} target="_blank" rel="noopener noreferrer">View the moment ↗</a>}
-            <div className="editorial-moment-controls">
-              <button type="button" onClick={() => showMoment(-1)} aria-label="Previous moment">←</button>
-              <button type="button" onClick={() => showMoment(1)} aria-label="Next moment">→</button>
-            </div>
-          </div>
-        </div>
-        <div className="editorial-moment-rail" aria-label="Select an experience">
-          {selectedMoments.map((item, index) => <button type="button" key={item.title} className={index === activeMoment ? 'is-active' : ''} onClick={() => { setActiveMoment(index); setActiveMomentImage(0) }} aria-pressed={index === activeMoment}>
-            <img src={item.images[0]} alt="" loading="lazy" />
-            <span>{String(index + 1).padStart(2, '0')} · {item.title}</span>
-          </button>)}
+        <div className="editorial-moment-board" aria-label="Experience photo board">
+          {selectedMoments.flatMap((item, eventIndex) => item.images.map((image, imageIndex) => {
+            const content = <>
+              <img src={image} alt={`${item.title}, photograph ${imageIndex + 1} of ${item.images.length}`} loading="lazy" />
+              <figcaption>
+                <span>{String(eventIndex + 1).padStart(2, '0')} · {item.label}</span>
+                <h3>{item.title}</h3>
+                {imageIndex === 0 && <p>{item.note}</p>}
+                <b>{String(imageIndex + 1).padStart(2, '0')} / {String(item.images.length).padStart(2, '0')}{item.link ? ' · View moment ↗' : ''}</b>
+              </figcaption>
+            </>
+            return item.link ? (
+              <a className="editorial-moment-pin" href={item.link} target="_blank" rel="noopener noreferrer" key={image}>
+                <figure>{content}</figure>
+              </a>
+            ) : (
+              <div className="editorial-moment-pin" key={image}>
+                <figure>{content}</figure>
+              </div>
+            )
+          }))}
         </div>
       </section>
       <section className="editorial-experience-section">
