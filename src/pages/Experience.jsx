@@ -79,6 +79,52 @@ const awards = [
   { title: "Content Creator of the Year", organizer: "DeFi Tigers", link: "https://x.com/cwembassy/status/1736740698647298368", image: "/experience-awards/defi-tigers-2023.jpg", year: "2023", description: "Recognised for content that inspired others to explore decentralized platforms and helped bring the Web3 community together.", accent: "#262026" },
 ]
 
+const selectedMoments = [
+  {
+    label: "RED CARPET HOST",
+    title: "Blockfest Africa 2026",
+    note: "Hosting conversations and meeting the people shaping the ecosystem.",
+    images: ["/experience-moments/blockfest-2026.webp"],
+    link: "https://x.com/qingthecreator_/status/2113533061262631181?s=46",
+  },
+  {
+    label: "PRODUCT PITCH / KENYA",
+    title: "Pitching Zortal",
+    note: "Presenting a gamified prediction layer for creator coins in Kenya.",
+    images: ["/experience-moments/kenya-product-pitch.webp"],
+  },
+  {
+    label: "CHIEF HOST",
+    title: "Technova",
+    note: "Leading the room and moderating conversations about technology, innovation and opportunity.",
+    images: ["/experience-moments/technova-stage.webp", "/experience-moments/technova-panel.webp"],
+    layout: "stack",
+    link: "https://x.com/qingthecreator_/status/2033109218811670897",
+  },
+  {
+    label: "HOST",
+    title: "Blockfest Africa 2025",
+    note: "Representing culture and community at one of Africa's major blockchain gatherings.",
+    images: ["/experience-moments/blockfest-2025.webp"],
+    link: "https://x.com/qingthecreator_/status/1977276685977313536",
+  },
+  {
+    label: "FOUNDER",
+    title: "CTNG House",
+    note: "Building a home for creators and hackers, then taking its conversations live.",
+    images: ["/experience-moments/ctng-house-live.webp", "/experience-moments/ctng-house-founder.webp"],
+    layout: "pair",
+  },
+  {
+    label: "ON STAGE / UNILAG",
+    title: "UNILAG Dream × Konoha Financial Conference",
+    note: "Bringing the programme to life from the stage at UNILAG.",
+    images: ["/experience-moments/konoha-solo.webp", "/experience-moments/konoha-stage.webp"],
+    layout: "pair",
+    link: "https://x.com/qingthecreator_/status/1994823171728707780?s=46",
+  },
+]
+
 export default function Experience() {
   const [active, setActive] = useState(0)
   const touchStart = useRef(null)
@@ -114,8 +160,27 @@ export default function Experience() {
           })}
         </div>
       </header>
+      <section className="editorial-experience-section editorial-moments-section">
+        <div className="editorial-experience-heading"><span>02 / SELECTED MOMENTS</span><h2>Proof I was <em>in the room.</em></h2></div>
+        <div className="editorial-moments-grid">
+          {selectedMoments.map((moment, index) => {
+            const Tag = moment.link ? 'a' : 'article'
+            const linkProps = moment.link ? { href: moment.link, target: '_blank', rel: 'noopener noreferrer' } : {}
+            return <Tag className="editorial-moment-card" key={moment.title} {...linkProps}>
+              <div className={`editorial-moment-media is-${moment.layout || 'single'}`}>
+                {moment.images.map((image, imageIndex) => <img key={image} src={image} alt={`${moment.title}${moment.images.length > 1 ? `, photograph ${imageIndex + 1}` : ''}`} loading={index < 2 ? 'eager' : 'lazy'} />)}
+              </div>
+              <div className="editorial-moment-copy">
+                <span>{String(index + 1).padStart(2, '0')} / {moment.label}</span>
+                <h3>{moment.title}{moment.link && ' ↗'}</h3>
+                <p>{moment.note}</p>
+              </div>
+            </Tag>
+          })}
+        </div>
+      </section>
       <section className="editorial-experience-section">
-        <div className="editorial-experience-heading"><span>02 / CAREER</span><h2>The work behind <em>the work.</em></h2></div>
+        <div className="editorial-experience-heading"><span>03 / CAREER</span><h2>The work behind <em>the work.</em></h2></div>
         <div className="editorial-experience-rows">
           {roles.map((role, index) => <article className="editorial-experience-row" key={index}>
             <span>{role.period}</span><div><h3>{role.title}</h3><strong>{role.org}</strong><p>{role.desc}</p></div><b>{String(index+1).padStart(2,'0')}</b>
@@ -123,7 +188,7 @@ export default function Experience() {
         </div>
       </section>
       <section className="editorial-experience-section">
-        <div className="editorial-experience-heading"><span>03 / ON STAGE</span><h2>Rooms I've <em>been in.</em></h2></div>
+        <div className="editorial-experience-heading"><span>04 / ON STAGE</span><h2>Rooms I've <em>been in.</em></h2></div>
         <div className="editorial-experience-rows">
           {events.map((event,index) => <a key={event.link} href={event.link} target="_blank" rel="noopener noreferrer" className="editorial-experience-row">
             <span>{event.date}<br />{event.role}</span><div><h3>{event.name} ↗</h3><p>{event.desc}</p>{event.secondLink && <span className="editorial-event-second-link" onClick={e => { e.preventDefault(); e.stopPropagation(); window.open(event.secondLink, '_blank', 'noopener,noreferrer') }} role="button" tabIndex={0} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); window.open(event.secondLink, '_blank', 'noopener,noreferrer') } }}>Second event post ↗</span>}</div><b>{String(index+1).padStart(2,'0')}</b>
