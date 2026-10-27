@@ -20,58 +20,6 @@ const roles = [
     desc: "Hosted daily live Web3 conversations across DeFi, gaming, and ecosystem events, translating technical topics into accessible community discussions.",
   },
 ]
-const events = [
-  {
-    role: "Red Carpet Host",
-    name: "Blockfest Africa 2026",
-    date: "2026",
-    desc: "Hosted the red carpet at Blockfest Africa 2026, engaging guests and capturing conversations from the event.",
-    link: "https://x.com/qingthecreator_/status/2113533061262631181?s=46",
-    secondLink: "https://x.com/qingthecreator_/status/2114349135444812220?s=46",
-  },
-  {
-    role: "Chief Host",
-    name: "Technova",
-    date: "Jan 2025",
-    desc: "Primary host for tech innovation event across Africa.",
-    link: "https://x.com/qingthecreator_/status/2033109218811670897",
-  },
-  {
-    role: "Convener",
-    name: "The Sunset Experience",
-    date: "Dec 2024",
-    desc: "Founded an intimate gathering for creators and builders to connect and share ideas.",
-    link: "https://x.com/qingthecreator_/status/2064391631457989092",
-  },
-  {
-    role: "Host / Moderator",
-    name: "NFT NG 2025 - Fireside Chat",
-    date: "Nov 2024",
-    desc: "Moderated fireside chat at Nigeria's flagship NFT conference.",
-    link: "https://x.com/nft__ng/status/1972617355198107941",
-  },
-  {
-    role: "Host",
-    name: "Blockfest Africa 2025",
-    date: "Jan 2025",
-    desc: "Hosted sessions at Africa's major blockchain festival.",
-    link: "https://x.com/qingthecreator_/status/1977276685977313536",
-  },
-  {
-    role: "Co-Host",
-    name: "BIU 2024 - Builder & Campus Ecosystem",
-    date: "Sep 2024",
-    desc: "Co-hosted builder and campus networking events.",
-    link: "https://x.com/qingthecreator_/status/1857424416700829791",
-  },
-  {
-    role: "Host / Moderator",
-    name: "Bitget Africa Community Meet & Greet",
-    date: "Aug 2024",
-    desc: "Community engagement and moderation for Bitget Africa.",
-    link: "https://x.com/bitgetafrica/status/1830573377150448000",
-  },
-]
 const awards = [
   { title: "Web3 Creator of the Year", organizer: "Onchain Fest Awards", link: "https://x.com/onchainfestival/status/1993585219010458081", image: "/experience-awards/onchainfest-2025.jpg", year: "2025", description: "Recognised for creative storytelling and impact across the African Web3 community.", accent: "#34110e" },
   { title: "Creator of the Year", organizer: "Web3 Nigeria Awards", link: "https://x.com/web3nigeria/status/2014977975410655486", image: "/experience-awards/web3-nigeria-2025.jpg", year: "2025", description: "Recognised for leading creative communities, mentoring emerging creators and making African blockchain innovation easier to understand.", accent: "#254532" },
@@ -123,13 +71,38 @@ const selectedMoments = [
     layout: "pair",
     link: "https://x.com/qingthecreator_/status/1994823171728707780?s=46",
   },
+  {
+    label: "CONVENER",
+    title: "The Sunset Experience",
+    note: "Convening an intimate gathering where creators and builders could connect, exchange ideas and find community.",
+    images: ["/experience-moments/sunset-convener.webp", "/experience-moments/sunset-community.webp"],
+    link: "https://x.com/qingthecreator_/status/2064391631457989092",
+  },
+  {
+    label: "CO-HOST / CAMPUS",
+    title: "BIU 2024",
+    note: "Bringing builders, students and the campus ecosystem together through conversation and community.",
+    images: ["/experience-moments/biu-2024.webp", "/experience-moments/biu-stage.webp"],
+    link: "https://x.com/qingthecreator_/status/1857424416700829791",
+  },
+  {
+    label: "HOST / MODERATOR",
+    title: "NFT NG 2025",
+    note: "Moderating a fireside conversation at Nigeria's flagship NFT gathering.",
+    images: ["/experience-moments/nft-ng-2025.webp"],
+    link: "https://x.com/nft__ng/status/1972617355198107941",
+  },
 ]
 
 export default function Experience() {
   const [active, setActive] = useState(0)
+  const [activeMoment, setActiveMoment] = useState(0)
   const touchStart = useRef(null)
+  const momentTouchStart = useRef(null)
   const selectNext = () => setActive(current => (current + 1) % awards.length)
   const selected = awards[active]
+  const moment = selectedMoments[activeMoment]
+  const showMoment = direction => setActiveMoment(current => (current + direction + selectedMoments.length) % selectedMoments.length)
   return (
     <div className="editorial-experience">
       <header className="editorial-experience-hero editorial-award-showcase">
@@ -162,21 +135,28 @@ export default function Experience() {
       </header>
       <section className="editorial-experience-section editorial-moments-section">
         <div className="editorial-experience-heading"><span>02 / SELECTED MOMENTS</span><h2>Proof I was <em>in the room.</em></h2></div>
-        <div className="editorial-moments-grid">
-          {selectedMoments.map((moment, index) => {
-            const Tag = moment.link ? 'a' : 'article'
-            const linkProps = moment.link ? { href: moment.link, target: '_blank', rel: 'noopener noreferrer' } : {}
-            return <Tag className="editorial-moment-card" key={moment.title} {...linkProps}>
-              <div className={`editorial-moment-media is-${moment.layout || 'single'}`}>
-                {moment.images.map((image, imageIndex) => <img key={image} src={image} alt={`${moment.title}${moment.images.length > 1 ? `, photograph ${imageIndex + 1}` : ''}`} loading={index < 2 ? 'eager' : 'lazy'} />)}
-              </div>
-              <div className="editorial-moment-copy">
-                <span>{String(index + 1).padStart(2, '0')} / {moment.label}</span>
-                <h3>{moment.title}{moment.link && ' ↗'}</h3>
-                <p>{moment.note}</p>
-              </div>
-            </Tag>
-          })}
+        <div className="editorial-moment-showcase"
+          onTouchStart={event => { momentTouchStart.current = event.touches[0].clientX }}
+          onTouchEnd={event => { if (momentTouchStart.current !== null && Math.abs(event.changedTouches[0].clientX - momentTouchStart.current) > 45) showMoment(event.changedTouches[0].clientX < momentTouchStart.current ? 1 : -1); momentTouchStart.current = null }}>
+          <div className={`editorial-moment-stage-media ${moment.images.length > 1 ? 'has-pair' : ''}`} key={`${moment.title}-media`}>
+            {moment.images.map((image, imageIndex) => <img key={image} src={image} alt={`${moment.title}${moment.images.length > 1 ? `, photograph ${imageIndex + 1}` : ''}`} />)}
+          </div>
+          <div className="editorial-moment-stage-copy" key={`${moment.title}-copy`}>
+            <span>{String(activeMoment + 1).padStart(2, '0')} / {String(selectedMoments.length).padStart(2, '0')} · {moment.label}</span>
+            <h3>{moment.title}</h3>
+            <p>{moment.note}</p>
+            {moment.link && <a href={moment.link} target="_blank" rel="noopener noreferrer">View the moment ↗</a>}
+            <div className="editorial-moment-controls">
+              <button type="button" onClick={() => showMoment(-1)} aria-label="Previous moment">←</button>
+              <button type="button" onClick={() => showMoment(1)} aria-label="Next moment">→</button>
+            </div>
+          </div>
+        </div>
+        <div className="editorial-moment-rail" aria-label="Select an experience">
+          {selectedMoments.map((item, index) => <button type="button" key={item.title} className={index === activeMoment ? 'is-active' : ''} onClick={() => setActiveMoment(index)} aria-pressed={index === activeMoment}>
+            <img src={item.images[0]} alt="" loading="lazy" />
+            <span>{String(index + 1).padStart(2, '0')} · {item.title}</span>
+          </button>)}
         </div>
       </section>
       <section className="editorial-experience-section">
@@ -185,14 +165,6 @@ export default function Experience() {
           {roles.map((role, index) => <article className="editorial-experience-row" key={index}>
             <span>{role.period}</span><div><h3>{role.title}</h3><strong>{role.org}</strong><p>{role.desc}</p></div><b>{String(index+1).padStart(2,'0')}</b>
           </article>)}
-        </div>
-      </section>
-      <section className="editorial-experience-section">
-        <div className="editorial-experience-heading"><span>04 / ON STAGE</span><h2>Rooms I've <em>been in.</em></h2></div>
-        <div className="editorial-experience-rows">
-          {events.map((event,index) => <a key={event.link} href={event.link} target="_blank" rel="noopener noreferrer" className="editorial-experience-row">
-            <span>{event.date}<br />{event.role}</span><div><h3>{event.name} ↗</h3><p>{event.desc}</p>{event.secondLink && <span className="editorial-event-second-link" onClick={e => { e.preventDefault(); e.stopPropagation(); window.open(event.secondLink, '_blank', 'noopener,noreferrer') }} role="button" tabIndex={0} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); window.open(event.secondLink, '_blank', 'noopener,noreferrer') } }}>Second event post ↗</span>}</div><b>{String(index+1).padStart(2,'0')}</b>
-          </a>)}
         </div>
       </section>
     </div>

@@ -1191,20 +1191,26 @@
 .portfolio-clay .editorial-experience-row strong{display:block;margin-top:.7rem;font-size:.85rem}
 .portfolio-clay .editorial-experience-row p{max-width:680px;line-height:1.6;color:#5d5757;margin-top:.6rem}
 .portfolio-clay .editorial-experience-row>b{color:#ed1726}
-.portfolio-clay .editorial-moments-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4.5rem 1.25rem}
-.portfolio-clay .editorial-moment-card{display:block;color:inherit;text-decoration:none;min-width:0}
-.portfolio-clay .editorial-moment-media{display:grid;overflow:hidden;border:1px solid #cfc7c0;background:#191619;min-height:0}
-.portfolio-clay .editorial-moment-media.is-single{aspect-ratio:4/5}
-.portfolio-clay .editorial-moment-media.is-pair{grid-template-columns:1fr 1fr;aspect-ratio:4/5}
-.portfolio-clay .editorial-moment-media.is-stack{grid-template-rows:1fr 1fr;aspect-ratio:4/5}
-.portfolio-clay .editorial-moment-media img{width:100%;height:100%;min-width:0;min-height:0;object-fit:cover;transition:transform .7s cubic-bezier(.2,.75,.2,1),filter .35s ease}
-.portfolio-clay .editorial-moment-media.is-pair img+img{border-left:1px solid #faf7f1}
-.portfolio-clay .editorial-moment-media.is-stack img+img{border-top:1px solid #faf7f1}
-.portfolio-clay a.editorial-moment-card:hover .editorial-moment-media img{transform:scale(1.025);filter:saturate(1.06)}
-.portfolio-clay .editorial-moment-copy{display:grid;grid-template-columns:150px 1fr;column-gap:1.25rem;padding-top:1rem;border-top:1px solid #242027;margin-top:.75rem}
-.portfolio-clay .editorial-moment-copy>span{font:700 10px/1.45 ui-monospace,monospace;letter-spacing:.11em;color:#ed1726}
-.portfolio-clay .editorial-moment-copy h3{font:normal clamp(1.55rem,2.6vw,2.55rem)/1.05 Georgia,serif;letter-spacing:-.035em}
-.portfolio-clay .editorial-moment-copy p{grid-column:2;max-width:520px;margin-top:.55rem;color:#5d5757;line-height:1.55}
+.portfolio-clay .editorial-moment-showcase{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.7fr);height:clamp(460px,52vw,620px);border:1px solid #cfc7c0;background:#fffdfa;overflow:hidden;touch-action:pan-y}
+.portfolio-clay .editorial-moment-stage-media{display:grid;min-width:0;overflow:hidden;background:#191619;animation:moment-in .45s ease both}
+.portfolio-clay .editorial-moment-stage-media.has-pair{grid-template-columns:repeat(2,minmax(0,1fr))}
+.portfolio-clay .editorial-moment-stage-media img{width:100%;height:100%;min-width:0;min-height:0;object-fit:cover}
+.portfolio-clay .editorial-moment-stage-media.has-pair img+img{border-left:1px solid #faf7f1}
+.portfolio-clay .editorial-moment-stage-copy{display:flex;flex-direction:column;justify-content:flex-end;padding:clamp(1.5rem,3.2vw,3rem);animation:moment-copy-in .4s ease both}
+.portfolio-clay .editorial-moment-stage-copy>span,.portfolio-clay .editorial-moment-rail span{font:700 10px/1.45 ui-monospace,monospace;letter-spacing:.1em;text-transform:uppercase}
+.portfolio-clay .editorial-moment-stage-copy>span{color:#ed1726}
+.portfolio-clay .editorial-moment-stage-copy h3{font:normal clamp(2rem,3.5vw,3.7rem)/1 Georgia,serif;letter-spacing:-.045em;margin:.8rem 0}
+.portfolio-clay .editorial-moment-stage-copy p{color:#5d5757;line-height:1.6}
+.portfolio-clay .editorial-moment-stage-copy>a{align-self:flex-start;margin-top:1.5rem;padding-bottom:.35rem;border-bottom:1px solid currentColor;font-weight:700}
+.portfolio-clay .editorial-moment-controls{display:flex;gap:.65rem;margin-top:2rem}
+.portfolio-clay .editorial-moment-controls button{width:44px;height:44px;border:1px solid #b9ada5;border-radius:50%;background:#fff;cursor:pointer;font-size:1.2rem}
+.portfolio-clay .editorial-moment-controls button:hover{background:#ed1726;color:#fff;border-color:#ed1726}
+.portfolio-clay .editorial-moment-rail{display:flex;gap:.75rem;overflow-x:auto;padding:.9rem 0 .6rem;scroll-snap-type:x proximity;scrollbar-width:thin}
+.portfolio-clay .editorial-moment-rail button{flex:0 0 clamp(132px,15vw,190px);display:grid;grid-template-columns:44px 1fr;align-items:center;gap:.65rem;padding:.45rem;text-align:left;border:1px solid transparent;background:transparent;color:#625b5a;cursor:pointer;scroll-snap-align:start}
+.portfolio-clay .editorial-moment-rail button.is-active{border-color:#ed1726;color:#242027;background:#fffdfa}
+.portfolio-clay .editorial-moment-rail img{width:44px;height:44px;object-fit:cover;background:#191619}
+@keyframes moment-in{from{opacity:.45;transform:scale(1.015)}to{opacity:1;transform:scale(1)}}
+@keyframes moment-copy-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .portfolio-clay .editorial-class-hero{display:grid;grid-template-columns:40% 60%;gap:2rem;align-items:center;padding:4rem 2rem 5rem;background:#faf7f1}
 .portfolio-clay .editorial-class-intro h1{font-size:clamp(3.5rem,6vw,7rem)}
 .portfolio-clay .editorial-class-actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
@@ -1217,10 +1223,16 @@
 .portfolio-clay .editorial-class-caption{display:flex;justify-content:space-between;gap:1rem;margin-top:1rem;color:#ed1726}
 @media(max-width:900px){.portfolio-clay .editorial-class-hero{grid-template-columns:1fr;padding:3rem 1.5rem}.portfolio-clay .editorial-awards-grid{grid-template-columns:1fr}.portfolio-clay .editorial-experience-row{grid-template-columns:130px 1fr 30px;gap:1rem}.portfolio-clay .editorial-experience-heading{display:block}.portfolio-clay .editorial-experience-heading h2{margin-top:1rem}}
 @media(max-width:760px){
-  .portfolio-clay .editorial-moments-grid{grid-template-columns:1fr;gap:3.25rem}
-  .portfolio-clay .editorial-moment-media.is-single,.portfolio-clay .editorial-moment-media.is-pair,.portfolio-clay .editorial-moment-media.is-stack{aspect-ratio:4/5}
-  .portfolio-clay .editorial-moment-copy{grid-template-columns:1fr;gap:.55rem}
-  .portfolio-clay .editorial-moment-copy p{grid-column:1;margin-top:0}
+  .portfolio-clay .editorial-experience{padding-bottom:4rem}
+  .portfolio-clay .editorial-experience-section{padding-top:3.5rem}
+  .portfolio-clay .editorial-moment-showcase{grid-template-columns:1fr;height:auto;max-height:none;min-height:0}
+  .portfolio-clay .editorial-moment-stage-media{height:clamp(280px,90vw,430px)}
+  .portfolio-clay .editorial-moment-stage-copy{padding:1.35rem}
+  .portfolio-clay .editorial-moment-stage-copy h3{font-size:clamp(2rem,10vw,3rem)}
+  .portfolio-clay .editorial-moment-stage-copy>a{margin-top:1rem}
+  .portfolio-clay .editorial-moment-controls{margin-top:1.25rem}
+  .portfolio-clay .editorial-moment-rail button{flex-basis:140px;grid-template-columns:36px 1fr}
+  .portfolio-clay .editorial-moment-rail img{width:36px;height:36px}
 }
 
 
