@@ -216,6 +216,70 @@
   .portfolio-clay .portfolio-end-cta { padding:28px; }
   .portfolio-clay .portfolio-end-cta > .absolute { width:120px;height:120px; }
 }
+
+/* Restrained interaction layer: depth follows the pointer and content settles into place on scroll. */
+.portfolio-clay .portfolio-nav::after {
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:-1px;
+  width:100%;
+  height:2px;
+  background:linear-gradient(90deg,#e997a8,#ad86c8,#8fcfc2);
+  transform:scaleX(var(--page-progress,0));
+  transform-origin:left;
+  pointer-events:none;
+}
+
+.portfolio-clay .portfolio-reveal {
+  --tilt-x:0deg;
+  --tilt-y:0deg;
+  --glow-x:50%;
+  --glow-y:0%;
+  position:relative;
+  isolation:isolate;
+  opacity:0;
+  transform:translateY(18px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style:preserve-3d;
+  transition:opacity .5s ease var(--reveal-delay,0ms),transform .5s cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms),box-shadow .22s ease;
+}
+
+.portfolio-clay .portfolio-reveal::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:0;
+  border-radius:inherit;
+  background:radial-gradient(circle at var(--glow-x) var(--glow-y),rgba(255,255,255,.6),transparent 34%);
+  opacity:0;
+  transition:opacity .2s ease;
+  pointer-events:none;
+}
+
+.portfolio-clay .portfolio-reveal.portfolio-visible {
+  opacity:1;
+  transform:translateY(0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+}
+
+.portfolio-clay .portfolio-reveal.portfolio-visible:hover {
+  transform:translateY(-4px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+}
+
+.portfolio-clay .portfolio-reveal:hover::before { opacity:1; }
+.portfolio-clay .portfolio-reveal .portfolio-browser { transition:transform .28s cubic-bezier(.2,.8,.2,1); }
+.portfolio-clay .portfolio-project-card:hover .portfolio-browser { transform:translateY(-3px); }
+.portfolio-clay .portfolio-project-card:active { transform:translateY(1px) scale(.995) rotateX(0) rotateY(0); }
+
+@media (prefers-reduced-motion:reduce), (hover:none) {
+  .portfolio-clay .portfolio-reveal,
+  .portfolio-clay .portfolio-reveal.portfolio-visible,
+  .portfolio-clay .portfolio-reveal.portfolio-visible:hover {
+    opacity:1;
+    transform:none;
+    transition:none;
+  }
+  .portfolio-clay .portfolio-reveal::before { display:none; }
+}
 @media (max-width:360px) {
   .portfolio-clay .portfolio-main { padding-inline:14px; }
   .portfolio-clay .portfolio-brand { font-size:1rem; }
