@@ -39,7 +39,8 @@ const selectedMoments = [
     label: "PRODUCT PITCH / KENYA",
     title: "Pitching Zortal",
     note: "Presenting a gamified prediction layer for creator coins in Kenya.",
-    images: ["/experience-moments/kenya-product-pitch.webp"],
+    images: ["/experience-moments/kenya-based-founders.webp", "/experience-moments/kenya-product-pitch.webp"],
+    link: "https://x.com/qingthecreator_/status/1980672270486884673?s=46",
   },
   {
     label: "CHIEF HOST",
@@ -97,12 +98,16 @@ const selectedMoments = [
 export default function Experience() {
   const [active, setActive] = useState(0)
   const [activeMoment, setActiveMoment] = useState(0)
+  const [activeMomentImage, setActiveMomentImage] = useState(0)
   const touchStart = useRef(null)
   const momentTouchStart = useRef(null)
   const selectNext = () => setActive(current => (current + 1) % awards.length)
   const selected = awards[active]
   const moment = selectedMoments[activeMoment]
-  const showMoment = direction => setActiveMoment(current => (current + direction + selectedMoments.length) % selectedMoments.length)
+  const showMoment = direction => {
+    setActiveMoment(current => (current + direction + selectedMoments.length) % selectedMoments.length)
+    setActiveMomentImage(0)
+  }
   return (
     <div className="editorial-experience">
       <header className="editorial-experience-hero editorial-award-showcase">
@@ -138,13 +143,20 @@ export default function Experience() {
         <div className="editorial-moment-showcase"
           onTouchStart={event => { momentTouchStart.current = event.touches[0].clientX }}
           onTouchEnd={event => { if (momentTouchStart.current !== null && Math.abs(event.changedTouches[0].clientX - momentTouchStart.current) > 45) showMoment(event.changedTouches[0].clientX < momentTouchStart.current ? 1 : -1); momentTouchStart.current = null }}>
-          <div className={`editorial-moment-stage-media ${moment.images.length > 1 ? 'has-pair' : ''}`} key={`${moment.title}-media`}>
-            {moment.images.map((image, imageIndex) => <img key={image} src={image} alt={`${moment.title}${moment.images.length > 1 ? `, photograph ${imageIndex + 1}` : ''}`} />)}
+          <div className="editorial-moment-stage-media" key={`${moment.title}-media`}>
+            <img src={moment.images[activeMomentImage]} alt={`${moment.title}${moment.images.length > 1 ? `, photograph ${activeMomentImage + 1} of ${moment.images.length}` : ''}`} />
+            {moment.images.length > 1 && <span className="editorial-moment-image-count">{String(activeMomentImage + 1).padStart(2, '0')} / {String(moment.images.length).padStart(2, '0')}</span>}
           </div>
           <div className="editorial-moment-stage-copy" key={`${moment.title}-copy`}>
             <span>{String(activeMoment + 1).padStart(2, '0')} / {String(selectedMoments.length).padStart(2, '0')} · {moment.label}</span>
             <h3>{moment.title}</h3>
             <p>{moment.note}</p>
+            {moment.images.length > 1 && <div className="editorial-moment-image-picker" aria-label={`${moment.title} photographs`}>
+              {moment.images.map((image, imageIndex) => <button key={image} type="button" className={imageIndex === activeMomentImage ? 'is-active' : ''} onClick={() => setActiveMomentImage(imageIndex)} aria-label={`Show photograph ${imageIndex + 1} of ${moment.images.length}`} aria-pressed={imageIndex === activeMomentImage}>
+                <img src={image} alt="" loading="lazy" />
+                <span>{String(imageIndex + 1).padStart(2, '0')}</span>
+              </button>)}
+            </div>}
             {moment.link && <a href={moment.link} target="_blank" rel="noopener noreferrer">View the moment ↗</a>}
             <div className="editorial-moment-controls">
               <button type="button" onClick={() => showMoment(-1)} aria-label="Previous moment">←</button>
@@ -153,7 +165,7 @@ export default function Experience() {
           </div>
         </div>
         <div className="editorial-moment-rail" aria-label="Select an experience">
-          {selectedMoments.map((item, index) => <button type="button" key={item.title} className={index === activeMoment ? 'is-active' : ''} onClick={() => setActiveMoment(index)} aria-pressed={index === activeMoment}>
+          {selectedMoments.map((item, index) => <button type="button" key={item.title} className={index === activeMoment ? 'is-active' : ''} onClick={() => { setActiveMoment(index); setActiveMomentImage(0) }} aria-pressed={index === activeMoment}>
             <img src={item.images[0]} alt="" loading="lazy" />
             <span>{String(index + 1).padStart(2, '0')} · {item.title}</span>
           </button>)}
