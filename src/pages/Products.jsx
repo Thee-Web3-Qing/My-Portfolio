@@ -136,7 +136,27 @@
       tags: ['Campus Marketplace', 'Student Economy', 'Next.js'],
       status: 'Live',
       links: {
-        demo: 'https://gigga-theta.vercel.app/',
+        demo: 'https://get-gigga.vercel.app/',
+        repo: null,
+      },
+    },
+    {
+      name: 'Bookie',
+      tagline: 'An AI receptionist for appointment-based businesses that answers customer questions, checks availability, handles booking conversations, and helps businesses manage enquiries without holding customer funds.',
+      tags: ['AI Receptionist', 'Appointments', 'Business Automation'],
+      status: 'Built',
+      links: {
+        demo: null,
+        repo: 'https://github.com/Thee-Web3-Qing/Askbookie',
+      },
+    },
+    {
+      name: 'Ubuntu',
+      tagline: 'A learning platform for boys in Kenya, with parent, guardian, and child journeys, structured programmes, academy access, and a growing library of guided educational content.',
+      tags: ['Education Platform', 'Parent and Child Flows', 'Next.js'],
+      status: 'Live',
+      links: {
+        demo: 'https://manofubuntu.org/',
         repo: null,
       },
     },
@@ -158,16 +178,6 @@
       links: {
         demo: 'https://bizora-os.vercel.app/',
         repo: null,
-      },
-    },
-    {
-      name: 'BountyPilot AI',
-      tagline: 'Autonomous web scraper and opportunity scorer for hackathon bounties. Pulls from Superteam, GibWork, DoraHacks, auto-rates by profile fit.',
-      tags: ['Web3 Automation', 'SQLite', 'Scraping'],
-      status: 'Shipped',
-      links: {
-        demo: 'https://bountypilot.xyz',
-        repo: 'https://github.com/Thee-Web3-Qing/BountyPilot-Ai',
       },
     },
     {
@@ -313,14 +323,17 @@
                 ))}
               </div>
               <div className="mt-auto flex gap-3 font-mono text-xs uppercase flex-wrap">
-                <a
-                  href={p.links.demo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="px-4 py-2 rounded-full bg-ink text-paper hover:bg-electric transition-colors"
-                >
-                  Live demo
-                </a>
+                {p.links.demo && (
+                  <a
+                    href={p.links.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={(event) => event.stopPropagation()}
+                    className="px-4 py-2 rounded-full bg-ink text-paper hover:bg-electric transition-colors"
+                  >
+                    Live demo
+                  </a>
+                )}
                 {p.links.repo && (
                   <a
                     href={p.links.repo}
