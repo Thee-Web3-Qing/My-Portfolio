@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocation } from 'react-router-dom'
   import { NavLink } from 'react-router-dom'
   const links = [
     { to: '/', label: 'Home' },
@@ -10,8 +11,10 @@ import { useState } from 'react'
   ]
   export default function Nav() {
     const [open, setOpen] = useState(false)
+    const { pathname } = useLocation()
+    const section = pathname === '/' ? 'home' : pathname.startsWith('/products') ? 'products' : pathname.startsWith('/class') ? 'class' : pathname.startsWith('/experience') ? 'experience' : pathname.startsWith('/content') ? 'content' : 'other'
     return (
-      <header className="portfolio-nav sticky top-0 z-50 bg-paper/90 backdrop-blur border-b border-line">
+      <header className={`portfolio-nav portfolio-nav-${section} sticky top-0 z-50 bg-paper/90 backdrop-blur border-b border-line`}>
         <div className="portfolio-nav-inner max-w-6xl mx-auto px-5 sm:px-6 py-4">
           <div className="flex items-center justify-between gap-4">
             <NavLink
