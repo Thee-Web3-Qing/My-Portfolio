@@ -1,271 +1,104 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import ClayArtifact from '../components/ClayArtifact.jsx'
 
 const WHATSAPP_URL = 'https://wa.me/2348124320659?text=Hi%20Qing%2C%20I%20found%20your%20portfolio%20and%20I%20would%20like%20to%20discuss%20a%20project.'
 
-const stats = [
-  { value: '16+', label: 'products and client builds shipped' },
-  { value: '7', label: 'client websites and platforms' },
-  { value: '9', label: 'independent AI and digital products' },
-  { value: '14 days', label: 'typical website delivery window' },
+const projects = [
+  { number: '01', title: 'Bookie', type: 'AI receptionist', copy: 'Booking conversations that feel human.', link: 'https://askbookie.xyz/', image: '/project-thumbs/bookie-interface.webp' },
+  { number: '02', title: 'Man of Ubuntu', type: 'Education platform', copy: 'Community, culture and opportunity.', link: 'https://manofubuntu.org/', image: '/project-thumbs/ubuntu-interface.webp' },
+  { number: '03', title: 'Cleverson', type: 'Industrial catalogue', copy: 'Infrastructure for what comes next.', link: 'https://cleverson-industrial-equipment.vercel.app/', image: '/project-thumbs/cleverson-interface.webp' },
+  { number: '04', title: 'Gigga', type: 'Student wallet', copy: 'Money tools made for student life.', link: 'https://get-gigga.vercel.app/', image: '/project-thumbs/gigga-interface.webp' },
+  { number: '05', title: 'Tab', type: 'Shared spending', copy: 'Simple tools for real shared expenses.', link: 'https://clearyourtab.xyz/', image: '/project-thumbs/tab-interface.webp' },
 ]
 
-const services = [
-  {
-    number: '01',
-    title: 'Websites and digital products',
-    copy: 'Mobile-first landing pages, marketplaces, dashboards and product prototypes designed around what your users actually need to do.',
-    link: '/services/mobile-first-websites',
-    action: 'View website service',
-  },
-  {
-    number: '02',
-    title: 'AI-powered business systems',
-    copy: 'Useful AI workflows that reduce repetitive work, organise information and help businesses move from scattered ideas to working systems.',
-    link: '/services/ai-business-automation',
-    action: 'View AI automation service',
-  },
-  {
-    number: '03',
-    title: 'Content and creative direction',
-    copy: 'Campaign ideas, scripts, storytelling and launch content that make technical or unfamiliar products easier for people to understand.',
-    link: '/services/web3-content-strategy',
-    action: 'View content service',
-  },
+const stories = [
+  { slug: 'codexero', title: 'CodeXero', kicker: 'Product feature', image: '/content-thumbs/codexero.webp' },
+  { slug: 'margin-trade', title: 'Margin Trade', kicker: 'Platform campaign', image: '/content-thumbs/margin-trade.webp' },
+  { slug: 'ramphub', title: 'Ramphub', kicker: 'Product spotlight', image: '/content-thumbs/ramphub.webp' },
+  { slug: 'clapmi', title: 'Clapmi', kicker: 'Brand video', image: '/content-thumbs/clapmi.webp' },
+  { slug: 'vaqno', title: 'Vaqno + The Impossible Build', kicker: 'Builder story', image: '/content-thumbs/vaqno-livestream.webp' },
 ]
 
-const caseStudies = [
-  {
-    title: 'Bookie',
-    type: 'AI receptionist',
-    copy: 'An AI receptionist for appointment businesses that answers customer questions, handles booking conversations and helps businesses manage enquiries.',
-    link: 'https://askbookie.xyz/',
-    accent: 'bg-coral',
-  },
-  {
-    title: 'Man of Ubuntu',
-    type: 'Education platform',
-    copy: 'A structured learning platform for boys in Kenya, with parent, guardian and child journeys, programmes, academy access and guided educational content.',
-    link: 'https://manofubuntu.org/',
-    accent: 'bg-lime',
-  },
-  {
-    title: 'Cleverson Industrial Equipment',
-    type: 'Industrial catalogue',
-    copy: 'A responsive equipment catalogue that guides customers through bakery, packaging, commercial kitchen, restaurant, laundry and pure-water solutions.',
-    link: 'https://cleverson-industrial-equipment.vercel.app/',
-    accent: 'bg-electric',
-  },
-  {
-    title: 'Gigga',
-    type: 'Student wallet',
-    copy: 'A Naira-first student wallet and savings product with wallet funding, peer transfers and a simple campus-focused experience.',
-    link: 'https://get-gigga.vercel.app/',
-    accent: 'bg-ink',
-  },
-  {
-    title: 'Tab',
-    type: 'Shared spending',
-    copy: 'A social spending app that records who paid, calculates group balances and gives friends, couples and roommates one clear way to settle.',
-    link: 'https://clearyourtab.xyz/',
-    accent: 'bg-coral',
-  },
-]
-
-const creativeWork = [
-  {
-    title: 'CodeXero - Product Feature',
-    type: 'Product Video',
-    link: 'https://x.com/QingTheCreator_/status/2071183931710325103/video/1?s=46',
-  },
-  {
-    title: 'Margin Trade - Platform Campaign',
-    type: 'Campaign Video',
-    link: 'https://x.com/QingTheCreator_/status/2073869608415842416/video/1?s=46',
-  },
-  {
-    title: 'Ramphub - Product Spotlight',
-    type: 'Product Video',
-    link: 'https://x.com/QingTheCreator_/status/2065842444415955061/video/1?s=46',
-  },
-  {
-    title: 'Clapmi - Product Campaign',
-    type: 'Brand Video',
-    link: 'https://x.com/QingTheCreator_/status/2068302555482923351/video/1?s=46',
-  },
-]
+function Arrow() {
+  return <span aria-hidden="true">↗</span>
+}
 
 export default function Home() {
-  const [showRealPortrait, setShowRealPortrait] = useState(false)
-
   return (
-    <div className="portfolio-home">
-      <section className="portfolio-home-hero relative pt-10 sm:pt-20 pb-14 sm:pb-20 grid lg:grid-cols-[1.08fr_.72fr] gap-10 lg:gap-14 items-center animate-fadeUp">
-        <div className="relative z-10">
-          <p className="font-mono text-xs sm:text-sm uppercase tracking-[0.22em] text-electric mb-4 leading-relaxed">
-            AI product builder · Creative strategist · Storyteller
-          </p>
-          <h1 className="font-display text-[3.3rem] sm:text-7xl lg:text-[5.65rem] font-extrabold leading-[0.96] tracking-[-0.045em] max-w-4xl">
-            Your idea deserves
-            <br />
-            <span className="text-stroke">more than a draft.</span>
-          </h1>
-          <p className="mt-6 max-w-2xl text-lg sm:text-xl leading-relaxed text-mid">
-            I turn rough ideas into clear stories, beautiful websites and useful digital products that people can understand, trust and use.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3">
-            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="text-center px-6 py-4 rounded-full bg-ink text-paper font-mono text-sm uppercase hover:bg-electric transition-colors">
-              Start a project on WhatsApp
-            </a>
-            <Link to="/products" className="text-center px-6 py-4 rounded-full border border-ink font-mono text-sm uppercase hover:bg-lime transition-colors">
-              Explore my work
-            </Link>
-          </div>
-          <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] sm:text-xs uppercase tracking-wider text-mid">
-            <span>Mobile-first</span>
-            <span>Clear project scope</span>
-            <span>Launch-ready handoff</span>
+    <div className="portfolio-home editorial-home">
+      <section className="editorial-hero">
+        <div className="editorial-hero-copy">
+          <p className="editorial-eyebrow"><span /> Creative developer &amp; designer</p>
+          <h1>Qing builds ideas<br />people <em>remember.</em></h1>
+          <p className="editorial-intro">Digital products, brands and experiences<br />with real people at the centre.</p>
+          <div className="editorial-actions">
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="editorial-primary">Book a project <Arrow /></a>
+            <Link to="/products" className="editorial-secondary">See my work <Arrow /></Link>
           </div>
         </div>
 
-        <div className="portfolio-home-scene relative mx-auto w-full max-w-[430px] lg:justify-self-end">
-          <ClayArtifact kind="browser" className="portfolio-scene-browser" />
-          <ClayArtifact kind="bulb" className="portfolio-scene-bulb" />
-          <ClayArtifact kind="laptop" className="portfolio-scene-laptop" />
-          <div
-            className={`portfolio-character portfolio-character-swap relative overflow-hidden rounded-[2.5rem] border border-ink bg-ink aspect-[4/5] ${showRealPortrait ? 'is-real' : ''}`}
-            role="button"
-            tabIndex={0}
-            aria-label="Reveal Qing's real portrait"
-            aria-pressed={showRealPortrait}
-            onClick={() => setShowRealPortrait((visible) => !visible)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' || event.key === ' ') {
-                event.preventDefault()
-                setShowRealPortrait((visible) => !visible)
-              }
-            }}
-          >
-            <img src="/qing-class-clay.jpg" alt="Clay portrait of Qing, AI product builder and creative strategist" className="portfolio-character-clay h-full w-full object-cover object-top" />
-            <img src="/qing-studio-web.jpg" alt="Studio portrait of Qing" className="portfolio-character-real absolute inset-0 h-full w-full object-cover" />
-            <span className="portfolio-character-hint absolute right-4 top-4 z-10 rounded-full px-3 py-2 font-mono text-[9px] uppercase tracking-wider">
-              Hover or tap
-            </span>
-            <div className="portfolio-character-caption absolute inset-x-0 bottom-0 bg-ink/90 text-paper p-5 sm:p-6 border-t border-paper/20">
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-lime">Qing The Creator</p>
-              <p className="font-display text-2xl sm:text-3xl font-bold mt-1">Giwa Oluwasheedah</p>
-              <p className="text-sm text-paper/70 mt-1">Ideas, products, content and culture.</p>
-            </div>
-          </div>
-          <div className="portfolio-scene-label absolute -left-4 sm:-left-8 top-8 rotate-[-5deg] rounded-2xl border border-ink bg-paper px-4 py-3 shadow-[4px_4px_0_0_#16161D]">
-            <p className="font-mono text-[10px] uppercase text-mid">Builder mode</p>
-            <p className="font-display font-bold">Idea → Live product</p>
-          </div>
+        <div className="editorial-portrait-wrap" aria-label="Portrait of Qing">
+          <span className="editorial-orbit orbit-one" />
+          <span className="editorial-orbit orbit-two" />
+          <span className="editorial-orbit-dot dot-one" />
+          <span className="editorial-orbit-dot dot-two" />
+          <span className="editorial-spark">✦</span>
+          <div className="editorial-grid" />
+          <img src="/qing-studio-cutout.webp" alt="Qing, creative developer and storyteller" />
+          <p className="editorial-note">Ideas.<br />Products.<br />Stories.</p>
         </div>
+
+        <div className="editorial-scroll" aria-hidden="true"><span>Scroll</span><i /></div>
       </section>
 
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pb-16">
-        {stats.map((stat) => (
-          <div key={stat.label} className="portfolio-stat noise-card border border-ink rounded-blob p-4 sm:p-5 bg-white/60">
-            <ClayArtifact kind={['sheets', 'browser', 'database', 'calendar'][stats.indexOf(stat)]} />
-            <strong className="block font-display text-2xl sm:text-3xl font-extrabold leading-none">{stat.value}</strong>
-            <p className="mt-2 text-xs sm:text-sm text-mid leading-snug">{stat.label}</p>
-          </div>
-        ))}
-      </section>
-
-      <section className="py-16 border-t border-line">
-        <div className="max-w-3xl">
-          <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">What I can build with you</p>
-          <h2 className="font-display text-4xl sm:text-6xl font-extrabold leading-[1.02]">One creative partner from idea to launch.</h2>
-          <p className="text-mid text-lg mt-5 leading-relaxed">You do not need to arrive with a perfect brief. Bring the idea, the problem or the business goal. I will help shape it into something clear enough to build and strong enough to share.</p>
+      <section className="editorial-section editorial-builds">
+        <div className="editorial-section-head">
+          <div><h2>Selected builds</h2></div>
+          <Link to="/products">View all projects <Arrow /></Link>
         </div>
-        <div className="grid lg:grid-cols-3 gap-5 mt-10">
-          {services.map((service) => (
-            <article key={service.number} className="portfolio-service-card group border border-ink rounded-blob p-6 sm:p-7 bg-white/60 noise-card hover:-translate-y-2 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
-              <ClayArtifact kind={['browser','bulb','video'][Number(service.number) - 1]} />
-              <span className="font-mono text-xs text-electric">{service.number}</span>
-              <h3 className="font-display text-2xl sm:text-3xl font-bold mt-8 leading-tight">{service.title}</h3>
-              <p className="text-mid mt-4 leading-relaxed">{service.copy}</p>
-              <Link to={service.link} className="inline-block mt-7 font-mono text-xs uppercase underline decoration-electric decoration-2 underline-offset-4">
-                {service.action}
-              </Link>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="py-16 border-t border-line">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-8">
-          <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">Selected builds</p>
-            <h2 className="font-display text-4xl sm:text-5xl font-extrabold">Built for real goals.</h2>
-          </div>
-          <Link to="/products" className="font-mono text-xs uppercase underline underline-offset-4">View every product</Link>
-        </div>
-        <div className="grid md:grid-cols-2 gap-5">
-          {caseStudies.map((item, index) => (
-            <a key={item.title} href={item.link} target="_blank" rel="noreferrer" className={`portfolio-case-card group relative overflow-hidden border border-ink rounded-blob bg-white/60 p-6 sm:p-8 min-h-[280px] flex flex-col justify-between hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300 ${index === 0 ? 'md:col-span-2' : ''}`}>
-              <ClayArtifact kind={['browser','folder','laptop','database','sheets'][index]} />
-              <div className={`absolute top-0 right-0 h-20 w-20 sm:h-28 sm:w-28 ${item.accent} border-l border-b border-ink rounded-bl-[3rem] transition-transform duration-300 group-hover:scale-110`} />
-              <div className="relative pr-16 sm:pr-24">
-                <span className="font-mono text-xs uppercase text-electric">0{index + 1} · {item.type}</span>
-                <h3 className="font-display text-3xl sm:text-4xl font-bold mt-4">{item.title}</h3>
-                <p className="text-mid mt-4 leading-relaxed max-w-md">{item.copy}</p>
+        <div className="editorial-project-grid">
+          {projects.map((project) => (
+            <a key={project.title} href={project.link} target="_blank" rel="noreferrer" className="editorial-project-card">
+              <div className="editorial-project-visual">
+                <img src={project.image} alt={`${project.title} website interface`} loading="lazy" />
               </div>
-              <span className="relative mt-8 font-mono text-xs uppercase group-hover:text-electric">Open live product ↗</span>
+              <div className="editorial-project-meta">
+                <span>{project.number}</span>
+                <span className="project-arrow"><Arrow /></span>
+              </div>
+              <h3>{project.title}</h3>
+              <p className="editorial-project-type">{project.type}</p>
+              <p>{project.copy}</p>
             </a>
           ))}
         </div>
       </section>
 
-      <section className="py-16 border-t border-line grid lg:grid-cols-[.8fr_1.2fr] gap-8 lg:gap-14 items-start">
-        <div>
-          <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">About Qing</p>
-          <h2 className="font-display text-4xl sm:text-5xl font-extrabold leading-tight">I am not just a creator. I am a creative system.</h2>
+      <section className="editorial-section editorial-stories">
+        <div className="editorial-section-head">
+          <div><p className="editorial-kicker">Top content videos</p><h2>Stories people <em>remember.</em></h2></div>
+          <Link to="/content">Watch all videos <Arrow /></Link>
         </div>
-        <div>
-          <p className="text-mid text-lg leading-relaxed">
-            Most people know me as Qing. I have worked across Web3 as a content creator, community builder, conference host, musician, comic storyteller, product founder and creative director. That range helps me see both sides of a project: what needs to work and what will make people care.
-          </p>
-          <p className="text-mid text-lg leading-relaxed mt-5">
-            My work sits at the intersection of story, culture, product and community. Whether I am building a client platform or explaining a technical product, the goal stays the same: make the idea feel clear, useful and memorable.
-          </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Link to="/experience" className="px-5 py-3 rounded-full border border-ink font-mono text-xs uppercase hover:bg-lime transition-colors">View my experience</Link>
-            <Link to="/hire" className="px-5 py-3 rounded-full border border-ink font-mono text-xs uppercase hover:bg-electric hover:text-paper transition-colors">How to work with me</Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 border-t border-line">
-        <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">More than websites</p>
-        <h2 className="font-display text-4xl sm:text-5xl font-extrabold mb-8">Stories people remember.</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {creativeWork.map((item) => (
-            <a key={item.title} href={item.link} target="_blank" rel="noreferrer" className="portfolio-creative-card group border border-ink rounded-blob p-6 bg-white/60 noise-card hover:-translate-y-2 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
-              <ClayArtifact kind={item.type === 'Product' ? 'laptop' : item.type === 'Comic' ? 'sheets' : 'video'} />
-              <span className="font-mono text-xs uppercase text-electric">{item.type}</span>
-              <h3 className="font-display text-xl font-bold mt-3 mb-8 leading-tight">{item.title}</h3>
-              <span className="font-mono text-xs uppercase group-hover:text-electric">View work ↗</span>
-            </a>
+        <div className="editorial-story-grid">
+          {stories.map((story, index) => (
+            <Link key={story.title} to={`/content?story=${story.slug}`} className="editorial-story-card">
+              <img src={story.image} alt={`${story.title} video thumbnail`} loading="lazy" />
+              <span className="story-index">0{index + 1}</span>
+              <div className="story-copy"><p>{story.kicker}</p><h3>{story.title}</h3></div>
+              <span className="story-play" aria-hidden="true">▶</span>
+            </Link>
           ))}
         </div>
       </section>
 
-      <section className="portfolio-end-cta my-8 sm:my-14 mb-16 sm:mb-24 rounded-[2.5rem] border border-ink bg-ink text-paper p-7 sm:p-12 lg:p-16 overflow-hidden relative">
-        <div className="absolute -right-16 -top-16 h-48 w-48 rounded-full bg-electric" />
-        <div className="absolute right-20 -bottom-20 h-40 w-40 rounded-full bg-lime" />
-        <div className="relative max-w-3xl">
-          <p className="font-mono text-xs uppercase tracking-[0.2em] text-lime mb-4">Have an idea in your notes?</p>
-          <h2 className="font-display text-4xl sm:text-6xl font-extrabold leading-[1.02]">Let’s turn it into something people can use.</h2>
-          <p className="text-paper/70 text-lg mt-5 leading-relaxed max-w-2xl">Tell me what you want to build, who it is for and what success should look like. I will help you find the clearest way forward.</p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3">
-            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="text-center px-6 py-4 rounded-full bg-lime text-ink font-mono text-sm uppercase font-bold hover:bg-paper transition-colors">Discuss your project</a>
-            <Link to="/hire" className="text-center px-6 py-4 rounded-full border border-paper/40 font-mono text-sm uppercase hover:bg-paper hover:text-ink transition-colors">View services first</Link>
-          </div>
-        </div>
+      <aside className="editorial-credit">
+        <span>Video editor</span>
+        <p>Stories cut with <strong>ThenaiRL</strong></p>
+        <a href="https://x.com/thenawave" target="_blank" rel="noreferrer">@thenawave <Arrow /></a>
+      </aside>
+
+      <section className="editorial-cta">
+        <div><p>Have an idea worth building?</p><h2>Let’s make it real.</h2></div>
+        <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">Start a project <Arrow /></a>
       </section>
     </div>
   )

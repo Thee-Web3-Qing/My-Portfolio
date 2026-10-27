@@ -1,4 +1,6 @@
-import ClayArtifact from '../components/ClayArtifact.jsx'
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useSearchParams } from 'react-router-dom'
 
 const channels = [
   {
@@ -232,116 +234,157 @@ const channels = [
     desc: 'Campaign videos, product features, and platform storytelling for emerging Web3 brands.',
     pieces: [
       {
+        slug: 'codexero',
         title: 'CodeXero - Product Feature',
         format: 'Product Video',
         link: 'https://x.com/QingTheCreator_/status/2071183931710325103/video/1?s=46',
+        thumbnail: '/content-thumbs/codexero.webp',
+        caption: 'Most people will tell you what an AI builder can do. I wanted to see it for myself, hypothetically. So if I was to test CodeXero with a completely random idea like Founder Tinder, a platform where founders swipe startup ideas instead of people, I’d watch it go from a simple prompt to an interactive product. That was the interesting part. CodeXero is the builder. Cluster Protocol is the unified AI infrastructure powering it underneath. If you’ve got an idea sitting in your notes app, this is probably the fastest way to find out what it could become. Try it yourself: app.codexero.xyz. Built on @codexero_xyz. Powered by @clusterprotocol.',
       },
       {
+        slug: 'margin-trade',
         title: 'Margin Trade - Trading Platform Campaign',
         format: 'Trading Platform',
         link: 'https://x.com/QingTheCreator_/status/2073869608415842416/video/1?s=46',
+        thumbnail: '/content-thumbs/margin-trade.webp',
+        caption: 'Earlier this year, I had about a million to hypothetically play with. I split it in half and it gave me an interesting outcome that led to a thought. What if the profit from one trade could help cushion the loss from another? Margin Trade brings crypto, stocks, and commodities into one cross-margin account, giving traders a more capital-efficient way to manage their positions onchain. I took a closer look at how it works. @margin_trade',
       },
       {
+        slug: 'ramphub',
         title: 'Ramphub - Product Spotlight',
         format: 'Product Video',
         link: 'https://x.com/QingTheCreator_/status/2065842444415955061/video/1?s=46',
+        thumbnail: '/content-thumbs/ramphub.webp',
+        caption: 'Five years ago, a tin of sardines cost around ₦250. Today, some sell for over ₦1,700. But what’s even more interesting is that despite inflation, you’ll still find different prices in different stores for the exact same product. The cheapest option isn’t always the best option either. Sometimes they’re out of stock. Sometimes they’re unavailable. Sometimes they can’t fulfill what you need. And that’s exactly what buying and selling crypto can feel like. In this video, I break down how @ramphub is solving that problem by comparing multiple providers in real time, optimizing for both price and availability, and giving users access to deeper liquidity through a single platform. One KYC. Multiple providers. Smarter execution. Watch till the end and let me know if you’ve ever experienced this while off-ramping crypto.',
       },
       {
+        slug: 'clapmi',
         title: 'Clapmi - Product Campaign',
         format: 'Brand Video',
         link: 'https://x.com/QingTheCreator_/status/2068302555482923351/video/1?s=46',
+        thumbnail: '/content-thumbs/clapmi.webp',
+        caption: 'Some days I want to build products. Some days I want to tell stories. Some days I want to make music. The problem isn’t finding something to create. The problem is finding a platform that grows with your creativity. That’s what caught my attention about @Clapmihq. A livestreaming platform on Solana where creators can go live, engage their communities, host competitions, and turn audiences into active participants. Whether you’re a builder, musician, educator, storyteller, or something completely different tomorrow, ClapMi gives you one place to create, compete, engage, and earn.',
+      },
+      {
+        slug: 'vaqno',
+        title: 'Vaqno, Free AI Models and The Impossible Build',
+        format: 'Builder Story',
+        link: 'https://x.com/QingTheCreator_/status/2111728996979503591?s=20',
+        thumbnail: '/content-thumbs/vaqno-livestream.webp',
+        caption: 'Yesterday, while building Vaqno, I needed an AI model to test websites and generate feedback, but I wasn’t ready to burn through API credits just experimenting. So I went looking for free models and found a whole catalogue on @Antseed, including Qwen, GLM, Nemotron, and coding models. They’re currently listed as FREE! 👀 Also, I’m hosting THE IMPOSSIBLE BUILD, a six-hour livestream where I’ll build a product from scratch, and YOU get to decide what I build. 🗳️ Vote here: theimpossiblebuild.vercel.app. Brands interested in being part of the livestream can send me a DM. And if you find my content useful, you can support me with a malt 🥹❤️',
       },
     ],
   },
 ]
 
 export default function Content() {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const featuredChannel = channels.find((channel) => channel.featured)
+  const otherChannels = channels.filter((channel) => !channel.featured)
+  const requestedStory = searchParams.get('story')
+  const [selectedPiece, setSelectedPiece] = useState(
+    () => featuredChannel.pieces.find((piece) => piece.slug === requestedStory) || null,
+  )
+
+  useEffect(() => {
+    setSelectedPiece(featuredChannel.pieces.find((piece) => piece.slug === requestedStory) || null)
+  }, [requestedStory, featuredChannel.pieces])
+
+  const openStory = (piece) => {
+    setSelectedPiece(piece)
+    setSearchParams({ story: piece.slug })
+  }
+
+  const closeStory = () => {
+    setSelectedPiece(null)
+    setSearchParams({})
+  }
+
   return (
-    <div className="portfolio-content pt-10 sm:pt-12 pb-20 sm:pb-24 animate-fadeUp">
-      <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
-        Frequencies
-      </p>
+    <div className="portfolio-content content-editorial animate-fadeUp">
+      <header className="content-editorial-hero">
+        <p>Content archive · 08 channels</p>
+        <h1>Stories, ideas and<br /><em>internet culture.</em></h1>
+        <div className="content-editorial-intro">
+          <p>I make technical products understandable, useful ideas memorable, and internet stories worth sharing.</p>
+          <span>Scroll to explore ↓</span>
+        </div>
+        <div className="content-hero-profiles" aria-label="Qing and ThenaiRL on X">
+          <a href="https://x.com/QingTheCreator_" target="_blank" rel="noreferrer" className="content-profile-card content-profile-qing">
+            <img src="/content-profiles/qing-x-profile.webp" alt="Qing's X profile" />
+            <span>Creator · @QingTheCreator_</span>
+          </a>
+          <a href="https://x.com/thenawave" target="_blank" rel="noreferrer" className="content-profile-card content-profile-editor">
+            <img src="/content-profiles/thenairl-x-profile.webp" alt="ThenaiRL's X profile" />
+            <span>Editor · @thenawave</span>
+          </a>
+        </div>
+      </header>
 
-      <h1 className="font-display text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
-        Eight content channels.
-      </h1>
+      <section className="content-featured">
+        <div className="content-section-heading">
+          <div><p>Top content videos</p><h2>Stories people remember.</h2></div>
+          <span>01 — 05</span>
+        </div>
+        <div className="content-vertical-grid">
+          {featuredChannel.pieces.map((piece, index) => (
+            <button key={piece.title} type="button" onClick={() => openStory(piece)} className="content-vertical-card">
+              <div className="content-vertical-media">
+                <img src={piece.thumbnail} alt={`${piece.title} thumbnail`} loading={index > 1 ? 'lazy' : 'eager'} />
+                <span className="content-vertical-number">0{index + 1}</span>
+                <span className="content-vertical-play">▶</span>
+              </div>
+              <p>{piece.format}</p>
+              <h3>{piece.title}</h3>
+              {piece.caption && <p className="content-featured-caption">{piece.caption}</p>}
+            </button>
+          ))}
+        </div>
+      </section>
 
-      <p className="text-mid max-w-2xl mb-12 sm:mb-16 leading-relaxed">
-        Education. Analysis. Music. Comics. Films. Community building. Brand
-        storytelling. Different formats, same mission: making ideas impossible
-        to ignore.
-      </p>
+      <section className="content-channel-index">
+        <div className="content-section-heading">
+          <div><p>The archive</p><h2>Explore every channel.</h2></div>
+          <span>Selected work across formats</span>
+        </div>
+        <div className="content-channel-list">
+          {otherChannels.map((channel) => (
+            <article key={channel.num} className="content-channel-row">
+              <div className="content-channel-heading">
+                <span>{channel.num}</span>
+                <div><h2>{channel.name}</h2><p>{channel.desc}</p></div>
+              </div>
+              <div className="content-link-list">
+                {channel.pieces.map((piece, index) => (
+                  <a key={piece.title} href={piece.link} target="_blank" rel="noreferrer">
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <div><p>{piece.format}</p><h3>{piece.title}</h3></div>
+                    <b>↗</b>
+                  </a>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-      <div className="space-y-20 sm:space-y-24">
-        {[...channels]
-          .sort(
-            (a, b) =>
-              Number(Boolean(b.featured)) - Number(Boolean(a.featured)),
-          )
-          .map((channel) => (
-          <div
-            key={channel.num}
-            data-clay-tone={Number(channel.num.slice(-2)) % 4}
-            className={
-              channel.featured
-                ? 'portfolio-channel portfolio-channel-featured rounded-blob border-2 border-electric bg-electric/5 p-5 sm:p-7 shadow-[8px_8px_0_0_#16161D]'
-                : 'portfolio-channel'
-            }
-          >
-            {channel.featured && (
-              <p className="font-mono text-xs font-bold uppercase tracking-[0.2em] text-electric mb-4">
-                Best work yet
-              </p>
-            )}
-            <div className="flex items-start sm:items-baseline gap-4 mb-6">
-              <ClayArtifact kind={channel.featured ? 'video' : Number(channel.num.slice(-2)) % 3 === 0 ? 'sheets' : 'browser'} className="portfolio-channel-object" />
-              <span className="font-display text-3xl font-extrabold text-electric shrink-0">
-                {channel.num}
-              </span>
-
-              <div>
-                <h2 className="font-display text-2xl sm:text-3xl font-bold leading-tight">
-                  {channel.name}
-                </h2>
-
-                <p className="text-sm text-mid leading-relaxed max-w-2xl">
-                  {channel.desc}
-                </p>
+      {selectedPiece && createPortal(
+        <div className="content-detail-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && closeStory()}>
+          <article className="content-detail-modal" role="dialog" aria-modal="true" aria-labelledby="content-detail-title">
+            <button type="button" className="content-detail-close" onClick={closeStory} aria-label="Close content details">×</button>
+            <div className="content-detail-layout">
+              <img src={selectedPiece.thumbnail} alt={`${selectedPiece.title} thumbnail`} />
+              <div className="content-detail-copy">
+                <p>{selectedPiece.format}</p>
+                <h2 id="content-detail-title">{selectedPiece.title}</h2>
+                <div className="content-detail-caption">{selectedPiece.caption}</div>
+                <a href={selectedPiece.link} target="_blank" rel="noreferrer">View original post <span>↗</span></a>
               </div>
             </div>
-
-            <div className="channel-stack grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-4">
-              {channel.pieces.map((piece, index) => (
-                <a
-                  key={`${piece.title}-${index}`}
-                  href={piece.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="portfolio-content-card channel-card noise-card border border-ink rounded-blob p-6 bg-white/60 hover:-translate-y-2 hover:rotate-1 hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300 block"
-                >
-                  <div className="flex items-center justify-between gap-4 mb-3">
-                    <span className="font-mono text-xs uppercase text-mid">
-                      {piece.format}
-                    </span>
-
-                    <span className="font-mono text-xs uppercase text-electric">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
-                  </div>
-
-                  <h3 className="font-display text-lg sm:text-xl font-bold mt-2 mb-5 leading-tight">
-                    {piece.title}
-                  </h3>
-
-                  <span className="font-mono text-xs uppercase text-electric group-hover:text-ink">
-                    View on X
-                  </span>
-                </a>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
+          </article>
+        </div>,
+        document.body,
+      )}
     </div>
   )
 }

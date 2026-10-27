@@ -12,6 +12,8 @@ const interactiveSelector = [
   '.portfolio-offer-card',
   '.portfolio-consult-card',
   '.portfolio-timeline-row',
+  '.content-vertical-card',
+  '.content-channel-row',
 ].join(',')
 
 export default function PortfolioInteractions() {
@@ -77,6 +79,12 @@ export default function PortfolioInteractions() {
     const updateScroll = () => {
       const distance = document.documentElement.scrollHeight - window.innerHeight
       root.style.setProperty('--page-progress', distance > 0 ? `${window.scrollY / distance}` : '0')
+      const hero = root.querySelector('.portfolio-home-hero')
+      if (hero) {
+        const heroBounds = hero.getBoundingClientRect()
+        const heroProgress = Math.max(0, Math.min(1, -heroBounds.top / Math.max(heroBounds.height, 1)))
+        root.style.setProperty('--hero-progress', heroProgress.toFixed(3))
+      }
     }
 
     updateScroll()

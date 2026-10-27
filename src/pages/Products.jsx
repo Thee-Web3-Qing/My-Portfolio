@@ -1,3 +1,6 @@
+import { useState } from 'react'
+import { createPortal } from 'react-dom'
+
   const recentClientBuilds = [
     {
       name: "FastFlow",
@@ -78,37 +81,29 @@
     },
   ]
 
-  function WebsitePreview({ url, title }) {
+  function WebsitePreview({ url, title, image }) {
     if (!url) return null
 
     return (
-      <div className="portfolio-browser mb-6 overflow-hidden rounded-[1.2rem] border border-ink bg-white shadow-[4px_4px_0_0_#16161D]">
-        <div className="flex items-center gap-2 border-b border-ink bg-paper px-3 py-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-coral" />
-          <span className="h-2.5 w-2.5 rounded-full bg-lime" />
-          <span className="h-2.5 w-2.5 rounded-full bg-electric" />
-          <span className="ml-2 min-w-0 flex-1 truncate rounded-full border border-line bg-white/80 px-3 py-1 font-mono text-[10px] text-mid">
+      <div className="products-browser">
+        <div className="products-browser-bar">
+          <span className="mac-dot mac-red" />
+          <span className="mac-dot mac-yellow" />
+          <span className="mac-dot mac-green" />
+          <span className="products-browser-url">
             {url.replace(/^https?:\/\//, '')}
           </span>
         </div>
-        <div className="relative h-52 sm:h-60 overflow-hidden bg-line">
-          <iframe
-            src={url}
-            title={`${title} desktop website preview`}
-            loading="lazy"
-            tabIndex="-1"
-            width="1440"
-            height="900"
-            className="absolute left-0 top-0 h-[900px] w-[1440px] origin-top-left scale-[0.24] sm:scale-[0.38] lg:scale-[0.31] pointer-events-auto bg-white"
-          />
-          <span className="pointer-events-none absolute bottom-3 right-3 rounded-full bg-ink px-3 py-2 font-mono text-[10px] uppercase text-paper shadow-md">
-            Interactive preview · use the menu
-          </span>
+        <div className="products-browser-screen">
+          {image ? (
+            <img src={image} alt={`${title} website interface`} loading="lazy" />
+          ) : (
+            <iframe src={url} title={`${title} desktop website preview`} loading="lazy" tabIndex="-1" width="1440" height="900" />
+          )}
         </div>
       </div>
     )
   }
-
   const products = [
     {
       name: 'Bookie',
@@ -116,6 +111,7 @@
       tags: ['AI Receptionist', 'Appointments', 'Business Automation'],
       status: 'Spotlight',
       spotlight: true,
+      image: '/project-thumbs/bookie-interface.webp',
       links: {
         demo: 'https://askbookie.xyz/',
         repo: 'https://github.com/Thee-Web3-Qing/Askbookie',
@@ -127,6 +123,7 @@
       tags: ['Education Platform', 'Parent and Child Flows', 'Next.js'],
       status: 'Spotlight',
       spotlight: true,
+      image: '/project-thumbs/ubuntu-interface.webp',
       links: {
         demo: 'https://manofubuntu.org/',
         repo: null,
@@ -138,6 +135,7 @@
       tags: ['Industrial Catalogue', 'Business Website', 'Responsive Design'],
       status: 'Spotlight',
       spotlight: true,
+      image: '/project-thumbs/cleverson-interface.webp',
       links: {
         demo: 'https://cleverson-industrial-equipment.vercel.app/',
         repo: null,
@@ -149,6 +147,7 @@
       tags: ['Campus Marketplace', 'Student Economy', 'Next.js'],
       status: 'Spotlight',
       spotlight: true,
+      image: '/project-thumbs/gigga-interface.webp',
       links: {
         demo: 'https://get-gigga.vercel.app/',
         repo: null,
@@ -160,6 +159,7 @@
       tags: ['Shared Spending', 'Group Expenses', 'Product Design'],
       status: 'Spotlight',
       spotlight: true,
+      image: '/project-thumbs/tab-interface.webp',
       links: {
         demo: 'https://clearyourtab.xyz/',
         repo: null,
@@ -237,8 +237,10 @@
     },
   ]
   export default function Products() {
+    const [selectedProduct, setSelectedProduct] = useState(null)
+
     return (
-      <div className="portfolio-products pt-12 pb-24">
+      <div className="portfolio-products products-editorial pt-12 pb-24">
         <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">
           Shipped under pressure
         </p>
@@ -256,44 +258,25 @@
           <h2 className="font-display text-3xl sm:text-4xl font-bold mb-7">
             The products I want you to see first.
           </h2>
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="spotlight-products-grid">
             {products.filter((product) => product.spotlight).map((p, index) => (
               <div
                 key={p.name}
                 data-clay-tone={index % 4}
                 role="link"
                 tabIndex={0}
-                onClick={() => window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
-                onKeyDown={(event) => event.key === "Enter" && window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
-                className="portfolio-project-card portfolio-own-card noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
+                onClick={() => setSelectedProduct(p)}
+                onKeyDown={(event) => event.key === "Enter" && setSelectedProduct(p)}
+                className="spotlight-product-card"
               >
-                <WebsitePreview url={p.links.demo} title={p.name} />
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="font-display text-2xl font-bold">{p.name}</h2>
-                  <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink">
-                    {p.status}
-                  </span>
+                <WebsitePreview url={p.links.demo} title={p.name} image={p.image} />
+                <div className="spotlight-product-meta">
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <a href={p.links.demo || p.links.repo} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} aria-label={`Open ${p.name} in a new tab`}>↗</a>
                 </div>
-                <p className="text-mid mb-4">{p.tagline}</p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {p.tags.map((t) => (
-                    <span key={t} className="font-mono text-xs uppercase px-2 py-1 bg-lime/60 rounded-full">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-auto flex gap-3 font-mono text-xs uppercase flex-wrap">
-                  {p.links.demo && (
-                    <a href={p.links.demo} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} className="px-4 py-2 rounded-full bg-ink text-paper hover:bg-electric transition-colors">
-                      Live demo
-                    </a>
-                  )}
-                  {p.links.repo && (
-                    <a href={p.links.repo} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} className="px-4 py-2 rounded-full border border-ink hover:bg-line transition-colors">
-                      Code
-                    </a>
-                  )}
-                </div>
+                <h2>{p.name}</h2>
+                <p>{p.tags[0]}</p>
+                <span className="spotlight-product-hint">Click to know more</span>
               </div>
             ))}
           </div>
@@ -316,11 +299,11 @@
                 data-clay-tone={index % 4}
                 role="link"
                 tabIndex={0}
-                onClick={() => window.open(project.links.demo || project.links.repo, "_blank", "noopener,noreferrer")}
-                onKeyDown={(event) => event.key === "Enter" && window.open(project.links.demo || project.links.repo, "_blank", "noopener,noreferrer")}
+                onClick={() => setSelectedProduct({ ...project, tagline: project.delivered })}
+                onKeyDown={(event) => event.key === "Enter" && setSelectedProduct({ ...project, tagline: project.delivered })}
                 className="portfolio-project-card portfolio-client-card noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
               >
-                <WebsitePreview url={project.links.demo} title={project.name} />
+                <WebsitePreview url={project.links.demo} title={project.name} image={project.image} />
                 <div className="flex items-start justify-between gap-4 mb-5">
                   <h3 className="font-display text-2xl font-bold">{project.name}</h3>
                   <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink whitespace-nowrap">
@@ -346,12 +329,12 @@
                 </div>
                 <div className="mt-auto flex gap-3 font-mono text-xs uppercase flex-wrap">
                   {project.links.demo && (
-                    <a href={project.links.demo} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-full bg-ink text-paper hover:bg-electric transition-colors">
+                    <a href={project.links.demo} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} className="px-4 py-2 rounded-full bg-ink text-paper hover:bg-electric transition-colors">
                       View deployed site
                     </a>
                   )}
                   {project.links.repo && (
-                    <a href={project.links.repo} target="_blank" rel="noreferrer" className="px-4 py-2 rounded-full border border-ink hover:bg-line transition-colors">
+                    <a href={project.links.repo} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} className="px-4 py-2 rounded-full border border-ink hover:bg-line transition-colors">
                       View code
                     </a>
                   )}
@@ -381,11 +364,11 @@
               data-clay-tone={index % 4}
               role="link"
               tabIndex={0}
-              onClick={() => window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
-              onKeyDown={(event) => event.key === "Enter" && window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
-              className="portfolio-project-card portfolio-own-card noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
+              onClick={() => setSelectedProduct(p)}
+              onKeyDown={(event) => event.key === "Enter" && setSelectedProduct(p)}
+              className="portfolio-project-card portfolio-own-card products-editorial-card noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 transition-all duration-300"
             >
-              <WebsitePreview url={p.links.demo} title={p.name} />
+              <WebsitePreview url={p.links.demo} title={p.name} image={p.image} />
               <div className="flex items-center justify-between mb-3">
                 <h2 className="font-display text-2xl font-bold">{p.name}</h2>
                 <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink">
@@ -401,6 +384,9 @@
                 ))}
               </div>
               <div className="mt-auto flex gap-3 font-mono text-xs uppercase flex-wrap">
+                <button type="button" onClick={(event) => { event.stopPropagation(); setSelectedProduct(p) }} className="products-details-button">
+                  View details
+                </button>
                 {p.links.demo && (
                   <a
                     href={p.links.demo}
@@ -429,6 +415,23 @@
             </div>
           </section>
         ))}
+        {selectedProduct && createPortal(
+          <div className="product-detail-backdrop" onMouseDown={(event) => event.target === event.currentTarget && setSelectedProduct(null)}>
+            <article className="product-detail-modal" role="dialog" aria-modal="true" aria-labelledby="product-detail-title">
+              <button type="button" className="product-detail-close" onClick={() => setSelectedProduct(null)} aria-label="Close product details">×</button>
+              <WebsitePreview url={selectedProduct.links.demo || selectedProduct.links.repo} title={selectedProduct.name} image={selectedProduct.image} />
+              <div className="product-detail-copy">
+                <p>{selectedProduct.status}</p>
+                <h2 id="product-detail-title">{selectedProduct.name}</h2>
+                {selectedProduct.clientWanted && <><h3>The brief</h3><p>{selectedProduct.clientWanted}</p><h3>What I built</h3></>}
+                <p>{selectedProduct.tagline || selectedProduct.delivered}</p>
+                <div className="product-detail-tags">{selectedProduct.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
+                <a href={selectedProduct.links.demo || selectedProduct.links.repo} target="_blank" rel="noreferrer">Open full product ↗</a>
+              </div>
+            </article>
+          </div>,
+          document.body,
+        )}
       </div>
     )
   }

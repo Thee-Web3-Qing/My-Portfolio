@@ -65,93 +65,91 @@ import { useState } from 'react'
       subject: 'Vibecoding session booking',
     },
   ]
+  const contentPackages = [
+    { term: 'Monthly', price: '$700', detail: '4 videos every month' },
+    { term: '3 months', price: '$1,500', detail: '12 videos across three months', featured: true },
+    { term: '6 months', price: '$2,800', detail: '24 videos across six months' },
+  ]
   import BookingModal from './BookingModal.jsx'
-  import ClayArtifact from '../components/ClayArtifact.jsx'
 
   export default function Hire() {
     const [selected, setSelected] = useState(null)
     return (
-      <div className="portfolio-hire pt-10 sm:pt-12 pb-20 sm:pb-24 animate-fadeUp">
-        <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
-          Work with Qing
-        </p>
-        <h1 className="font-display text-4xl sm:text-5xl font-extrabold mb-4 leading-tight">
-          Bring me in when the idea needs shape, voice, and fire.
-        </h1>
-        <p className="text-mid max-w-2xl mb-12 sm:mb-16 leading-relaxed">
-          I work with founders, creators, teams, and communities that need sharper
-          stories, better campaigns, stronger content, websites, landing pages, and
-          products people can understand quickly.
-        </p>
-        <section className="mb-16">
-          <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">Core services</p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="portfolio-hire hire-editorial animate-fadeUp">
+        <header className="hire-editorial-hero">
+          <p>Work with Qing</p>
+          <h1>Bring me in when<br />the idea needs <em>fire.</em></h1>
+          <div><p>I work with founders, creators, teams, and communities that need sharper stories, stronger content, and products people understand quickly.</p><span>Available worldwide · Remote</span></div>
+          <aside className="hire-hero-system" aria-label="Strategy, story and product services">
+            <div className="hire-hero-orbit"><i /><i /><i /></div>
+            <p>From loose idea to<br /><strong>clear direction.</strong></p>
+            <ol><li><span>01</span> Strategy</li><li><span>02</span> Story</li><li><span>03</span> Product</li></ol>
+            <b>Let’s build something useful ↗</b>
+          </aside>
+        </header>
+        <section className="hire-editorial-section">
+          <div className="hire-section-heading"><p>Core services</p><h2>What I can do for you.</h2></div>
+          <div className="hire-service-grid">
             {serviceList.map((service, index) => (
-              <Link key={service.slug} to={`/services/${service.slug}`} className="portfolio-hire-service group border border-ink rounded-blob bg-white/60 p-5 sm:p-6 hover:bg-lime transition-colors">
-                <ClayArtifact kind={['laptop','browser','bulb','video','folder'][index]} />
-                <span className="font-mono text-xs text-electric group-hover:text-ink">0{index + 1}</span>
-                <h2 className="font-display text-xl font-bold mt-5 leading-tight">{service.eyebrow}</h2>
-                <p className="text-sm text-mid group-hover:text-ink mt-3 leading-relaxed">{service.summary}</p>
-                <span className="inline-block font-mono text-xs uppercase mt-5">View service →</span>
+              <Link key={service.slug} to={`/services/${service.slug}`} className="hire-service-card">
+                <span>0{index + 1}</span>
+                <h3>{service.eyebrow}</h3>
+                <p>{service.summary}</p>
+                <b>View service ↗</b>
               </Link>
             ))}
           </div>
         </section>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-16">
+        <section className="hire-editorial-section hire-roles-section">
+          <div className="hire-section-heading"><p>Ways to work together</p><h2>Choose the role you need.</h2></div>
+          <div className="hire-role-list">
           {offers.map((offer) => (
             <div
               key={offer.title}
-              className="portfolio-offer-card noise-card border border-ink rounded-blob p-6 sm:p-7 flex flex-col hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300"
+              className="hire-role-row"
             >
-              <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink self-start mb-4">
-                {offer.badge}
-              </span>
-              <h2 className="font-display text-xl sm:text-2xl font-bold mb-3 leading-tight">
-                {offer.title}
-              </h2>
-              <p className="text-sm text-mid mb-6 leading-relaxed">
-                {offer.desc}
-              </p>
+              <span>{offer.badge}</span>
+              <h3>{offer.title}</h3>
+              <p>{offer.desc}</p>
               <button
                 onClick={() => setSelected(offer)}
-                className="mt-auto px-4 py-3 rounded-full bg-ink text-paper font-mono text-xs uppercase text-center hover:bg-electric transition-colors"
               >
-                Contact me
+                Contact me ↗
               </button>
             </div>
           ))}
-        </div>
-        <section className="mb-16">
-          <p className="font-mono text-xs uppercase tracking-widest text-coral mb-3">
-            Consultations
-          </p>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-3 leading-tight">
-            Book the session that fits.
-          </h2>
-          <p className="text-mid max-w-2xl mb-8 leading-relaxed">
-            These are focused, high-signal sessions. Come with the problem. Leave with a plan.
-          </p>
-          <div className="grid sm:grid-cols-3 gap-5">
+          </div>
+        </section>
+        <section className="hire-packages">
+          <div className="hire-packages-intro">
+            <p>Content packages</p>
+            <h2>Consistent videos,<br />handled end to end.</h2>
+            <span>I handle the research, scripting, and full production for every video.</span>
+          </div>
+          <div className="hire-package-grid">
+            {contentPackages.map((contentPackage) => (
+              <article key={contentPackage.term} className={contentPackage.featured ? 'hire-package-card is-featured' : 'hire-package-card'}>
+                <p>{contentPackage.term}</p>
+                <h3>{contentPackage.price}</h3>
+                <span>{contentPackage.detail}</span>
+                <ul><li>Research</li><li>Scripting</li><li>Full production</li></ul>
+                <button onClick={() => setSelected({ title: `${contentPackage.term} content package`, subject: `${contentPackage.term} content package inquiry`, desc: `${contentPackage.detail}. Research, scripting, and full production included.` })}>Choose package ↗</button>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section className="hire-consultations">
+          <div className="hire-section-heading"><p>Consultations</p><h2>Come with the problem.<br />Leave with a plan.</h2></div>
+          <div className="hire-consult-grid">
             {consultations.map((session) => (
               <div
                 key={session.title}
-                className="portfolio-consult-card border border-ink rounded-blob p-6 bg-white/60 noise-card hover:-translate-y-1 hover:shadow-[6px_6px_0_0_#16161D] transition-all duration-300 flex flex-col"
+                className="hire-consult-card"
               >
-                <h3 className="font-display text-xl font-bold mb-2">
-                  {session.title}
-                </h3>
-                <p className="font-display text-4xl font-extrabold mb-4 text-electric">
-                  {session.price}
-                </p>
-                <p className="text-sm text-mid leading-relaxed mb-6">
-                  {session.desc}
-                </p>
-                <button
-                  onClick={() => setSelected(session)}
-                  className="mt-auto px-4 py-3 rounded-full bg-ink text-paper font-mono text-xs uppercase text-center hover:bg-electric transition-colors"
-                >
-                  Book session
-                </button>
+                <p>{session.price}</p>
+                <h3>{session.title}</h3>
+                <span>{session.desc}</span>
+                <button onClick={() => setSelected(session)}>Book session ↗</button>
               </div>
             ))}
           </div>

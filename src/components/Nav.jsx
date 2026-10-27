@@ -42,6 +42,7 @@ import { useState } from 'react'
                 </NavLink>
               ))}
             </nav>
+            <NavLink to="/hire" className="portfolio-nav-cta hidden sm:inline-flex">Book a project <span>→</span></NavLink>
           </div>
           {open && (
             <nav className="portfolio-mobile-nav sm:hidden mt-4 grid gap-2 font-mono text-xs uppercase">
