@@ -1,0 +1,59 @@
+/* Classroom: flat editorial system, no claymorphism. */
+.portfolio-clay .editorial-class-page{--paper:#faf7f1;--ink:#242027;--red:#ed1726;--rule:#d5cbc1;background:var(--paper)!important;color:var(--ink)!important;font-family:Inter,Arial,sans-serif}
+.portfolio-clay .editorial-class-page .clay-shell{max-width:1180px;margin:auto;padding:0 32px 100px;background:transparent!important}
+.portfolio-clay .editorial-class-page .editorial-class-hero{padding:68px 0 78px;gap:40px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);background:transparent!important;border-bottom:1px solid var(--rule)}
+.portfolio-clay .editorial-class-page .editorial-class-intro h1{font:400 clamp(3.4rem,6vw,6.2rem)/.97 Georgia,serif;letter-spacing:-.065em;margin:22px 0}
+.portfolio-clay .editorial-class-page .editorial-class-intro>p:not(.editorial-kicker){font-size:1rem;line-height:1.7;max-width:440px;color:#514b4a}
+.portfolio-clay .editorial-class-page .editorial-class-actions a{border-radius:0!important;box-shadow:none!important;transition:background .2s,color .2s}
+.portfolio-clay .editorial-class-page .editorial-class-browser{border-radius:0!important;box-shadow:none!important;border:1px solid #2a2626}
+.portfolio-clay .editorial-class-page .editorial-class-browser-bar{background:#242027!important;color:white!important;border-radius:0}
+.portfolio-clay .editorial-class-page .editorial-class-browser-bar a{color:white}
+.portfolio-clay .editorial-class-page .editorial-class-browser iframe{height:420px}
+.portfolio-clay .editorial-class-page .editorial-class-caption{font-size:10px;letter-spacing:.08em}
+.portfolio-clay .editorial-class-page .clay-notice{display:flex;align-items:center;gap:24px;margin:0;padding:22px 0!important;background:transparent!important;color:var(--ink)!important;border:0!important;border-bottom:1px solid var(--rule)!important;border-radius:0!important;box-shadow:none!important}
+.portfolio-clay .editorial-class-page .clay-notice-symbol{font-size:24px;color:var(--red);background:none!important;box-shadow:none!important}
+.portfolio-clay .editorial-class-page .clay-notice>div{display:flex;flex-direction:column;gap:5px;flex:1}
+.portfolio-clay .editorial-class-page .clay-notice>div strong{font-size:.95rem}
+.portfolio-clay .editorial-class-page .clay-notice>div span{color:#6c6561;font-size:.85rem}
+.portfolio-clay .editorial-class-page .clay-notice-link{color:var(--red)!important;font-size:.8rem;font-weight:700;text-decoration:underline;text-underline-offset:5px}
+.portfolio-clay .editorial-class-page .clay-jump-nav{display:flex;flex-wrap:wrap;gap:22px;padding:22px 0;border-bottom:1px solid var(--rule);background:transparent!important;box-shadow:none!important}
+.portfolio-clay .editorial-class-page .clay-jump-nav a{color:var(--ink)!important;background:none!important;border:0!important;border-radius:0!important;padding:0!important;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.portfolio-clay .editorial-class-page .clay-jump-nav a:hover{color:var(--red)!important}
+.portfolio-clay .editorial-class-page .clay-section{padding:75px 0 0;margin:0;background:transparent!important}
+.portfolio-clay .editorial-class-page .clay-section-head{max-width:860px;margin-bottom:32px}
+.portfolio-clay .editorial-class-page .clay-kicker{color:var(--red)!important;font:700 11px/1.5 ui-monospace,monospace!important;letter-spacing:.14em;text-transform:uppercase}
+.portfolio-clay .editorial-class-page .class-display{font:400 clamp(2.5rem,5vw,5rem)/1.05 Georgia,serif!important;letter-spacing:-.055em!important;color:var(--ink)!important;margin:12px 0 0}
+.portfolio-clay .editorial-class-page .clay-section-head>p:not(.clay-kicker){max-width:670px;line-height:1.7;color:#5c5551}
+.portfolio-clay .editorial-class-page .clay-proof-grid,.portfolio-clay .editorial-class-page .clay-journey-grid,.portfolio-clay .editorial-class-page .clay-stack-grid,.portfolio-clay .editorial-class-page .clay-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0!important;border-top:1px solid var(--ink)}
+.portfolio-clay .editorial-class-page .clay-surface:not(.clay-notice){background:transparent!important;background-image:none!important;border:0!important;border-bottom:1px solid var(--rule)!important;border-radius:0!important;box-shadow:none!important;transform:none!important;color:var(--ink)!important}
+.portfolio-clay .editorial-class-page .clay-proof-card,.portfolio-clay .editorial-class-page .clay-journey-card,.portfolio-clay .editorial-class-page .clay-stack-card,.portfolio-clay .editorial-class-page .clay-guide-card{min-height:190px!important;padding:28px 26px 32px 0!important;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:12px}
+.portfolio-clay .editorial-class-page .clay-proof-card:nth-child(even),.portfolio-clay .editorial-class-page .clay-journey-card:nth-child(even),.portfolio-clay .editorial-class-page .clay-stack-card:nth-child(even),.portfolio-clay .editorial-class-page .clay-guide-card:nth-child(even){padding-left:28px!important;border-left:1px solid var(--rule)!important}
+.portfolio-clay .editorial-class-page .clay-object{display:none!important}
+.portfolio-clay .editorial-class-page .clay-eyebrow,.portfolio-clay .editorial-class-page .clay-badge{font:700 11px ui-monospace,monospace!important;text-transform:uppercase;letter-spacing:.12em;color:var(--red)!important;background:none!important;border:0!important;border-radius:0!important;padding:0!important}
+.portfolio-clay .editorial-class-page .clay-stat{font:400 clamp(3rem,5vw,5.5rem)/1 Georgia,serif!important;letter-spacing:-.06em;color:var(--ink)!important}
+.portfolio-clay .editorial-class-page .clay-proof-name,.portfolio-clay .editorial-class-page .clay-journey-card h3,.portfolio-clay .editorial-class-page .clay-stack-card h3,.portfolio-clay .editorial-class-page .clay-guide-card h3{font:400 clamp(1.5rem,2.5vw,2.4rem)/1.15 Georgia,serif!important;letter-spacing:-.035em;color:var(--ink)!important}
+.portfolio-clay .editorial-class-page :is(.clay-proof-card,.clay-journey-card,.clay-stack-card,.clay-guide-card) p{color:#5e5652!important;line-height:1.65;font-size:.93rem}
+.portfolio-clay .editorial-class-page .clay-footnote{color:#706761;font-size:.75rem;margin-top:12px}
+.portfolio-clay .editorial-class-page .clay-journey-top{width:100%;display:flex;justify-content:space-between;align-items:center;color:#6e625c;font-size:.78rem}
+.portfolio-clay .editorial-class-page .clay-subscription{padding:28px 0!important;display:flex;gap:24px;align-items:flex-start;border-top:1px solid var(--ink)!important}
+.portfolio-clay .editorial-class-page .clay-subscription-icon{font-size:28px;color:var(--red);background:none!important}
+.portfolio-clay .editorial-class-page .clay-subscription h3{font:400 1.8rem Georgia,serif;color:var(--ink)}
+.portfolio-clay .editorial-class-page .clay-subscription p{color:#5e5652;line-height:1.65}
+.portfolio-clay .editorial-class-page .clay-button{border-radius:0!important;box-shadow:none!important;transform:none!important;padding:12px 20px!important;font-size:.85rem;font-weight:700;background:var(--red)!important;color:white!important;border:1px solid var(--red)!important;text-decoration:none}
+.portfolio-clay .editorial-class-page .clay-enrollment-progress{padding:25px 0!important;border-top:1px solid var(--ink)!important}
+.portfolio-clay .editorial-class-page .clay-progress-heading{display:flex;justify-content:space-between;gap:20px;font-size:.9rem}
+.portfolio-clay .editorial-class-page .clay-progress-track{height:5px!important;background:#ddd3ca!important;border-radius:0!important;overflow:hidden;margin:16px 0}
+.portfolio-clay .editorial-class-page .clay-progress-fill{background:var(--red)!important;border-radius:0!important}
+.portfolio-clay .editorial-class-page .clay-enrollment-form{width:100%;max-width:760px;display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0!important}
+.portfolio-clay .editorial-class-page .clay-enrollment-form>h3,.portfolio-clay .editorial-class-page .clay-enrollment-form>p,.portfolio-clay .editorial-class-page .clay-payment-details,.portfolio-clay .editorial-class-page .clay-enrollment-form>label:nth-of-type(n+4),.portfolio-clay .editorial-class-page .clay-submit-button{grid-column:1/-1}
+.portfolio-clay .editorial-class-page .clay-enrollment-form>h3{font:400 2.5rem Georgia,serif;margin:0}
+.portfolio-clay .editorial-class-page .clay-enrollment-form>label{display:flex;flex-direction:column;gap:8px;font-size:.8rem;font-weight:700}
+.portfolio-clay .editorial-class-page .clay-enrollment-form :is(input,textarea,select){width:100%;border:1px solid #cbbfb6!important;border-radius:0!important;box-shadow:none!important;background:#fffdfa!important;padding:12px!important;color:var(--ink)!important;font:400 .95rem Inter,Arial,sans-serif}
+.portfolio-clay .editorial-class-page .clay-payment-details{background:#f0e9e1!important;border:1px solid var(--rule)!important;border-left:4px solid var(--red)!important;border-radius:0!important;box-shadow:none!important;padding:22px!important;display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+.portfolio-clay .editorial-class-page .clay-payment-eyebrow{font:700 .7rem ui-monospace,monospace;text-transform:uppercase;color:var(--red)}
+.portfolio-clay .editorial-class-page .clay-payment-bank{font:400 1.8rem Georgia,serif}
+.portfolio-clay .editorial-class-page .clay-payment-number{font:700 1.5rem ui-monospace,monospace}
+.portfolio-clay .editorial-class-page .clay-payment-copy{border:1px solid var(--ink)!important;background:transparent!important;color:var(--ink)!important;border-radius:0!important;padding:8px 12px!important}
+.portfolio-clay .editorial-class-page .clay-submit-button:disabled{opacity:.45;cursor:not-allowed}
+@media(max-width:900px){.portfolio-clay .editorial-class-page .editorial-class-hero{grid-template-columns:1fr;padding:40px 0}.portfolio-clay .editorial-class-page .editorial-class-browser iframe{height:370px}}
+@media(max-width:620px){.portfolio-clay .editorial-class-page .clay-shell{padding:0 18px 65px}.portfolio-clay .editorial-class-page .editorial-class-intro h1{font-size:clamp(3rem,12vw,4.6rem)}.portfolio-clay .editorial-class-page .editorial-class-browser iframe{height:300px}.portfolio-clay .editorial-class-page .editorial-class-caption{flex-direction:column;gap:5px}.portfolio-clay .editorial-class-page .clay-notice{align-items:flex-start;flex-wrap:wrap}.portfolio-clay .editorial-class-page .clay-jump-nav{gap:14px}.portfolio-clay .editorial-class-page .clay-section{padding-top:54px}.portfolio-clay .editorial-class-page .clay-proof-grid,.portfolio-clay .editorial-class-page .clay-journey-grid,.portfolio-clay .editorial-class-page .clay-stack-grid,.portfolio-clay .editorial-class-page .clay-guide-grid{grid-template-columns:1fr}.portfolio-clay .editorial-class-page :is(.clay-proof-card,.clay-journey-card,.clay-stack-card,.clay-guide-card){padding:24px 0!important;min-height:0!important;border-left:0!important}.portfolio-clay .editorial-class-page .clay-enrollment-form{grid-template-columns:1fr}.portfolio-clay .editorial-class-page .clay-enrollment-form>*{grid-column:1/-1}}
