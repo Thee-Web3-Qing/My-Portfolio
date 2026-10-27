@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
   import Nav from './components/Nav.jsx'
   import RouteMeta from './components/RouteMeta.jsx'
+  import PortfolioInteractions from './components/PortfolioInteractions.jsx'
   import Footer from './components/Footer.jsx'
   import Home from './pages/Home.jsx'
   import Content from './pages/Content.jsx'
@@ -18,6 +19,7 @@ import { Routes, Route } from 'react-router-dom'
           element={
             <div className="portfolio-clay min-h-screen flex flex-col">
               <RouteMeta />
+              <PortfolioInteractions />
               <Nav />
               <main className="portfolio-main flex-1 max-w-6xl mx-auto px-6 w-full">
                 <Routes>
