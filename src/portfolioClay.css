@@ -685,12 +685,13 @@
   .hire-service-grid { grid-template-columns:1fr; }
   .hire-service-card { min-height:230px; }
   .hire-role-row { grid-template-columns:1fr;gap:.8rem;padding:1.5rem 0; }
-  .hire-role-row button { justify-self:start; }
+  .hire-role-row > a { justify-self:start; }
   .hire-consultations { padding:4rem 1.2rem; }
   .hire-consult-grid { grid-template-columns:1fr; }
   .hire-consult-card { min-height:300px; }
   .hire-packages { padding:4rem 1.2rem;gap:2.5rem; }
   .hire-package-grid { grid-template-columns:1fr; }
+  .hire-package-card.is-featured { transform:none; }
   .hire-package-card.is-featured { transform:none; }
 }
 
