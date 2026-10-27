@@ -22,6 +22,14 @@ const roles = [
 ]
 const events = [
   {
+    role: "Red Carpet Host",
+    name: "Blockfest Africa 2026",
+    date: "2026",
+    desc: "Hosted the red carpet at Blockfest Africa 2026, engaging guests and capturing conversations from the event.",
+    link: "https://x.com/qingthecreator_/status/2113533061262631181?s=46",
+    secondLink: "https://x.com/qingthecreator_/status/2114349135444812220?s=46",
+  },
+  {
     role: "Chief Host",
     name: "Technova",
     date: "Jan 2025",
@@ -120,25 +128,7 @@ export default function Experience() {
         <div className="editorial-experience-heading"><span>03 / ON STAGE</span><h2>Rooms I've <em>been in.</em></h2></div>
         <div className="editorial-experience-rows">
           {events.map((event,index) => <a key={event.link} href={event.link} target="_blank" rel="noopener noreferrer" className="editorial-experience-row">
-            <span>{event.date}<br />{event.role}</span><div><h3>{event.name} ↗</h3><p>{event.desc}</p></div><b>{String(index+1).padStart(2,'0')}</b>
-          </a>)}
-        </div>
-      </section>
-    </div>
-  )
-}      <section className="editorial-experience-section">
-        <div className="editorial-experience-heading"><span>02 / CAREER</span><h2>The work behind <em>the work.</em></h2></div>
-        <div className="editorial-experience-rows">
-          {roles.map((role, index) => <article className="editorial-experience-row" key={index}>
-            <span>{role.period}</span><div><h3>{role.title}</h3><strong>{role.org}</strong><p>{role.desc}</p></div><b>{String(index+1).padStart(2,'0')}</b>
-          </article>)}
-        </div>
-      </section>
-      <section className="editorial-experience-section">
-        <div className="editorial-experience-heading"><span>03 / ON STAGE</span><h2>Rooms I've <em>been in.</em></h2></div>
-        <div className="editorial-experience-rows">
-          {events.map((event,index) => <a key={event.link} href={event.link} target="_blank" rel="noopener noreferrer" className="editorial-experience-row">
-            <span>{event.date}<br />{event.role}</span><div><h3>{event.name} ↗</h3><p>{event.desc}</p></div><b>{String(index+1).padStart(2,'0')}</b>
+            <span>{event.date}<br />{event.role}</span><div><h3>{event.name} ↗</h3><p>{event.desc}</p>{event.secondLink && <span className="editorial-event-second-link" onClick={e => { e.preventDefault(); e.stopPropagation(); window.open(event.secondLink, '_blank', 'noopener,noreferrer') }} role="button" tabIndex={0} onKeyDown={e => { if (e.key === 'Enter') { e.preventDefault(); window.open(event.secondLink, '_blank', 'noopener,noreferrer') } }}>Second event post ↗</span>}</div><b>{String(index+1).padStart(2,'0')}</b>
           </a>)}
         </div>
       </section>
