@@ -111,10 +111,55 @@
 
   const products = [
     {
+      name: 'Bookie',
+      tagline: 'An AI receptionist for appointment-based businesses that answers customer questions, checks availability, handles booking conversations, and helps businesses manage enquiries without holding customer funds.',
+      tags: ['AI Receptionist', 'Appointments', 'Business Automation'],
+      status: 'Spotlight',
+      spotlight: true,
+      links: {
+        demo: 'https://askbookie.xyz/',
+        repo: 'https://github.com/Thee-Web3-Qing/Askbookie',
+      },
+    },
+    {
+      name: 'Man of Ubuntu',
+      tagline: 'A learning platform for boys in Kenya, with parent, guardian, and child journeys, structured programmes, academy access, and a growing library of guided educational content.',
+      tags: ['Education Platform', 'Parent and Child Flows', 'Next.js'],
+      status: 'Spotlight',
+      spotlight: true,
+      links: {
+        demo: 'https://manofubuntu.org/',
+        repo: null,
+      },
+    },
+    {
+      name: 'Cleverson Industrial Equipment',
+      tagline: 'A responsive catalogue website for an industrial equipment supplier, organising bakery, packaging, commercial kitchen, restaurant, laundry, and pure-water-line equipment into clear customer pathways.',
+      tags: ['Industrial Catalogue', 'Business Website', 'Responsive Design'],
+      status: 'Spotlight',
+      spotlight: true,
+      links: {
+        demo: 'https://cleverson-industrial-equipment.vercel.app/',
+        repo: null,
+      },
+    },
+    {
+      name: 'Gigga',
+      tagline: 'A campus economy platform where students can post tasks, earn by completing Giggas, offer their skills, and discover student-run products and businesses through accountable campus profiles.',
+      tags: ['Campus Marketplace', 'Student Economy', 'Next.js'],
+      status: 'Spotlight',
+      spotlight: true,
+      links: {
+        demo: 'https://get-gigga.vercel.app/',
+        repo: null,
+      },
+    },
+    {
       name: 'Tab',
       tagline: 'A social spending app for friends, couples, roommates, travel groups and teams. Tab records who paid and who benefited, keeps the running debit and credit clear, calculates the final net balances, and lets everyone settle once.',
       tags: ['Shared Spending', 'Group Expenses', 'Product Design'],
-      status: 'Live',
+      status: 'Spotlight',
+      spotlight: true,
       links: {
         demo: 'https://clearyourtab.xyz/',
         repo: null,
@@ -127,36 +172,6 @@
       status: 'Live',
       links: {
         demo: 'https://civora-dun.vercel.app/',
-        repo: null,
-      },
-    },
-    {
-      name: 'Gigga',
-      tagline: 'A campus economy platform where students can post tasks, earn by completing Giggas, offer their skills, and discover student-run products and businesses through accountable campus profiles.',
-      tags: ['Campus Marketplace', 'Student Economy', 'Next.js'],
-      status: 'Live',
-      links: {
-        demo: 'https://get-gigga.vercel.app/',
-        repo: null,
-      },
-    },
-    {
-      name: 'Bookie',
-      tagline: 'An AI receptionist for appointment-based businesses that answers customer questions, checks availability, handles booking conversations, and helps businesses manage enquiries without holding customer funds.',
-      tags: ['AI Receptionist', 'Appointments', 'Business Automation'],
-      status: 'Built',
-      links: {
-        demo: null,
-        repo: 'https://github.com/Thee-Web3-Qing/Askbookie',
-      },
-    },
-    {
-      name: 'Ubuntu',
-      tagline: 'A learning platform for boys in Kenya, with parent, guardian, and child journeys, structured programmes, academy access, and a growing library of guided educational content.',
-      tags: ['Education Platform', 'Parent and Child Flows', 'Next.js'],
-      status: 'Live',
-      links: {
-        demo: 'https://manofubuntu.org/',
         repo: null,
       },
     },
@@ -296,8 +311,27 @@
             ))}
           </div>
         </section>
-        <div className="grid sm:grid-cols-2 gap-6">
-          {products.map((p, index) => (
+        {[
+          {
+            eyebrow: 'Spotlight builds',
+            title: 'The products I want you to see first.',
+            items: products.filter((product) => product.spotlight),
+          },
+          {
+            eyebrow: 'More shipped products',
+            title: 'More experiments, tools and working builds.',
+            items: products.filter((product) => !product.spotlight),
+          },
+        ].map((section) => (
+          <section key={section.eyebrow} className="mb-20 last:mb-0">
+            <p className="font-mono text-xs uppercase tracking-widest text-electric mb-2">
+              {section.eyebrow}
+            </p>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-7">
+              {section.title}
+            </h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+          {section.items.map((p, index) => (
             <div
               key={p.name}
               data-clay-tone={index % 4}
@@ -348,7 +382,9 @@
               </div>
             </div>
           ))}
-        </div>
+            </div>
+          </section>
+        ))}
       </div>
     )
   }
