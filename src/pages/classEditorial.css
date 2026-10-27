@@ -1,5 +1,7 @@
 /* Classroom: flat editorial system, no claymorphism. */
 .portfolio-clay .editorial-class-page{--paper:#faf7f1;--ink:#242027;--red:#ed1726;--rule:#d5cbc1;background:var(--paper)!important;color:var(--ink)!important;font-family:Inter,Arial,sans-serif}
+.portfolio-clay:has(.editorial-class-page) .portfolio-main{max-width:100%;padding-inline:0}
+.portfolio-clay .editorial-class-page{width:100%;min-width:0}
 .portfolio-clay .editorial-class-page .clay-shell{max-width:1180px;margin:auto;padding:0 32px 100px;background:transparent!important}
 .portfolio-clay .editorial-class-page .editorial-class-hero{padding:68px 0 78px;gap:40px;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);background:transparent!important;border-bottom:1px solid var(--rule)}
 .portfolio-clay .editorial-class-page .editorial-class-intro h1{font:400 clamp(3.4rem,6vw,6.2rem)/.97 Georgia,serif;letter-spacing:-.065em;margin:22px 0}
