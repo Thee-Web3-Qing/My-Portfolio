@@ -18,7 +18,7 @@ const normalisePhone = (value) => {
 }
 
 const timeline = [
-  { date: 'June 2026', title: 'AI agents and automated research', copy: 'Tracium and BountyPilot pushed me from simple AI assistance into systems that score opportunities, review work and keep humans in control.' },
+  { date: 'June 2026', title: 'AI agents and automated research', copy: 'Tracium pushed me from simple AI assistance into systems that organise work, review progress and keep humans in control.' },
   { date: 'August 2026', title: 'Interactive learning and client products', copy: 'Poysis, Moment, 22Energy and The Author’s Room showed how quickly a clear brief can become a useful, responsive product.' },
   { date: 'August 2026', title: 'AI plus real-world infrastructure', copy: 'AssetDNA combined evidence analysis, business records, authentication and onchain preparation in one product.' },
   { date: 'Now', title: 'Teaching the process', copy: 'My next goal is to help 500 people understand the basics of vibecoding and use AI to bring their own ideas to life.' },
