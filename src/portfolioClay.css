@@ -1158,3 +1158,47 @@
 .portfolio-clay .portfolio-nav-class .portfolio-nav-cta { background:#fffaf6!important;color:#971022!important;border-color:#fffaf6!important; }
 .portfolio-clay .portfolio-nav-class .portfolio-mobile-nav { background:#a40e1e; }
 .portfolio-clay .portfolio-nav-class .portfolio-mobile-nav .portfolio-nav-link[aria-current="page"] { background:rgba(255,255,255,.18)!important; }
+
+
+/* Portfolio editorial system: Experience and Classroom */
+.portfolio-clay .editorial-experience,.portfolio-clay .editorial-class-hero{--ed-red:#ed1726;--ed-ink:#242027;--ed-paper:#faf7f1;color:var(--ed-ink);font-family:Inter,Arial,sans-serif}
+.portfolio-clay .editorial-experience{padding:0 0 6rem}
+.portfolio-clay .editorial-kicker,.portfolio-clay .editorial-experience-heading>span,.portfolio-clay .editorial-class-caption,.portfolio-clay .editorial-award-top,.portfolio-clay .editorial-award-action,.portfolio-clay .editorial-experience-row>span{font:700 12px/1.5 ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase}
+.portfolio-clay .editorial-kicker{color:#ed1726}
+.portfolio-clay .editorial-experience-hero{padding:6rem 1rem 5rem;border-bottom:1px solid #d8d0c7}
+.portfolio-clay .editorial-experience-hero h1,.portfolio-clay .editorial-class-intro h1{max-width:1000px;font:normal clamp(4rem,8vw,8.5rem)/.94 Georgia,serif;letter-spacing:-.065em;margin:1.5rem 0}
+.portfolio-clay .editorial-experience em,.portfolio-clay .editorial-class-hero em{color:#ed1726;font-style:normal}
+.portfolio-clay .editorial-experience-hero>p:not(.editorial-kicker),.portfolio-clay .editorial-class-intro>p:not(.editorial-kicker){max-width:560px;font-size:1.2rem;line-height:1.6;color:#504b4b}
+.portfolio-clay .editorial-experience-link{display:inline-block;margin-top:2rem;border-bottom:1px solid currentColor;padding-bottom:.5rem;font-weight:700}
+.portfolio-clay .editorial-experience-section{padding:5rem 1rem 0}
+.portfolio-clay .editorial-experience-heading{display:flex;justify-content:space-between;align-items:start;gap:2rem;margin-bottom:2.5rem}
+.portfolio-clay .editorial-experience-heading h2{font:normal clamp(2.8rem,5vw,5rem)/1 Georgia,serif;letter-spacing:-.05em;max-width:660px}
+.portfolio-clay .editorial-awards-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.portfolio-clay .editorial-award{display:flex;flex-direction:column;gap:1rem;padding:1.5rem;border:1px solid #ded5cd;background:#fffdfa;border-radius:8px;color:#242027;text-decoration:none;transition:transform .2s}
+.portfolio-clay .editorial-award:hover{transform:translateY(-5px)}
+.portfolio-clay .editorial-award-top{display:flex;justify-content:space-between;gap:1rem;color:#ed1726}
+.portfolio-clay .editorial-award-art{min-height:240px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#222025;color:#f9f3e8;text-align:center;gap:.5rem}
+.portfolio-clay .editorial-award:nth-child(even) .editorial-award-art{background:#ed1726}
+.portfolio-clay .editorial-award-art>span{font:700 1rem ui-monospace,monospace}
+.portfolio-clay .editorial-award-art strong{font:900 clamp(3rem,6vw,6rem)/1 Inter,Arial,sans-serif;letter-spacing:-.09em}
+.portfolio-clay .editorial-award-art strong span{color:#ffc5ae}
+.portfolio-clay .editorial-award-art small{font:700 .75rem ui-monospace,monospace;text-transform:uppercase;letter-spacing:.15em}
+.portfolio-clay .editorial-award h3{font:normal 2rem/1.1 Georgia,serif}
+.portfolio-clay .editorial-award-action{margin-top:auto;border-top:1px solid #ded5cd;padding-top:1rem}
+.portfolio-clay .editorial-experience-note{font-size:.8rem;color:#676061;margin-top:1rem}
+.portfolio-clay .editorial-experience-row{display:grid;grid-template-columns:190px 1fr 45px;gap:2rem;padding:2rem 0;border-top:1px solid #cfc7c0;text-decoration:none;color:inherit}
+.portfolio-clay .editorial-experience-row h3{font:normal clamp(1.6rem,3vw,2.7rem)/1.15 Georgia,serif}
+.portfolio-clay .editorial-experience-row strong{display:block;margin-top:.7rem;font-size:.85rem}
+.portfolio-clay .editorial-experience-row p{max-width:680px;line-height:1.6;color:#5d5757;margin-top:.6rem}
+.portfolio-clay .editorial-experience-row>b{color:#ed1726}
+.portfolio-clay .editorial-class-hero{display:grid;grid-template-columns:40% 60%;gap:2rem;align-items:center;padding:4rem 2rem 5rem;background:#faf7f1}
+.portfolio-clay .editorial-class-intro h1{font-size:clamp(3.5rem,6vw,7rem)}
+.portfolio-clay .editorial-class-actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.portfolio-clay .editorial-class-actions a{padding:1rem 1.5rem;border:1px solid #242027;border-radius:50px;font-size:.85rem;font-weight:700}
+.portfolio-clay .editorial-class-actions a:first-child{background:#ed1726;border-color:#ed1726;color:white}
+.portfolio-clay .editorial-class-browser{overflow:hidden;border:1px solid #d5c9c0;border-radius:12px;background:white;box-shadow:0 15px 40px #211b1b20}
+.portfolio-clay .editorial-class-browser-bar{height:40px;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;font:600 11px ui-monospace,monospace;color:#4b4545;background:#eee9e3}
+.portfolio-clay .editorial-class-browser-bar>span:first-child{color:#ed1726}
+.portfolio-clay .editorial-class-browser iframe{width:100%;height:550px;border:0;background:#fff}
+.portfolio-clay .editorial-class-caption{display:flex;justify-content:space-between;gap:1rem;margin-top:1rem;color:#ed1726}
+@media(max-width:900px){.portfolio-clay .editorial-class-hero{grid-template-columns:1fr;padding:3rem 1.5rem}.portfolio-clay .editorial-awards-grid{grid-template-columns:1fr}.portfolio-clay .editorial-experience-row{grid-template-columns:130px 1fr 30px;gap:1rem}.portfolio-clay .editorial-experience-heading{display:block}.portfolio-clay .editorial-experience-heading h2{margin-top:1rem}}
