@@ -3,18 +3,6 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script>
-      // Present the full desktop composition, proportionally fitted to phone screens.
-      // The browser retains native vertical scrolling and normal link interactions.
-      (function () {
-        var phone = Math.min(screen.width, screen.height) <= 767 && navigator.maxTouchPoints > 0;
-        if (phone) {
-          var scale = Math.min(screen.width, screen.height) / 1200;
-          document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1200, initial-scale=' + scale.toFixed(4) + ', minimum-scale=' + scale.toFixed(4));
-          document.documentElement.classList.add('desktop-on-phone');
-        }
-      })();
-    </script>
     <title>Qing The Creator | AI Product Builder and Creative Strategist</title>
     <meta name="description" content="Giwa Oluwasheedah, known as Qing The Creator, builds mobile-first websites, AI products, business systems and Web3 content campaigns from Lagos, Nigeria." />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />

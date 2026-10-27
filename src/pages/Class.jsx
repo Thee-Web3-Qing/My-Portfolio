@@ -34,6 +34,12 @@ const stack = [
   ['Build layer', 'React, Next.js, TypeScript and Tailwind CSS'],
 ]
 
+const classroomScreens = [
+  { label: 'Dashboard', image: '/classroom-screens/dashboard.webp', alt: 'The Classroom student dashboard and learning path' },
+  { label: 'Task library', image: '/classroom-screens/tasks.webp', alt: 'The Classroom student task library' },
+  { label: 'Lesson workspace', image: '/classroom-screens/lesson.webp', alt: 'The Classroom lesson and assignment workspace' },
+]
+
 const classifyReason = (value) => {
   const reason = value.toLowerCase()
   if (/client|freelance|customer|agency|service|work/.test(reason)) return 'Client work'
@@ -54,6 +60,7 @@ export default function Class() {
   const [scanProgress, setScanProgress] = useState(0)
   const [receiptAnalysis, setReceiptAnalysis] = useState(null)
   const [pricingLoaded, setPricingLoaded] = useState(false)
+  const [activeClassroomScreen, setActiveClassroomScreen] = useState(0)
   const [pricing, setPricing] = useState({ acceptedCount: 80, price: 1000, tierIndex: 0, filledInTier: 80, remainingInTier: 20, soldOut: false })
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
@@ -181,10 +188,15 @@ export default function Class() {
           </div>
           <div className="editorial-class-showcase">
             <div className="editorial-class-browser">
-              <div className="editorial-class-browser-bar"><span>● ● ●</span><span>the-classroom-qing.vercel.app</span><a href="https://the-classroom-qing.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open The Classroom in a new tab">↗</a></div>
-              <iframe title="Live preview of The Classroom" src="https://the-classroom-qing.vercel.app/" loading="lazy" referrerPolicy="no-referrer" />
+              <div className="editorial-class-browser-bar"><span>● ● ●</span><span>{classroomScreens[activeClassroomScreen].label}</span><a href="https://the-classroom-qing.vercel.app/" target="_blank" rel="noopener noreferrer" aria-label="Open The Classroom in a new tab">↗</a></div>
+              <a className="editorial-class-screen" href="https://the-classroom-qing.vercel.app/" target="_blank" rel="noopener noreferrer">
+                <img src={classroomScreens[activeClassroomScreen].image} alt={classroomScreens[activeClassroomScreen].alt} fetchPriority="high" />
+              </a>
             </div>
-            <div className="editorial-class-caption"><span>01 / THE STUDENT EXPERIENCE</span><span>20 LESSONS · 5 MODULES · PRACTICAL TASKS</span></div>
+            <div className="editorial-class-screen-controls" aria-label="Classroom screenshots">
+              {classroomScreens.map((screen, index) => <button key={screen.label} type="button" className={index === activeClassroomScreen ? 'is-active' : ''} onClick={() => setActiveClassroomScreen(index)}><span>0{index + 1}</span>{screen.label}</button>)}
+            </div>
+            <div className="editorial-class-caption"><span>THE STUDENT EXPERIENCE</span><span>20 LESSONS · 5 MODULES · PRACTICAL TASKS</span></div>
           </div>
         </section>
 

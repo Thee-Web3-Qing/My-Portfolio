@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 
   const recentClientBuilds = [
@@ -81,11 +81,11 @@ import { createPortal } from 'react-dom'
     },
   ]
 
-  function WebsitePreview({ url, title, image }) {
+  function WebsitePreview({ url, title, image, interactive = false }) {
     if (!url) return null
 
     return (
-      <div className="products-browser">
+      <div className={`products-browser${interactive ? ' is-interactive' : ''}`}>
         <div className="products-browser-bar">
           <span className="mac-dot mac-red" />
           <span className="mac-dot mac-yellow" />
@@ -93,12 +93,13 @@ import { createPortal } from 'react-dom'
           <span className="products-browser-url">
             {url.replace(/^https?:\/\//, '')}
           </span>
+          {interactive && <a className="products-browser-open" href={url} target="_blank" rel="noreferrer">Open site ↗</a>}
         </div>
         <div className="products-browser-screen">
-          {image ? (
+          {image && !interactive ? (
             <img src={image} alt={`${title} website interface`} loading="lazy" />
           ) : (
-            <iframe src={url} title={`${title} desktop website preview`} loading="lazy" tabIndex="-1" width="1440" height="900" />
+            <iframe src={url} title={`${title} interactive website preview`} loading="lazy" width="1440" height="900" sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" />
           )}
         </div>
       </div>
@@ -238,6 +239,18 @@ import { createPortal } from 'react-dom'
   ]
   export default function Products() {
     const [selectedProduct, setSelectedProduct] = useState(null)
+
+    useEffect(() => {
+      if (!selectedProduct) return undefined
+      const previousOverflow = document.body.style.overflow
+      const closeOnEscape = (event) => event.key === 'Escape' && setSelectedProduct(null)
+      document.body.style.overflow = 'hidden'
+      window.addEventListener('keydown', closeOnEscape)
+      return () => {
+        document.body.style.overflow = previousOverflow
+        window.removeEventListener('keydown', closeOnEscape)
+      }
+    }, [selectedProduct])
 
     return (
       <div className="portfolio-products products-editorial pt-12 pb-24">
@@ -418,8 +431,12 @@ import { createPortal } from 'react-dom'
         {selectedProduct && createPortal(
           <div className="product-detail-backdrop" onMouseDown={(event) => event.target === event.currentTarget && setSelectedProduct(null)}>
             <article className="product-detail-modal" role="dialog" aria-modal="true" aria-labelledby="product-detail-title">
-              <button type="button" className="product-detail-close" onClick={() => setSelectedProduct(null)} aria-label="Close product details">×</button>
-              <WebsitePreview url={selectedProduct.links.demo || selectedProduct.links.repo} title={selectedProduct.name} image={selectedProduct.image} />
+              <div className="product-detail-toolbar">
+                <span>Live product preview</span>
+                <a href={selectedProduct.links.demo || selectedProduct.links.repo} target="_blank" rel="noreferrer">Open in new tab ↗</a>
+                <button type="button" className="product-detail-close" onClick={() => setSelectedProduct(null)} aria-label="Close product details">×</button>
+              </div>
+              <WebsitePreview url={selectedProduct.links.demo || selectedProduct.links.repo} title={selectedProduct.name} interactive />
               <div className="product-detail-copy">
                 <p>{selectedProduct.status}</p>
                 <h2 id="product-detail-title">{selectedProduct.name}</h2>

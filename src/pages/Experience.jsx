@@ -73,10 +73,10 @@ const events = [
   },
 ]
 const awards = [
-  { title: "Web3 Creator of the Year", organizer: "Onchain Fest Awards", link: "https://x.com/onchainfestival/status/1993585219010458081", year: "2025", description: "Recognised for creative storytelling and impact across the African Web3 community.", accent: "#34110e" },
-  { title: "Creator of the Year", organizer: "Web3 Nigeria Awards", link: "https://x.com/web3nigeria/status/2014977975410655486", year: "2025", description: "Recognised for leading creative communities, mentoring emerging creators and making African blockchain innovation easier to understand.", accent: "#254532" },
-  { title: "Content Creator of the Year", organizer: "DeFi Tigers", link: "https://x.com/cwembassy/status/1874712672622481887", year: "2024", description: "Celebrated for creativity, dedication and a distinctive voice in the Web3 space.", accent: "#58391b" },
-  { title: "Content Creator of the Year", organizer: "DeFi Tigers", link: "https://x.com/cwembassy/status/1736740698647298368", year: "2023", description: "Recognised for content that inspired others to explore decentralized platforms and helped bring the Web3 community together.", accent: "#262026" },
+  { title: "Web3 Creator of the Year", organizer: "Onchain Fest Awards", link: "https://x.com/onchainfestival/status/1993585219010458081", image: "/experience-awards/onchainfest-2025.jpg", year: "2025", description: "Recognised for creative storytelling and impact across the African Web3 community.", accent: "#34110e" },
+  { title: "Creator of the Year", organizer: "Web3 Nigeria Awards", link: "https://x.com/web3nigeria/status/2014977975410655486", image: "/experience-awards/web3-nigeria-2025.jpg", year: "2025", description: "Recognised for leading creative communities, mentoring emerging creators and making African blockchain innovation easier to understand.", accent: "#254532" },
+  { title: "Content Creator of the Year", organizer: "DeFi Tigers", link: "https://x.com/cwembassy/status/1874712672622481887", image: "/experience-awards/defi-tigers-2024.jpg", year: "2024", description: "Celebrated for creativity, dedication and a distinctive voice in the Web3 space.", accent: "#58391b" },
+  { title: "Content Creator of the Year", organizer: "DeFi Tigers", link: "https://x.com/cwembassy/status/1736740698647298368", image: "/experience-awards/defi-tigers-2023.jpg", year: "2023", description: "Recognised for content that inspired others to explore decentralized platforms and helped bring the Web3 community together.", accent: "#262026" },
 ]
 
 export default function Experience() {
@@ -108,10 +108,8 @@ export default function Experience() {
             return <button key={award.link} type="button" className="editorial-award-stack-card"
               style={{ '--stack-index': offset, '--award-accent': award.accent, zIndex: awards.length - offset, transform: `translate(${offset * 11}%, ${offset * -4}%) rotate(${offset * 5 - 3}deg) scale(${1 - offset * .07})`, opacity: offset === 3 ? .72 : 1 }}
               onClick={() => offset === 0 ? selectNext() : setActive(index)} aria-label={`Show ${award.title} ${award.year}`}>
+              <img src={award.image} alt={`${award.title}, ${award.organizer} ${award.year}`} loading={offset > 1 ? 'lazy' : 'eager'} />
               <span className="editorial-award-stack-label">{award.organizer} · {award.year}</span>
-              <strong>WINNER<span>.</span></strong>
-              <span className="editorial-award-stack-title">{award.title}</span>
-              <small>TAP TO EXPLORE ↗</small>
             </button>
           })}
         </div>
