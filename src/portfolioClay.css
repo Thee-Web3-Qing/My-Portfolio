@@ -1113,3 +1113,48 @@
   height:56px;
   margin-bottom:-.5rem;
 }
+
+
+/* Header contrast audit: page themes must own both background and foreground. */
+.portfolio-clay .portfolio-nav {
+  --nav-surface:#fbf8f2;
+  --nav-text:#211d20;
+  --nav-muted:#554b4e;
+  --nav-active:#c90d20;
+  background:var(--nav-surface)!important;
+  border-bottom:1px solid rgba(33,29,32,.16);
+}
+.portfolio-clay .portfolio-nav :is(.portfolio-brand,.portfolio-menu-button,.portfolio-nav-link) {
+  color:var(--nav-text)!important;
+}
+.portfolio-clay .portfolio-nav .portfolio-brand .text-electric { color:var(--nav-active)!important; }
+.portfolio-clay .portfolio-nav .portfolio-desktop-nav { background:transparent; }
+.portfolio-clay .portfolio-nav .portfolio-nav-link[aria-current="page"] {
+  color:var(--nav-active)!important;
+  background:rgba(201,13,32,.09)!important;
+  border-color:transparent;
+  box-shadow:none;
+  transform:none;
+}
+.portfolio-clay .portfolio-nav .portfolio-nav-link:hover { color:var(--nav-active)!important; }
+.portfolio-clay .portfolio-nav .portfolio-nav-cta {
+  background:#ed1726!important;
+  color:#fff!important;
+  border-color:#ed1726!important;
+}
+.portfolio-clay .portfolio-nav .portfolio-menu-button { border-color:currentColor; }
+.portfolio-clay .portfolio-nav .portfolio-mobile-nav { background:var(--nav-surface); }
+.portfolio-clay .portfolio-nav .portfolio-mobile-nav .portfolio-nav-link { background:transparent!important;color:var(--nav-text)!important; }
+.portfolio-clay .portfolio-nav .portfolio-mobile-nav .portfolio-nav-link[aria-current="page"] { color:var(--nav-active)!important;background:rgba(201,13,32,.1)!important; }
+.portfolio-clay .portfolio-nav-class {
+  --nav-surface:#bd1021;
+  --nav-text:#fffaf6;
+  --nav-muted:#fff0e8;
+  --nav-active:#fff1a8;
+  border-bottom-color:#8f0917;
+}
+.portfolio-clay .portfolio-nav-class .portfolio-brand .text-electric { color:#fff1a8!important; }
+.portfolio-clay .portfolio-nav-class .portfolio-nav-link[aria-current="page"] { background:rgba(255,255,255,.18)!important; }
+.portfolio-clay .portfolio-nav-class .portfolio-nav-cta { background:#fffaf6!important;color:#971022!important;border-color:#fffaf6!important; }
+.portfolio-clay .portfolio-nav-class .portfolio-mobile-nav { background:#a40e1e; }
+.portfolio-clay .portfolio-nav-class .portfolio-mobile-nav .portfolio-nav-link[aria-current="page"] { background:rgba(255,255,255,.18)!important; }
