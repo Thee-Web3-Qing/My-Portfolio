@@ -174,7 +174,7 @@ export default function Class() {
   }
 
   return (
-    <div className="class-page clay-class editorial-class-page relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+    <div className="class-page clay-class editorial-class-page">
       <div className="clay-shell">
         <section className="editorial-class-hero" aria-labelledby="class-heading">
           <div className="editorial-class-intro">
