@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const roles = [
   {
@@ -89,17 +89,46 @@ const selectedMoments = [
   {
     label: "HOST / MODERATOR",
     title: "NFT NG 2025",
-    note: "Moderating a fireside conversation at Nigeria's flagship NFT gathering.",
-    images: ["/experience-moments/nft-ng-2025.webp"],
+    note: "Hosting a full series of fireside conversations at Nigeria's flagship NFT gathering.",
+    images: [
+      "/experience-moments/nft-ng-2025-01.webp",
+      "/experience-moments/nft-ng-2025-02.webp",
+      "/experience-moments/nft-ng-2025-03.webp",
+      "/experience-moments/nft-ng-2025-04.webp",
+      "/experience-moments/nft-ng-2025-05.webp",
+    ],
     link: "https://x.com/nft__ng/status/1972617355198107941",
+  },
+  {
+    label: "FIRESIDE CHAT HOST",
+    title: "NFT NG 2026",
+    note: "Hosting a fireside conversation on the Building the Future Stack stage.",
+    images: ["/experience-moments/nft-ng-2026-01.webp", "/experience-moments/nft-ng-2026-02.webp"],
+    link: "https://x.com/qingthecreator_/status/2085669295867011168?s=46",
   },
 ]
 
 export default function Experience() {
   const [active, setActive] = useState(0)
+  const [openMoment, setOpenMoment] = useState(null)
+  const [openImage, setOpenImage] = useState(0)
   const touchStart = useRef(null)
   const selectNext = () => setActive(current => (current + 1) % awards.length)
   const selected = awards[active]
+  const gallery = openMoment === null ? null : selectedMoments[openMoment]
+  const showGallery = index => { setOpenMoment(index); setOpenImage(0) }
+  const stepImage = direction => setOpenImage(current => (current + direction + gallery.images.length) % gallery.images.length)
+
+  useEffect(() => {
+    if (openMoment === null) return undefined
+    const closeOnEscape = event => { if (event.key === 'Escape') setOpenMoment(null) }
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.body.style.overflow = ''
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [openMoment])
   return (
     <div className="editorial-experience">
       <header className="editorial-experience-hero editorial-award-showcase">
@@ -133,26 +162,19 @@ export default function Experience() {
       <section className="editorial-experience-section editorial-moments-section">
         <div className="editorial-experience-heading"><span>02 / SELECTED MOMENTS</span><h2>Proof I was <em>in the room.</em></h2></div>
         <div className="editorial-moment-board" aria-label="Experience photo board">
-          {selectedMoments.flatMap((item, eventIndex) => item.images.map((image, imageIndex) => {
-            const content = <>
-              <img src={image} alt={`${item.title}, photograph ${imageIndex + 1} of ${item.images.length}`} loading="lazy" />
+          {selectedMoments.map((item, eventIndex) => (
+            <button className="editorial-moment-pin" type="button" onClick={() => showGallery(eventIndex)} key={item.title} aria-label={`Open ${item.title} photo gallery`}>
+              <figure>
+              <img src={item.images[0]} alt={`${item.title} gallery cover`} loading="lazy" />
               <figcaption>
                 <span>{String(eventIndex + 1).padStart(2, '0')} · {item.label}</span>
                 <h3>{item.title}</h3>
-                {imageIndex === 0 && <p>{item.note}</p>}
-                <b>{String(imageIndex + 1).padStart(2, '0')} / {String(item.images.length).padStart(2, '0')}{item.link ? ' · View moment ↗' : ''}</b>
+                <p>{item.note}</p>
+                <b>{String(item.images.length).padStart(2, '0')} {item.images.length === 1 ? 'photo' : 'photos'} · Open gallery ↗</b>
               </figcaption>
-            </>
-            return item.link ? (
-              <a className="editorial-moment-pin" href={item.link} target="_blank" rel="noopener noreferrer" key={image}>
-                <figure>{content}</figure>
-              </a>
-            ) : (
-              <div className="editorial-moment-pin" key={image}>
-                <figure>{content}</figure>
-              </div>
-            )
-          }))}
+              </figure>
+            </button>
+          ))}
         </div>
       </section>
       <section className="editorial-experience-section">
@@ -163,6 +185,30 @@ export default function Experience() {
           </article>)}
         </div>
       </section>
+      {gallery && <div className="editorial-gallery-backdrop" role="presentation" onMouseDown={event => { if (event.target === event.currentTarget) setOpenMoment(null) }}>
+        <section className="editorial-gallery-modal" role="dialog" aria-modal="true" aria-label={`${gallery.title} photo gallery`}>
+          <button className="editorial-gallery-close" type="button" onClick={() => setOpenMoment(null)} aria-label="Close gallery">×</button>
+          <div className="editorial-gallery-media">
+            <img src={gallery.images[openImage]} alt={`${gallery.title}, photograph ${openImage + 1} of ${gallery.images.length}`} />
+            {gallery.images.length > 1 && <>
+              <button className="editorial-gallery-arrow is-previous" type="button" onClick={() => stepImage(-1)} aria-label="Previous photograph">←</button>
+              <button className="editorial-gallery-arrow is-next" type="button" onClick={() => stepImage(1)} aria-label="Next photograph">→</button>
+            </>}
+          </div>
+          <div className="editorial-gallery-details">
+            <span>{String(openMoment + 1).padStart(2, '0')} · {gallery.label}</span>
+            <h2>{gallery.title}</h2>
+            <p>{gallery.note}</p>
+            <strong>{String(openImage + 1).padStart(2, '0')} / {String(gallery.images.length).padStart(2, '0')}</strong>
+            {gallery.link && <a href={gallery.link} target="_blank" rel="noopener noreferrer">View original post ↗</a>}
+            {gallery.images.length > 1 && <div className="editorial-gallery-thumbnails" aria-label="Choose a photograph">
+              {gallery.images.map((image, imageIndex) => <button type="button" key={image} className={imageIndex === openImage ? 'is-active' : ''} onClick={() => setOpenImage(imageIndex)} aria-label={`Show photograph ${imageIndex + 1}`} aria-pressed={imageIndex === openImage}>
+                <img src={image} alt="" />
+              </button>)}
+            </div>}
+          </div>
+        </section>
+      </div>}
     </div>
   )
 }
