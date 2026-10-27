@@ -67,19 +67,24 @@ const caseStudies = [
 
 const creativeWork = [
   {
-    title: 'The Degen Throne',
-    type: 'Documentary',
-    link: 'https://youtu.be/mjgcVDle2Wg?si=WqlNSPoOot9kpjR',
+    title: 'CodeXero - Product Feature',
+    type: 'Product Video',
+    link: 'https://x.com/QingTheCreator_/status/2071183931710325103/video/1?s=46',
   },
   {
-    title: 'Union Build Comic',
-    type: 'Comic',
-    link: 'https://x.com/qingthecreator_/status/1922198581517185088?s=46',
+    title: 'Margin Trade - Platform Campaign',
+    type: 'Campaign Video',
+    link: 'https://x.com/QingTheCreator_/status/2073869608415842416/video/1?s=46',
   },
   {
-    title: 'Polygon Beef',
-    type: 'Music',
-    link: 'https://x.com/qingthecreator/status/1892170886712541632?s=46',
+    title: 'Ramphub - Product Spotlight',
+    type: 'Product Video',
+    link: 'https://x.com/QingTheCreator_/status/2065842444415955061/video/1?s=46',
+  },
+  {
+    title: 'Clapmi - Product Campaign',
+    type: 'Brand Video',
+    link: 'https://x.com/QingTheCreator_/status/2068302555482923351/video/1?s=46',
   },
 ]
 
