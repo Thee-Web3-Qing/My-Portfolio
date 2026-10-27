@@ -81,11 +81,6 @@ const creativeWork = [
     type: 'Music',
     link: 'https://x.com/qingthecreator/status/1892170886712541632?s=46',
   },
-  {
-    title: 'BountyPilot AI',
-    type: 'Product',
-    link: 'https://bountypilot.xyz',
-  },
 ]
 
 export default function Home() {
