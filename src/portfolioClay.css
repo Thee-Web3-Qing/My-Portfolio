@@ -51,6 +51,14 @@
 .portfolio-clay .portfolio-home-scene::before { content:"";position:absolute;inset:12% 4% 8%;z-index:-1;border-radius:43% 52% 31% 37% / 31% 32% 40% 40%;background:linear-gradient(125deg,#c7e5de,#f3c8bf 72%);box-shadow:inset 10px 12px 18px #fff9,0 11px 0 #cba99e,0 19px 27px #6f5c5d42;transform:rotate(-4deg); }
 .portfolio-clay .portfolio-character { border:7px solid #fff3e6;border-radius:43% 42% 33% 32% / 29% 30% 30% 30%;box-shadow:inset 5px 6px 10px white,0 11px 0 #d2a99e,0 21px 24px #674b5a55;transform:rotate(2deg); }
 .portfolio-clay .portfolio-character img { object-position:center 20%; }
+.portfolio-clay .portfolio-character-swap { cursor:pointer;outline:none; }
+.portfolio-clay .portfolio-character-swap :is(.portfolio-character-clay,.portfolio-character-real) { transition:opacity .45s ease,transform .7s cubic-bezier(.2,.75,.2,1); }
+.portfolio-clay .portfolio-character-real { opacity:0;object-position:center 24%;transform:scale(1.035); }
+.portfolio-clay .portfolio-character-swap:is(:hover,:focus-visible,.is-real) .portfolio-character-clay { opacity:0;transform:scale(1.04); }
+.portfolio-clay .portfolio-character-swap:is(:hover,:focus-visible,.is-real) .portfolio-character-real { opacity:1;transform:scale(1); }
+.portfolio-clay .portfolio-character-swap:focus-visible { outline:3px solid #514090;outline-offset:5px; }
+.portfolio-clay .portfolio-character-hint { border:1px solid #fff8;background:#292532d9;color:#fffaf4;box-shadow:0 5px 14px #2b223052;transition:opacity .25s ease,transform .25s ease; }
+.portfolio-clay .portfolio-character-swap:is(:hover,:focus-visible,.is-real) .portfolio-character-hint { opacity:0;transform:translateY(-5px); }
 .portfolio-clay .portfolio-character-caption { background:linear-gradient(0deg,#fff6e8f7,#fff6e8ec);border-top:2px solid #fff9;color:var(--pc-ink);text-align:center; }
 .portfolio-clay .portfolio-character-caption .text-lime { color:#824968; }
 .portfolio-clay .portfolio-character-caption .text-paper\/70 { color:#4d4650; }

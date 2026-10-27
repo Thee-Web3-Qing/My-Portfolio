@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import ClayArtifact from '../components/ClayArtifact.jsx'
 
@@ -89,6 +90,8 @@ const creativeWork = [
 ]
 
 export default function Home() {
+  const [showRealPortrait, setShowRealPortrait] = useState(false)
+
   return (
     <div className="portfolio-home">
       <section className="portfolio-home-hero relative pt-10 sm:pt-20 pb-14 sm:pb-20 grid lg:grid-cols-[1.08fr_.72fr] gap-10 lg:gap-14 items-center animate-fadeUp">
@@ -123,8 +126,25 @@ export default function Home() {
           <ClayArtifact kind="browser" className="portfolio-scene-browser" />
           <ClayArtifact kind="bulb" className="portfolio-scene-bulb" />
           <ClayArtifact kind="laptop" className="portfolio-scene-laptop" />
-          <div className="portfolio-character relative overflow-hidden rounded-[2.5rem] border border-ink bg-ink aspect-[4/5]">
-            <img src="/qing-class-clay.jpg" alt="Clay portrait of Qing, AI product builder and creative strategist" className="h-full w-full object-cover object-top" />
+          <div
+            className={`portfolio-character portfolio-character-swap relative overflow-hidden rounded-[2.5rem] border border-ink bg-ink aspect-[4/5] ${showRealPortrait ? 'is-real' : ''}`}
+            role="button"
+            tabIndex={0}
+            aria-label="Reveal Qing's real portrait"
+            aria-pressed={showRealPortrait}
+            onClick={() => setShowRealPortrait((visible) => !visible)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault()
+                setShowRealPortrait((visible) => !visible)
+              }
+            }}
+          >
+            <img src="/qing-class-clay.jpg" alt="Clay portrait of Qing, AI product builder and creative strategist" className="portfolio-character-clay h-full w-full object-cover object-top" />
+            <img src="/qing-studio-web.jpg" alt="Studio portrait of Qing" className="portfolio-character-real absolute inset-0 h-full w-full object-cover" />
+            <span className="portfolio-character-hint absolute right-4 top-4 z-10 rounded-full px-3 py-2 font-mono text-[9px] uppercase tracking-wider">
+              Hover or tap
+            </span>
             <div className="portfolio-character-caption absolute inset-x-0 bottom-0 bg-ink/90 text-paper p-5 sm:p-6 border-t border-paper/20">
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-lime">Qing The Creator</p>
               <p className="font-display text-2xl sm:text-3xl font-bold mt-1">Giwa Oluwasheedah</p>
