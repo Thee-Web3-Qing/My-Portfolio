@@ -1026,3 +1026,23 @@
 @media (prefers-reduced-motion: reduce) {
   .portfolio-clay .editorial-portrait-wrap *, .portfolio-clay .editorial-hero * { animation: none !important; }
 }
+
+
+/* Distinct page identities, with consistent editorial typography. */
+.portfolio-clay .portfolio-nav { transition: background-color .25s ease, border-color .25s ease; }
+.portfolio-clay .portfolio-nav-home { background: #faf7f1eF; border-bottom-color: #e3ded6; }
+.portfolio-clay .portfolio-nav-products { background: #19191dF2; border-bottom-color: #444; }
+.portfolio-clay .portfolio-nav-products .portfolio-brand,
+.portfolio-clay .portfolio-nav-products .portfolio-menu-button,
+.portfolio-clay .portfolio-nav-products .portfolio-nav-link:not(.bg-ink) { color: #fffaf2; }
+.portfolio-clay .portfolio-nav-products .portfolio-menu-button { border-color: #eae4dc; }
+.portfolio-clay .portfolio-nav-products .portfolio-nav-link.bg-ink { background: #f31526; color: white; }
+.portfolio-clay .portfolio-nav-class { background: #f41628F2; border-bottom-color: #a40c18; }
+.portfolio-clay .portfolio-nav-class .portfolio-brand,
+.portfolio-clay .portfolio-nav-class .portfolio-menu-button,
+.portfolio-clay .portfolio-nav-class .portfolio-nav-link:not(.bg-ink) { color: white; }
+.portfolio-clay .portfolio-nav-class .portfolio-menu-button { border-color: white; }
+.portfolio-clay .portfolio-nav-experience { background: #f0e8ddF2; border-bottom-color: #28232b; }
+.portfolio-clay .portfolio-nav-content { background: #fffaf2F2; border-bottom: 3px solid #f41628; }
+.portfolio-clay .portfolio-nav-products .portfolio-mobile-nav .portfolio-nav-link { background: #302e34; color: white; }
+.portfolio-clay .portfolio-nav-class .portfolio-mobile-nav .portfolio-nav-link { background: #bd1423; color: white; }
