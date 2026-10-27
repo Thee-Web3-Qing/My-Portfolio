@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { screenReceipt } from '../lib/receiptScreening'
 import './classClay.css'
+import './classEditorial.css'
 
 const PRICING_URL = '/api/class-pricing'
 const PRICE_TIERS = [1000, 2000, 4000, 8000, 16000]
@@ -166,7 +167,7 @@ export default function Class() {
   }
 
   return (
-    <div className="class-page clay-class relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
+    <div className="class-page clay-class editorial-class-page relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen">
       <div className="clay-shell">
         <section className="editorial-class-hero" aria-labelledby="class-heading">
           <div className="editorial-class-intro">
@@ -189,7 +190,7 @@ export default function Class() {
 
         <ClayNotice compact>
           <span className="clay-notice-symbol" aria-hidden="true">✳</span>
-          <div><strong>Registration is open for payment review.</strong><span>Confirm current payment details directly with Qing before paying.</span></div>
+          <div><strong>Class registration and payment review.</strong><span>Confirm current payment details directly with Qing before paying.</span></div>
           <a href="#registration" className="clay-notice-link">Read the class update <span aria-hidden="true">↗</span></a>
         </ClayNotice>
 
@@ -249,7 +250,7 @@ export default function Class() {
           </div>
           <ClayCard tone="cream" className="clay-subscription clay-enrollment-card">
             <span className="clay-subscription-icon" aria-hidden="true">✎</span>
-            <div><h3>Required subscriptions and accounts</h3><p>You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Neon accounts before class. Payments and registration are currently on hold.</p></div>
+            <div><h3>Required subscriptions and accounts</h3><p>You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Neon accounts before class. Registration requires payment review. Confirm the current payment instructions before transferring.</p></div>
           </ClayCard>
         </section>
 
@@ -306,9 +307,7 @@ function ClayCard({ tone, className = '', children }) {
   return <article className={`clay-surface clay-tone-${tone} ${className}`}>{children}</article>
 }
 
-function ClayObject({ kind }) {
-  return <span className={`clay-object clay-object-${kind}`} aria-hidden="true"><span className="clay-object-body"><i /><i /><i /><b /></span></span>
-}
+function ClayObject() { return null }
 
 function ClayBadge({ children }) {
   return <span className="clay-badge">{children}</span>
