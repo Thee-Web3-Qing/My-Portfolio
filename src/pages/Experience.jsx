@@ -80,7 +80,17 @@ const selectedMoments = [
     label: "CONVENER",
     title: "The Sunset Experience",
     note: "Convening an intimate gathering where creators and builders could connect, exchange ideas and find community.",
-    images: ["/experience-moments/sunset-convener.webp", "/experience-moments/sunset-community.webp"],
+    images: [
+      "/experience-moments/sunset-convener.webp",
+      "/experience-moments/sunset-community.webp",
+      "/experience-moments/sunset-7669.webp",
+      "/experience-moments/sunset-7759.webp",
+      "/experience-moments/sunset-7789.webp",
+      "/experience-moments/sunset-8051.webp",
+      "/experience-moments/sunset-8067.webp",
+      "/experience-moments/sunset-8100.webp",
+      "/experience-moments/sunset-8101.webp",
+    ],
     link: "https://x.com/qingthecreator_/status/2064391631457989092",
   },
   {
