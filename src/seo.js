@@ -13,7 +13,8 @@ const productWork = [
   { '@type': 'SoftwareApplication', name: 'Moment', applicationCategory: 'BusinessApplication', url: 'https://moment-blush.vercel.app/' },
   { '@type': 'SoftwareApplication', name: 'The Authors Room', applicationCategory: 'BusinessApplication', url: 'https://my-authors-room.vercel.app/' },
   { '@type': 'SoftwareApplication', name: '22Energy', applicationCategory: 'BusinessApplication', url: 'https://22-energy-rho.vercel.app/' },
-  { '@type': 'SoftwareApplication', name: 'BountyPilot AI', applicationCategory: 'BusinessApplication', url: 'https://bountypilot.xyz/' },
+  { '@type': 'SoftwareApplication', name: 'Bookie', applicationCategory: 'BusinessApplication', url: 'https://github.com/Thee-Web3-Qing/Askbookie' },
+  { '@type': 'SoftwareApplication', name: 'Ubuntu', applicationCategory: 'EducationalApplication', url: 'https://manofubuntu.org/' },
   { '@type': 'SoftwareApplication', name: 'AssetDNA', applicationCategory: 'BusinessApplication', url: 'https://asset-dna-gules.vercel.app/' },
 ]
 
@@ -81,7 +82,7 @@ const staticRoutes = {
     label: 'Product portfolio',
     heading: 'Websites, AI products and digital platforms built for real goals.',
     paragraphs: [
-      'Selected work includes Tab, FastFlow, Beauty by 3lle, Moment, The Authors Room, 22Energy, AssetDNA, BountyPilot AI and Poysis.',
+      'Selected work includes Tab, Gigga, Bookie, Ubuntu, FastFlow, Beauty by 3lle, Moment, The Authors Room, 22Energy, AssetDNA and Poysis.',
       'Each case study explains what the client wanted, what Qing built, the product features and the live deployment.',
     ],
     type: 'CollectionPage',
