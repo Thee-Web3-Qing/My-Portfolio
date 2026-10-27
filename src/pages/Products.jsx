@@ -250,6 +250,55 @@
           products built for real businesses, brands, hackathons, and communities.
         </p>
         <section className="mb-20">
+          <p className="font-mono text-xs uppercase tracking-widest text-electric mb-2">
+            Spotlight builds
+          </p>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold mb-7">
+            The products I want you to see first.
+          </h2>
+          <div className="grid sm:grid-cols-2 gap-6">
+            {products.filter((product) => product.spotlight).map((p, index) => (
+              <div
+                key={p.name}
+                data-clay-tone={index % 4}
+                role="link"
+                tabIndex={0}
+                onClick={() => window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
+                onKeyDown={(event) => event.key === "Enter" && window.open(p.links.demo || p.links.repo, "_blank", "noopener,noreferrer")}
+                className="portfolio-project-card portfolio-own-card noise-card border border-ink rounded-blob p-7 flex flex-col cursor-pointer hover:-translate-y-1 hover:shadow-[7px_7px_0_0_#16161D] transition-all duration-300"
+              >
+                <WebsitePreview url={p.links.demo} title={p.name} />
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="font-display text-2xl font-bold">{p.name}</h2>
+                  <span className="font-mono text-xs uppercase px-3 py-1 rounded-full border border-ink">
+                    {p.status}
+                  </span>
+                </div>
+                <p className="text-mid mb-4">{p.tagline}</p>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {p.tags.map((t) => (
+                    <span key={t} className="font-mono text-xs uppercase px-2 py-1 bg-lime/60 rounded-full">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+                <div className="mt-auto flex gap-3 font-mono text-xs uppercase flex-wrap">
+                  {p.links.demo && (
+                    <a href={p.links.demo} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} className="px-4 py-2 rounded-full bg-ink text-paper hover:bg-electric transition-colors">
+                      Live demo
+                    </a>
+                  )}
+                  {p.links.repo && (
+                    <a href={p.links.repo} target="_blank" rel="noreferrer" onClick={(event) => event.stopPropagation()} className="px-4 py-2 rounded-full border border-ink hover:bg-line transition-colors">
+                      Code
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        <section className="mb-20">
           <div className="flex items-end justify-between gap-6 mb-7">
             <div>
               <p className="font-mono text-xs uppercase tracking-widest text-electric mb-2">
@@ -312,11 +361,6 @@
           </div>
         </section>
         {[
-          {
-            eyebrow: 'Spotlight builds',
-            title: 'The products I want you to see first.',
-            items: products.filter((product) => product.spotlight),
-          },
           {
             eyebrow: 'More shipped products',
             title: 'More experiments, tools and working builds.',
