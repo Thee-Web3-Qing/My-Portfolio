@@ -1,4 +1,3 @@
-import ClayArtifact from '../components/ClayArtifact.jsx'
 
 const roles = [
   {
@@ -73,91 +72,41 @@ const awards = [
 
 export default function Experience() {
   return (
-    <div className="portfolio-experience pt-12 pb-24">
-      <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">
-        Track Record
-      </p>
-      <h1 className="font-display text-4xl sm:text-5xl font-extrabold mb-16">
-        Experience & Awards
-      </h1>
-      <section className="mb-20">
-        <h2 className="font-display text-2xl font-bold mb-6">
-          Awards & Recognition
-        </h2>
-        <div className="grid sm:grid-cols-2 gap-4">
-          {awards.map((award) => (
-            <a
-              key={award.link}
-              href={award.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="portfolio-award-card portfolio-award-linked group border border-ink rounded-blob p-5 bg-white/60 block"
-              aria-label={`View announcement for ${award.title}`}
-            >
-              <div className="flex items-center justify-between gap-3">
-                <span className="font-mono text-xs uppercase text-coral">{award.organizer}</span>
-                <span className="font-mono text-xs">{award.year} ↗</span>
-              </div>
-              <h3 className="font-display text-xl font-bold mt-5 group-hover:underline">{award.title}</h3>
-              <p className="font-mono text-xs uppercase mt-4">View award announcement ↗</p>
+    <div className="editorial-experience">
+      <header className="editorial-experience-hero">
+        <p className="editorial-kicker">THE WORK. THE PEOPLE. THE RECOGNITION.</p>
+        <h1>Experience worth <em>remembering.</em></h1>
+        <p>From hosting conversations and building communities to creating stories recognised across Web3.</p>
+        <a href="#recognition" className="editorial-experience-link">Explore the recognition ↘</a>
+      </header>
+      <section id="recognition" className="editorial-experience-section">
+        <div className="editorial-experience-heading"><span>01 / RECOGNITION</span><h2>Awards & <em>recognition.</em></h2></div>
+        <div className="editorial-awards-grid">
+          {awards.map((award, index) => (
+            <a key={award.link} className="editorial-award" href={award.link} target="_blank" rel="noopener noreferrer">
+              <div className="editorial-award-top"><span>{String(index + 1).padStart(2, '0')} / {award.organizer}</span><span>{award.year} ↗</span></div>
+              <div className="editorial-award-art" aria-hidden="true"><span>{award.year}</span><strong>WINNER<span>.</span></strong><small>{award.organizer}</small></div>
+              <h3>{award.title}</h3>
+              <span className="editorial-award-action">View original announcement ↗</span>
             </a>
           ))}
         </div>
+        <p className="editorial-experience-note">Original award artwork can be added to these cards when the image files are available in the repository.</p>
       </section>
-      <section className="mb-20">
-        <h2 className="font-display text-2xl font-bold mb-6">
-          Roles & Positions
-        </h2>
-        <div className="space-y-6">
-          {roles.map((role, index) => (
-            <div
-              key={index}
-              className="portfolio-timeline-row grid sm:grid-cols-[140px_1fr] gap-4 border-t border-line pt-6"
-            >
-              <span className="font-mono text-xs uppercase text-mid">
-                {role.period}
-              </span>
-              <div>
-                <h3 className="font-display text-lg font-bold">
-                  {role.title}
-                  <span className="text-mid font-body font-normal">
-                    {" "} - {role.org}
-                  </span>
-                </h3>
-                <p className="text-sm text-mid mt-1">
-                  {role.desc}
-                </p>
-              </div>
-            </div>
-          ))}
+      <section className="editorial-experience-section">
+        <div className="editorial-experience-heading"><span>02 / CAREER</span><h2>The work behind <em>the work.</em></h2></div>
+        <div className="editorial-experience-rows">
+          {roles.map((role, index) => <article className="editorial-experience-row" key={index}>
+            <span>{role.period}</span><div><h3>{role.title}</h3><strong>{role.org}</strong><p>{role.desc}</p></div><b>{String(index+1).padStart(2,'0')}</b>
+          </article>)}
         </div>
       </section>
-      <section>
-        <h2 className="font-display text-2xl font-bold mb-6">
-          Events Hosted & Convened
-        </h2>
-        <div className="space-y-6">
-          {events.map((event, index) => (
-            <a
-              key={index}
-              href={event.link}
-              target="_blank"
-              rel="noreferrer"
-              className="portfolio-timeline-row grid sm:grid-cols-[140px_1fr] gap-4 border-t border-line pt-6 group hover:text-electric transition-colors"
-            >
-              <span className="font-mono text-xs uppercase text-coral">
-                {event.role} - {event.date}
-              </span>
-              <div>
-                <h3 className="font-display text-lg font-bold group-hover:underline">
-                  {event.name}
-                </h3>
-                <p className="text-sm text-mid mt-1">
-                  {event.desc}
-                </p>
-              </div>
-            </a>
-          ))}
+      <section className="editorial-experience-section">
+        <div className="editorial-experience-heading"><span>03 / ON STAGE</span><h2>Rooms I've <em>been in.</em></h2></div>
+        <div className="editorial-experience-rows">
+          {events.map((event,index) => <a key={event.link} href={event.link} target="_blank" rel="noopener noreferrer" className="editorial-experience-row">
+            <span>{event.date}<br />{event.role}</span><div><h3>{event.name} ↗</h3><p>{event.desc}</p></div><b>{String(index+1).padStart(2,'0')}</b>
+          </a>)}
         </div>
       </section>
     </div>
