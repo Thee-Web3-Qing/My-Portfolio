@@ -37,32 +37,39 @@ const services = [
 
 const caseStudies = [
   {
-    title: 'Beauty by 3lle',
-    type: 'Beauty e-commerce',
-    copy: 'A polished product catalogue and shopping experience built to make browsing feel visual, premium and easy on mobile.',
-    link: 'https://beauty-by3ll3.vercel.app/',
+    title: 'Bookie',
+    type: 'AI receptionist',
+    copy: 'An AI receptionist for appointment businesses that answers customer questions, handles booking conversations and helps businesses manage enquiries.',
+    link: 'https://askbookie.xyz/',
     accent: 'bg-coral',
   },
   {
-    title: 'Moment',
-    type: 'Events platform',
-    copy: 'A marketing and ticketing product for event discovery, registrations, voting and organiser workflows.',
-    link: 'https://moment-blush.vercel.app/',
+    title: 'Man of Ubuntu',
+    type: 'Education platform',
+    copy: 'A structured learning platform for boys in Kenya, with parent, guardian and child journeys, programmes, academy access and guided educational content.',
+    link: 'https://manofubuntu.org/',
     accent: 'bg-lime',
   },
   {
-    title: 'The Authors Room',
-    type: 'Author marketplace',
-    copy: 'A community-led marketplace where authors can publish, build profiles and give readers a better way to discover their work.',
-    link: 'https://my-authors-room.vercel.app/',
+    title: 'Cleverson Industrial Equipment',
+    type: 'Industrial catalogue',
+    copy: 'A responsive equipment catalogue that guides customers through bakery, packaging, commercial kitchen, restaurant, laundry and pure-water solutions.',
+    link: 'https://cleverson-industrial-equipment.vercel.app/',
     accent: 'bg-electric',
   },
   {
-    title: '22Energy',
-    type: 'Solar distributor',
-    copy: 'A sales-focused landing page that guides homes, businesses and dealers towards the right solar enquiry path.',
-    link: 'https://22-energy-rho.vercel.app/',
+    title: 'Gigga',
+    type: 'Student wallet',
+    copy: 'A Naira-first student wallet and savings product with wallet funding, peer transfers and a simple campus-focused experience.',
+    link: 'https://get-gigga.vercel.app/',
     accent: 'bg-ink',
+  },
+  {
+    title: 'Tab',
+    type: 'Shared spending',
+    copy: 'A social spending app that records who paid, calculates group balances and gives friends, couples and roommates one clear way to settle.',
+    link: 'https://clearyourtab.xyz/',
+    accent: 'bg-coral',
   },
 ]
 
@@ -192,15 +199,15 @@ export default function Home() {
       <section className="py-16 border-t border-line">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-5 mb-8">
           <div>
-            <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">Selected client builds</p>
+            <p className="font-mono text-xs uppercase tracking-widest text-electric mb-3">Selected builds</p>
             <h2 className="font-display text-4xl sm:text-5xl font-extrabold">Built for real goals.</h2>
           </div>
           <Link to="/products" className="font-mono text-xs uppercase underline underline-offset-4">View every product</Link>
         </div>
         <div className="grid md:grid-cols-2 gap-5">
           {caseStudies.map((item, index) => (
-            <a key={item.title} href={item.link} target="_blank" rel="noreferrer" className="portfolio-case-card group relative overflow-hidden border border-ink rounded-blob bg-white/60 p-6 sm:p-8 min-h-[280px] flex flex-col justify-between hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300">
-              <ClayArtifact kind={['folder','video','browser','bulb'][index]} />
+            <a key={item.title} href={item.link} target="_blank" rel="noreferrer" className={`portfolio-case-card group relative overflow-hidden border border-ink rounded-blob bg-white/60 p-6 sm:p-8 min-h-[280px] flex flex-col justify-between hover:shadow-[8px_8px_0_0_#16161D] transition-all duration-300 ${index === 0 ? 'md:col-span-2' : ''}`}>
+              <ClayArtifact kind={['browser','folder','laptop','database','sheets'][index]} />
               <div className={`absolute top-0 right-0 h-20 w-20 sm:h-28 sm:w-28 ${item.accent} border-l border-b border-ink rounded-bl-[3rem] transition-transform duration-300 group-hover:scale-110`} />
               <div className="relative pr-16 sm:pr-24">
                 <span className="font-mono text-xs uppercase text-electric">0{index + 1} · {item.type}</span>
