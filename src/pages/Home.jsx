@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-const WHATSAPP_URL = 'https://wa.me/2348124320659?text=Hi%20Qing%2C%20I%20found%20your%20portfolio%20and%20I%20would%20like%20to%20discuss%20a%20project.'
+const WHATSAPP_URL = 'https://askbookie.xyz/store/qingthecreator'
 
 const projects = [
   { number: '01', title: 'Bookie', type: 'AI receptionist', copy: 'Booking conversations that feel human.', link: 'https://askbookie.xyz/', image: '/project-thumbs/bookie-interface.webp' },

@@ -2,7 +2,7 @@ import { Link, Navigate, useParams } from 'react-router-dom'
 import { services } from '../data/services'
 import ClayArtifact from '../components/ClayArtifact.jsx'
 
-const WHATSAPP_URL = 'https://wa.me/2348124320659?text=Hi%20Qing%2C%20I%20found%20your%20portfolio%20and%20I%20would%20like%20to%20discuss%20a%20project.'
+const WHATSAPP_URL = 'https://askbookie.xyz/store/qingthecreator'
 
 export default function Service() {
   const { serviceSlug } = useParams()
@@ -89,7 +89,7 @@ export default function Service() {
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-lime">Start with the idea you have</p>
         <h2 className="font-display text-4xl sm:text-6xl font-extrabold leading-[1.02] max-w-4xl mt-4">Tell me what you want people to be able to do.</h2>
         <p className="text-paper/70 text-lg leading-relaxed max-w-2xl mt-5">I will help you turn that goal into a realistic scope, timeline and next step.</p>
-        <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="inline-block mt-8 text-center px-6 py-4 rounded-full bg-lime text-ink font-mono text-sm uppercase font-bold hover:bg-paper transition-colors">Message Qing on WhatsApp</a>
+        <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="inline-block mt-8 text-center px-6 py-4 rounded-full bg-lime text-ink font-mono text-sm uppercase font-bold hover:bg-paper transition-colors">Book Qing through Bookie</a>
       </section>
     </div>
   )

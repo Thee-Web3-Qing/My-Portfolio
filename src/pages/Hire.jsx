@@ -1,5 +1,4 @@
-import { useState } from 'react'
-  import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
   import { serviceList } from '../data/services'
   const offers = [
     {
@@ -70,10 +69,9 @@ import { useState } from 'react'
     { term: '3 months', price: '$1,500', detail: '12 videos across three months', featured: true },
     { term: '6 months', price: '$2,800', detail: '24 videos across six months' },
   ]
-  import BookingModal from './BookingModal.jsx'
+  const BOOKING_URL = 'https://askbookie.xyz/store/qingthecreator'
 
   export default function Hire() {
-    const [selected, setSelected] = useState(null)
     return (
       <div className="portfolio-hire hire-editorial animate-fadeUp">
         <header className="hire-editorial-hero">
@@ -87,6 +85,24 @@ import { useState } from 'react'
             <b>Let’s build something useful ↗</b>
           </aside>
         </header>
+        <section className="hire-packages">
+          <div className="hire-packages-intro">
+            <p>Content packages</p>
+            <h2>Consistent videos,<br />handled end to end.</h2>
+            <span>I handle the research, scripting, and full production for every video.</span>
+          </div>
+          <div className="hire-package-grid">
+            {contentPackages.map((contentPackage) => (
+              <article key={contentPackage.term} className={contentPackage.featured ? 'hire-package-card is-featured' : 'hire-package-card'}>
+                <p>{contentPackage.term}</p>
+                <h3>{contentPackage.price}</h3>
+                <span>{contentPackage.detail}</span>
+                <ul><li>Research</li><li>Scripting</li><li>Full production</li></ul>
+                <a href={BOOKING_URL} target="_blank" rel="noreferrer">Choose package ↗</a>
+              </article>
+            ))}
+          </div>
+        </section>
         <section className="hire-editorial-section">
           <div className="hire-section-heading"><p>Core services</p><h2>What I can do for you.</h2></div>
           <div className="hire-service-grid">
@@ -111,31 +127,11 @@ import { useState } from 'react'
               <span>{offer.badge}</span>
               <h3>{offer.title}</h3>
               <p>{offer.desc}</p>
-              <button
-                onClick={() => setSelected(offer)}
-              >
+              <a href={BOOKING_URL} target="_blank" rel="noreferrer">
                 Contact me ↗
-              </button>
+              </a>
             </div>
           ))}
-          </div>
-        </section>
-        <section className="hire-packages">
-          <div className="hire-packages-intro">
-            <p>Content packages</p>
-            <h2>Consistent videos,<br />handled end to end.</h2>
-            <span>I handle the research, scripting, and full production for every video.</span>
-          </div>
-          <div className="hire-package-grid">
-            {contentPackages.map((contentPackage) => (
-              <article key={contentPackage.term} className={contentPackage.featured ? 'hire-package-card is-featured' : 'hire-package-card'}>
-                <p>{contentPackage.term}</p>
-                <h3>{contentPackage.price}</h3>
-                <span>{contentPackage.detail}</span>
-                <ul><li>Research</li><li>Scripting</li><li>Full production</li></ul>
-                <button onClick={() => setSelected({ title: `${contentPackage.term} content package`, subject: `${contentPackage.term} content package inquiry`, desc: `${contentPackage.detail}. Research, scripting, and full production included.` })}>Choose package ↗</button>
-              </article>
-            ))}
           </div>
         </section>
         <section className="hire-consultations">
@@ -149,12 +145,11 @@ import { useState } from 'react'
                 <p>{session.price}</p>
                 <h3>{session.title}</h3>
                 <span>{session.desc}</span>
-                <button onClick={() => setSelected(session)}>Book session ↗</button>
+                <a href={BOOKING_URL} target="_blank" rel="noreferrer">Book session ↗</a>
               </div>
             ))}
           </div>
         </section>
-        {selected && <BookingModal offer={selected} onClose={() => setSelected(null)} />}
       </div>
     )
   }

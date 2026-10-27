@@ -32,7 +32,11 @@ const selectedMoments = [
     label: "RED CARPET HOST",
     title: "Blockfest Africa 2026",
     note: "Hosting conversations and meeting the people shaping the ecosystem.",
-    images: ["/experience-moments/blockfest-2026.webp"],
+    images: [
+      "/experience-moments/blockfest-2026.webp",
+      "https://pbs.twimg.com/media/HVTHGuXXsAAq9yL?format=webp&name=large",
+      "https://pbs.twimg.com/media/HVTHGuTXUAE2aGi?format=webp&name=large",
+    ],
     link: "https://x.com/qingthecreator_/status/2113533061262631181?s=46",
   },
   {

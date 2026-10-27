@@ -22,7 +22,7 @@ export const services = {
       ['Build', 'I turn the agreed scope into a responsive product and connect the required services.'],
       ['Test', 'We check the important user journeys, fix blockers and prepare the product for launch.'],
     ],
-    proof: ['AssetDNA', 'Bookie', 'Poysis'],
+    proof: ['AssetDNA', 'Bookie', 'Bizora OS'],
     faq: [
       ['Do I need a complete technical brief?', 'No. You can bring a rough idea, voice note or business problem. I will help turn it into a clear product scope before development starts.'],
       ['Can you build an initial version before I invest in a full product?', 'Yes. A focused prototype or minimum viable product is often the best way to test the idea before expanding it.'],
@@ -138,7 +138,7 @@ export const services = {
       ['Prototype', 'I build the key screens and interactions so the idea can be explored on a real device.'],
       ['Learn', 'We review the experience, capture feedback and decide what belongs in the full product.'],
     ],
-    proof: ['The Authors Room', 'Moment', 'Poysis'],
+    proof: ['The Authors Room', 'Moment', '22Energy'],
     faq: [
       ['Is a prototype the finished product?', 'Not always. A prototype proves the experience and direction. It can later become the foundation of a production build if that is agreed in the scope.'],
       ['Can I show the prototype to investors or clients?', 'Yes. The prototype is designed to make the product idea easier to demonstrate and discuss.'],

@@ -31,19 +31,8 @@ import { createPortal } from 'react-dom'
       tags: ["Marketplace Prototype", "Next.js", "Responsive Design"],
       status: "Prototype",
       links: {
-        demo: "https://my-authors-room.vercel.app/",
+        demo: "https://the-authors-room.vercel.app/",
         repo: "https://github.com/Thee-Web3-Qing/The-Authors-Room",
-      },
-    },
-    {
-      name: "Poysis",
-      clientWanted: "A public-facing website that could move beyond a simple landing page and help people discover Poysis knowledge notebooks and understand the platform quickly.",
-      delivered: "I turned the concept into a functional, mobile-friendly public directory with searchable notebook listings, categories, detail views, contributor submissions, and clear product positioning.",
-      tags: ["Product Website", "Public Directory", "Next.js"],
-      status: "Live",
-      links: {
-        demo: "https://poysis.vercel.app/",
-        repo: "https://github.com/Thee-Web3-Qing/Poysis",
       },
     },
     {
@@ -224,16 +213,6 @@ import { createPortal } from 'react-dom'
       links: {
         demo: 'https://spendaadvert.vercel.app/',
         repo: null,
-      },
-    },
-    {
-      name: 'Tracium',
-      tagline: 'AI task manager and team tracker for Slack. Keeps distributed teams in sync with contextual reminders and progress updates.',
-      tags: ['Slack Integration', 'Task Management', 'AI'],
-      status: 'Live',
-      links: {
-        demo: 'https://traciumai.vercel.app/',
-        repo: 'https://github.com/Thee-Web3-Qing/Tracium',
       },
     },
   ]
