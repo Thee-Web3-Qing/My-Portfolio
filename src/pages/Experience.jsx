@@ -71,7 +71,11 @@ const awards = [
   { title: "Content Creator of the Year", organizer: "DeFi Tigers", link: "https://x.com/cwembassy/status/1736740698647298368", year: "2023", description: "Recognised for content that inspired others to explore decentralized platforms and helped bring the Web3 community together.", accent: "#262026" },
 ]
 
-export default function Experience() {\n  const [active, setActive] = useState(0)\n  const touchStart = useRef(null)\n  const selectNext = () => setActive(current => (current + 1) % awards.length)\n  const selected = awards[active]
+export default function Experience() {
+  const [active, setActive] = useState(0)
+  const touchStart = useRef(null)
+  const selectNext = () => setActive(current => (current + 1) % awards.length)
+  const selected = awards[active]
   return (
     <div className="editorial-experience">
       <header className="editorial-experience-hero editorial-award-showcase">
