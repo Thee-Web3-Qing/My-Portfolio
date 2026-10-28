@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 
   const recentClientBuilds = [
@@ -71,6 +71,25 @@ import { createPortal } from 'react-dom'
   ]
 
   function WebsitePreview({ url, title, image, interactive = false }) {
+    const screenRef = useRef(null)
+    const iframeRef = useRef(null)
+
+    useEffect(() => {
+      if (!iframeRef.current || !screenRef.current) return undefined
+
+      const fitDesktopPreview = () => {
+        const width = screenRef.current?.clientWidth || 0
+        const scale = width / 1440
+        screenRef.current.style.height = `${900 * scale}px`
+        iframeRef.current.style.transform = `scale(${scale})`
+      }
+
+      fitDesktopPreview()
+      const observer = new ResizeObserver(fitDesktopPreview)
+      observer.observe(screenRef.current)
+      return () => observer.disconnect()
+    }, [url, image, interactive])
+
     if (!url) return null
 
     return (
@@ -84,11 +103,11 @@ import { createPortal } from 'react-dom'
           </span>
           {interactive && <a className="products-browser-open" href={url} target="_blank" rel="noreferrer">Open site ↗</a>}
         </div>
-        <div className="products-browser-screen">
+        <div className="products-browser-screen" ref={screenRef}>
           {image && !interactive ? (
             <img src={image} alt={`${title} website interface`} loading="lazy" />
           ) : (
-            <iframe src={url} title={`${title} interactive website preview`} loading="lazy" width="1440" height="900" sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" />
+            <iframe ref={iframeRef} src={url} title={`${title} interactive website preview`} loading="lazy" width="1440" height="900" sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" />
           )}
         </div>
       </div>
