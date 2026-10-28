@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Qing Portfolio Mobile Preview</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { min-height: 100%; margin: 0; }
+      body {
+        display: grid;
+        place-items: center;
+        padding: 32px;
+        background: #242127;
+        color: #fffaf4;
+        font-family: Inter, Arial, sans-serif;
+      }
+      .preview {
+        display: grid;
+        grid-template-columns: minmax(0, 390px) 230px;
+        align-items: start;
+        gap: 28px;
+      }
+      .phone {
+        width: 390px;
+        max-width: calc(100vw - 32px);
+        padding: 12px;
+        border: 1px solid #625c65;
+        border-radius: 38px;
+        background: #0e0d0f;
+        box-shadow: 0 30px 90px rgba(0,0,0,.45);
+      }
+      .speaker {
+        width: 74px;
+        height: 5px;
+        margin: 0 auto 9px;
+        border-radius: 999px;
+        background: #3d3940;
+      }
+      iframe {
+        display: block;
+        width: 100%;
+        height: min(812px, calc(100vh - 100px));
+        min-height: 680px;
+        border: 0;
+        border-radius: 26px;
+        background: #faf6ef;
+      }
+      aside { padding-top: 72px; }
+      p { color: #c9c1c8; font-size: 14px; line-height: 1.6; }
+      strong { display: block; font-family: Georgia, serif; font-size: 27px; font-weight: 400; }
+      small { display: block; margin-top: 16px; color: #f01820; font: 700 10px/1.5 ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase; }
+      @media (max-width: 760px) {
+        body { display: block; padding: 0; background: #faf6ef; }
+        .preview { display: block; }
+        .phone { width: 100%; max-width: none; padding: 0; border: 0; border-radius: 0; box-shadow: none; }
+        .speaker, aside { display: none; }
+        iframe { width: 100%; height: 100dvh; min-height: 0; border-radius: 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="preview">
+      <section class="phone" aria-label="390 pixel mobile website preview">
+        <div class="speaker"></div>
+        <iframe src="/?mobile-preview=1" title="Qing portfolio mobile preview"></iframe>
+      </section>
+      <aside>
+        <strong>Mobile preview</strong>
+        <p>This frame is 390 pixels wide. Use the site menu inside the phone to review every page.</p>
+        <small>Local only · not published</small>
+      </aside>
+    </main>
+  </body>
+</html>

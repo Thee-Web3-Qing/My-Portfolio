@@ -26,9 +26,16 @@ import { useLocation } from 'react-router-dom'
             </NavLink>
             <button
               onClick={() => setOpen(!open)}
-              className="portfolio-menu-button sm:hidden px-4 py-2 rounded-full border border-ink font-mono text-xs uppercase"
+              className="portfolio-menu-button sm:hidden"
+              aria-label={open ? 'Close navigation' : 'Open navigation'}
+              aria-expanded={open}
             >
-              {open ? 'Close' : 'Menu'}
+              <span className="portfolio-menu-icon" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+              <span className="sr-only">{open ? 'Close' : 'Menu'}</span>
             </button>
             <nav className="portfolio-desktop-nav hidden sm:flex gap-2 font-mono text-sm uppercase">
               {links.map((link) => (

@@ -145,7 +145,12 @@ export default function Experience() {
   }, [openMoment])
   return (
     <div className="editorial-experience">
-      <header className="editorial-experience-hero editorial-award-showcase">
+      <nav className="experience-mobile-sections" aria-label="Experience sections">
+        <a href="#experience-moments">Moments</a>
+        <a href="#experience-awards">Awards</a>
+        <a href="#experience-career">Career</a>
+      </nav>
+      <header id="experience-awards" className="editorial-experience-hero editorial-award-showcase">
         <div className="editorial-award-copy" key={active}>
           <p className="editorial-kicker">THE WORK. THE PEOPLE. THE RECOGNITION. / {String(active + 1).padStart(2, '0')}</p>
           <h1>Experience worth <em>remembering.</em></h1>
@@ -173,7 +178,7 @@ export default function Experience() {
           })}
         </div>
       </header>
-      <section className="editorial-experience-section editorial-moments-section">
+      <section id="experience-moments" className="editorial-experience-section editorial-moments-section">
         <div className="editorial-experience-heading"><span>02 / SELECTED MOMENTS</span><h2>Proof I was <em>in the room.</em></h2></div>
         <div className="editorial-moment-board" aria-label="Experience photo board">
           {selectedMoments.map((item, eventIndex) => (
@@ -191,7 +196,7 @@ export default function Experience() {
           ))}
         </div>
       </section>
-      <section className="editorial-experience-section">
+      <section id="experience-career" className="editorial-experience-section editorial-career-section">
         <div className="editorial-experience-heading"><span>03 / CAREER</span><h2>The work behind <em>the work.</em></h2></div>
         <div className="editorial-experience-rows">
           {roles.map((role, index) => <article className="editorial-experience-row" key={index}>

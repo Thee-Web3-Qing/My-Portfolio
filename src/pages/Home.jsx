@@ -29,7 +29,7 @@ export default function Home() {
         <div className="editorial-hero-copy">
           <p className="editorial-eyebrow"><span /> Creative developer &amp; designer</p>
           <h1>Qing builds ideas<br />people <em>remember.</em></h1>
-          <p className="editorial-intro">Digital products, brands and experiences<br />with real people at the centre.</p>
+          <p className="editorial-intro">Digital products, brands and experiences<br />{' '}with real people at the centre.</p>
           <div className="editorial-actions">
             <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="editorial-primary">Book a project <Arrow /></a>
             <Link to="/products" className="editorial-secondary">See my work <Arrow /></Link>
