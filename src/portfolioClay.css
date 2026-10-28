@@ -1478,3 +1478,79 @@
   font-size:.78rem;
   font-weight:700;
 }
+
+/* X and other in-app browsers can ignore the fixed desktop viewport. Keep the
+   homepage composition tidy when they expose the real phone width instead. */
+@media (max-width:760px){
+  .portfolio-clay:has(.editorial-home) .portfolio-nav-inner{
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:.65rem;
+  }
+  .portfolio-clay:has(.editorial-home) .portfolio-brand{
+    max-width:100%;
+    overflow:hidden;
+    font-size:clamp(.92rem,4.2vw,1.2rem);
+    letter-spacing:-.055em;
+    text-overflow:clip;
+    white-space:nowrap;
+  }
+  .portfolio-clay:has(.editorial-home) .portfolio-menu-button{
+    padding:.58rem .72rem;
+    font-size:.62rem;
+  }
+  .portfolio-clay .editorial-home .editorial-hero{
+    min-height:520px;
+    grid-template-columns:minmax(0,54%) minmax(0,46%);
+    padding:2rem .9rem 0;
+  }
+  .portfolio-clay .editorial-home .editorial-hero-copy{
+    width:100%;
+    padding:0 0 1.5rem;
+  }
+  .portfolio-clay .editorial-home .editorial-hero h1{
+    max-width:100%;
+    margin:.8rem 0 1rem;
+    font-size:clamp(2rem,9.4vw,2.85rem);
+    line-height:.91;
+    letter-spacing:-.06em;
+    overflow-wrap:normal;
+    word-break:normal;
+    hyphens:none;
+  }
+  .portfolio-clay .editorial-home .editorial-intro{
+    max-width:95%;
+    font-size:clamp(.72rem,3vw,.88rem);
+    line-height:1.42;
+    overflow-wrap:normal;
+    word-break:normal;
+  }
+  .portfolio-clay .editorial-home .editorial-portrait-wrap{
+    right:-7%;
+    bottom:0;
+    width:56%;
+    height:86%;
+    margin:0;
+    overflow:hidden;
+  }
+  .portfolio-clay .editorial-home .editorial-portrait-wrap img{
+    right:-7%;
+    bottom:-5%;
+    height:100%;
+    max-width:none;
+    object-fit:contain;
+    object-position:center bottom;
+  }
+  .portfolio-clay .editorial-home .editorial-note{
+    right:8%;
+    top:14%;
+  }
+}
+
+@media (max-width:390px){
+  .portfolio-clay .editorial-home .editorial-hero h1{
+    font-size:clamp(1.9rem,9.2vw,2.2rem);
+  }
+  .portfolio-clay .editorial-home .editorial-primary{
+    padding:.66rem .72rem;
+  }
+}
