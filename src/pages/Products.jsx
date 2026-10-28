@@ -104,7 +104,7 @@ import { createPortal } from 'react-dom'
           {interactive && <a className="products-browser-open" href={url} target="_blank" rel="noreferrer">Open site ↗</a>}
         </div>
         <div className="products-browser-screen" ref={screenRef}>
-          {image && !interactive ? (
+          {image ? (
             <img src={image} alt={`${title} website interface`} loading="lazy" />
           ) : (
             <iframe ref={iframeRef} src={url} title={`${title} interactive website preview`} loading="lazy" width="1440" height="900" sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" />
@@ -434,7 +434,7 @@ import { createPortal } from 'react-dom'
                 <a href={selectedProduct.links.demo || selectedProduct.links.repo} target="_blank" rel="noreferrer">Open in new tab ↗</a>
                 <button type="button" className="product-detail-close" onClick={() => setSelectedProduct(null)} aria-label="Close product details">×</button>
               </div>
-              <WebsitePreview url={selectedProduct.links.demo || selectedProduct.links.repo} title={selectedProduct.name} interactive />
+              <WebsitePreview url={selectedProduct.links.demo || selectedProduct.links.repo} title={selectedProduct.name} image={selectedProduct.image} interactive />
               <div className="product-detail-copy">
                 <p>{selectedProduct.status}</p>
                 <h2 id="product-detail-title">{selectedProduct.name}</h2>
