@@ -59,6 +59,7 @@ export default function Class() {
   const [scanning, setScanning] = useState(false)
   const [scanProgress, setScanProgress] = useState(0)
   const [receiptAnalysis, setReceiptAnalysis] = useState(null)
+  const [confirmation, setConfirmation] = useState(null)
   const [pricingLoaded, setPricingLoaded] = useState(false)
   const [activeClassroomScreen, setActiveClassroomScreen] = useState(0)
   const [pricing, setPricing] = useState({ acceptedCount: 80, price: 1000, tierIndex: 0, filledInTier: 80, remainingInTier: 20, soldOut: false })
@@ -161,7 +162,8 @@ export default function Class() {
       const result = await response.json().catch(() => ({}))
       if (!response.ok) throw new Error(result.error || 'Registration failed.')
 
-      setStatus({ type: 'success', message: 'Registration received. After your payment is approved, your registration code will be sent to your email. Please keep an eye on your inbox and spam folder.' })
+      setConfirmation({ name: form.fullName.trim(), email: cleanEmail, amount: pricing.price })
+      setStatus({ type: 'success', message: 'Registration received.' })
       window.localStorage.setItem(REGISTRATION_STORAGE_KEY, 'true')
       setForm({ fullName: '', whatsapp: '', email: '', reason: '', mentorship: '' })
       setReceipt(null)
@@ -292,7 +294,25 @@ export default function Class() {
             <p><strong>{pricing.filledInTier} of 100 spots filled in this batch.</strong> {pricing.acceptedCount} total enrolled students, including the original 80. The price doubles when each 100-person batch fills.</p>{!pricingLoaded && <p>Live pricing connection unavailable. Submissions remain disabled until it reconnects.</p>}
           </ClayCard>
           <ClayCard tone="cream" className="clay-subscription">
-            <form onSubmit={submit} className="clay-enrollment-form">
+            {confirmation ? (
+              <div className="clay-registration-success" role="status" aria-live="polite">
+                <span className="clay-success-mark" aria-hidden="true">✓</span>
+                <p className="clay-success-kicker">SUBMISSION COMPLETE</p>
+                <h3>Registration received.</h3>
+                <p>Thank you, {confirmation.name}. Your receipt has been saved and is waiting for payment review.</p>
+                <div className="clay-success-details">
+                  <div><span>Current status</span><strong>Payment review pending</strong></div>
+                  <div><span>Amount submitted for</span><strong>{formatNaira(confirmation.amount)}</strong></div>
+                  <div><span>Registration code</span><strong>Sent after approval</strong></div>
+                  <div><span>Delivery email</span><strong>{confirmation.email}</strong></div>
+                </div>
+                <div className="clay-success-next">
+                  <strong>What happens next?</strong>
+                  <p>Qing’s TV will review the payment. Once it is approved, your Classroom registration code will be sent to the email above. Please also check your spam folder.</p>
+                </div>
+                <a className="clay-button clay-button-coral clay-success-home" href="/">Back to homepage</a>
+              </div>
+            ) : <form onSubmit={submit} className="clay-enrollment-form">
               <h3>Secure your spot.</h3>
               <p>Pay the current batch fee to the account below, then upload your payment receipt. Qing's TV reviews payments and issues Classroom access codes after approval.</p>
               <div className="clay-payment-details" aria-label="Official class payment details">
@@ -313,7 +333,7 @@ export default function Class() {
               {receiptAnalysis && <p>Receipt checked. Payment is subject to manual approval.</p>}
               {status.message && <p role="status">{status.message}</p>}
               <button type="submit" className="clay-button clay-button-coral clay-submit-button" disabled={!pricingLoaded || !detailsComplete || !receiptAnalysis || scanning || submitting}>{submitting ? 'Submitting...' : `Submit registration at ${formatNaira(pricing.price)}`}</button>
-            </form>
+            </form>}
           </ClayCard>
         </section>
       </div>
