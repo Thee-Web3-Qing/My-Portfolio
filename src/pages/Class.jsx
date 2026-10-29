@@ -18,6 +18,8 @@ const normalisePhone = (value) => {
   return digits
 }
 
+const normaliseTelegram = (value) => value.trim().replace(/^@+/, '').toLowerCase()
+
 const timeline = [
   { date: 'June 2026', title: 'AI agents and automated research', copy: 'Building agentic systems pushed me from simple AI assistance into workflows that organise work, review progress and keep humans in control.' },
   { date: 'August 2026', title: 'Interactive learning and client products', copy: 'Moment, 22Energy and The Author’s Room showed how quickly a clear brief can become a useful, responsive product.' },
@@ -51,7 +53,7 @@ const classifyReason = (value) => {
 }
 
 export default function Class() {
-  const [form, setForm] = useState({ fullName: '', whatsapp: '', email: '', reason: '', mentorship: '' })
+  const [form, setForm] = useState({ fullName: '', whatsapp: '', telegram: '', email: '', reason: '', mentorship: '' })
   const [receipt, setReceipt] = useState(null)
   const [previewUrl, setPreviewUrl] = useState('')
   const [status, setStatus] = useState({ type: '', message: '' })
@@ -65,10 +67,12 @@ export default function Class() {
   const [pricing, setPricing] = useState({ acceptedCount: 80, price: 1000, tierIndex: 0, filledInTier: 80, remainingInTier: 20, soldOut: false })
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
-  const detailsComplete = form.fullName.trim().length >= 3 && form.whatsapp.trim().length >= 10 && emailValid && form.reason.trim().length >= 20
+  const telegramValid = /^[a-zA-Z0-9_]{5,32}$/.test(normaliseTelegram(form.telegram))
+  const detailsComplete = form.fullName.trim().length >= 3 && form.whatsapp.trim().length >= 10 && telegramValid && emailValid && form.reason.trim().length >= 20
   const missingDetails = [
     form.fullName.trim().length < 3 && 'your full name',
     form.whatsapp.trim().length < 10 && 'a valid WhatsApp number',
+    !telegramValid && 'a valid Telegram username',
     !emailValid && 'a valid email address for your registration code',
     form.reason.trim().length < 20 && 'at least 20 characters explaining why you want to join',
   ].filter(Boolean)
@@ -140,6 +144,7 @@ export default function Class() {
 
       const cleanEmail = normaliseEmail(form.email)
       const cleanPhone = normalisePhone(form.whatsapp)
+      const cleanTelegram = normaliseTelegram(form.telegram)
       const receiptBase64 = await new Promise((resolve, reject) => {
         const reader = new FileReader()
         reader.onload = () => resolve(String(reader.result).split(',')[1])
@@ -150,7 +155,7 @@ export default function Class() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          fullName: form.fullName, whatsapp: cleanPhone, email: cleanEmail,
+          fullName: form.fullName, whatsapp: cleanPhone, telegram: cleanTelegram, email: cleanEmail,
           reason: form.reason, reasonCategory: category,
           mentorshipInterest: form.mentorship, receiptName: receipt.name,
           receiptType: receipt.type, receiptBase64,
@@ -165,7 +170,7 @@ export default function Class() {
       setConfirmation({ name: form.fullName.trim(), email: cleanEmail, amount: pricing.price })
       setStatus({ type: 'success', message: 'Registration received.' })
       window.localStorage.setItem(REGISTRATION_STORAGE_KEY, 'true')
-      setForm({ fullName: '', whatsapp: '', email: '', reason: '', mentorship: '' })
+      setForm({ fullName: '', whatsapp: '', telegram: '', email: '', reason: '', mentorship: '' })
       setReceipt(null)
       setReceiptAnalysis(null)
     } catch (error) {
@@ -325,6 +330,7 @@ export default function Class() {
               </div>
               <label>Full name<input name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
               <label>WhatsApp number<input name="whatsapp" required value={form.whatsapp} onChange={update} /></label>
+              <label>Telegram username<input name="telegram" required minLength={5} maxLength={33} placeholder="@yourusername" autoCapitalize="none" autoCorrect="off" value={form.telegram} onChange={update} /></label>
               <label>Email address<input name="email" type="email" required value={form.email} onChange={update} /></label>
               <label>Why do you want to join?<textarea name="reason" required minLength={20} rows={4} value={form.reason} onChange={update} /></label>
               <label>Interested in mentorship?<select name="mentorship" value={form.mentorship} onChange={update}><option value="">Select</option><option>Yes</option><option>No</option><option>Maybe</option></select></label>

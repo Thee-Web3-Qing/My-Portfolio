@@ -32,8 +32,9 @@ export default async function handler(req, res) {
     const name = String(b.fullName || '').trim()
     const email = String(b.email || '').trim().toLowerCase()
     const phone = String(b.whatsapp || '').replace(/\D/g, '')
+    const telegram = String(b.telegram || '').trim().replace(/^@+/, '').toLowerCase()
     const reason = String(b.reason || '').trim()
-    if (name.length < 3 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phone.length < 10 || reason.length < 20) return res.status(400).json({ error: 'Complete all required fields.' })
+    if (name.length < 3 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || phone.length < 10 || !/^[a-z0-9_]{5,32}$/.test(telegram) || reason.length < 20) return res.status(400).json({ error: 'Complete all required fields, including a valid Telegram username.' })
     const raw = String(b.receiptBase64 || '')
     if (!raw || raw.length > 7_000_000) return res.status(400).json({ error: 'Receipt is required and must be under 5 MB.' })
     const bytes = Buffer.from(raw, 'base64')
@@ -46,8 +47,8 @@ export default async function handler(req, res) {
     if (!(isPdf || isPng || isJpg || isWebp)) return res.status(400).json({ error: 'Upload a PDF, PNG, JPEG or WebP receipt.' })
     const hash = createHash('sha256').update(bytes).digest('hex')
     const sql = neon(process.env.DATABASE_URL)
-    const existing = await sql`SELECT id FROM class_registrations WHERE lower(email) = ${email} OR whatsapp = ${phone} OR payment_reference = ${hash} LIMIT 1`
-    if (existing.length) return res.status(409).json({ error: 'This email, phone number or receipt has already been registered.' })
+    const existing = await sql`SELECT id FROM class_registrations WHERE lower(email) = ${email} OR whatsapp = ${phone} OR lower(telegram_username) = ${telegram} OR payment_reference = ${hash} LIMIT 1`
+    if (existing.length) return res.status(409).json({ error: 'This email, phone number, Telegram username or receipt has already been registered.' })
     const count = await sql`SELECT COALESCE((SELECT integer_value FROM classroom_registration_settings WHERE key = 'legacy_student_offset'), 80)::int + (SELECT count(*)::int FROM class_registrations WHERE payment_status IN ('confirmed','approved')) AS total`
     const amount = 1000 * (2 ** Math.floor(Number(count[0].total) / 100))
     const receiptText = String(b.receiptText || '').slice(0, 20_000)
@@ -59,12 +60,12 @@ export default async function handler(req, res) {
       if (duplicate.length) return res.status(409).json({error:'This transaction reference has already been submitted.'})
     }
     const receiptMime = isPdf ? 'application/pdf' : isPng ? 'image/png' : isJpg ? 'image/jpeg' : 'image/webp'
-    await sql`INSERT INTO class_registrations (full_name, whatsapp, email, reason, reason_category, mentorship_interest, receipt_path, receipt_name, receipt_size, receipt_mime, receipt_data, amount_paid, currency, payment_source, payment_reference, fraud_score, fraud_status, fraud_checks, transaction_reference, payment_status) VALUES (${name}, ${phone}, ${email}, ${reason}, ${String(b.reasonCategory || 'Other')}, ${String(b.mentorshipInterest || 'Not answered')}, ${`neon://class-receipts/${hash}`}, ${String(b.receiptName || 'receipt')}, ${bytes.length}, ${receiptMime}, decode(${raw}, 'base64'), ${amount}, 'NGN', 'Portfolio class page', ${hash}, ${screening.score}, ${screening.status}, ${JSON.stringify({checks:screening.checks,serverHash:hash,source:'browser_ocr_server_checked',storage:'neon'})}::jsonb, ${screening.reference}, 'pending')`
+    await sql`INSERT INTO class_registrations (full_name, whatsapp, telegram_username, email, reason, reason_category, mentorship_interest, receipt_path, receipt_name, receipt_size, receipt_mime, receipt_data, amount_paid, currency, payment_source, payment_reference, fraud_score, fraud_status, fraud_checks, transaction_reference, payment_status) VALUES (${name}, ${phone}, ${telegram}, ${email}, ${reason}, ${String(b.reasonCategory || 'Other')}, ${String(b.mentorshipInterest || 'Not answered')}, ${`neon://class-receipts/${hash}`}, ${String(b.receiptName || 'receipt')}, ${bytes.length}, ${receiptMime}, decode(${raw}, 'base64'), ${amount}, 'NGN', 'Portfolio class page', ${hash}, ${screening.score}, ${screening.status}, ${JSON.stringify({checks:screening.checks,serverHash:hash,source:'browser_ocr_server_checked',storage:'neon'})}::jsonb, ${screening.reference}, 'pending')`
     return res.status(201).json({ success: true, message: 'Registration submitted for payment review.' })
   } catch (error) {
     console.error('Class registration failed', error)
     if (error?.code === '23505') {
-      return res.status(409).json({ error: 'This email address, WhatsApp number, receipt or transaction reference has already been submitted.' })
+      return res.status(409).json({ error: 'This email address, WhatsApp number, Telegram username, receipt or transaction reference has already been submitted.' })
     }
     return res.status(500).json({ error: 'Could not submit registration. Please try again.' })
   }

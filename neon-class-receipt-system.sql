@@ -6,7 +6,8 @@ begin;
 
 alter table public.class_registrations
 add column if not exists receipt_mime text,
-add column if not exists receipt_data bytea;
+add column if not exists receipt_data bytea,
+add column if not exists telegram_username text;
 
 create unique index if not exists class_registrations_receipt_hash_unique
 on public.class_registrations (payment_reference)
@@ -23,5 +24,9 @@ where email is not null and btrim(email) <> '';
 create unique index if not exists class_registrations_whatsapp_unique
 on public.class_registrations (whatsapp)
 where whatsapp is not null and btrim(whatsapp) <> '';
+
+create unique index if not exists class_registrations_telegram_unique
+on public.class_registrations (lower(btrim(telegram_username)))
+where telegram_username is not null and btrim(telegram_username) <> '';
 
 commit;
