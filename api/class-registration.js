@@ -1,5 +1,4 @@
 import { neon } from '@neondatabase/serverless'
-import { put } from '@vercel/blob'
 import { createHash } from 'node:crypto'
 import { createWorker } from 'tesseract.js'
 
@@ -46,7 +45,7 @@ const checkReceipt = (text, amount) => {
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store')
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' })
-  if (!process.env.DATABASE_URL || !process.env.BLOB_READ_WRITE_TOKEN) return res.status(503).json({ error: 'Registration is being configured. Please try later.' })
+  if (!process.env.DATABASE_URL) return res.status(503).json({ error: 'Registration is temporarily unavailable. Please try again shortly.' })
   try {
     const b = req.body || {}
     const name = String(b.fullName || '').trim()
@@ -82,9 +81,8 @@ export default async function handler(req, res) {
       const duplicate = await sql`SELECT id FROM class_registrations WHERE transaction_reference = ${screening.reference} LIMIT 1`
       if (duplicate.length) return res.status(409).json({error:'This transaction reference has already been submitted.'})
     }
-    const extension = isPdf ? 'pdf' : isPng ? 'png' : isJpg ? 'jpg' : 'webp'
-    const receipt = await put(`class-receipts/${hash}.${extension}`, bytes, { access: 'private', addRandomSuffix: true, contentType: isPdf ? 'application/pdf' : isPng ? 'image/png' : isJpg ? 'image/jpeg' : 'image/webp' })
-    await sql`INSERT INTO class_registrations (full_name, whatsapp, email, reason, reason_category, mentorship_interest, receipt_path, receipt_name, receipt_size, amount_paid, currency, payment_source, payment_reference, fraud_score, fraud_status, fraud_checks, transaction_reference, payment_status) VALUES (${name}, ${phone}, ${email}, ${reason}, ${String(b.reasonCategory || 'Other')}, ${String(b.mentorshipInterest || 'Not answered')}, ${receipt.pathname}, ${String(b.receiptName || 'receipt')}, ${bytes.length}, ${amount}, 'NGN', 'Portfolio class page', ${hash}, ${screening.score}, ${screening.status}, ${JSON.stringify({checks:screening.checks,serverHash:hash,source:'server_ocr'})}::jsonb, ${screening.reference}, 'pending')`
+    const receiptMime = isPdf ? 'application/pdf' : isPng ? 'image/png' : isJpg ? 'image/jpeg' : 'image/webp'
+    await sql`INSERT INTO class_registrations (full_name, whatsapp, email, reason, reason_category, mentorship_interest, receipt_path, receipt_name, receipt_size, receipt_mime, receipt_data, amount_paid, currency, payment_source, payment_reference, fraud_score, fraud_status, fraud_checks, transaction_reference, payment_status) VALUES (${name}, ${phone}, ${email}, ${reason}, ${String(b.reasonCategory || 'Other')}, ${String(b.mentorshipInterest || 'Not answered')}, ${`neon://class-receipts/${hash}`}, ${String(b.receiptName || 'receipt')}, ${bytes.length}, ${receiptMime}, decode(${raw}, 'base64'), ${amount}, 'NGN', 'Portfolio class page', ${hash}, ${screening.score}, ${screening.status}, ${JSON.stringify({checks:screening.checks,serverHash:hash,source:'server_ocr',storage:'neon'})}::jsonb, ${screening.reference}, 'pending')`
     return res.status(201).json({ success: true, message: 'Registration submitted for payment review.' })
   } catch (error) {
     console.error('Class registration failed', error)

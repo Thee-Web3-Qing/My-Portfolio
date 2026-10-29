@@ -50,8 +50,8 @@
 .portfolio-clay .editorial-class-page .clay-guide-copy .clay-button{margin-top:auto}
 .portfolio-clay .editorial-class-page .clay-enrollment-progress{padding:25px 0!important;border-top:1px solid var(--ink)!important}
 .portfolio-clay .editorial-class-page .clay-progress-heading{display:flex;justify-content:space-between;gap:20px;font-size:.9rem}
-.portfolio-clay .editorial-class-page .clay-progress-track{height:5px!important;background:#ddd3ca!important;border-radius:0!important;overflow:hidden;margin:16px 0}
-.portfolio-clay .editorial-class-page .clay-progress-fill{background:var(--red)!important;border-radius:0!important}
+.portfolio-clay .editorial-class-page .clay-progress-track{height:10px!important;padding:0!important;background:#ddd3ca!important;border:1px solid #b9afa6!important;border-radius:999px!important;overflow:hidden;margin:16px 0}
+.portfolio-clay .editorial-class-page .clay-progress-fill{display:block!important;height:100%!important;background:#f51924!important;border-radius:999px!important;box-shadow:none!important}
 .portfolio-clay .editorial-class-page .clay-enrollment-form{width:100%;max-width:760px;display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:0!important}
 .portfolio-clay .editorial-class-page .clay-enrollment-form>h3,.portfolio-clay .editorial-class-page .clay-enrollment-form>p,.portfolio-clay .editorial-class-page .clay-payment-details,.portfolio-clay .editorial-class-page .clay-enrollment-form>label:nth-of-type(n+4),.portfolio-clay .editorial-class-page .clay-submit-button{grid-column:1/-1}
 .portfolio-clay .editorial-class-page .clay-enrollment-form>h3{font:400 2.5rem Georgia,serif;margin:0}

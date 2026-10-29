@@ -289,7 +289,7 @@ export default function Class() {
           <ClayCard tone="mint" className="clay-progress-card clay-enrollment-progress">
             <div className="clay-progress-heading"><span>Batch {pricing.tierIndex + 1}: {formatNaira(pricing.price)}</span><strong>{`${pricing.remainingInTier} spots left`}</strong></div>
             <ClayProgress value={pricing.filledInTier} max={100} />
-            <p>{pricing.acceptedCount} enrolled students, including the original 80. The price doubles every 100 students.</p>{!pricingLoaded && <p>Live pricing connection unavailable. Submissions remain disabled until it reconnects.</p>}
+            <p><strong>{pricing.filledInTier} of 100 spots filled in this batch.</strong> {pricing.acceptedCount} total enrolled students, including the original 80. The price doubles when each 100-person batch fills.</p>{!pricingLoaded && <p>Live pricing connection unavailable. Submissions remain disabled until it reconnects.</p>}
           </ClayCard>
           <ClayCard tone="cream" className="clay-subscription">
             <form onSubmit={submit} className="clay-enrollment-form">
