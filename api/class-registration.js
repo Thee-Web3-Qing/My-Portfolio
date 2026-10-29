@@ -88,6 +88,9 @@ export default async function handler(req, res) {
     return res.status(201).json({ success: true, message: 'Registration submitted for payment review.' })
   } catch (error) {
     console.error('Class registration failed', error)
+    if (error?.code === '23505') {
+      return res.status(409).json({ error: 'This email address, WhatsApp number, receipt or transaction reference has already been submitted.' })
+    }
     return res.status(500).json({ error: 'Could not submit registration. Please try again.' })
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { screenReceipt } from '../lib/receiptScreening'
 import './classClay.css'
 import './classEditorial.css'
@@ -60,10 +60,7 @@ export default function Class() {
   const [scanProgress, setScanProgress] = useState(0)
   const [receiptAnalysis, setReceiptAnalysis] = useState(null)
   const [pricingLoaded, setPricingLoaded] = useState(false)
-  const [paymentStep, setPaymentStep] = useState(false)
   const [activeClassroomScreen, setActiveClassroomScreen] = useState(0)
-  const registrationFormRef = useRef(null)
-  const paymentStepRef = useRef(null)
   const [pricing, setPricing] = useState({ acceptedCount: 80, price: 1000, tierIndex: 0, filledInTier: 80, remainingInTier: 20, soldOut: false })
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
@@ -102,25 +99,6 @@ export default function Class() {
   }, [])
 
   const update = (event) => setForm((current) => ({ ...current, [event.target.name]: event.target.value }))
-
-  const continueToPayment = () => {
-    const formElement = registrationFormRef.current
-    if (!formElement) return
-
-    const detailFields = [...formElement.querySelectorAll('[data-registration-detail]')]
-    const invalidField = detailFields.find((field) => !field.checkValidity())
-    if (invalidField) {
-      invalidField.reportValidity()
-      invalidField.focus({ preventScroll: false })
-      return
-    }
-
-    setStatus({ type: '', message: '' })
-    setPaymentStep(true)
-    window.requestAnimationFrame(() => {
-      paymentStepRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    })
-  }
 
   const chooseReceipt = async (event) => {
     const file = event.target.files?.[0]
@@ -188,7 +166,6 @@ export default function Class() {
       setForm({ fullName: '', whatsapp: '', email: '', reason: '', mentorship: '' })
       setReceipt(null)
       setReceiptAnalysis(null)
-      setPaymentStep(false)
     } catch (error) {
       setStatus({ type: 'error', message: error.message || 'Something went wrong. Please try again.' })
     } finally {
@@ -315,40 +292,27 @@ export default function Class() {
             <p>{pricing.acceptedCount} enrolled students, including the original 80. The price doubles every 100 students.</p>{!pricingLoaded && <p>Live pricing connection unavailable. Submissions remain disabled until it reconnects.</p>}
           </ClayCard>
           <ClayCard tone="cream" className="clay-subscription">
-            <form ref={registrationFormRef} onSubmit={submit} className="clay-enrollment-form">
+            <form onSubmit={submit} className="clay-enrollment-form">
               <h3>Secure your spot.</h3>
-              <p>Enter your registration details first. You will see the official payment details on the next step.</p>
-              <label>Full name<input data-registration-detail name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
-              <label>WhatsApp number<input data-registration-detail name="whatsapp" required minLength={10} value={form.whatsapp} onChange={update} /></label>
-              <label>Email address<input data-registration-detail name="email" type="email" required value={form.email} onChange={update} /></label>
-              <label>Why do you want to join?<textarea data-registration-detail name="reason" required minLength={20} rows={4} value={form.reason} onChange={update} /></label>
-              <label>Interested in mentorship?<select data-registration-detail name="mentorship" value={form.mentorship} onChange={update}><option value="">Select</option><option>Yes</option><option>No</option><option>Maybe</option></select></label>
-              {!paymentStep && (
-                <button type="button" className="clay-button clay-button-coral clay-continue-payment" onClick={continueToPayment} disabled={!pricingLoaded || pricing.soldOut}>
-                  {pricingLoaded ? `Continue to payment · ${formatNaira(pricing.price)}` : 'Loading payment details...'}
-                </button>
-              )}
-              {paymentStep && (
-                <div ref={paymentStepRef} className="clay-payment-step">
-                  <div className="clay-payment-step-heading">
-                    <div><span>Step 2 of 2</span><strong>Make payment and upload your receipt.</strong></div>
-                    <button type="button" onClick={() => setPaymentStep(false)}>Edit details</button>
-                  </div>
-                  <div className="clay-payment-details" aria-label="Official class payment details">
-                    <span className="clay-payment-eyebrow">Official payment account</span>
-                    <strong className="clay-payment-bank">Moniepoint</strong>
-                    <span className="clay-payment-number">8124320659</span>
-                    <span className="clay-payment-name">Oluwasheedah Giwa</span>
-                    <button type="button" className="clay-payment-copy" onClick={() => { navigator.clipboard?.writeText('8124320659'); }}>Copy account number</button>
-                    <small>Transfer exactly {formatNaira(pricing.price)}. Use your own payment reference and keep the receipt.</small>
-                  </div>
-                  <label>Payment receipt (PDF, JPEG, PNG or WebP, up to 5 MB)<input type="file" required accept=".pdf,.png,.jpg,.jpeg,.webp" onChange={chooseReceipt} /></label>
-                  {scanning && <p>Screening receipt: {scanProgress}%</p>}
-                  {receiptAnalysis && <p>Receipt checked. Payment is subject to manual approval.</p>}
-                  {status.message && <p role="status" className={`clay-form-status clay-form-status-${status.type}`}>{status.message}</p>}
-                  <button type="submit" className="clay-button clay-button-coral clay-submit-button" disabled={!pricingLoaded || !detailsComplete || !receiptAnalysis || scanning || submitting}>{submitting ? 'Submitting...' : `Submit registration at ${formatNaira(pricing.price)}`}</button>
-                </div>
-              )}
+              <p>Pay the current batch fee to the account below, then upload your payment receipt. Qing's TV reviews payments and issues Classroom access codes after approval.</p>
+              <div className="clay-payment-details" aria-label="Official class payment details">
+                <span className="clay-payment-eyebrow">Official payment account</span>
+                <strong className="clay-payment-bank">Moniepoint</strong>
+                <span className="clay-payment-number">8124320659</span>
+                <span className="clay-payment-name">Oluwasheedah Giwa</span>
+                <button type="button" className="clay-payment-copy" onClick={() => { navigator.clipboard?.writeText('8124320659'); }}>Copy account number</button>
+                <small>Transfer exactly {formatNaira(pricing.price)}. Use your own payment reference and keep the receipt.</small>
+              </div>
+              <label>Full name<input name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
+              <label>WhatsApp number<input name="whatsapp" required value={form.whatsapp} onChange={update} /></label>
+              <label>Email address<input name="email" type="email" required value={form.email} onChange={update} /></label>
+              <label>Why do you want to join?<textarea name="reason" required minLength={20} rows={4} value={form.reason} onChange={update} /></label>
+              <label>Interested in mentorship?<select name="mentorship" value={form.mentorship} onChange={update}><option value="">Select</option><option>Yes</option><option>No</option><option>Maybe</option></select></label>
+              <label>Payment receipt (PDF, JPEG, PNG or WebP, up to 5 MB)<input type="file" required accept=".pdf,.png,.jpg,.jpeg,.webp" onChange={chooseReceipt} /></label>
+              {scanning && <p>Screening receipt: {scanProgress}%</p>}
+              {receiptAnalysis && <p>Receipt checked. Payment is subject to manual approval.</p>}
+              {status.message && <p role="status">{status.message}</p>}
+              <button type="submit" className="clay-button clay-button-coral clay-submit-button" disabled={!pricingLoaded || !detailsComplete || !receiptAnalysis || scanning || submitting}>{submitting ? 'Submitting...' : `Submit registration at ${formatNaira(pricing.price)}`}</button>
             </form>
           </ClayCard>
         </section>
