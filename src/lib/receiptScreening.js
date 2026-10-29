@@ -86,7 +86,7 @@ export const screenReceipt = async (file, onProgress, expectedAmount = 1000) => 
   try {
     const isPdf = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')
     const text = isPdf ? await readPdf(file, onProgress) : await recogniseImage(file, onProgress)
-    return { ...evaluateText(text, expectedAmount), hash, scanCompleted: true, expectedAmount }
+    return { ...evaluateText(text, expectedAmount), hash, extractedText: text.slice(0, 20_000), scanCompleted: true, expectedAmount }
   } catch (error) {
     console.error('Receipt screening failed', error)
     return {

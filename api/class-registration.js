@@ -1,24 +1,5 @@
 import { neon } from '@neondatabase/serverless'
 import { createHash } from 'node:crypto'
-import { createWorker } from 'tesseract.js'
-
-
-const extractReceiptText = async (bytes, isPdf) => {
-  if (isPdf) {
-    const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs')
-    const pdf = await pdfjs.getDocument({data:new Uint8Array(bytes),useSystemFonts:true,disableFontFace:true}).promise
-    let text = ''
-    for (let i=1;i<=Math.min(pdf.numPages,2);i++) {
-      const page=await pdf.getPage(i)
-      const content=await page.getTextContent()
-      text += ' ' + content.items.map(item=>item.str||'').join(' ')
-    }
-    return text
-  }
-  const worker=await createWorker('eng')
-  try { return (await worker.recognize(bytes)).data.text || '' }
-  finally { await worker.terminate() }
-}
 const parseReference = text => {
   const match = text.match(/(?:transaction\s*(?:reference|ref|id)|session\s*(?:id|number)|payment\s*(?:reference|ref)|reference\s*(?:number|no|id)?|transfer\s*(?:id|ref))\s*[:#-]?\s*([A-Z0-9][A-Z0-9-]{5,50})/i)
   return match ? match[1].toUpperCase().replace(/-/g,'') : null
@@ -69,20 +50,16 @@ export default async function handler(req, res) {
     if (existing.length) return res.status(409).json({ error: 'This email, phone number or receipt has already been registered.' })
     const count = await sql`SELECT COALESCE((SELECT integer_value FROM classroom_registration_settings WHERE key = 'legacy_student_offset'), 80)::int + (SELECT count(*)::int FROM class_registrations WHERE payment_status IN ('confirmed','approved')) AS total`
     const amount = 1000 * (2 ** Math.floor(Number(count[0].total) / 100))
-    let screening
-    try {
-      const extractedText = await extractReceiptText(bytes,isPdf)
-      screening = checkReceipt(extractedText,amount)
-    } catch(error) {
-      console.error('Server receipt OCR failed',error)
-      screening = {checks:{},score:0,reference:null,status:'review'}
-    }
+    const receiptText = String(b.receiptText || '').slice(0, 20_000)
+    const screening = receiptText
+      ? checkReceipt(receiptText, amount)
+      : {checks:{},score:0,reference:null,status:'review'}
     if (screening.reference) {
       const duplicate = await sql`SELECT id FROM class_registrations WHERE transaction_reference = ${screening.reference} LIMIT 1`
       if (duplicate.length) return res.status(409).json({error:'This transaction reference has already been submitted.'})
     }
     const receiptMime = isPdf ? 'application/pdf' : isPng ? 'image/png' : isJpg ? 'image/jpeg' : 'image/webp'
-    await sql`INSERT INTO class_registrations (full_name, whatsapp, email, reason, reason_category, mentorship_interest, receipt_path, receipt_name, receipt_size, receipt_mime, receipt_data, amount_paid, currency, payment_source, payment_reference, fraud_score, fraud_status, fraud_checks, transaction_reference, payment_status) VALUES (${name}, ${phone}, ${email}, ${reason}, ${String(b.reasonCategory || 'Other')}, ${String(b.mentorshipInterest || 'Not answered')}, ${`neon://class-receipts/${hash}`}, ${String(b.receiptName || 'receipt')}, ${bytes.length}, ${receiptMime}, decode(${raw}, 'base64'), ${amount}, 'NGN', 'Portfolio class page', ${hash}, ${screening.score}, ${screening.status}, ${JSON.stringify({checks:screening.checks,serverHash:hash,source:'server_ocr',storage:'neon'})}::jsonb, ${screening.reference}, 'pending')`
+    await sql`INSERT INTO class_registrations (full_name, whatsapp, email, reason, reason_category, mentorship_interest, receipt_path, receipt_name, receipt_size, receipt_mime, receipt_data, amount_paid, currency, payment_source, payment_reference, fraud_score, fraud_status, fraud_checks, transaction_reference, payment_status) VALUES (${name}, ${phone}, ${email}, ${reason}, ${String(b.reasonCategory || 'Other')}, ${String(b.mentorshipInterest || 'Not answered')}, ${`neon://class-receipts/${hash}`}, ${String(b.receiptName || 'receipt')}, ${bytes.length}, ${receiptMime}, decode(${raw}, 'base64'), ${amount}, 'NGN', 'Portfolio class page', ${hash}, ${screening.score}, ${screening.status}, ${JSON.stringify({checks:screening.checks,serverHash:hash,source:'browser_ocr_server_checked',storage:'neon'})}::jsonb, ${screening.reference}, 'pending')`
     return res.status(201).json({ success: true, message: 'Registration submitted for payment review.' })
   } catch (error) {
     console.error('Class registration failed', error)
