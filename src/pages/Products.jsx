@@ -8,6 +8,7 @@ import { createPortal } from 'react-dom'
       delivered: "I designed and built an editorial, responsive platform with programme discovery, The Thinking Room, The Thinking Human, ideas and perspectives, partnership journeys, registration pathways, and a connected AI-powered THINK NOW product.",
       tags: ["Learning Platform", "Editorial Website", "Programme Discovery"],
       status: "Live Client Build",
+      image: "/project-thumbs/think-tank-circle-interface.webp",
       links: {
         demo: "https://think-tank-circle.vercel.app/",
         repo: null,
@@ -144,6 +145,7 @@ import { createPortal } from 'react-dom'
       tags: ['Creative Technology', 'Brand Strategy', 'Marketing Platform'],
       status: 'Spotlight',
       spotlight: true,
+      image: '/project-thumbs/dragon-universe-interface.webp',
       links: {
         demo: 'https://www.thedragonuniverse.io/',
         repo: null,

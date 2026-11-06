@@ -1,4 +1,3 @@
-import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 
 const WHATSAPP_URL = 'https://askbookie.xyz/store/qingthecreator'
@@ -6,7 +5,7 @@ const WHATSAPP_URL = 'https://askbookie.xyz/store/qingthecreator'
 const projects = [
   { number: '01', title: 'Bookie', type: 'AI receptionist', copy: 'Booking conversations that feel human.', link: 'https://askbookie.xyz/', image: '/project-thumbs/bookie-interface.webp' },
   { number: '02', title: 'Man of Ubuntu', type: 'Education platform', copy: 'Community, culture and opportunity.', link: 'https://manofubuntu.org/', image: '/project-thumbs/ubuntu-interface.webp' },
-  { number: '03', title: 'Dragon Universe', type: 'Creative technology', copy: 'Strategy, creativity and technology for brand growth.', link: 'https://www.thedragonuniverse.io/', livePreview: true },
+  { number: '03', title: 'Dragon Universe', type: 'Creative technology', copy: 'Strategy, creativity and technology for brand growth.', link: 'https://www.thedragonuniverse.io/', image: '/project-thumbs/dragon-universe-interface.webp' },
   { number: '04', title: 'Gigga', type: 'Student wallet', copy: 'Money tools made for student life.', link: 'https://get-gigga.vercel.app/', image: '/project-thumbs/gigga-interface.webp' },
   { number: '05', title: 'Tab', type: 'Shared spending', copy: 'Simple tools for real shared expenses.', link: 'https://clearyourtab.xyz/', image: '/project-thumbs/tab-interface.webp' },
 ]
@@ -21,40 +20,6 @@ const stories = [
 
 function Arrow() {
   return <span aria-hidden="true">↗</span>
-}
-
-function LiveProjectPreview({ url, title }) {
-  const frame = useRef(null)
-  const screen = useRef(null)
-
-  useEffect(() => {
-    if (!frame.current || !screen.current) return undefined
-
-    const fitDesktopPreview = () => {
-      const scale = screen.current.clientWidth / 1440
-      frame.current.style.transform = `scale(${scale})`
-    }
-
-    fitDesktopPreview()
-    const observer = new ResizeObserver(fitDesktopPreview)
-    observer.observe(screen.current)
-    return () => observer.disconnect()
-  }, [])
-
-  return (
-    <div className="editorial-project-visual" ref={screen}>
-      <iframe
-        ref={frame}
-        src={url}
-        title={`${title} website interface`}
-        loading="lazy"
-        width="1440"
-        height="1060"
-        tabIndex="-1"
-        aria-hidden="true"
-      />
-    </div>
-  )
 }
 
 export default function Home() {
@@ -93,13 +58,9 @@ export default function Home() {
         <div className="editorial-project-grid">
           {projects.map((project) => (
             <a key={project.title} href={project.link} target="_blank" rel="noreferrer" className="editorial-project-card">
-              {project.livePreview ? (
-                <LiveProjectPreview url={project.link} title={project.title} />
-              ) : (
-                <div className="editorial-project-visual">
-                  <img src={project.image} alt={`${project.title} website interface`} loading="lazy" />
-                </div>
-              )}
+              <div className="editorial-project-visual">
+                <img src={project.image} alt={`${project.title} website interface`} loading="lazy" />
+              </div>
               <div className="editorial-project-meta">
                 <span>{project.number}</span>
                 <span className="project-arrow"><Arrow /></span>
