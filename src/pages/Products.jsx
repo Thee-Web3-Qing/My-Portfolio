@@ -3,13 +3,13 @@ import { createPortal } from 'react-dom'
 
   const recentClientBuilds = [
     {
-      name: "FastFlow",
-      clientWanted: "A modern logistics website where staff could register parcels, generate unique tracking codes, record sender and receiver details, update each parcel’s location and status, notify both parties, and let customers follow deliveries without calling the company for every update.",
-      delivered: "I designed and built a responsive logistics platform with a branded public website, no-account parcel tracking, complete delivery timelines, customer sign-in and parcel views, plus an admin workflow for parcel registration, search, sender and receiver records, status updates, and reusable notification templates.",
-      tags: ["Logistics Platform", "Parcel Tracking", "Admin Dashboard"],
+      name: "Think Tank Circle",
+      clientWanted: "A distinctive platform that could bring people, ideas and institutions together around clearer thinking, responsible leadership, practical learning and real-world progress.",
+      delivered: "I designed and built an editorial, responsive platform with programme discovery, The Thinking Room, The Thinking Human, ideas and perspectives, partnership journeys, registration pathways, and a connected AI-powered THINK NOW product.",
+      tags: ["Learning Platform", "Editorial Website", "Programme Discovery"],
       status: "Live Client Build",
       links: {
-        demo: "https://fastflow-web.vercel.app/",
+        demo: "https://think-tank-circle.vercel.app/",
         repo: null,
       },
     },
@@ -139,14 +139,13 @@ import { createPortal } from 'react-dom'
       },
     },
     {
-      name: 'Cleverson Industrial Equipment',
-      tagline: 'A responsive catalogue website for an industrial equipment supplier, organising bakery, packaging, commercial kitchen, restaurant, laundry, and pure-water-line equipment into clear customer pathways.',
-      tags: ['Industrial Catalogue', 'Business Website', 'Responsive Design'],
+      name: 'The Dragon Universe',
+      tagline: 'A strategy-led marketing and creative technology platform that connects brand strategy, content, production, intelligent systems, programmes, and business growth in one expressive digital experience.',
+      tags: ['Creative Technology', 'Brand Strategy', 'Marketing Platform'],
       status: 'Spotlight',
       spotlight: true,
-      image: '/project-thumbs/cleverson-interface.webp',
       links: {
-        demo: 'https://cleverson-industrial-equipment.vercel.app/',
+        demo: 'https://www.thedragonuniverse.io/',
         repo: null,
       },
     },
