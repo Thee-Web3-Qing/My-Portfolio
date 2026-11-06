@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 
 const WHATSAPP_URL = 'https://askbookie.xyz/store/qingthecreator'
 
+// Fixed desktop captures keep every selected-build card visually consistent on mobile.
 const projects = [
   { number: '01', title: 'Bookie', type: 'AI receptionist', copy: 'Booking conversations that feel human.', link: 'https://askbookie.xyz/', image: '/project-thumbs/bookie-interface.webp' },
   { number: '02', title: 'Man of Ubuntu', type: 'Education platform', copy: 'Community, culture and opportunity.', link: 'https://manofubuntu.org/', image: '/project-thumbs/ubuntu-interface.webp' },
