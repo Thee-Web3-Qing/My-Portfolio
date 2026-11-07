@@ -105,7 +105,7 @@ import { createPortal } from 'react-dom'
           {interactive && <a className="products-browser-open" href={url} target="_blank" rel="noreferrer">Open site ↗</a>}
         </div>
         <div className="products-browser-screen" ref={screenRef}>
-          {image ? (
+          {image && !interactive ? (
             <img src={image} alt={`${title} website interface`} loading="lazy" />
           ) : (
             <iframe ref={iframeRef} src={url} title={`${title} interactive website preview`} loading="lazy" width="1440" height="900" sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" />
