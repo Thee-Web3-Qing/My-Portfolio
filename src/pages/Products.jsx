@@ -15,6 +15,17 @@ import { createPortal } from 'react-dom'
       },
     },
     {
+      name: "Africa Money AI",
+      clientWanted: "An Africa-focused platform that could make AI literacy practical, accessible and culturally relevant while bringing learning, communities and institutional programmes into one clear experience.",
+      delivered: "I designed and built a responsive editorial platform with Academy pathways, an interactive AI Fluency Check, community journeys, a National AI Literacy Programme, insights and case studies, partnership and lead forms, and a curated AI Guide.",
+      tags: ["AI Literacy Platform", "Education Ecosystem", "Interactive Assessment"],
+      status: "Live Client Build",
+      links: {
+        demo: "https://africa-money-v2.vercel.app/",
+        repo: null,
+      },
+    },
+    {
       name: "Beauty by 3lle",
       clientWanted: "A polished beauty-brand website that could present skincare and makeup as one thoughtful collection, feel credible across different skin tones, and let customers explore products easily.",
       delivered: "I designed and built an editorial e-commerce demo with a responsive brand landing page, skincare and makeup collections, a filterable 30-product shop, individual product galleries and details, and clear paths into the full catalogue.",
