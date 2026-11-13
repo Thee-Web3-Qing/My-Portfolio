@@ -21,7 +21,7 @@ import { createPortal } from 'react-dom'
       tags: ["AI Literacy Platform", "Education Ecosystem", "Interactive Assessment"],
       status: "Live Client Build",
       links: {
-        demo: "https://africa-money-v2.vercel.app/",
+        demo: "https://africamoneyai.org/",
         repo: null,
       },
     },
@@ -37,25 +37,26 @@ import { createPortal } from 'react-dom'
       },
     },
     {
-      name: "The Author's Room",
-      clientWanted: "An artsy author marketplace where readers and writers can create profiles, discover books, and use the platform from either a reader or author perspective.",
-      delivered: "I designed and built a responsive marketplace prototype with role-based sign-up, reader and author dashboards, profile switching, book discovery, community features, and a Vercel-ready Next.js build.",
-      tags: ["Marketplace Prototype", "Next.js", "Responsive Design"],
-      status: "Prototype",
+      name: "EmpowerED Strategies",
+      clientWanted: "An education strategy platform that could present consulting, research, learning and institutional transformation work with clarity and credibility.",
+      delivered: "I designed and built a responsive education consultancy website with clear service pathways, a complete Learning Academy, research and insights, impact stories, partnership journeys and consultation forms.",
+      tags: ["Education Strategy", "Learning Academy", "Institutional Consulting"],
+      status: "Live Client Build",
       links: {
-        demo: "https://the-authors-room.vercel.app/",
-        repo: "https://github.com/Thee-Web3-Qing/The-Authors-Room",
+        demo: "https://empowerstrategies.ai/",
+        repo: null,
       },
     },
     {
-      name: "Val Gadgets",
-      clientWanted: "A modern gadget-store website that could showcase devices, support product discovery, and prepare the business for checkout, payments, orders, and an owner dashboard.",
-      delivered: "I designed and built a responsive e-commerce storefront with product categories, search and filtering, product pages, a cart and checkout flow, and a structure prepared for Salesive payment and order-management integration.",
-      tags: ["E-commerce Design", "Gadget Store", "Responsive UI"],
-      status: "Live",
+      name: "The Dragon Universe",
+      clientWanted: "A creative technology company needed a website that could unite strategy, marketing, production, intelligent systems and programmes without flattening the brand's personality.",
+      delivered: "I designed and built an editorial, responsive platform that turns the company's services, studios, systems, programmes, work and insights into one connected digital universe.",
+      tags: ["Creative Technology", "Brand Strategy", "Marketing Platform"],
+      status: "Live Client Build",
+      image: "/project-thumbs/dragon-universe-interface.webp",
       links: {
-        demo: "https://val-gadgets-one.vercel.app/",
-        repo: "https://github.com/Thee-Web3-Qing/ValGadgets",
+        demo: "https://www.thedragonuniverse.io/",
+        repo: null,
       },
     },
     {
@@ -93,6 +94,10 @@ import { createPortal } from 'react-dom'
         const width = screenRef.current?.clientWidth || 0
         const scale = width / 1440
         screenRef.current.style.height = `${900 * scale}px`
+        iframeRef.current.style.width = '1440px'
+        iframeRef.current.style.height = '900px'
+        iframeRef.current.style.minWidth = '1440px'
+        iframeRef.current.style.maxWidth = 'none'
         iframeRef.current.style.transform = `scale(${scale})`
       }
 
@@ -119,7 +124,7 @@ import { createPortal } from 'react-dom'
           {image && !interactive ? (
             <img src={image} alt={`${title} website interface`} loading="lazy" />
           ) : (
-            <iframe ref={iframeRef} src={url} title={`${title} interactive website preview`} loading="lazy" width="1440" height="900" sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" />
+            <iframe ref={iframeRef} src={url} title={`${title} interactive website preview`} loading="lazy" width="1440" height="900" scrolling={interactive ? 'yes' : 'no'} style={{ width: '1440px', height: '900px', minWidth: '1440px', maxWidth: 'none' }} sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts" />
           )}
         </div>
       </div>
@@ -163,14 +168,13 @@ import { createPortal } from 'react-dom'
       },
     },
     {
-      name: 'Gigga',
-      tagline: 'A campus economy platform where students can post tasks, earn by completing Giggas, offer their skills, and discover student-run products and businesses through accountable campus profiles.',
-      tags: ['Campus Marketplace', 'Student Economy', 'Next.js'],
+      name: 'Jacha Advisory',
+      tagline: 'A finance, AI and professional-learning platform that helps professionals and organisations understand their finances, build practical capability and use intelligent tools with confidence.',
+      tags: ['Financial Advisory', 'Professional Learning', 'AI in Finance'],
       status: 'Spotlight',
       spotlight: true,
-      image: '/project-thumbs/gigga-interface.webp',
       links: {
-        demo: 'https://get-gigga.vercel.app/',
+        demo: 'https://jachaadvisory.com/',
         repo: null,
       },
     },
