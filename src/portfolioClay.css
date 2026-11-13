@@ -2033,3 +2033,41 @@
     margin-top:1rem;
   }
 }
+
+
+/* Force every embedded portfolio site to keep a 1440px desktop viewport on phones. */
+.products-browser-screen>iframe,
+.products-browser.is-interactive .products-browser-screen>iframe{
+  width:1440px!important;
+  min-width:1440px!important;
+  max-width:none!important;
+  height:900px!important;
+  min-height:900px!important;
+}
+
+@media (max-width:760px){
+  .products-browser-screen{
+    width:100%;
+    aspect-ratio:16/10;
+    overflow:hidden;
+    background:#f4f2ef;
+  }
+  .products-browser-screen>iframe{
+    position:absolute!important;
+    inset:0 auto auto 0!important;
+    width:1440px!important;
+    min-width:1440px!important;
+    max-width:none!important;
+    height:900px!important;
+    min-height:900px!important;
+    transform-origin:top left!important;
+  }
+  .products-browser:not(.is-interactive) .products-browser-screen>iframe{
+    pointer-events:none;
+  }
+  .products-browser.is-interactive .products-browser-screen{
+    width:100%;
+    aspect-ratio:16/10;
+    max-height:none;
+  }
+}
