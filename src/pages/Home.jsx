@@ -7,7 +7,7 @@ const projects = [
   { number: '01', title: 'Bookie', type: 'AI receptionist', copy: 'Booking conversations that feel human.', link: 'https://askbookie.xyz/', image: '/project-thumbs/bookie-interface.webp' },
   { number: '02', title: 'Man of Ubuntu', type: 'Education platform', copy: 'Community, culture and opportunity.', link: 'https://manofubuntu.org/', image: '/project-thumbs/ubuntu-interface.webp' },
   { number: '03', title: 'Dragon Universe', type: 'Creative technology', copy: 'Strategy, creativity and technology for brand growth.', link: 'https://www.thedragonuniverse.io/', image: '/project-thumbs/dragon-universe-interface.webp' },
-  { number: '04', title: 'Gigga', type: 'Student wallet', copy: 'Money tools made for student life.', link: 'https://get-gigga.vercel.app/', image: '/project-thumbs/gigga-interface.webp' },
+  { number: '04', title: 'Jacha Advisory', type: 'Finance and AI advisory', copy: 'Clearer financial decisions, practical learning and responsible AI.', link: 'https://jachaadvisory.com/', image: 'https://www.jachaadvisory.com/images/hero.png' },
   { number: '05', title: 'Tab', type: 'Shared spending', copy: 'Simple tools for real shared expenses.', link: 'https://clearyourtab.xyz/', image: '/project-thumbs/tab-interface.webp' },
 ]
 
