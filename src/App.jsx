@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
   import PortfolioInteractions from './components/PortfolioInteractions.jsx'
   import Footer from './components/Footer.jsx'
   import Home from './pages/Home.jsx'
+  import December from './pages/December.jsx'
   import Content from './pages/Content.jsx'
   import Products from './pages/Products.jsx'
   import Hire from './pages/Hire.jsx'
@@ -29,6 +30,7 @@ import { Routes, Route } from 'react-router-dom'
                   <Route path="/hire" element={<Hire />} />
                   <Route path="/experience" element={<Experience />} />
                   <Route path="/class" element={<Class />} />
+                  <Route path="/december" element={<December />} />
                   <Route path="/services/:serviceSlug" element={<Service />} />
                 </Routes>
               </main>
