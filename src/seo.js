@@ -111,6 +111,17 @@ const staticRoutes = {
     ],
     type: 'ProfilePage',
   },
+  '/december': {
+    title: 'December Website Sale | Business Websites from ₦120,000 | Qing The Creator',
+    description: 'Get a beautiful website for your clothing, food, gifting, beauty, events or hospitality business. Choose an industry, a layout and optional features with clear prices.',
+    label: 'December Website Sale',
+    heading: 'December websites for businesses, with industry templates and optional add-ons.',
+    paragraphs: [
+      'Every December website starts at ₦120,000 and includes a responsive branded storefront, up to 12 listings, a seasonal offer and WhatsApp ordering or enquiries.',
+      'Browse industry layouts and choose optional features, AI product photos and a 60% deposit or full-payment checkout.',
+    ],
+    type: 'WebPage',
+  },
   '/class': {
     title: 'Beginner Vibecoding Class | Learn to Build with AI',
     description: 'Join Qing’s beginner vibecoding class and learn how to turn an idea into a mobile-first product using AI, GitHub, Vercel and Supabase.',
