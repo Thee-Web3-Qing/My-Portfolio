@@ -159,6 +159,7 @@ function IndustryContent({industryId}){
            <small>Independent preview route: <code>{preview.url}</code>. {preview.status==='sample'?'Current sample only; the finished interface will replace it.':'Finished storefront preview.'}</small>
          </article>
        })}</div>
+       {industryId==='food'&&<div className="ds-design-note"><span>FOURTH FOOD CONCEPT</span><p>Explore the additional warm, organic biryani restaurant design separately at <Link to="/foodartisan" target="_blank" rel="noopener noreferrer"><strong>/foodartisan ↗</strong></Link>. The three standard package selections above are unchanged.</p></div>}
        <div className="ds-design-note"><span>ABOUT THE DESIGNS</span><p>The website designs are separate products, not recoloured versions of the same mockup. Your final selected sample will be built as its own standalone interface at <strong>/{industryId}{draft.layout}</strong>.</p></div>
        <div className="ds-next-row"><Link to={to('features')}>Explore {industry.label.toLowerCase()} features ↗</Link></div>
      </section>}
