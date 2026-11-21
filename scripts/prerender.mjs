@@ -106,6 +106,19 @@ for (const pathname of publicPaths) {
   await writeFile(outputPath, html)
 }
 
+// Private utility pages must be emitted as actual static entrypoints.
+// Rewriting to /index.html was returning NOT_FOUND on cleanUrls deployments.
+// Do not inject crawlable portfolio SEO content into admin, intake or payment screens.
+const privateUtilityPages=['/admin','/december/track','/december/details','/payment/callback']
+for(const pathname of privateUtilityPages){
+ const seo={...getSeoForPath(pathname),noindex:true}
+ const html=cleanedTemplate.replace('</head>',buildHead(seo)+'\n  </head>')
+ const output=outputPathForRoute(pathname)
+ await mkdir(dirname(output),{recursive:true})
+ await writeFile(output,html)
+}
+console.log('Pre-rendered '+privateUtilityPages.length+' secure utility route entrypoints.')
+
 // Standalone fashion prototypes use the regular React entrypoint, not the portfolio's SEO body.
 // Emitting a real HTML file for each route makes direct links work with Vercel cleanUrls.
 const fashionPreviewRoutes = [
