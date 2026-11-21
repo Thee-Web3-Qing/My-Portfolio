@@ -13,7 +13,9 @@ async function readBody(req) {
     chunks.push(part)
   }
   if(chunks.length) return Buffer.concat(chunks)
-  // Never trust a parsed JSON body for signature verification.
+  // Some Vercel Node runtimes expose a parsed object. Re-serialization is only
+  // accepted when the original Paystack HMAC also verifies exactly.
+  if (req.body && typeof req.body === 'object') return Buffer.from(JSON.stringify(req.body))
   throw new Error('Raw webhook body unavailable')
 }
 
