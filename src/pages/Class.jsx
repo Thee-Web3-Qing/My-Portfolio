@@ -55,6 +55,7 @@ const classifyReason = (value) => {
 export default function Class() {
   const [form, setForm] = useState({ fullName: '', whatsapp: '', telegram: '', email: '', reason: '', mentorship: '' })
   const [receipt, setReceipt] = useState(null)
+  const [paymentMethod, setPaymentMethod] = useState('transfer')
   const [previewUrl, setPreviewUrl] = useState('')
   const [status, setStatus] = useState({ type: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
@@ -133,7 +134,7 @@ export default function Class() {
 
   const submit = async (event) => {
     event.preventDefault()
-    if (!detailsComplete || !receipt || !receiptAnalysis || scanning || submitting) return
+    if (!detailsComplete || (paymentMethod === 'transfer' && (!receipt || !receiptAnalysis || scanning)) || submitting) return
     setSubmitting(true)
     setStatus({ type: '', message: '' })
 
@@ -142,6 +143,19 @@ export default function Class() {
         throw new Error('You have already registered. Please do not submit another registration. Keep an eye on your email for your registration code after payment approval.')
       }
 
+      if (paymentMethod === 'paystack') {
+        const response = await fetch('/api/class-payment/initialize', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...form, reasonCategory: category })
+        })
+        const result = await response.json().catch(() => ({}))
+        if (!response.ok || !result.authorization_url) throw new Error(result.error || 'Could not start class payment.')
+        const checkout = new URL(result.authorization_url)
+        if (checkout.protocol !== 'https:' || !(checkout.hostname === 'paystack.com' || checkout.hostname.endsWith('.paystack.com'))) throw new Error('Unexpected checkout provider.')
+        window.location.assign(checkout.href)
+        return
+      }
       const cleanEmail = normaliseEmail(form.email)
       const cleanPhone = normalisePhone(form.whatsapp)
       const cleanTelegram = normaliseTelegram(form.telegram)
@@ -319,7 +333,13 @@ export default function Class() {
               </div>
             ) : <form onSubmit={submit} className="clay-enrollment-form">
               <h3>Secure your spot.</h3>
-              <p>Pay the current batch fee to the account below, then upload your payment receipt. Qing's TV reviews payments and issues Classroom access codes after approval.</p>
+              <p>Choose Paystack for an online payment or make a bank transfer and upload your receipt. Classroom access codes are issued after registration approval.</p>
+              <div className="clay-paystack-options" role="group" aria-label="Class payment method">
+                <button type="button" className={paymentMethod === 'paystack' ? 'is-active' : ''} onClick={() => setPaymentMethod('paystack')} aria-pressed={paymentMethod === 'paystack'}>Pay with Paystack</button>
+                <button type="button" className={paymentMethod === 'transfer' ? 'is-active' : ''} onClick={() => setPaymentMethod('transfer')} aria-pressed={paymentMethod === 'transfer'}>Bank transfer + receipt</button>
+              </div>
+              {paymentMethod === 'paystack' && <p className="clay-paystack-note">Secure Paystack payment for {formatNaira(pricing.price)}. You will return here after payment verification. Your class access code is issued only after approval.</p>}
+              {paymentMethod === 'transfer' && (
               <div className="clay-payment-details" aria-label="Official class payment details">
                 <span className="clay-payment-eyebrow">Official payment account</span>
                 <strong className="clay-payment-bank">Moniepoint</strong>
@@ -327,18 +347,18 @@ export default function Class() {
                 <span className="clay-payment-name">Oluwasheedah Giwa</span>
                 <button type="button" className="clay-payment-copy" onClick={() => { navigator.clipboard?.writeText('8124320659'); }}>Copy account number</button>
                 <small>Transfer exactly {formatNaira(pricing.price)}. Use your own payment reference and keep the receipt.</small>
-              </div>
+              </div>)}
               <label>Full name<input name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
               <label>WhatsApp number<input name="whatsapp" required value={form.whatsapp} onChange={update} /></label>
               <label>Telegram username<input name="telegram" required minLength={5} maxLength={33} placeholder="@yourusername" autoCapitalize="none" autoCorrect="off" value={form.telegram} onChange={update} /></label>
               <label>Email address<input name="email" type="email" required value={form.email} onChange={update} /></label>
               <label>Why do you want to join?<textarea name="reason" required minLength={20} rows={4} value={form.reason} onChange={update} /></label>
               <label>Interested in mentorship?<select name="mentorship" value={form.mentorship} onChange={update}><option value="">Select</option><option>Yes</option><option>No</option><option>Maybe</option></select></label>
-              <label>Payment receipt (PDF, JPEG, PNG or WebP, up to 5 MB)<input type="file" required accept=".pdf,.png,.jpg,.jpeg,.webp" onChange={chooseReceipt} /></label>
-              {scanning && <p>Screening receipt: {scanProgress}%</p>}
-              {receiptAnalysis && <p>Receipt checked. Payment is subject to manual approval.</p>}
+              {paymentMethod === 'transfer' && <label>Payment receipt (PDF, JPEG, PNG or WebP, up to 5 MB)<input type="file" required accept=".pdf,.png,.jpg,.jpeg,.webp" onChange={chooseReceipt} /></label>}
+              {paymentMethod === 'transfer' && scanning && <p>Screening receipt: {scanProgress}%</p>}
+              {paymentMethod === 'transfer' && receiptAnalysis && <p>Receipt checked. Payment is subject to manual approval.</p>}
               {status.message && <p role="status">{status.message}</p>}
-              <button type="submit" className="clay-button clay-button-coral clay-submit-button" disabled={!pricingLoaded || !detailsComplete || !receiptAnalysis || scanning || submitting}>{submitting ? 'Submitting...' : `Submit registration at ${formatNaira(pricing.price)}`}</button>
+              <button type="submit" className="clay-button clay-button-coral clay-submit-button" disabled={!pricingLoaded || !detailsComplete || (paymentMethod === 'transfer' && (!receiptAnalysis || scanning)) || submitting}>{submitting ? 'Processing…' : paymentMethod === 'paystack' ? `Pay ${formatNaira(pricing.price)} with Paystack ↗` : `Submit registration at ${formatNaira(pricing.price)}`}</button>
             </form>}
           </ClayCard>
         </section>
