@@ -1,4 +1,18 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/fashioneditorial",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fashioncatalogue",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fashionminimal",
+      "destination": "/index.html"
+    }
+  ]
 }
