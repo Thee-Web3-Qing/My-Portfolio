@@ -1,5 +1,5 @@
 import { enabledOrderModes, needAdmin, ordersDb } from '../../api/_lib/decemberAdmin.js'
-import { confirmPayment, paystackGet } from '../../api/_lib/payments.js'
+import { confirmPayment, paystackGet, paymentVerificationChecks } from '../../api/_lib/payments.js'
 
 const validRef = value => /^QDEC-[a-f0-9]{32}$/i.test(value)
 
@@ -32,13 +32,7 @@ export default async function handler(req, res) {
     // Detailed diagnostics are available only to an authenticated admin.
     // We expose comparisons, never the customer's email or payment credentials.
     const transaction = await paystackGet('/transaction/verify/' + encodeURIComponent(reference), mode)
-    const checks = {
-      reference:transaction.reference === reference,
-      environment:transaction.domain === mode,
-      currency:transaction.currency === 'NGN',
-      amount:Number(transaction.amount) === Number(rows[0].amount_kobo),
-      customerEmail:String(transaction.customer?.email||'').toLowerCase() === String(rows[0].customer_email||'').toLowerCase(),
-    }
+    const checks = paymentVerificationChecks(transaction,rows[0],reference,mode)
     const failures = Object.keys(checks).filter(key=>!checks[key])
     const paidAtPaystack = transaction.status === 'success'
     const message = paidAtPaystack
