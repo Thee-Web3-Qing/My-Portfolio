@@ -1,5 +1,5 @@
 import { services } from './data/services.js'
-import { INDUSTRIES } from './data/december.js'
+import { INDUSTRIES, LAYOUTS } from './data/december.js'
 
 export const SITE_URL = 'https://www.qingthecreator.xyz'
 export const SOCIAL_IMAGE = `${SITE_URL}/qing-class-portrait.jpg`
@@ -158,13 +158,44 @@ const demoRoutes = Object.fromEntries(INDUSTRIES.map(industry => [
   }
 ]))
 
+const industryRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
+  ['', '/features', '/checkout'].map(stage => {
+    const path = '/december/' + industry.id + stage
+    const pageName = stage === '/features' ? 'Optional features and prices' : stage === '/checkout' ? 'Website checkout' : 'Website designs'
+    return [path, {
+      title: industry.label + ' ' + pageName + ' | December Website Sale',
+      description: 'Create a ' + industry.label.toLowerCase() + ' business website with an editorial template, up to 12 listings and individually priced optional features.',
+      label: industry.label + ' ' + pageName.toLowerCase(),
+      heading: industry.label + ' ' + pageName.toLowerCase() + '.',
+      paragraphs: ['Choose from three independent design styles and an expanded set of features tailored to this industry.', 'Websites start at ₦120,000, with a 60% deposit or full payment through Paystack.'],
+      type:'WebPage',
+      noindex:stage === '/checkout',
+    }]
+  })
+))
+const previewRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
+  LAYOUTS.map(style => {
+    const path = '/' + industry.id + style.id
+    return [path, {
+      title:industry.label + ' ' + style.label + ' Website Sample | December Sale',
+      description:'Sample ' + style.label.toLowerCase() + ' website layout for ' + industry.label.toLowerCase() + '.',
+      label:industry.label + ' ' + style.label.toLowerCase() + ' sample storefront',
+      heading:style.label + ' sample website for ' + industry.label.toLowerCase() + '.',
+      paragraphs:['This preview currently shows illustrative demo content until the standalone industry interface is completed.'],
+      type:'WebPage',
+    }]
+  })
+))
+
 export const servicePaths = Object.keys(services).map((slug) => `/services/${slug}`)
-export const publicPaths = [...Object.keys(staticRoutes), ...Object.keys(demoRoutes), ...servicePaths]
+export const publicPaths = [...Object.keys(staticRoutes), ...Object.keys(industryRoutes), ...Object.keys(demoRoutes), ...Object.keys(previewRoutes), ...servicePaths]
 
 export function getSeoForPath(pathname) {
   const cleanPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '')
   if (staticRoutes[cleanPath]) return { path: cleanPath, ...staticRoutes[cleanPath] }
   if (demoRoutes[cleanPath]) return { path: cleanPath, ...demoRoutes[cleanPath] }
+  if (industryRoutes[cleanPath]) return { path: cleanPath, ...industryRoutes[cleanPath] }
+  if (previewRoutes[cleanPath]) return { path: cleanPath, ...previewRoutes[cleanPath] }
   if (cleanPath === '/december/details') return {
     path:cleanPath, title:'Submit Business Information | Qing The Creator',
     description:'Complete your December website order using a verified Paystack reference.',
