@@ -11,9 +11,12 @@ export default async function handler(req,res){
   return res.status(400).json({error:'Enter your valid website payment reference.'})
 
  try{
-  const verification=await confirmPayment(reference,mode)
-  if(!verification.found||verification.product!=='december-website')
+  const sql=dbForMode(mode)
+  const orderCheck=await sql`SELECT product FROM payment_orders
+    WHERE reference=${reference} AND environment=${mode} LIMIT 1`
+  if(!orderCheck.length||orderCheck[0].product!=='december-website')
    return res.status(404).json({error:'Website order not found in this payment environment.'})
+  const verification=await confirmPayment(reference,mode)
   if(!verification.paid)
    return res.status(200).json({
     found:true,paid:false,reference,environment:mode,
@@ -21,7 +24,6 @@ export default async function handler(req,res){
     publicNote:'Paystack has not confirmed this transaction. Check your payment receipt before retrying a payment.'
    })
 
-  const sql=dbForMode(mode)
   const rows=await sql`SELECT o.reference,o.created_at,
     p.stage,p.percent_complete,p.public_note,p.estimated_completion_date,
     p.assets_confirmed_at,p.updated_at,
