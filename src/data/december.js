@@ -1,3 +1,5 @@
+import { INDUSTRY_ADDONS, getIndustryGroups } from './decemberIndustryAddons.js'
+
 export const BASE_PRICE = 120000
 
 export const INDUSTRIES = [
@@ -16,7 +18,7 @@ export const LAYOUTS = [
   { id: 'minimal', label: 'Minimal', description: 'Quiet typography, large images and lots of breathing room.' },
 ]
 
-export const ADDONS = [
+export const SHARED_ADDONS = [
   { id: 'custom-design', name: 'Custom homepage design', description: 'Unique hero, typography and section arrangement.', price: 57000, recommended: ['fashion', 'beauty', 'events'] },
   { id: 'expanded-catalogue', name: 'Expanded catalogue', description: 'Increase your included listings from 12 to 30.', price: 19000, recommended: ['fashion', 'food', 'gifts', 'accessories'] },
   { id: 'cart', name: 'Multi-item order basket', description: 'Customers combine items into one WhatsApp order.', price: 33250, recommended: ['fashion', 'food', 'gifts', 'accessories'] },
@@ -26,6 +28,20 @@ export const ADDONS = [
   { id: 'page', name: 'Additional standard page', description: 'One extra page from your existing design components.', price: 28500, recommended: ['events', 'hospitality'] },
   { id: 'payment', name: 'Customer online payments', description: 'Hosted payment checkout for your storefront, subject to provider approval.', price: 66500, recommended: ['fashion', 'food', 'gifts', 'accessories'] },
 ]
+
+export const ADDONS = [...SHARED_ADDONS, ...INDUSTRY_ADDONS]
+export { getIndustryGroups }
+
+export function getAvailableAddons(industry) {
+  return ADDONS.filter(item => !item.industries || item.industries.includes(industry))
+}
+
+export function getSharedGroups() {
+  return [
+    { title:'Design & presentation', description:'Change how your storefront is displayed.', items:SHARED_ADDONS.filter(x=>['custom-design','expanded-catalogue','gallery','page'].includes(x.id)) },
+    { title:'Orders & customer enquiries', description:'Add optional ordering and communication tools.', items:SHARED_ADDONS.filter(x=>['cart','order-form','booking','payment'].includes(x.id)) },
+  ]
+}
 
 export const money = amount => '₦' + Number(amount || 0).toLocaleString('en-NG')
 
@@ -39,7 +55,7 @@ export function calculateDecemberQuote({ industry = 'fashion', layout = 'editori
   const selectedIndustry = INDUSTRIES.find(item => item.id === industry) || INDUSTRIES[0]
   const selectedLayout = LAYOUTS.find(item => item.id === layout) || LAYOUTS[0]
   const chosenIds = new Set(Array.isArray(addons) ? addons : [])
-  const selectedAddons = ADDONS.filter(item => chosenIds.has(item.id))
+  const selectedAddons = getAvailableAddons(selectedIndustry.id).filter(item => chosenIds.has(item.id))
   const imageCount = Number.isInteger(Number(images)) ? Math.max(0, Math.min(200, Number(images))) : 0
   const photosUnitPrice = imageUnitPrice(imageCount)
   const imagesSubtotal = imageCount * photosUnitPrice
