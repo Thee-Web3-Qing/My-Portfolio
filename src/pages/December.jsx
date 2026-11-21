@@ -179,7 +179,7 @@ export default function December() {
       <section className="dec-intro" id="build-your-site">
         <p className="dec-kicker">BUILD YOUR OWN PACKAGE</p>
         <h2>Different businesses.<br /><em>Different needs.</em> Same starting point.</h2>
-        <p>Your industry decides the content and layout inspiration, not the starting price. Every package includes mobile responsiveness, up to 12 listings, a featured December offer, WhatsApp ordering or enquiries, delivery or booking information, and one revision round.</p>
+        <p>Your industry decides the content and layout inspiration, not the starting price. Every package already includes a complete mobile-friendly website, up to 12 listings, product or service details, simple categories, a featured December offer, WhatsApp ordering and standard enquiries, delivery or booking information, and one revision round.</p>
       </section>
 
       <nav className="dec-inpage-nav" aria-label="December website sections">
@@ -234,9 +234,14 @@ export default function December() {
           </section>
 
           <section className="dec-builder-step" id="dec-features">
-            <div className="dec-step-title"><span>03</span><div><p className="dec-kicker">OPTIONAL FEATURE ADD-ONS</p><h2>Choose what your business needs.</h2></div></div>
-            <p className="dec-section-description">You're viewing <strong>{industry.label}</strong> features. Switch industries above to see a different set of options without leaving this page. Everything here is optional, and the prices already include the December 5% discount.</p>
-            <div className="dec-feature-headline"><span>FEATURES FOR {industry.label.toUpperCase()}</span><strong>{featureCount} industry-specific options</strong></div>
+            <div className="dec-step-title"><span>03</span><div><p className="dec-kicker">INTERACTIVE FEATURE UPGRADES</p><h2>Add something your customers can actually use.</h2></div></div>
+            <p className="dec-section-description">Your {industry.label.toLowerCase()} website already includes the essentials. The options below are interactive experiences beyond the finished template. Switch industries to see genuinely different tools. Prices include the December 5% discount.</p>
+            <div className="dec-included-basics">
+              <span>ALREADY INCLUDED IN YOUR ₦120,000 WEBSITE</span>
+              <p>Mobile-friendly design, up to 12 listings, product or service information, ordinary menus and categories, WhatsApp enquiries and ordering, basic order or appointment request details, a December offer, contact information and one revision round.</p>
+              <strong>There is no extra fee for a normal order basket, a standard enquiry form or ordinary storefront navigation.</strong>
+            </div>
+            <div className="dec-feature-headline"><span>INTERACTIVE EXPERIENCES FOR {industry.label.toUpperCase()}</span><strong>{featureCount} unique options</strong></div>
             {industryGroups.map((group, groupIndex) => (
               <details key={industryId + '-' + group.title} className="dec-feature-group" open={groupIndex === 0}>
                 <summary><span>{String(groupIndex + 1).padStart(2, '0')}</span><span><strong>{group.title}</strong><small>{group.description}</small></span><b aria-hidden="true">+</b></summary>
@@ -248,7 +253,7 @@ export default function December() {
                 </div>
               </details>
             ))}
-            <div className="dec-feature-headline dec-feature-shared"><span>AVAILABLE FOR MOST BUSINESSES</span><strong>Shared website upgrades</strong></div>
+            <div className="dec-feature-headline dec-feature-shared"><span>NEED A BIGGER PROJECT?</span><strong>Optional design and content extensions</strong></div>
             {sharedGroups.map((group, groupIndex) => (
               <details key={industryId + '-shared-' + group.title} className="dec-feature-group">
                 <summary><span>{String(groupIndex + 1 + industryGroups.length).padStart(2, '0')}</span><span><strong>{group.title}</strong><small>{group.description}</small></span><b aria-hidden="true">+</b></summary>
@@ -260,6 +265,7 @@ export default function December() {
                 </div>
               </details>
             ))}
+            <p className="dec-feature-integrations-note">Need a custom payment gateway, real-time stock sync, an AI virtual try-on or another third-party integration? Those require a separate quote and provider setup. They are not basic website add-ons.</p>
             <div className="dec-photo-addon">
               <div className="dec-photo-top"><span className="dec-photo-graphic" aria-hidden="true">✳</span><div><p className="dec-kicker">OPTIONAL AI PHOTO STUDIO</p><h3>Product images that look ready for a campaign.</h3><p>AI-reimagined product photos from the reference photos you supply. We keep important product details intact wherever possible, but you approve the results before use.</p></div></div>
               <div className="dec-photo-controls">
