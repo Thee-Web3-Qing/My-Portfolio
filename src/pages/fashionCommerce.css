@@ -353,3 +353,5 @@
  .fc-look-actions button {font-size:9px;}
 }
 @media(prefers-reduced-motion:reduce){.commerce-platform *{transition:none!important;animation:none!important;scroll-behavior:auto!important;}}
+
+@media(max-width:650px){.fashion-text-arrow{display:none!important}}

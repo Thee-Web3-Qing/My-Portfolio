@@ -12,7 +12,7 @@ const CONFIG = {
 }
 const fallback = fashionImage['campaign-street']
 function Image({src,alt, ...rest}) { return <img src={src} alt={alt} loading="lazy" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=fallback}} {...rest} /> }
-function Arrow({up=false}) { return <span aria-hidden="true">{up?'↗':'→'}</span> }
+function Arrow({up=false}) { return <span className="fashion-text-arrow" aria-hidden="true">{up?'↗':'→'}</span> }
 const getLink=(config,path)=>config.root+(path?'/'+path:'')
 function Icon({name}) {
  const d={
