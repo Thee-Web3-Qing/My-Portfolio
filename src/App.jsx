@@ -17,10 +17,19 @@ import { Routes, Route } from 'react-router-dom'
   import Experience from './pages/Experience.jsx'
   import Class from './pages/Class.jsx'
   import Service from './pages/Service.jsx'
+  import FashionPlatform from './pages/FashionPlatform.jsx'
+  import FoodStorefront from './pages/FoodStorefront.jsx'
 
   export default function App() {
     return (
       <Routes>
+        <Route path="/fashioneditorial/*" element={<FashionPlatform mode="editorial" />} />
+        <Route path="/fashioncatalogue/*" element={<FashionPlatform mode="catalogue" />} />
+        <Route path="/fashionminimal/*" element={<FashionPlatform mode="minimal" />} />
+        <Route path="/foodeditorial/*" element={<FoodStorefront type="editorial" />} />
+        <Route path="/foodcatalogue/*" element={<FoodStorefront type="catalogue" />} />
+        <Route path="/foodminimal/*" element={<FoodStorefront type="minimal" />} />
+        <Route path="/foodartisan/*" element={<FoodStorefront type="artisan" />} />
         <Route
           path="*"
           element={
