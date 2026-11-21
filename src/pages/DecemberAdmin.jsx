@@ -92,7 +92,7 @@ export default function DecemberAdmin(){
   if(!order||order.status==='paid'||rechecking)return
   setRechecking(true);setPaymentDiagnosis(null);setNotice('')
   try{
-   const response=await fetch('/api/admin/reconcile',{
+   const response=await fetch('/api/admin/orders',{
     method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({environment:order.environment,reference:order.reference})
    })
