@@ -123,6 +123,6 @@ export const getBrand=(store,style)=>store.brands[style]||store.brands.editorial
 export const getRoot=(slug,style)=>'/'+slug+style
 export const allPaths=Object.entries(storeData).flatMap(([slug,store])=>styles.flatMap(style=>{
  const root=getRoot(slug,style)
- const subpages=['explore','about','contact','faq','saved',slug==='beauty'?'book':slug==='events'?'plan':slug==='accessories'?'cart':'search',slug==='accessories'?'style-kit':'services']
+ const subpages=['explore','about','contact','faq','saved',...(slug==='beauty'?['book']:slug==='events'?['plan']:slug==='accessories'?['cart','style-kit']:['search','enquire'])]
  return [root,...[...new Set(subpages)].map(page=>root+'/'+page),...store.items.map(p=>root+'/item/'+p.id)]
 }))

@@ -157,7 +157,7 @@ function Details({ctx,shop,id}) {
   if(slug==='accessories'){shop.add(p,color||p.colors[0],qty);return}
   const query=new URLSearchParams({item:p.id})
   if(slug==='hospitality'){if(checkin)query.set('checkin',checkin);if(checkout)query.set('checkout',checkout);query.set('guests',String(guests))}
-  navigate(to(ctx,slug==='beauty'?'book':slug==='events'?'plan':'search')+'?'+query)
+  navigate(to(ctx,slug==='beauty'?'book':slug==='events'?'plan':'enquire')+'?'+query)
  }
  const images=[p.image,ctx.store.secondary,ctx.store.hero]
  const related=ctx.store.items.filter(x=>x.id!==p.id).slice(0,4)
@@ -235,9 +235,9 @@ function Core({ctx}) {
  const [section,id]=sub.split('/')
  const Home=HOMES[ctx.store.slug][ctx.style]
  const Page=!section?<Home ctx={ctx} shop={shop}/>
- :section==='explore'?<Catalogue key={location.search} ctx={ctx} shop={shop}/>
+ :section==='explore'||(section==='search'&&ctx.store.slug==='hospitality')?<Catalogue key={location.search} ctx={ctx} shop={shop} isSearch={section==='search'}/>
  :section==='item'?<Details key={id} ctx={ctx} shop={shop} id={id}/>
- :['book','plan','search'].includes(section)?<Inquiry key={location.search} ctx={ctx} type={section}/>
+ :['book','plan','enquire'].includes(section)?<Inquiry key={location.search} ctx={ctx} type={section}/>
  :section==='style-kit'&&ctx.store.slug==='accessories'?<StyleKit ctx={ctx} shop={shop}/>
  :section==='cart'&&ctx.store.slug==='accessories'?<Cart ctx={ctx} shop={shop}/>
  :section==='saved'?<Saved ctx={ctx} shop={shop}/>
