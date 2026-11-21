@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs && node scripts/check-hobby-api.mjs && node scripts/check-industry-render.mjs && node scripts/check-private-pages.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/check-hobby-api.mjs && node scripts/check-industry-render.mjs && node scripts/check-private-pages.mjs && node scripts/check-preview-widths.mjs",
     "preview": "vite preview"
   },
   "dependencies": {
