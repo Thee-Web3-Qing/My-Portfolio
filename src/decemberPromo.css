@@ -1,0 +1,37 @@
+/* Seasonal campaign details are additive. Portfolio sections and base layout remain untouched. */
+.editorial-december-banner {
+  background:#e5ebd7;
+  color:#1b4230;
+  padding:17px max(5vw,calc((100vw - 1440px)/2));
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  border-bottom:1px solid #c1d2b9;
+}
+.editorial-december-banner > div { display:flex;align-items:center;gap:24px;flex-wrap:wrap; }
+.editorial-december-banner .editorial-december-tag { font:800 .64rem 'Space Mono',monospace;letter-spacing:.05em;color:#246046;white-space:nowrap; }
+.editorial-december-banner p { margin:0;color:#456350;font-size:.82rem;line-height:1.5; }
+.editorial-december-banner p strong { color:#214932; }
+.editorial-december-banner .editorial-december-button { flex:none;display:inline-flex;align-items:center;gap:18px;background:#1e5039;color:#fff;padding:12px 18px;border-radius:99px;font-size:.78rem;font-weight:800;white-space:nowrap;transition:transform .2s; }
+.editorial-december-banner .editorial-december-button:hover { transform:translateY(-2px); }
+.portfolio-clay .portfolio-nav-link.portfolio-nav-december,
+.portfolio-clay:has(.editorial-home) .portfolio-nav-link.portfolio-nav-december {
+  border:1px solid #b8d0ad;
+  background:#dcebcf!important;
+  color:#1c563d!important;
+  box-shadow:none;
+  font-weight:800;
+}
+.portfolio-clay .portfolio-nav-link.portfolio-nav-december[aria-current="page"] {
+  background:#1b503a!important;color:#fff!important;
+}
+@media (min-width:901px) and (max-width:1240px) {
+  .portfolio-clay .portfolio-desktop-nav { gap:0; }
+  .portfolio-clay .portfolio-desktop-nav .portfolio-nav-link { padding:9px 10px;font-size:.69rem; }
+  .portfolio-clay .portfolio-nav-cta { padding:10px 13px; }
+  .portfolio-clay:has(.editorial-home) .portfolio-nav-inner { grid-template-columns:1fr auto; }
+  .portfolio-clay:has(.editorial-home) .portfolio-nav-inner .portfolio-nav-cta { display:none; }
+}
+@media(max-width:680px) {
+  .editorial-december-banner { padding:16px 18px;align-items:flex-start;flex-direction:column;gap:13px; }
+  .editorial-december-banner > div { gap:5px; }
+  .editorial-december-banner .editorial-december-button { width:100%;justify-content:space-between; }
+}
