@@ -20,6 +20,7 @@ import { Routes, Route } from 'react-router-dom'
   import FashionPlatform from './pages/FashionPlatform.jsx'
   import FoodStorefront from './pages/FoodStorefront.jsx'
   import GiftStorefront from './pages/GiftStorefront.jsx'
+  import IndustryStorefront from './pages/IndustryStorefront.jsx'
 
   export default function App() {
     return (
@@ -34,6 +35,9 @@ import { Routes, Route } from 'react-router-dom'
         <Route path="/giftseditorial/*" element={<GiftStorefront mode="editorial" />} />
         <Route path="/giftscatalogue/*" element={<GiftStorefront mode="catalogue" />} />
         <Route path="/giftsminimal/*" element={<GiftStorefront mode="minimal" />} />
+        {['beauty','events','accessories','hospitality'].flatMap(industry => ['editorial','catalogue','minimal'].map(style =>
+          <Route key={industry+style} path={'/'+industry+style+'/*'} element={<IndustryStorefront industry={industry} style={style} />} />
+        ))}
         <Route
           path="*"
           element={
