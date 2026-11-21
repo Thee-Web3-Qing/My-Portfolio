@@ -244,7 +244,7 @@ function Core({ctx}) {
  :section==='about'?<About ctx={ctx}/>:section==='contact'?<Contact ctx={ctx}/>
  :section==='faq'?<FAQ ctx={ctx}/>:<Missing ctx={ctx}/>
  useEffect(()=>{document.title=(section==='item'?getItem(ctx.store,id)?.title:section?section.charAt(0).toUpperCase()+section.slice(1):'Home')+' | '+ctx.brand.name+' | December Website Preview'},[ctx.brand.name,ctx.store,id,section])
- return <div className={'ix-store ix-store-'+ctx.store.slug+' ix-'+ctx.style}><Header ctx={ctx} shop={shop}/>{Page}<Footer ctx={ctx}/>{ctx.store.slug==='accessories'&&<Drawer ctx={ctx} shop={shop}/>}</div>
+ return <div className={'ix-store ix-store-'+ctx.store.slug+' ix-'+ctx.store.slug+' ix-'+ctx.store.slug+'-'+ctx.style+' ix-'+ctx.style}><Header ctx={ctx} shop={shop}/>{Page}<Footer ctx={ctx}/>{ctx.store.slug==='accessories'&&<Drawer ctx={ctx} shop={shop}/>}</div>
 }
 export default function IndustryStorefront({industry='beauty',style='editorial'}) {
  const store=storeData[industry]||storeData.beauty
