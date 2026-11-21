@@ -951,3 +951,14 @@
  .ix-footer-base{flex-direction:column;align-items:start;font-size:9px;}
 }
 @media(prefers-reduced-motion:reduce){.ix-store *{animation:none!important;transition:none!important;scroll-behavior:auto!important;}}
+
+
+/* Mobile references favour typography, photographs and clean line icons. */
+@media(max-width:650px){
+  .ix-store :is(
+    .ix-brand-symbol,.ix-ticker,.bc-bubbles,
+    .bc-hero-photo strong,.ec-photo span,.ac-photo b,.hc-hero-sticker
+  ){display:none!important}
+  .ix-store .ix-brand{gap:0}
+  .ix-store .ix-nav-right svg{stroke-width:1.7}
+}

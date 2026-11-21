@@ -635,3 +635,15 @@
  .fd-art-callout h2{font-size:50px;}
 }
 @media(prefers-reduced-motion:reduce){.fd-site *{transition:none!important;animation:none!important;scroll-behavior:auto!important;}}
+
+
+/* Replace prominent ornamental symbols with a quieter mobile treatment. */
+@media(max-width:650px){
+  .fd-site :is(
+    .fd-han-blossom,.fd-han-flower,.fd-han-decor,
+    .fd-bake-ticker,.fd-bake-party-flower,.fd-kan-spices,
+    .fd-art-badge,.fd-bake-sticker
+  ){display:none!important}
+  .fd-site-minimal .fd-brand>span:first-child,
+  .fd-site-artisan .fd-brand>span:first-child{display:none!important}
+}

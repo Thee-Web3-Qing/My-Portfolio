@@ -742,3 +742,16 @@
 }
 @media(max-width:360px){.gg-store-catalogue .gg-brand>span:last-child{font-size:15px}.gg-store-minimal .gg-brand>span:last-child{font-size:16px}.gg-nav-right>a,.gg-nav-right>button{width:30px}.gg-builder-chip small{font-size:7px}}
 @media(prefers-reduced-motion:reduce){.gg-store *{animation:none!important;scroll-behavior:auto!important;transition:none!important}}
+
+
+/* iOS/mobile: avoid decorative Unicode stars, flowers and glyph-like stickers.
+   The important product, hamper and booking controls remain visible. */
+@media(max-width:650px){
+  .gg-store :is(
+    .gg-mark-star,.gg-mark-circle,.gg-moving-ribbon,
+    .ge-hero-seal,.ge-hero-index,.gc-announcement,.gc-ribbon,
+    .gc-floating-tag,.gc-banner-flower,.gg-builder-bow
+  ){display:none!important}
+  .gg-store .gg-brand{gap:0}
+  .gg-store .gg-nav-right :is(a,button) svg{stroke-width:1.7}
+}
