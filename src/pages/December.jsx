@@ -157,7 +157,7 @@ export default function December() {
             <a href="#build-your-site" className="dec-btn dec-btn-light">Build my website <Arrow /></a>
             <span>Starting at <strong>₦120,000</strong></span>
           </div>
-          <div className="dec-hero-meta"><span>01 / Select your business</span><span>02 / Make it yours</span><span>03 / Reserve your slot</span></div>
+          <div className="dec-hero-meta"><span>01 / Select your business</span><span>02 / Make it yours</span><span>03 / Reserve your slot</span><span>Delivery: 3–7 days after assets are confirmed</span></div>
         </div>
         <div className="dec-hero-visual" aria-hidden="true">
           <div className="dec-hero-visual-orbit" />
