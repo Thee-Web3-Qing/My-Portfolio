@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { buildSchema, getSeoForPath, publicPaths, SITE_URL, SOCIAL_IMAGE } from '../src/seo.js'
+import { fashionInventory, fashionLooks } from '../src/pages/fashionInventory.js'
 
 const distDirectory = new URL('../dist/', import.meta.url)
 const templatePath = new URL('index.html', distDirectory)
@@ -110,6 +111,21 @@ const fashionPreviewRoutes = [
   { path: '/fashioncatalogue', title: 'HER FASHION | Fashion Catalogue and Styling Preview' },
   { path: '/fashionminimal', title: 'RUSH | Minimal Fashion Fitting Room Preview' },
 ]
+
+const commercePages = ['shop','looks','about','faq','wishlist','cart']
+const extras = {fashioneditorial:['campaign'],fashioncatalogue:['stylist'],fashionminimal:['fitting-room']}
+for (const base of Object.keys(extras)) {
+  const brand=base==='fashioneditorial'?'LOCO':base==='fashioncatalogue'?'HER FASHION':'RUSH'
+  for (const section of [...commercePages,...extras[base]]) {
+    fashionPreviewRoutes.push({path:'/'+base+'/'+section,title:brand+' | '+section.replaceAll('-',' ')})
+  }
+  for (const product of fashionInventory) {
+    fashionPreviewRoutes.push({path:'/'+base+'/product/'+product.id,title:product.name+' | '+brand})
+  }
+  for (const look of fashionLooks) {
+    fashionPreviewRoutes.push({path:'/'+base+'/looks/'+look.id,title:look.title+' | '+brand})
+  }
+}
 
 for (const preview of fashionPreviewRoutes) {
   const head = '<title>' + escapeHtml(preview.title) + '</title>' +
