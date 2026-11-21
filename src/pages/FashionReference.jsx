@@ -167,7 +167,7 @@ export function FashionMinimal(){
     <header className="rush-header"><div className="rush-header-left"><strong>AI fitting room</strong><span>INTERFACE CONCEPT</span><a href="#rush-wardrobe"><I name="left" size={14}/> Back</a></div><a className="rush-logo" href="#rush-top">RUSH</a><div className="rush-header-right"><button onClick={()=>shop.setBagOpen(true)}><I name="bag" size={17}/> Bag ({shop.count})</button><button aria-label="Profile" onClick={()=>setExpanded(expanded==='profile'?'':'profile')}><I name="person" size={19}/></button></div></header>
     <div className="rush-layout">
      <section className="rush-stage">
-       <div className="rush-stage-person"><Img className={flip?'flipped':''} src={pic('photo-1483985988355-763728e1935b',1300)} alt="Model showing a fashion outfit as a static illustration"/></div>
+       <div className="rush-stage-person"><Img className={flip?'flipped':''} src={pic('photo-1515886657613-9f3515b0c78f',1300)} alt="Model showing a fashion outfit as a static illustration"/></div>
        <div className="rush-fabric-preview"><Img src={fashionProducts[0].image} alt="Close-up of clothing texture"/></div>
        <div className="rush-zoom"><button onClick={()=>setFlip(!flip)} aria-label="Flip model photo"><I name="rotate"/></button><button onClick={()=>setFlip(false)} aria-label="Reset model photo"><I name="search"/></button></div>
        <button className="rush-turn-left" onClick={()=>setFlip(!flip)} aria-label="Flip photo left"><I name="left" size={28}/></button>
