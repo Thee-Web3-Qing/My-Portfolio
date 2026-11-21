@@ -1,5 +1,6 @@
 
-import { useMemo, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { fashionInventory, fashionLooks, fashionImage } from './fashionInventory.js'
 import { fashionProducts, fashionImages, money } from './fashionData.js'
 import './fashionReference.css'
 
@@ -28,35 +29,34 @@ const ICON = {
 }
 function I({name,size=19}) {return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ICON[name]||ICON.arrow}/></svg>}
 function Img({src,alt,className=''}) {return <img className={className} src={src} alt={alt} loading="lazy" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=pic('photo-1483985988355-763728e1935b')}}/>}
-const initial = [
-  {id:'ivory',brand:'ZARA',name:'Off-shoulder top',category:'Tops',price:29900,image:'https://i5.walmartimages.com/asr/f651417e-bf99-465d-a72a-ebdd3eabd445.6fde4c90c4aa07785488851046741ad5.jpeg?odnBg=FFFFFF&odnHeight=768&odnWidth=768',tone:'Ivory'},
-  {id:'pleat',brand:'MANGO',name:'Pleated mini skirt',category:'Bottoms',price:49900,image:'https://www.pngkit.com/png/detail/435-4358855_black-pleated-skirt-skirt-for-girl.png',tone:'Charcoal'},
-  {id:'boots',brand:'ZARA',name:'Leather boots',category:'Shoes',price:129000,image:'https://static.zara.net/assets/public/a4fc/4498/495643caa4d5/dd9ef9eb8f38/11028610800-e1/11028610800-e1.jpg?ts=1759848697333',tone:'Black'},
-  {id:'tabby',brand:'COACH',name:'Tabby shoulder bag',category:'Bags',price:350000,image:'https://cultstatus.com.au/cdn/shop/files/SSS.jpg?crop=center&height=1200&v=1756182428&width=1200',tone:'Black'},
-  {id:'wine',brand:'MANGO',name:'Burgundy fitted vest',category:'Tops',price:39900,image:pic('photo-1591047139829-d91aecb6caea'),tone:'Burgundy'},
-  {id:'trousers',brand:'ASOS',name:'Straight-leg trousers',category:'Bottoms',price:65900,image:pic('photo-1594633312681-425c7b97ccd1'),tone:'Sand'},
-  {id:'creamBag',brand:'COACH',name:'Mini shoulder bag',category:'Bags',price:72000,image:pic('photo-1584917865442-de89df76afd3'),tone:'Cream'},
-  {id:'heels',brand:'ZARA',name:'Weekend heels',category:'Shoes',price:45000,image:pic('photo-1515347619252-60a4bf4fff4f'),tone:'Black'},
-  {id:'gold',brand:'H&M',name:'Sculptural gold hoops',category:'Accessories',price:15900,image:pic('photo-1535632066927-ab7c9ab60908'),tone:'Gold'},
-  {id:'knit',brand:'H&M',name:'Relaxed knitwear',category:'Tops',price:28900,image:pic('photo-1434389677669-e08b4cac3105'),tone:'Cream'},
-]
+const demoBrands={ivory:'ZARA',pleat:'MANGO',boots:'ZARA',tabby:'COACH',wine:'MANGO',winepants:'MANGO',croco:'COACH',heels:'ASOS',bluecoat:'ZARA',whiteboots:'ZARA',rosebag:'COACH',greyskirt:'MANGO'}
+const brandOptions=['ZARA','H&M','MANGO','ASOS','COACH']
+const initial=fashionInventory.map((product,index)=>({...product,brand:demoBrands[product.id]||brandOptions[index%brandOptions.length],tone:product.colour}))
 const popular = [...initial.slice(0,4)]
 const storeNames=['ZARA','H&M','MANGO','ASOS']
-const groupNames=['All','Tops','Bottoms','Shoes','Bags','Accessories']
+const groupNames=['All','Tops','Bottoms','Outerwear','Dresses','Shoes','Bags','Accessories']
 
-function useStore() {
- const [bag,setBag]=useState([])
+const ShopContext = createContext(null)
+export function FashionStoreProvider({site,children}) {
+ const key='qing-december-fashion-'+site
+ const [bag,setBag]=useState(()=>{try{return JSON.parse(window.localStorage.getItem(key+'-bag')||'[]')}catch{return []}})
  const [bagOpen,setBagOpen]=useState(false)
- const [saved,setSaved]=useState([])
+ const [saved,setSaved]=useState(()=>{try{return JSON.parse(window.localStorage.getItem(key+'-saved')||'[]')}catch{return []}})
  const [notice,setNotice]=useState('')
- const count=bag.reduce((s,r)=>s+r.quantity,0)
- const subtotal=bag.reduce((s,r)=>s+r.item.price*r.quantity,0)
- const add=(p)=>{setBag(cur=>{const has=cur.find(x=>x.item.id===p.id);return has?cur.map(x=>x.item.id===p.id?{...x,quantity:x.quantity+1}:x):[...cur,{item:p,quantity:1}]});setBagOpen(true)}
- const toggle=(id)=>setSaved(c=>c.includes(id)?c.filter(x=>x!==id):[...c,id])
- const change=(id,d)=>setBag(cur=>cur.map(x=>x.item.id===id?{...x,quantity:x.quantity+d}:x).filter(x=>x.quantity>0))
- return {bag,bagOpen,setBagOpen,saved,toggle,add,count,subtotal,change,notice,setNotice}
+ useEffect(()=>{try{window.localStorage.setItem(key+'-bag',JSON.stringify(bag))}catch{}},[key,bag])
+ useEffect(()=>{try{window.localStorage.setItem(key+'-saved',JSON.stringify(saved))}catch{}},[key,saved])
+ const count=bag.reduce((total,entry)=>total+entry.quantity,0)
+ const subtotal=bag.reduce((total,entry)=>total+entry.item.price*entry.quantity,0)
+ const add=(product,open=true)=>{setBag(cur=>{const prior=cur.find(entry=>entry.item.id===product.id);return prior?cur.map(entry=>entry.item.id===product.id?{...entry,quantity:entry.quantity+1}:entry):[...cur,{item:product,quantity:1}]});setNotice('');if(open)setBagOpen(true)}
+ const addMultiple=(items)=>{setBag(cur=>{let next=[...cur];for(const product of items){const at=next.findIndex(entry=>entry.item.id===product.id);if(at>=0)next=next.map((entry,index)=>index===at?{...entry,quantity:entry.quantity+1}:entry);else next.push({item:product,quantity:1})}return next});setNotice('');setBagOpen(true)}
+ const toggle=id=>setSaved(cur=>cur.includes(id)?cur.filter(x=>x!==id):[...cur,id])
+ const change=(id,delta)=>setBag(cur=>cur.map(entry=>entry.item.id===id?{...entry,quantity:entry.quantity+delta}:entry).filter(entry=>entry.quantity>0))
+ const remove=id=>setBag(cur=>cur.filter(entry=>entry.item.id!==id))
+ const value={bag,bagOpen,setBagOpen,saved,toggle,add,addMultiple,count,subtotal,change,remove,notice,setNotice}
+ return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>
 }
-function Bag({shop}) {
+export function useStore() {const value=useContext(ShopContext);if(!value)throw new Error('Fashion store must be wrapped in FashionStoreProvider');return value}
+export function Bag({shop}) {
  if(!shop.bagOpen)return null
  return <div className="ref-dim" onMouseDown={e=>{if(e.target===e.currentTarget)shop.setBagOpen(false)}}><aside className="ref-bag" role="dialog" aria-modal="true" aria-label="Your bag"><header><div><small>YOUR SELECTION</small><h2>Shopping bag ({shop.count})</h2></div><button onClick={()=>shop.setBagOpen(false)} aria-label="Close bag"><I name="close"/></button></header><div className="ref-bag-scroll">{!shop.bag.length?<p className="ref-empty">Your bag is empty. Find a piece you love.</p>:shop.bag.map(({item,quantity})=><div className="ref-bag-line" key={item.id}><Img src={item.image} alt={item.name}/><div><small>{item.brand}</small><strong>{item.name}</strong><span>{money(item.price)}</span><div className="ref-counter"><button aria-label="Reduce quantity" onClick={()=>shop.change(item.id,-1)}><I name="minus" size={13}/></button>{quantity}<button aria-label="Increase quantity" onClick={()=>shop.change(item.id,1)}><I name="plus" size={13}/></button></div></div></div>)}</div><div className="ref-bag-foot"><div><span>Subtotal</span><strong>{money(shop.subtotal)}</strong></div><button onClick={()=>shop.setNotice('Checkout is a demonstration. Real payments will be connected when a client selects this website.')} disabled={!shop.count}>PROCEED TO CHECKOUT <I name="arrow"/></button>{shop.notice&&<p role="status">{shop.notice}</p>}<small>Prototype merchandise and prices. No purchase is processed.</small></div></aside></div>
 }
@@ -70,15 +70,15 @@ export function FashionEditorial(){
  const [slide,setSlide]=useState(0)
  const [nav,setNav]=useState(false)
  const [activePin,setActivePin]=useState(null)
- const arrival=initial.slice(0,3)
- const best=initial.slice(4,8)
- const variants=[{title:'FEEL THE VIBES',image:pic('photo-1529139574466-a303027c1d8b',1500)},{title:'OWN YOUR STYLE',image:pic('photo-1539109136881-3be0616acf4b',1500)},{title:'WEAR IT LOUD',image:pic('photo-1515886657613-9f3515b0c78f',1500)}]
+ const arrival=[initial[0],initial[8],initial[4]]
+ const best=[initial[1],initial[5],initial[12],initial[14]]
+ const variants=[{title:'FEEL THE VIBES',image:fashionImage['campaign-bright']},{title:'OWN YOUR STYLE',image:fashionImage['campaign-street']},{title:'WEAR IT LOUD',image:fashionImage['campaign-luxury']}]
  return <div className="ref-page ref-loco" id="top">
   <div className="ref-loco-frame">
    <header className="loco-nav">
     <a className="loco-mark" href="#top">LOCO<span>®</span></a>
-    <nav className={nav?'open':''}><a href="#new" onClick={()=>setNav(false)}>Men</a><a href="#new" onClick={()=>setNav(false)}>Women</a><a href="#best" onClick={()=>setNav(false)}>Kids</a><a href="#best" onClick={()=>setNav(false)}>Featured</a></nav>
-    <div className="loco-nav-end"><span className="loco-lang">◎ EN⌄</span><button className="loco-search" onClick={()=>document.getElementById('new')?.scrollIntoView({behavior:'smooth'})}><I name="search" size={16}/> Search</button><button aria-label="Saved products" onClick={()=>document.getElementById('best')?.scrollIntoView({behavior:'smooth'})}><I name="heart" size={19}/></button><button aria-label="Open shopping bag" onClick={()=>shop.setBagOpen(true)}><I name="bag" size={19}/>{shop.count>0&&<sup>{shop.count}</sup>}</button><button className="loco-nav-mobile" aria-label="Toggle menu" onClick={()=>setNav(!nav)}><I name={nav?'close':'menu'}/></button></div>
+    <nav className={nav?'open':''}><a href="/fashioneditorial/shop" onClick={()=>setNav(false)}>Shop</a><a href="/fashioneditorial/looks" onClick={()=>setNav(false)}>Lookbook</a><a href="/fashioneditorial/about" onClick={()=>setNav(false)}>Our story</a><a href="/fashioneditorial/faq" onClick={()=>setNav(false)}>Help</a></nav>
+    <div className="loco-nav-end"><span className="loco-lang">◎ EN⌄</span><button className="loco-search" onClick={()=>window.location.assign('/fashioneditorial/shop')}><I name="search" size={16}/> Search</button><button aria-label="Saved products" onClick={()=>window.location.assign('/fashioneditorial/wishlist')}><I name="heart" size={19}/></button><button aria-label="Open shopping bag" onClick={()=>shop.setBagOpen(true)}><I name="bag" size={19}/>{shop.count>0&&<sup>{shop.count}</sup>}</button><button className="loco-nav-mobile" aria-label="Toggle menu" onClick={()=>setNav(!nav)}><I name={nav?'close':'menu'}/></button></div>
    </header>
    <main>
     <section className="loco-hero">
@@ -94,8 +94,8 @@ export function FashionEditorial(){
         <div className="loco-slides">{variants.map((v,i)=><button key={v.title} className={slide===i?'selected':''} aria-label={'Show campaign '+(i+1)} onClick={()=>{setSlide(i);setActivePin(null)}}/>)}</div>
       </div>
     </section>
-    <section className="loco-arrivals" id="new"><div className="loco-section-title"><h2>New Arrival</h2><a href="#best">See All <I name="arrow"/></a></div><div className="loco-arrival-row">{arrival.map((p,i)=><article key={p.id} className="loco-mini"><Img src={p.image} alt={p.name}/><div><strong>{['Daisy Shirt','Rei Blue Jacket','Rozz Jacket'][i]}</strong><p className="loco-stars">★★★★★</p><small>({[129,92,72][i]} Reviews)</small><b>{money(p.price)}</b><button onClick={()=>shop.add(p)} aria-label={'Add '+p.name}><I name="plus" size={17}/></button></div></article>)}</div></section>
-    <section className="loco-bestsellers" id="best"><div className="loco-section-title"><h2>Best Seller</h2><a href="#new">See All <I name="arrow"/></a></div><div className="loco-best-grid">{best.map((p,i)=><article key={p.id}><div className="loco-best-image"><Img src={p.image} alt={p.name}/><button aria-label={'Add '+p.name+' to bag'} onClick={()=>shop.add(p)}><I name="plus" size={18}/></button></div><h3>{['Molly Jacket','Pop Star Neon Jacket','Gaby Half-Zipped','Smith Sweatshirt'][i]}</h3><p className="loco-stars">★★★★★ <small>({[3000,2100,3300,5100][i].toLocaleString()} Reviews)</small></p><b>{money(p.price)}</b></article>)}</div></section>
+    <section className="loco-arrivals" id="new"><div className="loco-section-title"><h2>New Arrival</h2><a href="#best">See All <I name="arrow"/></a></div><div className="loco-arrival-row">{arrival.map((p,i)=><article key={p.id} className="loco-mini"><Img src={p.image} alt={p.name}/><div><strong>{p.name}</strong><p className="loco-stars">★★★★★</p><small>(Demo piece)</small><b>{money(p.price)}</b><button onClick={()=>shop.add(p)} aria-label={'Add '+p.name}><I name="plus" size={17}/></button></div></article>)}</div></section>
+    <section className="loco-bestsellers" id="best"><div className="loco-section-title"><h2>Best Seller</h2><a href="#new">See All <I name="arrow"/></a></div><div className="loco-best-grid">{best.map((p,i)=><article key={p.id}><div className="loco-best-image"><Img src={p.image} alt={p.name}/><button aria-label={'Add '+p.name+' to bag'} onClick={()=>shop.add(p)}><I name="plus" size={18}/></button></div><h3>{p.name}</h3><p className="loco-stars">★★★★★ <small>(Preview)</small></p><b>{money(p.price)}</b></article>)}</div></section>
     <div className="loco-end"><strong>THE LOOK IS YOURS.</strong><a href="#top">BACK TO TOP ↑</a></div>
    </main>
   </div><Bag shop={shop}/>
@@ -110,7 +110,7 @@ export function FashionCatalogue(){
  const [category,setCategory]=useState('All')
  const [brand,setBrand]=useState('All stores')
  const [query,setQuery]=useState('')
- const [look,setLook]=useState(['ivory','pleat','boots','tabby'])
+ const [look,setLook]=useState([...fashionLooks[0].products])
  const [activeTab,setActiveTab]=useState('Explore')
  const [savedOnly,setSavedOnly]=useState(false)
  const [selectedOutfit,setSelectedOutfit]=useState(0)
@@ -119,6 +119,7 @@ export function FashionCatalogue(){
  const [filterOpen,setFilterOpen]=useState(false)
  const filtered=useMemo(()=>initial.filter(p=>(category==='All'||p.category===category)&&(brand==='All stores'||p.brand===brand)&&(!savedOnly||shop.saved.includes(p.id))&&((p.name+' '+p.brand).toLowerCase().includes(query.toLowerCase()))),[category,brand,query,savedOnly,shop.saved])
  const selected=initial.filter(p=>look.includes(p.id))
+ const exactLook=fashionLooks.find(l=>l.products.length===look.length && l.products.every(id=>look.includes(id)))
  const remove=(id)=>setLook(arr=>arr.filter(x=>x!==id))
  const append=(id)=>setLook(arr=>arr.includes(id)?arr.filter(x=>x!==id):[...arr,id])
  const selectedTotal=selected.reduce((s,p)=>s+p.price,0)
@@ -135,11 +136,12 @@ export function FashionCatalogue(){
   <section className="her-centre" aria-label="Outfit styling preview">
    <div className="her-icon-rail">{['left','person','shirt','hanger','bag','spark'].map((icon,i)=><button key={i} className={selectedOutfit===i?'selected':''} aria-label={['Go back','Model','Tops','Wardrobe','Bags','Style suggestions'][i]} onClick={()=>setSelectedOutfit(i)}><I name={icon} size={22}/></button>)}</div>
    <div className="her-switch"><button className="active" onClick={()=>setArMessage(false)}>3D</button><button onClick={()=>setArMessage(true)}>AR</button></div>
-   <Img className="her-main-model" src={pic('photo-1539109136881-3be0616acf4b',1100)} alt="Fashion model illustrating the selected look"/>
+   {exactLook?<Img className="her-main-model" src={exactLook.image} alt={'Curated model look: '+exactLook.title}/>:<div className="ref-outfit-board"><span>YOUR OWN EDIT</span><div>{selected.map(p=><Img key={p.id} src={p.image} alt={p.name}/>)}</div><small>These are the pieces you selected. Live garment fitting is not connected.</small></div>}
+   <div className="ref-look-tabs">{fashionLooks.map(l=><button key={l.id} className={exactLook?.id===l.id?'active':''} onClick={()=>setLook([...l.products])}>{l.id==='mono'?'CLASSIC':l.id==='wine'?'BURGUNDY':'BLUE HOUR'}</button>)}</div>
    <span className="her-podium-label">360° <I name="rotate" size={20}/></span>
    <div className="her-selected-rail">{selected.map(p=><button key={p.id} onClick={()=>{setSelectedProduct(p);document.getElementById('her-your-look')?.scrollIntoView({behavior:'smooth'})}} aria-label={'View '+p.name}><Img src={p.image} alt={p.name}/></button>)}</div>
    {arMessage&&<div className="her-ar-info" role="status">AR fitting is a visual concept. The live experience requires garment models and a camera integration.<button onClick={()=>setArMessage(false)}>Close</button></div>}
-   <div className="her-centre-note">OUTFIT PREVIEW · STATIC MODEL PHOTOGRAPH</div>
+   <div className="her-centre-note">{exactLook?'CURATED LOOK / CLOSE-MATCH PRODUCT STYLING':'CUSTOM OUTFIT BOARD / YOUR SELECTED PIECES'}</div>
   </section>
   <section className="her-right" id="her-your-look">
    <div className="her-look-card"><div className="her-card-title"><h2>YOUR LOOK</h2><span>{selected.length} ITEMS</span></div><div className="her-look-list">{selected.length?selected.map(p=><div className={'her-look-item '+(selectedProduct?.id===p.id?'active':'')} key={p.id}><button className="her-look-picture" onClick={()=>setSelectedProduct(p)}><Img src={p.image} alt={p.name}/></button><div><b>{p.brand}</b><span>{p.name}</span><strong>{money(p.price)}</strong></div><button className="her-look-more" aria-label={'Remove '+p.name+' from look'} onClick={()=>remove(p.id)}><I name="close" size={17}/></button></div>):<div className="her-look-blank">Tap the pieces on the left to build your look.</div>}</div><div className="her-style-fit"><h3>STYLE & FIT</h3><p><I name="check" size={16}/> Your personal outfit selection <I name="info" size={15}/></p><p><I name="check" size={16}/> Combine tops, bottoms and accessories</p><p><I name="info" size={16}/> Fit checks require your measurements</p></div><div className="her-total"><span>LOOK TOTAL</span><strong>{money(selectedTotal)}</strong></div><button disabled={!selected.length} className="her-shop-look" onClick={()=>selected.forEach(p=>shop.add(p))}>Shop the Look <I name="arrowUp" size={18}/></button></div>
@@ -154,7 +156,7 @@ export function FashionCatalogue(){
  * wardrobe rail, bright yellow controls and parameter panel. */
 export function FashionMinimal(){
  const shop=useStore()
- const [chosen,setChosen]=useState(['ivory','trousers','boots'])
+ const [chosen,setChosen]=useState([...fashionLooks[0].products])
  const [size,setSize]=useState('M')
  const [flip,setFlip]=useState(false)
  const [measurements,setMeasurements]=useState({chest:'81',waist:'59',hips:'86',height:'168'})
@@ -162,6 +164,7 @@ export function FashionMinimal(){
  const [colour,setColour]=useState('#5d4034')
  const [expanded,setExpanded]=useState('')
  const outfit=initial.filter(p=>chosen.includes(p.id))
+ const exactRushLook=fashionLooks.find(l=>l.products.length===chosen.length&&l.products.every(id=>chosen.includes(id)))
  const add=(id)=>setChosen(cur=>cur.includes(id)?cur.filter(x=>x!==id):[...cur,id])
  const total=outfit.reduce((s,p)=>s+p.price,0)
  return <div className="ref-page ref-rush" id="rush-top">
@@ -170,13 +173,14 @@ export function FashionMinimal(){
     <header className="rush-header"><div className="rush-header-left"><strong>AI fitting room</strong><span>INTERFACE CONCEPT</span><a href="#rush-wardrobe"><I name="left" size={14}/> Back</a></div><a className="rush-logo" href="#rush-top">RUSH</a><div className="rush-header-right"><button onClick={()=>shop.setBagOpen(true)}><I name="bag" size={17}/> Bag ({shop.count})</button><button aria-label="Profile" onClick={()=>setExpanded(expanded==='profile'?'':'profile')}><I name="person" size={19}/></button></div></header>
     <div className="rush-layout">
      <section className="rush-stage">
-       <div className="rush-stage-person"><Img className={flip?'flipped':''} src={pic('photo-1515886657613-9f3515b0c78f',1300)} alt="Model showing a fashion outfit as a static illustration"/></div>
-       <div className="rush-fabric-preview"><Img src={fashionProducts[0].image} alt="Close-up of clothing texture"/></div>
+       <div className="rush-stage-person">{exactRushLook?<Img className={flip?'flipped':''} src={exactRushLook.image} alt={'Model wearing the '+exactRushLook.title+' styled look'}/>:<div className="rush-composed-board"><strong>YOUR LOOK BOARD</strong><div>{outfit.map(p=><Img key={p.id} src={p.image} alt={p.name}/>)}</div><small>Selected garments, not a generated try-on</small></div>}</div>
+       <div className="ref-rush-looks">{fashionLooks.map(l=><button key={l.id} className={exactRushLook?.id===l.id?'active':''} onClick={()=>setChosen([...l.products])}>{l.title}</button>)}</div>
+       <div className="rush-fabric-preview"><Img src={outfit[0]?.image || fashionInventory[0].image} alt="Close-up of selected garment"/></div>
        <div className="rush-zoom"><button onClick={()=>setFlip(!flip)} aria-label="Flip model photo"><I name="rotate"/></button><button onClick={()=>setFlip(false)} aria-label="Reset model photo"><I name="search"/></button></div>
        <button className="rush-turn-left" onClick={()=>setFlip(!flip)} aria-label="Flip photo left"><I name="left" size={28}/></button>
        <button className="rush-turn-right" onClick={()=>setFlip(!flip)} aria-label="Flip photo right"><I name="right" size={28}/></button>
        <div className="rush-wardrobe" id="rush-wardrobe"><header><strong>On a hanger</strong><I name="search" size={17}/></header><div className="rush-wardrobe-items"><button className="rush-rail-arrow" onClick={()=>document.getElementById('rush-rack')?.scrollBy({left:-240,behavior:'smooth'})} aria-label="Scroll rail left"><I name="left" size={19}/></button><div id="rush-rack" className="rush-scroll">{initial.map(p=><button key={p.id} className={chosen.includes(p.id)?'selected':''} title={p.name} aria-label={(chosen.includes(p.id)?'Remove ':'Add ')+p.name} onClick={()=>add(p.id)}><Img src={p.image} alt={p.name}/>{chosen.includes(p.id)&&<span><I name="check" size={12}/></span>}</button>)}</div><button className="rush-rail-arrow" onClick={()=>document.getElementById('rush-rack')?.scrollBy({left:240,behavior:'smooth'})} aria-label="Scroll rail right"><I name="right" size={19}/></button></div></div>
-       <span className="rush-stage-disclaimer">STYLE COMPOSITION · IMAGE PREVIEW, NOT LIVE AI TRY-ON</span>
+       <span className="rush-stage-disclaimer">{exactRushLook?'CURATED OUTFIT PHOTO · MATCHED GARMENT SELECTION':'CUSTOM LOOK BOARD · NOT LIVE AI TRY-ON'}</span>
      </section>
      <aside className="rush-right">
        <div className="rush-params"><h2>Your parameters</h2><div className="rush-metrics">{[['Chest (cm)','chest'],['Waist (cm)','waist'],['Hips (cm)','hips'],['Height (cm)','height']].map(([label,key])=><label key={key}><span>{label}</span><input type="number" min="1" aria-label={label} value={measurements[key]} onChange={e=>{setMeasurements(cur=>({...cur,[key]:e.target.value}));setConfirmed(false)}}/></label>)}</div><button onClick={()=>setConfirmed(true)}>{confirmed?'Confirmed ✓':'Confirm'}</button>{confirmed&&<p className="rush-confirm" role="status">Measurements saved for this preview. Size estimation is not active.</p>}</div>
