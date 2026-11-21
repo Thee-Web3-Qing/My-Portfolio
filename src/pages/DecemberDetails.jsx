@@ -18,7 +18,9 @@ const cards=[
 export default function DecemberDetails(){
   const [params]=useSearchParams()
   const [reference,setReference]=useState(params.get('reference')||'')
-  const [email,setEmail]=useState('')
+  const [email,setEmail]=useState(()=>{
+    try { return window.sessionStorage.getItem('qing_december_checkout_email') || '' } catch { return '' }
+  })
   const [verified,setVerified]=useState(null)
   const [form,setForm]=useState({...blank})
   const [pending,setPending]=useState(false)
@@ -67,13 +69,16 @@ export default function DecemberDetails(){
         if(json.submission){const current=json.submission;setForm({...blank,...current,items:Array.isArray(current.items)&&current.items.length?current.items:[emptyItem()]})}
         else setForm(prev=>({...prev,businessName:json.context.business,items:prev.items?.length?prev.items:[emptyItem()]}))
       }
-      if(action==='submit')setSaved(true)
+      if(action==='submit'){
+        setSaved(true)
+        try { window.sessionStorage.removeItem('qing_december_checkout_email') } catch {}
+      }
       setMessage(action==='lookup'?'Your verified website order has been found. You can complete or update your details below.':json.message)
     }catch(err){setMessage(err.message||'Please try again.')}
     finally{setPending(false)}
   }
   return <div className="dec-details">
-    <div className="dec-details-top"><Link to="/december">← December sale</Link><span>THE CUSTOMER STUDIO / 2026</span></div>
+    <div className="dec-details-top"><Link to="/december">← December sale</Link><Link to={'/december/track'+(reference?'?reference='+encodeURIComponent(reference):'')}>Track my website progress ↗</Link><span>THE CUSTOMER STUDIO / 2026</span></div>
     <header className="dec-details-hero">
       <p>01 / AFTER YOUR PAYMENT</p>
       <h1>Your business.<br/><em>Your website.</em><br/>Your details.</h1>
@@ -138,7 +143,8 @@ export default function DecemberDetails(){
           <span>All my product images, business information, prices and other website resources are ready for review.</span></label>
           <p>The 3–7 day build window starts after Qing confirms your submitted materials are complete. If something is missing, you can return with the same payment reference and email to update your form.</p>
           <button type="submit" disabled={pending||!!uploading}>{pending?'Saving your details…':uploading?'Image uploading…':'Save business information ↗'}</button>
-          {saved&&<p className="dec-save-success" role="status">✓ Details saved in your website order. Keep your reference for any updates.</p>}
+          {saved&&<p className="dec-save-success" role="status">✓ Details saved to your order. You can track your website using the same Paystack reference.</p>}
+          {saved&&<Link className="dec-track-after-save" to={'/december/track?reference='+encodeURIComponent(reference)}>Track my website's progress ↗</Link>}
         </div>
       </form>}
     </main>
