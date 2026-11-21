@@ -348,7 +348,7 @@
  .her-bottom-nav {position:sticky;bottom:0;z-index:10;margin:0;padding:13px 5% 18px;box-shadow:0 -7px 26px #0001;background:#fff;}
  .her-centre {order:2;width:100%;min-height:640px;height:710px;background:linear-gradient(150deg,#5d2634,#411421);border-radius:0;}
  .her-main-model {height:84%;inset:7% 10% 0 10%;width:80%;object-position:center;mask-image:linear-gradient(to bottom,#000 73%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,#000 73%,transparent 100%);}
- .her-centre:before {content:'LOOK ITEMS: '+ '3';position:absolute;top:15px;left:65px;color:#fff;font:600 10px 'DM Sans',sans-serif;letter-spacing:.08em;}
+ .her-centre:before {content:'LOOK ITEMS: 3';position:absolute;top:15px;left:65px;color:#fff;font:600 10px 'DM Sans',sans-serif;letter-spacing:.08em;}
  .her-icon-rail {left:10px;top:54px;}
  .her-icon-rail button {width:38px;height:38px;}
  .her-switch {top:16px;right:15px;}
