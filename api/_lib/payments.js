@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless'
+import { calculateDecemberQuote } from '../../src/data/december.js'
 import { randomUUID, createHmac, timingSafeEqual } from 'node:crypto'
 
 export const PAYSTACK_ORIGIN = 'https://api.paystack.co'
@@ -106,7 +107,16 @@ export async function confirmPayment(reference, mode = environment()) {
 }
 export function publicStatus(order) {
   const paid = order.status === 'paid'
-  return {
+  const config = safeMetadata(order.configuration)
+  const quote = order.product === 'december-website'
+    ? calculateDecemberQuote({ industry:config.industry, layout:config.layout, addons:config.addons, images:config.images })
+    : null
+  const items = quote ? [
+    { name:'Branded website (12 listings)', price:quote.base },
+    ...quote.selectedAddons.map(x=>({name:x.name,price:x.price})),
+    ...(quote.images>0?[{name:quote.images+' AI product images × ₦'+quote.imageUnitPrice,price:quote.imagesSubtotal}]:[]),
+  ] : [{name:'Vibecoding Starter Class',price:Number(order.quote_total_kobo)/100}]
+  return { items, industry:quote?.industry.label || null, layout:quote?.layout.label || null,
     found:true, paid, reference:order.reference, product:order.product,
     amount:paid ? Number(order.amount_kobo) : 0,
     total:Number(order.quote_total_kobo)/100,
