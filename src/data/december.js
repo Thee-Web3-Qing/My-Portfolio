@@ -32,15 +32,24 @@ export const SHARED_ADDONS = [
 export const ADDONS = [...SHARED_ADDONS, ...INDUSTRY_ADDONS]
 export { getIndustryGroups }
 
-export function getAvailableAddons(industry) {
-  return ADDONS.filter(item => !item.industries || item.industries.includes(industry))
+const SHARED_ADDON_ELIGIBILITY = {
+  'expanded-catalogue':['fashion','food','gifts','accessories','hospitality'],
+  cart:['fashion','food','gifts','accessories'],
+  booking:['beauty','events','hospitality'],
 }
 
-export function getSharedGroups() {
+export function getAvailableAddons(industry) {
+  return ADDONS.filter(item => item.industries
+    ? item.industries.includes(industry)
+    : !SHARED_ADDON_ELIGIBILITY[item.id] || SHARED_ADDON_ELIGIBILITY[item.id].includes(industry))
+}
+
+export function getSharedGroups(industry) {
+  const allowed = new Set(getAvailableAddons(industry).map(item=>item.id))
   return [
-    { title:'Design & presentation', description:'Change how your storefront is displayed.', items:SHARED_ADDONS.filter(x=>['custom-design','expanded-catalogue','gallery','page'].includes(x.id)) },
-    { title:'Orders & customer enquiries', description:'Add optional ordering and communication tools.', items:SHARED_ADDONS.filter(x=>['cart','order-form','booking','payment'].includes(x.id)) },
-  ]
+    { title:'Design & presentation', description:'Change how your storefront is displayed.', items:SHARED_ADDONS.filter(x=>allowed.has(x.id) && ['custom-design','expanded-catalogue','gallery','page'].includes(x.id)) },
+    { title:'Orders & customer enquiries', description:'Add optional ordering and communication tools.', items:SHARED_ADDONS.filter(x=>allowed.has(x.id) && ['cart','order-form','booking','payment'].includes(x.id)) },
+  ].filter(group=>group.items.length>0)
 }
 
 export const money = amount => '₦' + Number(amount || 0).toLocaleString('en-NG')
