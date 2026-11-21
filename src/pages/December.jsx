@@ -141,6 +141,8 @@ export default function December() {
       if (!response.ok || !data.authorization_url) throw new Error(data.error || 'Payment could not be started.')
       const checkoutUrl = new URL(data.authorization_url)
       if (checkoutUrl.protocol !== 'https:' || !(checkoutUrl.hostname === 'paystack.com' || checkoutUrl.hostname.endsWith('.paystack.com'))) throw new Error('Unexpected checkout provider.')
+      // The email is kept only in this tab, not in the callback URL.
+      try { window.sessionStorage.setItem('qing_december_checkout_email', customer.email.trim().toLowerCase()) } catch {}
       window.location.assign(checkoutUrl.href)
     } catch (error) {
       setFeedback(error.message || 'Payment could not be started. Please try again.')
