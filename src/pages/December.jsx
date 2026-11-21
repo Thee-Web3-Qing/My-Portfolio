@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ADDONS, INDUSTRIES, LAYOUTS, calculateDecemberQuote, imageUnitPrice, money } from '../data/december.js'
+import { ADDONS, INDUSTRIES, LAYOUTS, calculateDecemberQuote, money } from '../data/december.js'
 import './December.css'
 
 const Arrow = () => <span aria-hidden="true">↗</span>
@@ -177,6 +177,7 @@ export default function December() {
 
           <section className="dec-builder-step">
             <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>One brand. Three directions.</h2></div></div>
+            <p className="dec-section-description">All three starting layouts are included in the ₦120,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
             <div className="dec-layout-choices">
               {LAYOUTS.map((item, index) => <button type="button" key={item.id} className={'dec-layout-option' + (layoutId === item.id ? ' is-active' : '')} onClick={() => setLayoutId(item.id)} aria-pressed={layoutId === item.id}>
                 <span className={'dec-layout-doodle dec-layout-doodle-' + item.id}><i /><i /><i /></span>
