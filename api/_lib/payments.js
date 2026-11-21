@@ -13,6 +13,15 @@ export const db = () => {
   if (!process.env.DATABASE_URL) throw new Error('Database is not configured')
   return neon(process.env.DATABASE_URL)
 }
+// Select the correct isolated Neon database whenever an authorised admin
+// reconciles historical test transactions from the production dashboard.
+export function dbForMode(mode = environment()) {
+  if (mode === environment()) return db()
+  if (mode === 'test' && environment() === 'live' && process.env.DECEMBER_TEST_DATABASE_URL) {
+    return neon(process.env.DECEMBER_TEST_DATABASE_URL)
+  }
+  throw new Error('Payment database unavailable for this environment')
+}
 export function callbackUrl() {
   if (environment() === 'live') return 'https://www.qingthecreator.xyz/payment/callback'
   const hostname = process.env.VERCEL_BRANCH_URL || process.env.VERCEL_URL
@@ -60,18 +69,29 @@ export function verifySignature(rawBody, signature, mode) {
   const b = Buffer.from(signature, 'hex')
   return a.length === b.length && timingSafeEqual(a, b)
 }
+export function paymentVerificationChecks(transaction,order,reference,mode){
+  const amount=Number(transaction?.amount)
+  return {
+    reference:transaction?.reference===reference,
+    status:transaction?.status==='success',
+    environment:transaction?.domain===mode,
+    currency:transaction?.currency==='NGN',
+    amount:Number.isFinite(amount) && amount>0 && amount===Number(order.amount_kobo),
+    customerEmail:!!transaction?.customer?.email &&
+      String(transaction.customer.email).trim().toLowerCase()===String(order.customer_email).trim().toLowerCase(),
+  }
+}
+
 export async function confirmPayment(reference, mode = environment()) {
   if (!/^[A-Za-z0-9._-]{6,120}$/.test(reference)) throw new Error('Invalid payment reference')
-  const sql = db()
+  const sql = dbForMode(mode)
   const orders = await sql`SELECT * FROM payment_orders WHERE reference = ${reference} AND environment = ${mode} LIMIT 1`
   if (!orders.length) return { found:false, paid:false, reference }
   const order = orders[0]
   if (order.status === 'paid') return publicStatus(order)
   const transaction = await paystackGet('/transaction/verify/' + encodeURIComponent(reference), mode)
-  const valid = transaction.reference === reference && transaction.status === 'success' &&
-    transaction.currency === 'NGN' && Number(transaction.amount) === Number(order.amount_kobo) &&
-    Number(transaction.amount) > 0 &&
-    (String(transaction.customer?.email || '').toLowerCase() === String(order.customer_email).toLowerCase())
+  const checks=paymentVerificationChecks(transaction,order,reference,mode)
+  const valid=Object.values(checks).every(Boolean)
   if (!valid) return { found:true, paid:false, reference, status:transaction.status === 'success' ? 'unverified' : 'pending' }
   if (order.product === 'qing-class') {
     const info = safeMetadata(order.configuration)

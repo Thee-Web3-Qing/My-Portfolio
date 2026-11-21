@@ -20,6 +20,7 @@ const formatDate=value=>value?new Date(value).toLocaleDateString('en-NG',{day:'n
 export default function DecemberProgress(){
  const [params]=useSearchParams()
  const [reference,setReference]=useState(params.get('reference')||'')
+ const mode=params.get('mode')==='test'?'test':null
  const [details,setDetails]=useState(null)
  const [error,setError]=useState('')
  const [busy,setBusy]=useState(false)
@@ -28,11 +29,11 @@ export default function DecemberProgress(){
   if(!reference.trim())return
   setBusy(true);setError('')
   try{
-   const response=await fetch('/api/december/progress?reference='+encodeURIComponent(reference.trim()),{cache:'no-store'})
+   const response=await fetch('/api/december/progress?reference='+encodeURIComponent(reference.trim())+(mode==='test'?'&mode=test':''),{cache:'no-store'})
    const json=await response.json().catch(()=>({}))
    if(!response.ok)throw Error(json.error||'Could not find project status')
    setDetails(json)
-   window.history.replaceState(null,'','/december/track?reference='+encodeURIComponent(reference.trim()))
+   window.history.replaceState(null,'','/december/track?reference='+encodeURIComponent(reference.trim())+(mode==='test'?'&mode=test':''))
   }catch(e){setDetails(null);setError(e.message)}
   finally{setBusy(false)}
  }
@@ -40,7 +41,7 @@ export default function DecemberProgress(){
  const current=details?.stage
  const stageIndex=MILESTONES.findIndex(x=>x[0]===current)
  return <div className="dp-page">
-  <div className="dp-top"><Link to="/december">← December sale</Link><span>YOUR WEBSITE / PROJECT TRACKING</span></div>
+  <div className="dp-top"><Link to="/december">← December sale</Link><span>{mode==='test'?'TEST WEBSITE / PROJECT TRACKING':'YOUR WEBSITE / PROJECT TRACKING'}</span></div>
   <div className="dp-hero"><span>PROGRESS STUDIO / 2026</span><h1>Every great<br/>website has<br/><em>a process.</em></h1>
    <p>Check your website's progress anytime using the Paystack reference saved after your payment. Your project updates are published by Qing.</p></div>
   <div className="dp-main">

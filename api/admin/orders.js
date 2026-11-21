@@ -1,13 +1,29 @@
 import { needAdmin, enabledOrderModes, ordersDb } from '../_lib/decemberAdmin.js'
+import { confirmPayment } from '../_lib/payments.js'
+import reconcile from '../../server/admin/reconcile.js'
 
 export default async function handler(req,res){
  res.setHeader('X-Robots-Tag','noindex, nofollow')
+ if(req.method==='POST')return reconcile(req,res)
  if(!needAdmin(req,res))return
  const allowed=enabledOrderModes()
  const requested=String(req.query?.environment||'all')
  const modes=requested==='all'?allowed:allowed.filter(x=>x===requested)
  if(!modes.length)return res.status(400).json({error:'That payment environment is unavailable'})
  try{
+  // Recover legitimately completed transactions when a webhook or customer
+  // callback was missed. Provider verification is authoritative and idempotent.
+  // The bounded scan prevents old abandoned checkouts from causing large
+  // Paystack API bursts on every admin page load.
+  const reconciliations=await Promise.allSettled(modes.map(async mode=>{
+    const sql=ordersDb(mode)
+    const waiting=await sql`SELECT reference FROM payment_orders
+      WHERE environment=${mode} AND product='december-website'
+        AND status='pending' AND created_at > now()-interval '14 days'
+      ORDER BY created_at DESC LIMIT 8`
+    const attempts=await Promise.allSettled(waiting.map(order=>confirmPayment(order.reference,mode)))
+    return {mode,checked:waiting.length,providerErrors:attempts.filter(x=>x.status==='rejected').length}
+  }))
   const results=await Promise.all(modes.map(async mode=>{
    const sql=ordersDb(mode)
    const rows=await sql`SELECT
@@ -24,6 +40,7 @@ export default async function handler(req,res){
     FROM payment_orders o
     LEFT JOIN december_business_intakes i ON i.payment_reference=o.reference
     LEFT JOIN december_project_progress p ON p.payment_reference=o.reference
+    WHERE o.environment=${mode} AND (${mode}='test' OR o.status='paid')
     ORDER BY o.created_at DESC LIMIT 500`
    return {mode,rows:rows.map(row=>{
     const config=row.configuration||{}
@@ -38,7 +55,7 @@ export default async function handler(req,res){
     paid:orders.filter(o=>o.status==='paid').length,pending:orders.filter(o=>o.status!=='paid').length,
     websiteOrders:orders.filter(o=>o.product==='december-website').length,
   }
-  return res.status(200).json({orders,summary,modes,limitPerEnvironment:500})
+  return res.status(200).json({orders,summary,modes,limitPerEnvironment:500,providerSync:reconciliations.filter(x=>x.status==='fulfilled').map(x=>x.value)})
  }catch(err){
   console.error('Admin orders lookup failed',err?.message)
   return res.status(502).json({error:'Unable to load payment records'})

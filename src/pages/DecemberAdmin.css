@@ -91,3 +91,30 @@
 .da-notice{position:fixed;bottom:22px;right:20px;z-index:99;padding:15px 20px;background:#111;color:white;border-left:4px solid #f01820;box-shadow:0 13px 27px #1113;max-width:420px;font:.75rem/1.6 Inter,sans-serif;}
 @media(max-width:1050px){.da-layout{grid-template-columns:1fr;}.da-order-list{max-height:430px;}.da-details{min-height:400px;}}
 @media(max-width:700px){.da-wrap{padding:28px 15px 60px;}.da-head{flex-direction:column;align-items:flex-start;}.da-stats{grid-template-columns:1fr 1fr;gap:9px;}.da-stats>div{padding:14px;}.da-stats>div>strong{font-size:1.8rem;}.da-orders,.da-details{padding:18px;}.da-progress-form-grid{grid-template-columns:1fr;}.da-head-actions{flex-wrap:wrap;}.da-payment-info strong{font-size:1.1rem;}}
+
+
+/* Keep iPhone forms inside their column, especially native date inputs. */
+.da-wrap,.da-dashboard,.da-layout,.da-orders,.da-details,.da-progress-editor,
+.da-progress-form-grid,.da-progress-form-grid label{min-width:0;max-width:100%;}
+.da-progress-form-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+.da-progress-form-grid label{display:block;min-width:0;}
+.da-progress-form-grid input:not([type="checkbox"]),
+.da-progress-form-grid select,.da-progress-form-grid textarea{
+ width:100%;max-width:100%;min-width:0;box-sizing:border-box;
+ -webkit-appearance:none;appearance:none;
+}
+.da-progress-form-grid input[type="date"]{display:block;min-width:0;max-width:100%;font-size:16px;}
+.da-pending-review{background:#fff4e9;border:1px solid #e0b68a;border-left:4px solid #b85d14;padding:19px;margin:16px 0 25px;}
+.da-pending-review strong{font:.85rem/1.5 Inter,sans-serif;color:#573619;}
+.da-pending-review p{font:.75rem/1.65 Inter,sans-serif;color:#6e4e36;margin:9px 0;}
+.da-pending-review button{background:#111;color:white;border:0;border-radius:30px;padding:13px 16px;font:800 .63rem 'Space Mono',monospace;margin:10px 0;max-width:100%;white-space:normal;text-align:left;}
+.da-pending-review button:disabled{opacity:.55;cursor:default;}
+.da-notice{overflow-wrap:anywhere;}
+@media(max-width:700px){
+ .da-layout{grid-template-columns:minmax(0,1fr);}
+ .da-payment-info{grid-template-columns:repeat(2,minmax(0,1fr));}
+ .da-progress-form-grid{grid-template-columns:minmax(0,1fr);}
+ .da-progress-form-grid .da-full{grid-column:1;}
+ .da-progress-editor>button{max-width:100%;white-space:normal;line-height:1.5;}
+ .da-notice{bottom:12px;right:12px;left:12px;max-width:none;}
+}

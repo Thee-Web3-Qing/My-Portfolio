@@ -1,4 +1,5 @@
 import { STAGES, enabledOrderModes, needAdmin, ordersDb } from '../_lib/decemberAdmin.js'
+import { confirmPayment } from '../_lib/payments.js'
 const clean=(x,n)=>typeof x==='string'?x.trim().slice(0,n):''
 export default async function handler(req,res){
  res.setHeader('X-Robots-Tag','noindex, nofollow')
@@ -18,7 +19,14 @@ export default async function handler(req,res){
   const sql=ordersDb(mode)
   const orders=await sql`SELECT status FROM payment_orders WHERE reference=${ref} AND environment=${mode} AND product='december-website' LIMIT 1`
   if(!orders.length)return res.status(404).json({error:'December website order not found'})
-  if(orders[0].status!=='paid')return res.status(409).json({error:'Project progress can only be started after verified payment'})
+  if(orders[0].status!=='paid'){
+    // A successful test/live charge can reach the admin before Paystack's
+    // webhook. Reconcile against Paystack once before refusing to save.
+    const verified=await confirmPayment(ref,mode)
+    if(!verified.paid)return res.status(409).json({
+      error:'Paystack has not confirmed this payment. Use the verification button on the client record to inspect its current provider status.'
+    })
+  }
   const previous=await sql`SELECT stage FROM december_project_progress WHERE payment_reference=${ref} LIMIT 1`
   await sql`INSERT INTO december_project_progress
     (payment_reference,stage,percent_complete,public_note,private_note,estimated_completion_date,assets_confirmed_at)
