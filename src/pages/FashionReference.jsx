@@ -29,10 +29,10 @@ const ICON = {
 function I({name,size=19}) {return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ICON[name]||ICON.arrow}/></svg>}
 function Img({src,alt,className=''}) {return <img className={className} src={src} alt={alt} loading="lazy" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=pic('photo-1483985988355-763728e1935b')}}/>}
 const initial = [
-  {id:'ivory',brand:'ZARA',name:'Off-shoulder top',category:'Tops',price:29900,image:pic('photo-1598554747436-c9293d6a588f'),tone:'Ivory'},
-  {id:'pleat',brand:'MANGO',name:'Pleated mini skirt',category:'Bottoms',price:49900,image:pic('photo-1583496661160-fb5886a13d27'),tone:'Charcoal'},
-  {id:'boots',brand:'ZARA',name:'Leather boots',category:'Shoes',price:129000,image:pic('photo-1608256246200-53e635b5b65f'),tone:'Black'},
-  {id:'tabby',brand:'COACH',name:'Tabby shoulder bag',category:'Bags',price:350000,image:pic('photo-1548036328-c9fa89d128fa'),tone:'Black'},
+  {id:'ivory',brand:'ZARA',name:'Off-shoulder top',category:'Tops',price:29900,image:'https://i5.walmartimages.com/asr/f651417e-bf99-465d-a72a-ebdd3eabd445.6fde4c90c4aa07785488851046741ad5.jpeg?odnBg=FFFFFF&odnHeight=768&odnWidth=768',tone:'Ivory'},
+  {id:'pleat',brand:'MANGO',name:'Pleated mini skirt',category:'Bottoms',price:49900,image:'https://www.pngkit.com/png/detail/435-4358855_black-pleated-skirt-skirt-for-girl.png',tone:'Charcoal'},
+  {id:'boots',brand:'ZARA',name:'Leather boots',category:'Shoes',price:129000,image:'https://static.zara.net/assets/public/a4fc/4498/495643caa4d5/dd9ef9eb8f38/11028610800-e1/11028610800-e1.jpg?ts=1759848697333',tone:'Black'},
+  {id:'tabby',brand:'COACH',name:'Tabby shoulder bag',category:'Bags',price:350000,image:'https://cultstatus.com.au/cdn/shop/files/SSS.jpg?crop=center&height=1200&v=1756182428&width=1200',tone:'Black'},
   {id:'wine',brand:'MANGO',name:'Burgundy fitted vest',category:'Tops',price:39900,image:pic('photo-1591047139829-d91aecb6caea'),tone:'Burgundy'},
   {id:'trousers',brand:'ASOS',name:'Straight-leg trousers',category:'Bottoms',price:65900,image:pic('photo-1594633312681-425c7b97ccd1'),tone:'Sand'},
   {id:'creamBag',brand:'COACH',name:'Mini shoulder bag',category:'Bags',price:72000,image:pic('photo-1584917865442-de89df76afd3'),tone:'Cream'},
