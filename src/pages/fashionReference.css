@@ -410,3 +410,8 @@
  .rush-wardrobe {bottom:18px;}
 }
 @media(prefers-reduced-motion:reduce){.ref-page * {animation:none!important;scroll-behavior:auto!important;transition:none!important;}}
+
+/* E-commerce cutout photography, as in the supplied outfit-builder reference. */
+.her-product-img img,.her-look-picture img,.her-selected-rail img,.her-recs img,
+.rush-scroll img,.rush-garment>img {object-fit:contain;background:#f4f2f0;}
+.loco-best-image img {mix-blend-mode:multiply;}
