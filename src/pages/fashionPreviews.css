@@ -1,0 +1,459 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;1,6..96,400;1,6..96,500&family=DM+Sans:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+.fashion-site { min-height:100vh; width:100%; overflow-x:clip; font-family:'Instrument Sans',sans-serif; font-size:14px; font-weight:400; -webkit-font-smoothing:antialiased; }
+.fashion-site *, .fashion-site *::before, .fashion-site *::after { box-sizing:border-box; }
+.fashion-site button { cursor:pointer; border:none; border-radius:0; font:inherit; color:inherit; }
+.fashion-site a { color:inherit; text-decoration:none; }
+.fashion-site img { display:block; width:100%; }
+.fashion-site button:disabled { opacity:.48; cursor:not-allowed; }
+.fashion-site button:focus-visible, .fashion-site a:focus-visible, .fashion-site input:focus-visible, .fashion-site select:focus-visible { outline:2px solid currentColor; outline-offset:3px; }
+.fashion-site h1,.fashion-site h2,.fashion-site h3,.fashion-site h4,.fashion-site p { margin:0; }
+.fashion-site .fashion-overline { display:block; font-size:10px; font-weight:700; letter-spacing:.15em; line-height:1.5; text-transform:uppercase; }
+.fashion-icon-btn { width:39px; height:39px; display:grid; place-items:center; background:transparent; transition:transform .2s; }
+.fashion-icon-btn:hover { transform:rotate(90deg); }
+.fashion-dark-button { padding:17px 21px; background:#1a1918; color:#fff !important; display:flex; align-items:center; justify-content:space-between; gap:20px; font-size:12px !important; font-weight:700 !important; letter-spacing:.05em; text-transform:uppercase; transition:background .25s,transform .25s; }
+.fashion-dark-button:hover { background:#4b282c; transform:translateY(-2px); }
+.fashion-full-button { width:100%; }
+.fashion-link-button { background:transparent; padding:15px; text-align:center; text-decoration:underline; font-size:12px !important; }
+.fashion-site .fashion-newsletter-form { display:flex; align-items:center; border-bottom:1px solid currentColor; width:100%; min-height:55px; }
+.fashion-site .fashion-newsletter-form input { outline:none; padding:14px 0; background:transparent; border:0; color:inherit; flex:1; min-width:0; font:inherit; font-size:14px; }
+.fashion-site .fashion-newsletter-form input::placeholder { color:inherit; opacity:.65; }
+.fashion-site .fashion-newsletter-form button { display:grid; place-items:center; background:transparent; width:45px; height:48px; }
+.fashion-site .fashion-footer { display:flex; flex-wrap:wrap; align-items:start; justify-content:space-between; gap:50px; padding:65px 5% 26px; }
+.fashion-site .fashion-footer-brand { display:block; font-weight:800; font-size:32px; line-height:1; letter-spacing:-.07em; margin-bottom:15px; }
+.fashion-site .fashion-footer p { opacity:.68; font-size:12px; }
+.fashion-site .fashion-footer-links { display:flex; align-items:center; flex-wrap:wrap; gap:28px; font-size:12px; }
+.fashion-site .fashion-footer-links a:hover { text-decoration:underline; }
+.fashion-site .fashion-footer small { width:100%; padding-top:32px; border-top:1px solid currentColor; opacity:.5; font-size:10px; letter-spacing:.12em; }
+.fashion-site .fashion-product-image { position:relative; overflow:hidden; background:#ece9e5; }
+.fashion-site .fashion-product-photo { width:100%; display:block; background:transparent; overflow:hidden; }
+.fashion-site .fashion-product-photo img { width:100%; height:100%; object-fit:cover; transition:transform .7s cubic-bezier(.2,.8,.2,1); }
+.fashion-site .fashion-product:hover .fashion-product-photo img { transform:scale(1.055); }
+.fashion-site .fashion-product-tag { position:absolute; top:13px; left:13px; background:#fff; color:#2e2929; padding:8px 11px; font-size:9px; text-transform:uppercase; letter-spacing:.09em; }
+.fashion-site .fashion-favorite { position:absolute; right:12px; top:11px; height:34px; width:34px; background:rgba(255,255,255,.92); border-radius:50%; display:grid; place-items:center; }
+.fashion-site .fashion-favorite.is-saved svg { fill:#762d38; stroke:#762d38; }
+.fashion-site .fashion-product-add { position:absolute; right:12px; bottom:12px; width:39px; height:39px; display:grid; place-items:center; color:#fff; background:#1b1b1b; border-radius:50%; transition:transform .2s; }
+.fashion-site .fashion-product-add:hover { transform:rotate(90deg); }
+.fashion-site .fashion-product-info { display:flex; align-items:start; justify-content:space-between; padding-top:15px; gap:10px; }
+.fashion-site .fashion-product-info div { display:flex; flex-direction:column; gap:6px; }
+.fashion-site .fashion-product-info span { font-size:10px; opacity:.55; letter-spacing:.035em; }
+.fashion-site .fashion-product-info button { font-size:13px; font-weight:600; background:none; text-align:left; line-height:1.45; }
+.fashion-site .fashion-product-info button:hover { text-decoration:underline; }
+.fashion-site .fashion-product-info strong { white-space:nowrap; font-weight:600; font-size:12px; margin-top:21px; }
+.fashion-modal-layer { position:fixed; z-index:99999; inset:0; background:rgba(12,12,12,.62); display:flex; align-items:stretch; justify-content:flex-end; backdrop-filter:blur(5px); }
+.fashion-site .fashion-cart-panel { background:#faf9f6; color:#171717; width:min(100%,475px); min-height:100%; display:flex; flex-direction:column; box-shadow:-25px 0 90px #0002; animation:fashion-slide .3s ease both; font-family:'Instrument Sans',sans-serif; }
+.fashion-panel-head { display:flex; align-items:center; justify-content:space-between; padding:30px 26px; border-bottom:1px solid #e4e0da; }
+.fashion-site .fashion-panel-head h2 { font-size:27px; font-weight:500; letter-spacing:-.06em; padding-top:5px; }
+.fashion-site .fashion-panel-head small { font-size:13px; color:#999; vertical-align:middle; }
+.fashion-cart-items { padding:22px 26px; display:flex; flex-direction:column; gap:25px; overflow-y:auto; flex:1; }
+.fashion-cart-item { display:grid; grid-template-columns:94px 1fr; gap:18px; padding-bottom:23px; border-bottom:1px solid #e7e3df; }
+.fashion-cart-item>img { height:124px; object-fit:cover; background:#edeae7; }
+.fashion-site .fashion-cart-item h3 { font-size:16px; letter-spacing:-.025em; margin:4px 0; }
+.fashion-site .fashion-cart-item p { color:#777; font-size:12px; margin-bottom:10px; }
+.fashion-site .fashion-cart-item strong { font-weight:600; }
+.fashion-qty { margin-top:12px; display:inline-flex; height:34px; border:1px solid #ddd8d2; align-items:center; gap:14px; }
+.fashion-qty button { background:transparent; width:30px; height:32px; display:grid; place-items:center; }
+.fashion-qty span { min-width:15px; text-align:center; font-size:12px; }
+.fashion-cart-bottom { padding:22px 26px 28px; border-top:1px solid #e3e0db; margin-top:auto; }
+.fashion-cart-total { display:flex; justify-content:space-between; font-size:19px; font-weight:600; margin-bottom:11px; }
+.fashion-cart-bottom>p { font-size:11px; color:#777; margin:0 0 21px; }
+.fashion-demo-notice { padding:12px; background:#eee8dc; display:flex; align-items:start; gap:9px; font-size:12px; line-height:1.5; margin-bottom:13px; }
+.fashion-demo-notice svg { flex-shrink:0; }
+.fashion-empty { display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; flex:1; padding:45px; text-align:center; }
+.fashion-site .fashion-empty h3 { font-size:22px; font-weight:500; }
+.fashion-site .fashion-empty p { color:#777; margin-bottom:12px; }
+.fashion-quickview { background:#fbfaf7; color:#141414; margin:auto; width:min(900px,calc(100% - 24px)); max-height:calc(100vh - 40px); position:relative; display:grid; grid-template-columns:1fr 1fr; overflow-y:auto; font-family:'Instrument Sans',sans-serif; box-shadow:0 20px 100px #0004; animation:fashion-pop .25s ease; }
+.fashion-quickview>img { width:100%; height:100%; max-height:700px; min-height:520px; object-fit:cover; background:#ebe6de; }
+.fashion-quick-close { position:absolute; top:15px; right:17px; background:#fff; z-index:2; }
+.fashion-quick-info { padding:65px 46px 42px; display:flex; flex-direction:column; align-items:flex-start; }
+.fashion-site .fashion-quick-info h2 { margin:12px 0 7px; font-size:clamp(30px,3.5vw,45px); letter-spacing:-.06em; line-height:1.05; font-weight:500; }
+.fashion-site .fashion-quick-info>p { color:#777; font-size:13px; }
+.fashion-quick-price { font-size:23px; font-weight:500; margin-top:22px; }
+.fashion-site .fashion-quick-description { margin:25px 0 !important; line-height:1.7; font-size:13px !important; }
+.fashion-sizes { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0 25px; }
+.fashion-sizes button { width:44px; height:42px; border:1px solid #ded9d4; background:transparent; font-size:12px; }
+.fashion-sizes button.active { border-color:#161616; color:#fff; background:#161616; }
+.fashion-quick-actions { display:flex; align-items:end; width:100%; gap:15px; margin-top:auto; }
+.fashion-quick-actions .fashion-qty { height:48px; margin:0; }
+.fashion-quick-actions .fashion-qty button { height:46px; }
+.fashion-quick-actions .fashion-dark-button { flex:1; min-height:48px; }
+.fashion-quick-support { width:100%; display:flex; gap:16px; justify-content:space-between; flex-wrap:wrap; border-top:1px solid #ece7e0; padding-top:23px; margin-top:28px; font-size:10px; color:#797671; }
+@keyframes fashion-slide { from { transform:translateX(40px); opacity:.6 } to { transform:translateX(0); opacity:1 } }
+@keyframes fashion-pop { from { transform:translateY(10px); opacity:.8 } to { transform:translateY(0); opacity:1 } }
+
+/* EDITORIAL. Big type, strong contrast, campaign art direction. */
+.fashion-editorial { background:#f6f2ed; color:#181714; font-family:'DM Sans',sans-serif; }
+.fe-announcement { height:33px; background:#171817; color:white; display:flex; align-items:center; justify-content:center; gap:28px; font-size:10px; font-weight:700; letter-spacing:.13em; }
+.fe-announcement span { opacity:.52; }
+.fe-header { height:79px; padding:0 4.4%; display:flex; align-items:center; justify-content:space-between; background:#f6f2ed; position:relative; z-index:4; }
+.fe-header button { background:none; }
+.fe-menu-trigger { display:flex; align-items:center; gap:12px; font-size:11px !important; letter-spacing:.1em; }
+.fe-logo { font-family:'Archivo Black',sans-serif; font-size:33px; letter-spacing:-.095em; line-height:1; position:absolute; left:50%; transform:translateX(-50%); }
+.fe-logo span { font-size:9px; position:absolute; top:0; right:-12px; letter-spacing:0; }
+.fe-header-right { display:flex; align-items:center; gap:35px; font-size:11px; font-weight:700; letter-spacing:.06em; }
+.fe-header-right button { display:flex; align-items:center; gap:9px; }
+.fe-mobile-menu { position:absolute; z-index:8; top:112px; left:0; width:100%; background:#f6f2ed; border-bottom:1px solid #222; padding:25px 5%; }
+.fe-mobile-menu a { display:flex; align-items:center; justify-content:space-between; padding:15px 0; font-size:22px; font-weight:700; border-bottom:1px solid #ddd; }
+.fe-hero { position:relative; display:grid; grid-template-columns:53% 47%; min-height:690px; height:min(76vw,780px); background:#e64d35; }
+.fe-hero-words { background:linear-gradient(128deg,#f36a42 0%,#df3b35 76%,#bc2c39); padding:39px 5.5% 36px 8.2%; position:relative; display:flex; flex-direction:column; justify-content:space-between; z-index:1; }
+.fe-hero-topline, .fe-hero-bottom { display:flex; justify-content:space-between; gap:20px; align-items:center; font-size:11px; font-weight:700; letter-spacing:.11em; }
+.fashion-site .fe-hero h1 { font-family:'Archivo Black',sans-serif; font-size:clamp(65px,8.15vw,161px); line-height:.89; letter-spacing:-.093em; transform:scaleX(1.03); transform-origin:left center; font-weight:900; margin-left:-5px; }
+.fashion-site .fe-hero h1 em { font-family:'Bodoni Moda',serif; font-weight:600; font-size:.83em; letter-spacing:-.065em; }
+.fe-hero-bottom a { display:flex; align-items:center; gap:12px; border-bottom:1px solid currentColor; padding-bottom:8px; }
+.fe-hero-photo { position:relative; overflow:hidden; background:#d9c5ae; }
+.fe-hero-photo>img { width:100%; height:100%; object-fit:cover; object-position:center 35%; filter:contrast(1.04); }
+.fe-hero-image-label { position:absolute; left:5%; right:5%; bottom:27px; display:flex; justify-content:space-between; gap:12px; color:#fff; font-size:10px; letter-spacing:.1em; text-shadow:0 1px 5px #0008; }
+.fe-hero-vertical { position:absolute; top:50%; right:1.2%; transform:translateY(-50%); writing-mode:vertical-rl; color:#fff; letter-spacing:.3em; font-size:10px; font-weight:700; z-index:2; }
+.fe-hero-vertical span { padding:8px 0; }
+.fe-ticker { height:51px; background:#191919; color:#fff; overflow:hidden; display:flex; align-items:center; }
+.fe-ticker>div { font-family:'Archivo Black',sans-serif; font-size:18px; white-space:nowrap; word-spacing:14px; min-width:120%; letter-spacing:-.025em; }
+.fe-ticker span { color:#ff7453; padding:0 24px; }
+.fe-intro { padding:115px 6% 89px; display:grid; grid-template-columns:1.4fr .6fr; gap:80px; align-items:end; }
+.fe-intro h2 { margin-top:26px; font-family:'Archivo Black',sans-serif; font-weight:800; letter-spacing:-.075em; font-size:clamp(55px,7.6vw,115px); line-height:.98; }
+.fe-intro h2 em { font-family:'Bodoni Moda',serif; font-weight:400; letter-spacing:-.09em; }
+.fe-intro-side { padding-bottom:9px; }
+.fe-intro-side p { font-size:18px; line-height:1.6; letter-spacing:-.03em; max-width:345px; }
+.fe-underlined { margin-top:40px; display:inline-flex; align-items:center; gap:13px; padding-bottom:11px; border-bottom:1px solid #111; font-size:11px; font-weight:800; letter-spacing:.06em; }
+.fe-mosaic { display:grid; grid-template-columns:58% 42%; height:625px; gap:8px; padding:0 4.2%; }
+.fe-mosaic-item { position:relative; overflow:hidden; background:#d6ccbe; }
+.fe-mosaic-item>img { object-fit:cover; height:100%; transition:transform .8s ease; }
+.fe-mosaic-item:hover>img { transform:scale(1.04); }
+.fe-mosaic-item::after { content:''; position:absolute; inset:35% 0 0; background:linear-gradient(transparent,rgba(0,0,0,.55)); }
+.fe-mosaic-item>div { position:absolute; left:6%; bottom:42px; color:white; z-index:1; }
+.fe-mosaic-item span { font-size:10px; font-weight:700; letter-spacing:.15em; }
+.fe-mosaic-item h3 { font-family:'Archivo Black',sans-serif; font-size:clamp(36px,5.1vw,76px); line-height:.98; letter-spacing:-.06em; margin:13px 0 30px; }
+.fe-mosaic-small h3 { font-size:clamp(29px,3.5vw,54px); }
+.fe-shop-section { padding:118px 5% 124px; }
+.fe-section-heading { display:flex; justify-content:space-between; gap:65px; align-items:end; margin-bottom:42px; }
+.fe-section-heading h2 { margin-top:17px; font-family:'Archivo Black',sans-serif; font-size:clamp(65px,8vw,117px); letter-spacing:-.09em; line-height:.85; }
+.fe-section-heading h2 i { font-family:'Bodoni Moda',serif; font-weight:400; letter-spacing:-.06em; }
+.fe-section-heading>p { width:255px; font-size:16px; line-height:1.55; }
+.fe-product-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:17px; }
+.fe-product-grid .fashion-product-photo { aspect-ratio:3/4; }
+.fe-product-grid .fashion-product-tag { background:#f4f2ed; }
+.fe-product-grid .fashion-product-info button { font-family:'Archivo Black',sans-serif; font-size:12px; letter-spacing:-.03em; }
+.fe-story { min-height:610px; display:grid; grid-template-columns:48% 52%; background:#1e1c1a; color:#eee8de; }
+.fe-story-photo { min-height:610px; overflow:hidden; }
+.fe-story-photo img { height:100%; object-fit:cover; }
+.fe-story-copy { display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:60px 11%; }
+.fe-story-copy h2 { font-family:'Archivo Black',sans-serif; font-size:clamp(47px,6vw,87px); letter-spacing:-.075em; line-height:1.01; margin:25px 0 25px; }
+.fe-story-copy h2 em { font-family:'Bodoni Moda',serif; font-weight:400; }
+.fe-story-copy p { font-size:16px; line-height:1.7; opacity:.7; max-width:360px; }
+.fe-story-copy a { margin-top:40px; display:flex; align-items:center; gap:13px; border-bottom:1px solid currentColor; padding-bottom:9px; font-size:11px; font-weight:700; letter-spacing:.05em; }
+.fe-newsletter { background:#e8ddcd; display:grid; grid-template-columns:1.3fr .7fr; gap:90px; padding:95px 6%; align-items:end; }
+.fe-newsletter>div>span { font-size:10px; font-weight:700; letter-spacing:.15em; }
+.fe-newsletter h2 { font-family:'Archivo Black',sans-serif; letter-spacing:-.06em; font-size:clamp(32px,4.5vw,67px); line-height:1.05; margin-top:20px; }
+.fe-newsletter p { max-width:370px; line-height:1.6; }
+.fe-footer { background:#1c1b1a; color:#e9e4df; }
+.fe-footer .fashion-footer-brand { font-family:'Archivo Black',sans-serif; }
+
+/* CATALOGUE. Utility, editorial shopping, and an interactive outfit rail. */
+.fashion-catalogue { background:#faf9f7; color:#201d1b; font-family:'Manrope',sans-serif; }
+.fc-topline { background:#54252f; color:#fff; height:34px; display:flex; align-items:center; justify-content:space-around; gap:15px; font-size:9px; letter-spacing:.12em; font-weight:700; }
+.fc-topline span { opacity:.75; }
+.fc-header { height:83px; padding:0 5%; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eae5e0; background:#fff; position:relative; z-index:3; }
+.fc-logo { font-family:'Bodoni Moda',serif; font-size:38px; font-weight:600; letter-spacing:-.065em; line-height:1; }
+.fc-logo span { color:#9b384a; }
+.fc-header nav { display:flex; align-items:center; gap:40px; font-size:10px; letter-spacing:.08em; font-weight:800; }
+.fc-header nav a:hover { color:#9b384a; }
+.fc-header-actions { display:flex; align-items:center; gap:20px; }
+.fc-header-actions button { background:transparent; position:relative; }
+.fc-header-actions sup { font-family:'Manrope',sans-serif; position:absolute; top:-8px; right:-10px; font-size:9px; }
+.fc-hero { background:#f2e9e4; display:grid; grid-template-columns:48% 52%; min-height:580px; }
+.fc-hero-copy { display:flex; flex-direction:column; justify-content:center; align-items:flex-start; padding:70px 9% 55px 11%; position:relative; }
+.fc-hero-copy .fashion-overline { color:#713642; }
+.fc-hero-copy h1 { font-family:'Bodoni Moda',serif; font-size:clamp(54px,6.5vw,99px); line-height:1.08; font-weight:500; letter-spacing:-.07em; margin:20px 0; }
+.fc-hero-copy h1 em { font-weight:400; }
+.fc-hero-copy>p { font-size:15px; line-height:1.85; color:#736762; max-width:375px; }
+.fc-hero-copy>a { background:#562632; color:#fff; margin-top:31px; padding:18px 24px; display:flex; align-items:center; gap:25px; font-size:10px; font-weight:800; letter-spacing:.08em; }
+.fc-hero-copy>a:hover { background:#7d394b; }
+.fc-hero-mini { display:flex; justify-content:space-between; width:100%; font-size:9px; font-weight:800; letter-spacing:.1em; margin-top:65px; }
+.fc-hero-visual { background:#81434b; position:relative; overflow:hidden; min-height:520px; }
+.fc-hero-visual>img { height:100%; width:100%; object-fit:cover; }
+.fc-hero-badge { position:absolute; bottom:38px; left:36px; color:#fff; font-family:'Bodoni Moda',serif; line-height:1.03; font-size:clamp(30px,4vw,61px); text-shadow:0 1px 15px #0006; }
+.fc-hero-badge em { font-weight:400; }
+.fc-perks { border-top:1px solid #eee; border-bottom:1px solid #eee; background:#fff; padding:23px 5%; display:flex; align-items:center; justify-content:space-around; gap:12px; font-size:10px; font-weight:700; letter-spacing:.1em; }
+.fc-shop-intro { padding:92px 5% 41px; display:flex; justify-content:space-between; align-items:end; gap:40px; }
+.fc-shop-intro .fashion-overline { color:#8a4651; }
+.fc-shop-intro h2 { font-family:'Bodoni Moda',serif; font-size:clamp(48px,5.2vw,76px); letter-spacing:-.06em; font-weight:500; line-height:1.1; margin-top:14px; }
+.fc-shop-intro h2 span { font-family:'Manrope',sans-serif; font-size:12px; vertical-align:top; letter-spacing:0; margin-left:15px; color:#9c9590; }
+.fc-shop-intro>p { color:#817c77; font-size:13px; max-width:290px; line-height:1.7; }
+.fc-catalogue-layout { display:grid; grid-template-columns:220px minmax(0,1fr); gap:42px; padding:0 5% 115px; align-items:start; }
+.fc-filters { padding-top:17px; border-top:1px solid #dcd4cd; }
+.fc-filter-head { font-size:10px; font-weight:800; letter-spacing:.12em; margin-bottom:36px; display:flex; justify-content:space-between; }
+.fc-filter-block { padding-bottom:31px; margin-bottom:30px; border-bottom:1px solid #e7e0db; }
+.fc-filter-block h3 { font-size:12px; margin-bottom:17px; font-weight:800; }
+.fc-filter-block>button { background:transparent; width:100%; display:flex; justify-content:space-between; padding:10px 0; font-size:12px; color:#7b7773; }
+.fc-filter-block>button.fc-filter-active { color:#602a36; font-weight:800; }
+.fc-checkbox { display:flex; gap:9px; align-items:center; color:#777; font-size:11px; cursor:pointer; }
+.fc-checkbox input { accent-color:#5c2a35; }
+.fc-styling-banner { background:#572c37; color:#f7ebed; padding:22px; display:flex; flex-direction:column; align-items:start; }
+.fc-styling-banner>span { font-family:'Bodoni Moda',serif; font-size:29px; line-height:1.15; margin:16px 0; }
+.fc-styling-banner p { font-size:11px; line-height:1.65; opacity:.76; }
+.fc-styling-banner a { display:flex; align-items:center; gap:7px; margin-top:25px; font-size:9px; font-weight:800; letter-spacing:.03em; border-bottom:1px solid #bba4a7; padding-bottom:7px; }
+.fc-tools { display:flex; gap:18px; align-items:center; justify-content:space-between; padding-bottom:14px; border-bottom:1px solid #ded8d2; }
+.fc-search { background:#f0ede9; padding:0 16px; height:47px; flex:1; display:flex; align-items:center; gap:12px; max-width:470px; }
+.fc-search input { border:0; outline:none; background:transparent; width:100%; min-width:0; color:#222; font-family:inherit; font-size:12px; }
+.fc-search input::placeholder { color:#99908a; }
+.fc-sort { display:flex; gap:10px; align-items:center; font-size:9px; font-weight:800; white-space:nowrap; letter-spacing:.09em; }
+.fc-sort select { border:0; background:transparent; outline:none; color:#5c3540; font-size:11px; font-family:inherit; min-width:80px; }
+.fc-filter-toggle,.fc-mobile-only { display:none; }
+.fc-results-count { padding:21px 0; font-size:10px; letter-spacing:.09em; color:#9a908e; font-weight:700; }
+.fc-product-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:34px 16px; }
+.fc-product-grid .fashion-product-photo { aspect-ratio:3/3.8; }
+.fc-product-grid .fashion-product-info { gap:5px; }
+.fc-product-grid .fashion-product-info button { font-size:12px; }
+.fc-product-grid .fashion-product-info strong { font-size:11px; }
+.fc-no-results { padding:90px 20px; text-align:center; }
+.fc-no-results h3 { font-family:'Bodoni Moda',serif; font-size:35px; font-weight:500; }
+.fc-no-results p { color:#888; margin:10px 0 24px; }
+.fc-no-results button { background:transparent; text-decoration:underline; display:inline-flex; align-items:center; gap:10px; }
+.fc-look-section { background:#f2ebe7; padding:110px 5%; }
+.fc-look-heading { text-align:center; margin:0 auto 45px; max-width:550px; }
+.fc-look-heading .fashion-overline { color:#6e3947; }
+.fc-look-heading h2 { font-family:'Bodoni Moda',serif; font-weight:500; letter-spacing:-.055em; font-size:clamp(50px,6vw,88px); margin:10px 0 10px; }
+.fc-look-heading h2 em { font-weight:400; }
+.fc-look-heading>p { font-size:13px; line-height:1.7; color:#77716b; }
+.fc-look-builder { display:grid; grid-template-columns:1fr 410px; max-width:1190px; margin:auto; min-height:620px; box-shadow:0 18px 70px #1e14110f; }
+.fc-look-feature { position:relative; overflow:hidden; background:#e8dbd1; min-height:620px; }
+.fc-look-feature>img { width:100%; height:100%; object-fit:cover; }
+.fc-look-stamp { position:absolute; left:27px; bottom:25px; display:flex; align-items:center; gap:8px; background:#fff; padding:12px 16px; font-size:10px; font-weight:800; letter-spacing:.06em; }
+.fc-look-editor { background:#fff; padding:28px; display:flex; flex-direction:column; }
+.fc-look-editor-header,.fc-look-rail-title { display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:10px; font-weight:800; letter-spacing:.11em; }
+.fc-look-editor-header { border-bottom:1px solid #eee8e4; padding-bottom:20px; margin-bottom:14px; }
+.fc-look-editor-header span:last-child { color:#a69b95; }
+.fc-selected-look { display:flex; flex-direction:column; gap:10px; min-height:220px; max-height:292px; overflow:auto; }
+.fc-look-item { display:grid; grid-template-columns:67px 1fr 28px; align-items:center; gap:12px; }
+.fc-look-item img { height:78px; object-fit:cover; background:#f3f2f1; }
+.fc-look-item>div { display:flex; flex-direction:column; align-items:start; gap:4px; }
+.fc-look-item strong { font-size:11px; font-weight:700; }
+.fc-look-item span { font-size:10px; color:#aaa; }
+.fc-look-item b { font-size:11px; }
+.fc-look-item>button { background:transparent; color:#888; padding:7px; }
+.fc-look-empty { display:grid; place-items:center; padding:65px 20px; font-size:12px; color:#777; text-align:center; }
+.fc-look-rail-title { border-top:1px solid #eee8e4; padding:18px 0 14px; margin-top:auto; font-size:9px; }
+.fc-look-rail-title span:last-child { opacity:.5; }
+.fc-look-rail { display:grid; grid-template-columns:repeat(6,1fr); gap:6px; }
+.fc-look-rail button { aspect-ratio:1; overflow:hidden; position:relative; background:#f3efec; border:2px solid transparent; }
+.fc-look-rail button.active { border-color:#722e3e; }
+.fc-look-rail img { width:100%; height:100%; object-fit:cover; }
+.fc-look-rail button span { position:absolute; right:2px; bottom:2px; display:grid; place-items:center; width:18px; height:18px; border-radius:50%; color:#fff; background:#552532; font-size:11px; }
+.fc-look-total { display:flex; justify-content:space-between; padding:23px 0 17px; font-size:11px; letter-spacing:.07em; }
+.fc-look-total strong { font-size:17px; letter-spacing:0; }
+.fc-look-disclaimer { font-size:10px; color:#999; line-height:1.5; margin-top:13px !important; text-align:center; }
+.fc-bottom-banner { display:grid; grid-template-columns:44% 56%; min-height:500px; background:#522934; color:#fff; }
+.fc-bottom-banner>div { display:flex; flex-direction:column; align-items:start; justify-content:center; padding:70px 12%; }
+.fc-bottom-banner h2 { font-family:'Bodoni Moda',serif; font-size:clamp(50px,6vw,87px); line-height:1.1; font-weight:500; margin:16px 0; letter-spacing:-.05em; }
+.fc-bottom-banner p { opacity:.8; font-size:14px; }
+.fc-bottom-banner a { display:flex; gap:12px; margin-top:30px; border-bottom:1px solid; padding-bottom:10px; font-size:10px; font-weight:800; letter-spacing:.1em; }
+.fc-bottom-banner img { height:100%; object-fit:cover; max-height:550px; }
+.fc-footer { background:#f7f2ee; }
+.fc-footer .fashion-footer-brand { font-family:'Bodoni Moda',serif; font-weight:600; font-size:43px; }
+
+/* MINIMAL. Architectural spacing, thoughtful typography, warm neutrals. */
+.fashion-minimal { background:#f9f8f5; color:#242320; font-family:'DM Sans',sans-serif; }
+.fm-announcement { height:33px; background:#eae8e2; display:flex; align-items:center; justify-content:space-between; padding:0 5%; font-size:10px; letter-spacing:.035em; color:#64605b; }
+.fm-announcement span { text-decoration:underline; }
+.fm-header { height:88px; background:#f9f8f5; display:flex; justify-content:space-between; align-items:center; padding:0 5%; border-bottom:1px solid #e8e6e0; position:relative; z-index:3; }
+.fm-logo { font-family:'Bodoni Moda',serif; font-size:31px; line-height:.7; letter-spacing:-.065em; font-weight:600; display:flex; flex-direction:column; gap:7px; }
+.fm-logo span { font-family:'DM Sans',sans-serif; font-size:8px; letter-spacing:.39em; font-weight:500; }
+.fm-header nav { display:flex; align-items:center; gap:39px; font-size:12px; color:#77736c; }
+.fm-header nav a:hover { color:#181717; }
+.fm-actions { display:flex; align-items:center; gap:22px; }
+.fm-actions button { background:transparent; font-size:12px; }
+.fm-menu { display:none; }
+.fm-hero { min-height:710px; height:min(60vw,850px); display:grid; grid-template-columns:45% 55%; padding:0 3.2% 0 5%; }
+.fm-hero-copy { padding:90px 8% 55px 0; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; position:relative; }
+.fm-hero-copy .fashion-overline { color:#9a8873; }
+.fm-hero-copy h1 { font-family:'Bodoni Moda',serif; font-weight:400; font-size:clamp(63px,6.3vw,98px); line-height:1.13; letter-spacing:-.075em; margin:25px 0; }
+.fm-hero-copy h1 em { font-weight:400; }
+.fm-hero-copy>p { max-width:355px; font-size:15px; color:#79746f; line-height:1.9; }
+.fm-hero-copy>a { display:flex; align-items:center; gap:40px; margin-top:34px; padding:15px 0; font-weight:500; border-bottom:1px solid #292620; font-size:12px; }
+.fm-hero-number { position:absolute; bottom:34px; left:0; right:8%; display:flex; justify-content:space-between; font-size:10px; letter-spacing:.15em; color:#aaa19a; }
+.fm-hero-image { position:relative; background:#e2ded5; overflow:hidden; }
+.fm-hero-image img { width:100%; height:100%; object-fit:cover; object-position:center 37%; }
+.fm-hero-image>span { position:absolute; bottom:25px; left:25px; background:#f8f7f3; padding:13px 18px; font-size:9px; font-weight:700; letter-spacing:.13em; }
+.fm-statement { padding:145px 10%; text-align:center; display:flex; flex-direction:column; align-items:center; gap:30px; }
+.fm-statement>p { max-width:890px; font-family:'Bodoni Moda',serif; font-size:clamp(37px,4.7vw,70px); line-height:1.24; letter-spacing:-.05em; }
+.fm-statement>p em { color:#8b8073; font-weight:400; }
+.fm-statement>span:last-child { color:#aaa29b; font-size:9px; letter-spacing:.16em; font-weight:700; }
+.fm-collections { padding:0 5% 125px; }
+.fm-section-top { display:flex; justify-content:space-between; align-items:end; gap:30px; margin-bottom:38px; }
+.fm-section-top .fashion-overline { color:#a09486; }
+.fm-section-top h2 { margin-top:12px; font-family:'Bodoni Moda',serif; font-weight:400; font-size:clamp(51px,5.4vw,78px); letter-spacing:-.075em; line-height:1.05; }
+.fm-section-top>a { display:flex; align-items:center; gap:11px; border-bottom:1px solid #2f2d29; padding-bottom:11px; font-size:12px; }
+.fm-collection-grid { display:grid; grid-template-columns:1.08fr .92fr; gap:19px; }
+.fm-collection-card { position:relative; min-height:590px; overflow:hidden; background:#e9e4dc; }
+.fm-collection-two { min-height:590px; }
+.fm-collection-card>img { height:100%; width:100%; object-fit:cover; transition:transform .7s; }
+.fm-collection-card:hover img { transform:scale(1.035); }
+.fm-collection-card::after { content:''; position:absolute; inset:50% 0 0; background:linear-gradient(transparent,#0005); }
+.fm-collection-card>div { position:absolute; left:33px; right:30px; bottom:33px; display:flex; flex-direction:column; gap:12px; color:white; z-index:1; }
+.fm-collection-card>div span { font-size:11px; letter-spacing:.08em; }
+.fm-collection-card h3 { font-family:'Bodoni Moda',serif; font-weight:400; font-size:clamp(42px,4.3vw,64px); letter-spacing:-.05em; }
+.fm-products-section { padding:0 5% 130px; }
+.fm-section-note { font-size:12px; color:#918981; }
+.fm-product-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:42px 17px; }
+.fm-product-grid .fashion-product-photo { aspect-ratio:3/4; }
+.fm-product-grid .fashion-product-tag { color:#6c655d; background:#f7f6f3; }
+.fm-product-grid .fashion-product-info button { font-family:'Bodoni Moda',serif; font-weight:500; font-size:18px; letter-spacing:-.02em; }
+.fm-product-grid .fashion-product-info strong { font-size:12px; }
+.fm-note { display:grid; grid-template-columns:50% 50%; background:#edeae4; min-height:590px; }
+.fm-note-image { min-height:590px; }
+.fm-note-image img { width:100%; height:100%; object-fit:cover; }
+.fm-note-copy { display:flex; flex-direction:column; justify-content:center; align-items:start; padding:65px 13%; }
+.fm-note-copy .fashion-overline { color:#8d8175; }
+.fm-note-copy h2 { font-family:'Bodoni Moda',serif; font-size:clamp(49px,5.9vw,85px); font-weight:400; line-height:1.14; letter-spacing:-.07em; margin:21px 0 22px; }
+.fm-note-copy h2 em { font-weight:400; }
+.fm-note-copy p { color:#7f7770; font-size:14px; line-height:1.9; max-width:350px; }
+.fm-note-copy a { display:flex; align-items:center; gap:28px; border-bottom:1px solid #37332f; margin-top:31px; padding-bottom:11px; font-size:12px; }
+.fm-newsletter { display:flex; flex-direction:column; align-items:center; text-align:center; padding:125px 5%; }
+.fm-newsletter h2 { font-family:'Bodoni Moda',serif; font-size:clamp(48px,5.6vw,78px); letter-spacing:-.065em; font-weight:400; margin:12px 0; }
+.fm-newsletter>p { color:#837e77; font-size:13px; margin-bottom:35px; }
+.fm-newsletter-field { max-width:460px; }
+.fm-footer { background:#ece9e2; }
+.fm-footer .fashion-footer-brand { font-family:'Bodoni Moda',serif; font-weight:500; }
+
+/* Tablet and mobile */
+@media (max-width: 1100px) {
+  .fe-hero { min-height:560px; }
+  .fe-hero-words { padding-left:7%; }
+  .fe-hero h1 { font-size:clamp(55px,8.1vw,105px) !important; }
+  .fe-mosaic { height:520px; }
+  .fc-catalogue-layout { grid-template-columns:185px minmax(0,1fr); gap:25px; }
+  .fc-product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .fc-look-builder { grid-template-columns:1fr 370px; }
+  .fm-hero { min-height:580px; }
+  .fm-hero-copy h1 { font-size:clamp(50px,6vw,78px); }
+  .fm-collection-card { min-height:510px; }
+}
+@media (max-width: 760px) {
+  .fashion-site .fashion-footer { gap:30px; padding:50px 6% 23px; }
+  .fashion-site .fashion-footer-links { width:100%; gap:24px; }
+  .fashion-site .fashion-product-tag { top:10px; left:9px; font-size:8px; padding:6px 7px; }
+  .fashion-site .fashion-favorite { width:30px; height:30px; top:8px; right:8px; }
+  .fashion-site .fashion-product-add { width:34px; height:34px; right:9px; bottom:9px; }
+  .fashion-site .fashion-product-info { flex-direction:column; gap:4px; padding-top:11px; }
+  .fashion-site .fashion-product-info strong { margin-top:3px; }
+  .fashion-quickview { display:flex; flex-direction:column; width:min(440px,calc(100% - 24px)); }
+  .fashion-quickview>img { height:250px; min-height:250px; max-height:250px; }
+  .fashion-quick-info { padding:25px 23px 28px; }
+  .fashion-site .fashion-quick-info h2 { font-size:31px; }
+  .fashion-quick-price { margin-top:12px; }
+  .fashion-site .fashion-quick-description { margin:16px 0 !important; }
+  .fashion-sizes { margin-bottom:18px; }
+  .fashion-quick-support { display:none; }
+  .fe-announcement { gap:10px; font-size:8px; }
+  .fe-announcement span { display:none; }
+  .fe-header { height:69px; padding:0 5%; }
+  .fe-header-right { gap:10px; }
+  .fe-header-right>a { display:none; }
+  .fe-menu-trigger span { display:none; }
+  .fe-logo { font-size:30px; }
+  .fe-mobile-menu { top:102px; }
+  .fe-hero { min-height:0; height:auto; display:flex; flex-direction:column; }
+  .fe-hero-words { min-height:420px; padding:26px 5% 25px; }
+  .fe-hero-topline,.fe-hero-bottom { font-size:9px; }
+  .fashion-site .fe-hero h1 { font-size:clamp(65px,15vw,110px) !important; line-height:.89; letter-spacing:-.1em; }
+  .fe-hero-photo { height:510px; }
+  .fe-hero-vertical { display:none; }
+  .fe-ticker { height:44px; }
+  .fe-ticker>div { font-size:14px; }
+  .fe-intro { padding:73px 6% 57px; grid-template-columns:1fr; gap:22px; }
+  .fe-intro h2 { margin-top:14px; font-size:clamp(54px,11vw,90px); }
+  .fe-intro-side p { max-width:480px; font-size:14px; }
+  .fe-underlined { margin-top:19px; }
+  .fe-mosaic { padding:0 4%; height:auto; grid-template-columns:1fr; gap:10px; }
+  .fe-mosaic-item { height:480px; }
+  .fe-mosaic-small { height:360px; }
+  .fe-mosaic-item h3,.fe-mosaic-small h3 { font-size:clamp(36px,8vw,58px); }
+  .fe-shop-section { padding:73px 5% 85px; }
+  .fe-section-heading { gap:10px; align-items:start; flex-direction:column; margin-bottom:30px; }
+  .fe-section-heading h2 { font-size:clamp(65px,12vw,94px); }
+  .fe-section-heading>p { width:auto; font-size:13px; max-width:260px; }
+  .fe-product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 11px; }
+  .fe-story { display:flex; flex-direction:column; }
+  .fe-story-photo { min-height:360px; height:450px; }
+  .fe-story-copy { padding:69px 7%; }
+  .fe-story-copy h2 { font-size:clamp(50px,10vw,80px); }
+  .fe-newsletter { grid-template-columns:1fr; padding:70px 7%; gap:31px; }
+  .fc-topline { justify-content:center; font-size:8px; }
+  .fc-topline span { display:none; }
+  .fc-header { height:72px; padding:0 5%; }
+  .fc-logo { font-size:34px; }
+  .fc-header nav { gap:13px; }
+  .fc-header nav a { display:none; }
+  .fc-header nav a:last-child { display:inline; }
+  .fc-hero { display:flex; flex-direction:column; }
+  .fc-hero-copy { padding:68px 7% 40px; }
+  .fc-hero-copy h1 { font-size:clamp(58px,11vw,85px); }
+  .fc-hero-mini { margin-top:36px; }
+  .fc-hero-visual { min-height:410px; height:460px; }
+  .fc-perks { padding:18px 4%; font-size:8px; }
+  .fc-perks span:nth-child(3) { display:none; }
+  .fc-shop-intro { padding:75px 5% 30px; align-items:start; flex-direction:column; gap:10px; }
+  .fc-shop-intro h2 { font-size:58px; }
+  .fc-shop-intro>p { font-size:12px; }
+  .fc-catalogue-layout { display:block; padding:0 5% 75px; }
+  .fc-filters { display:none; padding:25px; position:fixed; background:#fff; z-index:30; inset:0 15% 0 0; overflow:auto; border:0; box-shadow:0 0 0 100vw #0008; }
+  .fc-filters.fc-filters-open { display:block; }
+  .fc-mobile-only { display:block; background:transparent; }
+  .fc-tools { flex-wrap:wrap; gap:10px; }
+  .fc-search { order:1; max-width:none; width:100%; flex-basis:100%; }
+  .fc-sort { order:3; margin-left:auto; }
+  .fc-filter-toggle { display:flex; background:#f0ede9; align-items:center; gap:9px; padding:10px 13px; font-size:12px; order:2; }
+  .fc-product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:29px 11px; }
+  .fc-results-count { padding:15px 0; }
+  .fc-look-section { padding:74px 4%; }
+  .fc-look-heading h2 { font-size:clamp(52px,10vw,80px); }
+  .fc-look-builder { display:flex; flex-direction:column; }
+  .fc-look-feature { min-height:0; height:420px; }
+  .fc-look-editor { min-height:520px; padding:24px; }
+  .fc-look-rail { grid-template-columns:repeat(6,1fr); }
+  .fc-bottom-banner { display:flex; flex-direction:column-reverse; }
+  .fc-bottom-banner>img { max-height:370px; height:370px; }
+  .fc-bottom-banner>div { padding:65px 7%; }
+  .fm-announcement { justify-content:center; font-size:9px; text-align:center; }
+  .fm-announcement span { display:none; }
+  .fm-header { height:77px; padding:0 5%; }
+  .fm-header nav { display:none; position:absolute; top:77px; left:0; right:0; background:#f9f8f5; padding:23px 6%; box-shadow:0 15px 30px #0001; }
+  .fm-header nav.fm-nav-open { display:flex; flex-direction:column; gap:23px; align-items:start; }
+  .fm-menu { display:block; }
+  .fm-hero { display:flex; flex-direction:column; height:auto; min-height:0; padding:0 4%; }
+  .fm-hero-copy { min-height:430px; padding:65px 4% 72px; }
+  .fm-hero-copy h1 { font-size:clamp(62px,11vw,90px); line-height:1.08; }
+  .fm-hero-copy>p { font-size:13px; }
+  .fm-hero-number { bottom:21px; left:4%; right:4%; }
+  .fm-hero-image { height:480px; }
+  .fm-statement { padding:105px 6%; gap:22px; }
+  .fm-statement p { font-size:clamp(37px,8vw,58px); }
+  .fm-collections { padding:0 5% 85px; }
+  .fm-section-top h2 { font-size:clamp(47px,9vw,66px); }
+  .fm-collection-grid { grid-template-columns:1fr; gap:14px; }
+  .fm-collection-card,.fm-collection-two { min-height:0; height:480px; }
+  .fm-products-section { padding:0 5% 90px; }
+  .fm-product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:30px 12px; }
+  .fm-product-grid .fashion-product-info button { font-size:17px; }
+  .fm-note { display:flex; flex-direction:column; }
+  .fm-note-image { min-height:0; height:400px; }
+  .fm-note-copy { padding:76px 7%; }
+  .fm-note-copy h2 { font-size:clamp(51px,10vw,77px); }
+  .fm-newsletter { padding:95px 7%; }
+}
+@media (max-width: 400px) {
+  .fashion-site .fashion-footer-links { gap:12px; font-size:10px; }
+  .fe-hero-photo { height:410px; }
+  .fashion-site .fe-hero h1 { font-size:60px !important; }
+  .fe-hero-bottom { gap:10px; font-size:8px; }
+  .fe-hero-bottom a { gap:5px; }
+  .fc-header nav { display:none; }
+  .fc-hero-visual { height:370px; min-height:370px; }
+  .fc-look-rail { grid-template-columns:repeat(5,1fr); }
+  .fm-hero-copy h1 { font-size:57px; }
+  .fm-hero-image { height:410px; }
+  .fm-collection-card,.fm-collection-two { height:400px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fashion-site *, .fashion-site *::before,.fashion-site *::after { transition:none !important; animation:none !important; scroll-behavior:auto !important; }
+}
