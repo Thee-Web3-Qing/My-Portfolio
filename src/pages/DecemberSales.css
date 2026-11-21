@@ -295,3 +295,11 @@
  .ds-mobile-quote button{padding:11px 13px;font-size:.58rem;}
 }
 @media(prefers-reduced-motion:reduce){.ds-directory-card,.ds-directory-card img,.ds-stage-nav a{transition:none;}}
+
+
+/* Keep the new subpages inside the existing editorial portfolio navigation. */
+.portfolio-clay:has(.ds-root) .portfolio-nav{background:rgba(251,248,242,.95);border-color:#ded7d0;box-shadow:none;backdrop-filter:blur(14px);}
+.portfolio-clay:has(.ds-root) .portfolio-brand{font-family:Georgia,'Times New Roman',serif;letter-spacing:-.04em;color:#111;}
+.portfolio-clay:has(.ds-root) .portfolio-brand .text-electric{color:#f01820;}
+.portfolio-clay:has(.ds-root) .portfolio-nav-cta{background:#f01820;color:white;border-radius:100px;}
+.portfolio-clay:has(.ds-root) .portfolio-nav-link.portfolio-nav-december{background:#f01820!important;border-color:#f01820;color:#fff!important;}
