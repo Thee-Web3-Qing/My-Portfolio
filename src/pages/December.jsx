@@ -182,6 +182,13 @@ export default function December() {
         <p>Your industry decides the content and layout inspiration, not the starting price. Every package includes mobile responsiveness, up to 12 listings, a featured December offer, WhatsApp ordering or enquiries, delivery or booking information, and one revision round.</p>
       </section>
 
+      <nav className="dec-inpage-nav" aria-label="December website sections">
+        <a href="#build-your-site">01 / Industries</a>
+        <a href="#dec-designs">02 / Website preview</a>
+        <a href="#dec-features">03 / Feature add-ons</a>
+        <a href="#dec-checkout">04 / Checkout</a>
+      </nav>
+
       <div className="dec-builder">
         <div className="dec-builder-main">
           <section className="dec-builder-step">
