@@ -19,9 +19,20 @@ export default async function handler(req, res) {
   const quote = calculateDecemberQuote({ industry:b.industry, layout:b.layout, addons:b.addons, images:b.images })
   const amountKobo = (b.paymentMode === 'deposit' ? quote.deposit : quote.total) * 100
   const reference = makeReference('december-website')
+  const lineItems = [
+    { name:'Branded website (12 listings)',price:quote.base },
+    ...quote.selectedAddons.map(x=>({name:x.name,price:x.price})),
+    ...(quote.images > 0 ? [{name:quote.images+' AI product images',price:quote.imagesSubtotal}]:[]),
+  ]
   const metadata = { campaign:'december-2026', product:'december-website', reference,
     industry:b.industry, layout:b.layout, addons:quote.selectedAddons.map(x=>x.id), images:b.images,
-    payment_mode:b.paymentMode, quoted_total_ngn:quote.total }
+    payment_mode:b.paymentMode, quoted_total_ngn:quote.total, line_items:lineItems,
+    custom_fields:[
+      {display_name:'Website style',variable_name:'website_style',value:quote.industry.label+' / '+quote.layout.label},
+      {display_name:'What you selected',variable_name:'selected_features',value:lineItems.map(x=>x.name+' (₦'+x.price.toLocaleString('en-NG')+')').join(', ').slice(0,255)},
+      {display_name:'Payment',variable_name:'payment_type',value:b.paymentMode==='deposit'?'60% deposit':'Full payment'},
+    ]
+  }
   const config = { ...metadata, customer_note:String(customer.note || '').slice(0,1000) }
   try {
     const sql = db()
