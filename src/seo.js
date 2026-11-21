@@ -188,7 +188,7 @@ const previewRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
 ))
 
 export const servicePaths = Object.keys(services).map((slug) => `/services/${slug}`)
-export const publicPaths = [...Object.keys(staticRoutes), ...Object.keys(industryRoutes), ...Object.keys(demoRoutes), ...Object.keys(previewRoutes), ...servicePaths]
+export const publicPaths = [...Object.keys(staticRoutes), ...Object.keys(demoRoutes), ...Object.keys(previewRoutes), ...servicePaths]
 
 export function getSeoForPath(pathname) {
   const cleanPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '')
