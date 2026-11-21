@@ -23,7 +23,7 @@ export const LAYOUTS = [
 export const SHARED_ADDONS = [
   { id:'custom-design', name:'Fully custom homepage design', description:'A newly art-directed hero, typography and section arrangement beyond the selected starter design.', price:57000, recommended:['fashion','food','gifts','beauty','events','accessories','hospitality'], scope:'design-extension' },
   { id:'expanded-catalogue', name:'Expand catalogue to 30 listings', description:'Increase the supplied catalogue from 12 to a total of 30 ready-to-publish products or services.', price:19000, recommended:['fashion','food','gifts','accessories','hospitality'], scope:'content-extension' },
-  { id:'page', name:'Additional designed page', description:'One additional page using the approved template's existing components, with your supplied content.', price:28500, recommended:['events','hospitality'], scope:'content-extension' },
+  { id:'page', name:'Additional designed page', description:'One additional page using the approved the approved template components, with your supplied content.', price:28500, recommended:['events','hospitality'], scope:'content-extension' },
 ]
 
 export const ADDONS = [...SHARED_ADDONS, ...INDUSTRY_ADDONS]
