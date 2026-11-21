@@ -22,12 +22,40 @@ export default function DecemberDetails(){
   const [verified,setVerified]=useState(null)
   const [form,setForm]=useState({...blank})
   const [pending,setPending]=useState(false)
+  const [uploading,setUploading]=useState('')
   const [message,setMessage]=useState('')
   const [saved,setSaved]=useState(false)
   const update=(field,value)=>{setForm(prev=>({...prev,[field]:value}));setSaved(false)}
   const changeItem=(i,k,val)=>{setForm(prev=>({...prev,items:prev.items.map((item,index)=>i===index?{...item,[k]:val}:item)}));setSaved(false)}
   const addItem=()=>{if(form.items.length<(verified?.maxItems||12))update('items',[...form.items,emptyItem()])}
   const removeItem=i=>update('items',form.items.filter((_,index)=>index!==i).length?form.items.filter((_,index)=>index!==i):[emptyItem()])
+  async function uploadPhoto(event,field,index){
+    const file=event.target.files?.[0]
+    if(!file)return
+    if(file.size>2000000){setMessage('That image is over 2 MB. Upload a smaller JPG/PNG/WebP or paste a full-resolution Google Drive link.');return}
+    if(!['image/jpeg','image/png','image/webp'].includes(file.type)){setMessage('Please upload a JPG, PNG or WebP image.');return}
+    const key=field==='logoUrl'?'logo':('item-'+index)
+    setUploading(key);setMessage('')
+    try{
+      const base64=await new Promise((resolve,reject)=>{
+        const reader=new FileReader()
+        reader.onload=()=>resolve(String(reader.result).split(',')[1])
+        reader.onerror=()=>reject(Error('Could not read image'))
+        reader.readAsDataURL(file)
+      })
+      const response=await fetch('/api/december/upload',{
+        method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({reference,email:email.trim().toLowerCase(),name:file.name,data:base64})
+      })
+      const result=await response.json().catch(()=>({}))
+      if(!response.ok||!result.url)throw Error(result.error||'Image upload failed')
+      if(field==='logoUrl')update('logoUrl',result.url)
+      else changeItem(index,'imageUrl',result.url)
+      setMessage(file.name+' uploaded securely. Save the form to keep this image linked to your order.')
+    }catch(err){setMessage(err.message||'Could not upload the image.')}
+    finally{setUploading('')}
+  }
+
   async function request(action){
     setPending(true);setMessage('')
     try{
@@ -67,14 +95,15 @@ export default function DecemberDetails(){
         <section className="dec-intake-section"><div className="dec-intake-heading"><span>02</span><div><h2>{cards[0].title}</h2><p>{cards[0].description}</p></div></div>
           <div className="dec-intake-grid">
             <label>Business / trading name *<input required maxLength={120} value={form.businessName} onChange={e=>update('businessName',e.target.value)}/></label>
-            <label>Logo link (optional)<input type="url" placeholder="https://drive.google.com/..." value={form.logoUrl} onChange={e=>update('logoUrl',e.target.value)}/></label>
+            <label>Logo link (optional)<input type="text" placeholder="https://drive.google.com/..." value={form.logoUrl} onChange={e=>update('logoUrl',e.target.value)}/></label>
+            <label className="dec-upload-control">Or upload your logo (JPG, PNG, WebP, max 2 MB)<input type="file" accept="image/jpeg,image/png,image/webp" disabled={!!uploading} onChange={e=>uploadPhoto(e,'logoUrl')} />{uploading==='logo'&&<small>Uploading logo…</small>}{form.logoUrl?.startsWith('/api/december/image')&&<img src={form.logoUrl} alt="Uploaded business logo" />}</label>
             <label>Brand colours and style<input placeholder="E.g. oxblood, cream and black" value={form.brandColors} onChange={e=>update('brandColors',e.target.value)}/></label>
             <label>Instagram / social page<input type="url" placeholder="https://instagram.com/..." value={form.instagramUrl} onChange={e=>update('instagramUrl',e.target.value)}/></label>
             <label>Preferred website/domain<input placeholder="E.g. mybrand.com or need a new domain" value={form.websiteDomain} onChange={e=>update('websiteDomain',e.target.value)}/></label>
             <label>Shared image + logo folder<input type="url" placeholder="https://drive.google.com/drive/folders/..." value={form.assetFolderUrl} onChange={e=>update('assetFolderUrl',e.target.value)}/></label>
             <label className="dec-intake-full">Describe your business and who you sell to *<textarea required minLength={20} rows={4} maxLength={2200} value={form.businessDescription} onChange={e=>update('businessDescription',e.target.value)} placeholder="What do you sell or offer, who is it for, and what makes your brand different?"/></label>
           </div>
-          <div className="dec-tip"><strong>PHOTOS & BRAND ASSETS</strong><p>Paste a publicly accessible or correctly shared Google Drive/Dropbox folder with your final-resolution product photos, logo and any other assets. Add an individual image link to each product below where possible. Please enable viewing access for the person building your website.</p></div>
+          <div className="dec-tip"><strong>PHOTOS & BRAND ASSETS</strong><p>Upload individual JPG/PNG/WebP photos (up to 2 MB each), or paste a correctly shared Google Drive/Dropbox folder with full-resolution images, logos and other resources. For larger files and video, please use a shared folder link.</p></div>
         </section>
         <section className="dec-intake-section">
           <div className="dec-intake-heading"><span>03</span><div><h2>{cards[1].title}</h2><p>{cards[1].description} Your package allows {verified.maxItems} listings.</p></div></div>
@@ -84,7 +113,8 @@ export default function DecemberDetails(){
               <div className="dec-intake-grid">
                 <label>Product / service name<input value={item.name} maxLength={120} onChange={e=>changeItem(i,'name',e.target.value)} placeholder="The signature holiday box"/></label>
                 <label>Price or starting price<input value={item.price} maxLength={60} onChange={e=>changeItem(i,'price',e.target.value)} placeholder="₦18,500 or Price on enquiry"/></label>
-                <label>Photo link<input type="url" value={item.imageUrl} onChange={e=>changeItem(i,'imageUrl',e.target.value)} placeholder="https://..."/></label>
+                <label>Photo link or uploaded image<input value={item.imageUrl} onChange={e=>changeItem(i,'imageUrl',e.target.value)} placeholder="https://..."/></label>
+                <label className="dec-upload-control">Or upload this product photo (max 2 MB)<input type="file" accept="image/jpeg,image/png,image/webp" disabled={!!uploading} onChange={e=>uploadPhoto(e,'imageUrl',i)}/>{uploading==='item-'+i&&<small>Uploading photo…</small>}{item.imageUrl?.startsWith('/api/december/image')&&<img src={item.imageUrl} alt={'Uploaded product '+(i+1)}/>}</label>
                 <label>Brief description<input value={item.description} maxLength={600} onChange={e=>changeItem(i,'description',e.target.value)} placeholder="Size, colours, servings, or what it includes"/></label>
               </div>
             </div>)}
@@ -107,7 +137,7 @@ export default function DecemberDetails(){
           <label className="dec-intake-confirm"><input type="checkbox" checked={form.assetsSubmittedComplete} onChange={e=>update('assetsSubmittedComplete',e.target.checked)}/>
           <span>All my product images, business information, prices and other website resources are ready for review.</span></label>
           <p>The 3–7 day build window starts after Qing confirms your submitted materials are complete. If something is missing, you can return with the same payment reference and email to update your form.</p>
-          <button type="submit" disabled={pending}>{pending?'Saving your details…':'Save business information ↗'}</button>
+          <button type="submit" disabled={pending||!!uploading}>{pending?'Saving your details…':uploading?'Image uploading…':'Save business information ↗'}</button>
           {saved&&<p className="dec-save-success" role="status">✓ Details saved in your website order. Keep your reference for any updates.</p>}
         </div>
       </form>}
