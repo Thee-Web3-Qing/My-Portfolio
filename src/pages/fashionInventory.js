@@ -36,7 +36,7 @@ export const fashionImageSet = [
   { id: 'knit', kind: 'product', src: uns('photo-1434389677669-e08b4cac3105'), alt: 'Soft neutral knitwear' },
   { id: 'jacket', kind: 'product', src: uns('photo-1591047139829-d91aecb6caea'), alt: 'Relaxed cropped jacket' },
   { id: 'longcoat', kind: 'product', src: uns('photo-1544022613-e87ca75a784a'), alt: 'Coat in a neutral tone' },
-  { id: 'minibag', kind: 'product', src: uns('photo-1584917865442-de89df76afd3'), alt: 'Classic compact shoulder bag' },
+  { id: 'minibag', kind: 'product', src: uns('photo-1547949003-9792a18a2601'), alt: 'Classic compact shoulder bag' },
   { id: 'summerdress', kind: 'product', src: uns('photo-1496747611176-843222e1e57c'), alt: 'Soft summer dress editorial' },
   { id: 'bootsbrown', kind: 'product', src: uns('photo-1608256246200-53e635b5b65f'), alt: 'Tall leather boots' },
 ]
