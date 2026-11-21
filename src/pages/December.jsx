@@ -2,9 +2,10 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { INDUSTRIES, LAYOUTS, calculateDecemberQuote, getIndustryGroups, getSharedGroups, money } from '../data/december.js'
 import StorefrontPreviewGallery from '../components/StorefrontPreviewGallery.jsx'
+import ScaledWebsitePreview from '../components/ScaledWebsitePreview.jsx'
 import './December.css'
 
-const Arrow = () => <span aria-hidden="true">↗</span>
+const Arrow = () => <span className="dec-desktop-only-decoration" aria-hidden="true">↗</span>
 
 function IndustryPreview({ industry, layout }) {
   return (
@@ -170,7 +171,7 @@ export default function December() {
           <div className="dec-hero-stamp">THE<br />DECEMBER<br />EDIT <span>✳</span></div>
           <div className="dec-floating-window">
             <div className="dec-floating-top"><i /><i /><i /><span>yourbrand.com</span></div>
-            <div className="dec-floating-contents"><div><small>SEASON 2026</small><strong>Good things<br />are in store.</strong><span>DISCOVER COLLECTION ↗</span></div><div className="dec-floating-art"><i /></div></div>
+            <div className="dec-floating-contents"><div><small>SEASON 2026</small><strong>Good things<br />are in store.</strong><span>DISCOVER COLLECTION</span></div><div className="dec-floating-art"><i /></div></div>
             <div className="dec-floating-thumbs"><span /><span /><span /></div>
           </div>
           <div className="dec-hero-asterisk">✳</div>
@@ -203,7 +204,7 @@ export default function December() {
                 <span className="dec-industry-symbol" aria-hidden="true">{['✿', '◒', '✳', '✧', '✺', '◇', '⌂'][index]}</span>
                 <strong>{item.label}</strong>
                 <span>{item.feature}</span>
-                <i>{industryId === item.id ? '✓ Selected' : 'Choose this ↗'}</i>
+                <i>{industryId === item.id ? '✓ Selected' : 'Choose this'}</i>
               </button>)}
             </div>
           </section>
@@ -228,11 +229,15 @@ export default function December() {
                 </div>
               </div>
               <div className={'dec-real-preview-stage dec-real-preview-stage-' + previewDevice}>
-                <div className={'dec-real-preview-frame dec-real-preview-frame-' + previewDevice}>
-                  <iframe key={industryId + '-' + layoutId} title={industry.label + ' ' + layout.label + ' interactive website sample'} loading="lazy" src={previewUrl} />
-                </div>
+                <ScaledWebsitePreview
+                  key={industryId + '-' + layoutId + '-' + previewDevice}
+                  className={'dec-real-preview-frame dec-real-preview-frame-' + previewDevice}
+                  src={previewUrl}
+                  device={previewDevice}
+                  title={industry.label + ' ' + layout.label + ' interactive website sample'}
+                />
               </div>
-              <div className="dec-real-preview-actions"><a className="dec-real-preview-open" href={previewUrl} target="_blank" rel="noreferrer">Open larger preview ↗</a><a href="#dec-features">Choose optional features ↓</a></div>
+              <div className="dec-real-preview-actions"><a className="dec-real-preview-open" href={previewUrl} target="_blank" rel="noreferrer">Open larger preview</a><a href="#dec-features">Choose optional features ↓</a></div>
               <p>The selected website loads inside this preview. Product names, prices and photographs are illustrative and will be replaced with your supplied business resources.</p>
             </div>
           </section>
@@ -285,7 +290,7 @@ export default function December() {
             </div>
           </section>
 
-          <div className="dec-delivery-note"><span>DELIVERY TIMELINE</span><strong>3–7 days after your assets are confirmed.</strong><p>After payment, keep your Paystack reference. You will use it to fill in the business information form and share your product prices, images and other resources. The build timeline starts after we review and confirm that everything required is complete.</p><Link to="/december/details">Already paid? Submit business information ↗</Link></div>
+          <div className="dec-delivery-note"><span>DELIVERY TIMELINE</span><strong>3–7 days after your assets are confirmed.</strong><p>After payment, keep your Paystack reference. You will use it to fill in the business information form and share your product prices, images and other resources. The build timeline starts after we review and confirm that everything required is complete.</p><Link to="/december/details">Already paid? Submit business information</Link></div>
       <section className="dec-builder-step" id="dec-checkout">
             <div className="dec-step-title"><span>04</span><div><p className="dec-kicker">RESERVE YOUR SLOT</p><h2>Ready to make it real?</h2></div></div>
             {status === 'paid' && <div className="dec-notice dec-notice-success" role="status"><strong>Payment verified ✓</strong><p>{feedback}</p><p>Reference: {receipt?.reference}</p><p>Amount received: {money((receipt?.amount || 0) / 100)}</p></div>}
@@ -301,8 +306,8 @@ export default function December() {
               <label className="dec-form-note">Anything I should know? <textarea name="note" maxLength={1000} rows={3} value={customer.note} onChange={updateCustomer} placeholder="Launch date, special requests, etc." /></label>
               <div className="dec-mobile-summary"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} small /></div>
               <div className="dec-checkout-actions">
-                <button className="dec-btn dec-btn-dark" type="submit" disabled={!checkoutEnabled || status === 'loading' || status === 'verifying'}>{status === 'loading' ? 'Opening secure checkout…' : checkoutEnabled ? 'Pay with Paystack ↗' : 'Paystack setup pending'} </button>
-                <a href={'mailto:qinglidah@gmail.com?subject=' + encodeURIComponent('December website enquiry') + '&body=' + encodeURIComponent(emailSummary)} className="dec-link-text">Email me this quote ↗</a>
+                <button className="dec-btn dec-btn-dark" type="submit" disabled={!checkoutEnabled || status === 'loading' || status === 'verifying'}>{status === 'loading' ? 'Opening secure checkout…' : checkoutEnabled ? 'Pay with Paystack' : 'Paystack setup pending'} </button>
+                <a href={'mailto:qinglidah@gmail.com?subject=' + encodeURIComponent('December website enquiry') + '&body=' + encodeURIComponent(emailSummary)} className="dec-link-text">Email me this quote</a>
               </div>
               {!checkoutEnabled && <p className="dec-checkout-warning">Online checkout is currently unavailable. You can still email your selected quote.</p>}
               <p className="dec-checkout-nextstep">AFTER PAYMENT: Keep your Paystack transaction reference. You will need it, alongside your payment email, to submit business information and product assets.</p>
@@ -310,11 +315,11 @@ export default function December() {
             </form>
           </section>
         </div>
-        <aside className={"dec-sidebar"+(builderVisible?" is-visible":"")} aria-label="Your website price and selected features"><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout ↗</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>
+        <aside className={"dec-sidebar"+(builderVisible?" is-visible":"")} aria-label="Your website price and selected features"><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>
       </div>
       <div className={"dec-floating-mobile-checkout" + (builderVisible ? " dec-floating-checkout-in-builder" : "")} role="region" aria-label="Your checkout total">
         <div><span>Your website estimate</span><strong>{money(quote.total)}</strong><small>Due today: {money(paymentMode === 'deposit' ? quote.deposit : quote.total)}</small></div>
-        <a href="#dec-checkout" className="dec-floating-mobile-button">Checkout ↗</a>
+        <a href="#dec-checkout" className="dec-floating-mobile-button">Checkout</a>
       </div>
       <StorefrontPreviewGallery placement="december" />
       <section className="dec-bottom-cta"><span>NOT JUST FOR THE HOLIDAYS</span><h2>Built for December.<br /><em>Useful all year.</em></h2><p>Your December banners can come down in January. Your website stays.</p><Link to="/products">See what I've built <Arrow /></Link></section>

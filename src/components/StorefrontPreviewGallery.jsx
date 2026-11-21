@@ -1,5 +1,6 @@
 
 import { useState } from 'react'
+import ScaledWebsitePreview from './ScaledWebsitePreview.jsx'
 import './StorefrontPreviewGallery.css'
 
 export const STOREFRONT_PREVIEWS = [
@@ -37,10 +38,17 @@ function GalleryCard({site,device}){
   <div className="site-preview-browser">
    <div className="site-preview-chrome"><span className="site-preview-dots"><i/><i/><i/></span><code>{site.url}</code><a href={site.url} target="_blank" rel="noopener noreferrer" aria-label={'Open '+site.label+' in a full tab'}>↗</a></div>
    <div className={'site-preview-viewport site-preview-viewport-'+device}>
-    <iframe src={site.url} title={site.label+' full website interactive preview'} loading="lazy" style={{pointerEvents:interactive?'auto':'none'}} />
-    {!interactive&&<button type="button" className="site-preview-unlock" onClick={()=>setInteractive(true)}>Interact with website ↗</button>}
+    <ScaledWebsitePreview
+      key={site.id + '-' + device}
+      className="site-preview-scaled-frame"
+      src={site.url}
+      device={device}
+      interactive={interactive}
+      title={site.label + ' full website interactive preview'}
+    />
+    {!interactive&&<button type="button" className="site-preview-unlock" onClick={()=>setInteractive(true)}>Interact with website</button>}
    </div>
-   <div className="site-preview-controls"><button type="button" onClick={()=>setInteractive(x=>!x)} aria-pressed={interactive}>{interactive?'✓ Interaction on · Lock scrolling':'Enable browsing inside preview'}</button><a href={site.url} target="_blank" rel="noopener noreferrer">Open full website ↗</a></div>
+   <div className="site-preview-controls"><button type="button" onClick={()=>setInteractive(x=>!x)} aria-pressed={interactive}>{interactive?'✓ Interaction on · Lock scrolling':'Enable browsing inside preview'}</button><a href={site.url} target="_blank" rel="noopener noreferrer">Open full website</a></div>
   </div>
   <div className="site-preview-copy"><div><span>{site.category.toUpperCase()} / {site.style.toUpperCase()}</span><h3>{site.label}</h3></div><p>{site.summary}</p></div>
  </article>
@@ -55,6 +63,6 @@ export default function StorefrontPreviewGallery({placement='december'}){
   <div className="site-preview-filters"><div aria-label="Filter website previews">{['All','Fashion','Food','Gifts','Beauty','Events','Accessories','Stays'].map(item=><button key={item} onClick={()=>setCategory(item)} className={category===item?'active':''} aria-pressed={category===item}>{item} <span>{String(item==='All'?STOREFRONT_PREVIEWS.length:STOREFRONT_PREVIEWS.filter(site=>site.category===item).length).padStart(2,'0')}</span></button>)}</div><div className="site-preview-device" aria-label="Preview size"><button className={device==='desktop'?'active':''} onClick={()=>setDevice('desktop')} aria-pressed={device==='desktop'}>Desktop</button><button className={device==='mobile'?'active':''} onClick={()=>setDevice('mobile')} aria-pressed={device==='mobile'}>Mobile</button></div></div>
   <div className="site-preview-grid">{shown.map(site=><GalleryCard key={site.id} site={site} device={device}/>)}</div>
   <p className="site-preview-footnote">These are demonstration stores. Sample product prices, imagery, availability and customer information are illustrative. Shopping and booking interfaces do not collect real payments or confirm reservations.</p>
-  {placement==='home'&&<a className="site-preview-home-cta" href="/december#dec-designs">Choose a website style and see pricing ↗</a>}
+  {placement==='home'&&<a className="site-preview-home-cta" href="/december#dec-designs">Choose a website style and see pricing</a>}
  </section>
 }
