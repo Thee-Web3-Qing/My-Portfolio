@@ -629,3 +629,43 @@
   .dec-included-basics{padding:17px;}
   .dec-included-basics>span{font-size:.55rem;}
 }
+
+
+/* Website preview devices are independent of the parent window's breakpoint.
+   The iframe itself is given an explicit 1440px or 390px layout viewport,
+   then scaled visually by ScaledWebsitePreview at any screen width. */
+.dec-real-preview-stage .dec-real-preview-frame[data-preview-device]{
+  position:relative;
+  overflow:hidden;
+  contain:paint;
+}
+.dec-real-preview-stage .dec-real-preview-frame[data-preview-device] iframe{
+  position:absolute;
+  top:0;
+  left:0;
+  display:block;
+  max-width:none;
+  border:0;
+  background:#fff;
+}
+@media(max-width:600px){
+  /* Mobile sales page: quiet typography rather than emoji-like flourishes. */
+  .december-page :is(
+    .dec-desktop-only-decoration,
+    .dec-announcement-separator,
+    .dec-hero-asterisk,
+    .dec-hero-stamp span,
+    .dec-industry-symbol,
+    .dec-ticker span,
+    .dec-photo-graphic
+  ){display:none!important}
+  .december-page .dec-industry-card.is-active::after,
+  .december-page .dec-bottom-cta::before{content:none!important}
+  .dec-real-preview-stage-desktop{
+    padding:0;
+    background:#fff;
+  }
+  .dec-real-preview-stage-desktop .dec-real-preview-frame{
+    width:100%;
+  }
+}
