@@ -72,19 +72,11 @@ export async function confirmPayment(reference, mode = environment()) {
     Number(transaction.amount) > 0 &&
     (String(transaction.customer?.email || '').toLowerCase() === String(order.customer_email).toLowerCase())
   if (!valid) return { found:true, paid:false, reference, status:transaction.status === 'success' ? 'unverified' : 'pending' }
-  const confirmed = await sql`
-    UPDATE payment_orders SET status='paid',paid_at=COALESCE(paid_at,now()),updated_at=now()
-    WHERE reference=${reference} AND environment=${mode} AND status='pending'
-    RETURNING reference, product, environment, customer_name, customer_email, customer_whatsapp,
-              amount_kobo, quote_total_kobo, payment_mode, configuration, status
-  `
-  const paidOrder = confirmed[0] || order
-  // Receiving payment never issues a classroom access code; approval remains separate.
-  if (paidOrder.product === 'qing-class') {
+  if (order.product === 'qing-class') {
     const info = safeMetadata(paidOrder.configuration)
     const details = info.registration || {}
-    const registrationEmail = String(paidOrder.customer_email).trim().toLowerCase()
-    const phone = String(paidOrder.customer_whatsapp || '').replace(/\D/g,'')
+    const registrationEmail = String(order.customer_email).trim().toLowerCase()
+    const phone = String(order.customer_whatsapp || '').replace(/\D/g,'')
     const telegram = String(details.telegram || '').trim().replace(/^@+/, '').toLowerCase()
     const reason = String(details.reason || '')
     await sql`
@@ -93,14 +85,23 @@ export async function confirmPayment(reference, mode = environment()) {
          mentorship_interest, amount_paid, currency, payment_source, payment_reference,
          transaction_reference, fraud_score, fraud_status, fraud_checks, payment_status)
       VALUES
-        (${paidOrder.customer_name}, ${phone}, ${telegram}, ${registrationEmail},
+        (${order.customer_name}, ${phone}, ${telegram}, ${registrationEmail},
          ${reason}, ${String(details.reasonCategory || 'Other')},
-         ${String(details.mentorship || 'Not answered')}, ${Number(paidOrder.amount_kobo)/100},
+         ${String(details.mentorship || 'Not answered')}, ${Number(order.amount_kobo)/100},
          'NGN', 'Paystack', ${reference}, ${reference}, 100, 'verified',
          ${JSON.stringify({provider:'paystack',environment:mode,verified:true})}::jsonb, 'pending')
       ON CONFLICT DO NOTHING
     `
   }
+
+  const confirmed = await sql`
+    UPDATE payment_orders SET status='paid',paid_at=COALESCE(paid_at,now()),updated_at=now()
+    WHERE reference=${reference} AND environment=${mode} AND status='pending'
+    RETURNING reference, product, environment, customer_name, customer_email, customer_whatsapp,
+              amount_kobo, quote_total_kobo, payment_mode, configuration, status
+  `
+  const paidOrder = confirmed[0] || order
+  // Receiving payment never issues a classroom access code; approval remains separate.
   return publicStatus(paidOrder)
 }
 export function publicStatus(order) {
