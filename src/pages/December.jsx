@@ -216,6 +216,7 @@ export default function December() {
                 <small>{item.description}</small>
               </button>)}
             </div>
+            {industryId==='food'&&<p className="dec-section-description">Also explore the fourth food reference: <a href="/foodartisan" target="_blank" rel="noopener noreferrer"><strong>Artisan Biryani website ↗</strong></a>. This is an additional visual preview; the three standard layout choices above remain the current quote options.</p>}
             <div className="dec-preview-wrap">
               <div className="dec-preview-header"><span><i /> LIVE WEBSITE PREVIEW</span><span>{industry.label} / {layout.label}</span></div>
               <div className="dec-preview-device-bar">
