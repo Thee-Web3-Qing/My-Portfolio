@@ -755,3 +755,5 @@
   .gg-store .gg-brand{gap:0}
   .gg-store .gg-nav-right :is(a,button) svg{stroke-width:1.7}
 }
+
+.gg-newsletter form button{width:auto;min-width:70px;height:40px;padding:0 15px;border-radius:22px;font:800 11px 'DM Sans',sans-serif;letter-spacing:.04em}
