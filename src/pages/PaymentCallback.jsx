@@ -25,6 +25,13 @@ export default function PaymentCallback(){
  },[reference])
  useEffect(()=>{check()},[check])
  useEffect(()=>{
+  if(data?.paid && data.product==='december-website' && reference){
+   // The Paystack verify API has confirmed the amount and customer email.
+   // Go straight to the prefilled business information form.
+   window.location.replace('/december/details?reference='+encodeURIComponent(reference))
+  }
+ },[data?.paid,data?.product,reference])
+ useEffect(()=>{
   if(data?.paid||!reference)return
   let calls=0
   const timer=window.setInterval(()=>{if(++calls>=6)window.clearInterval(timer);else check()},8500)
@@ -35,7 +42,7 @@ export default function PaymentCallback(){
  const saveRef=async()=>{try{await navigator.clipboard.writeText(reference);setCopied(true)}catch{setCopied(false)}}
  return <section className="dec-callback">
   <p className="dec-callback-kicker">QING THE CREATOR / PAYMENT STATUS</p>
-  <h1>{error?'We couldn’t check your payment.':checking&&!data?'Checking your payment…':data?.paid?'Payment confirmed.':'Payment not confirmed yet.'}</h1>
+  <h1>{error?'We couldn’t check your payment.':checking&&!data?'Checking your payment…':data?.paid?'Payment confirmed.': 'Payment not confirmed yet.'}</h1>
   <p className="dec-callback-intro">{data?.paid
     ?isClass?'Your class fee has been received. Access codes are issued only after the class registration is approved.'
     :'Your December website payment is verified. The next step is to complete your business information and provide your product photos, logo and resources.'
