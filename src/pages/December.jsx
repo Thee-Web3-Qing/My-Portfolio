@@ -65,6 +65,7 @@ export default function December() {
   const [checkoutEnabled, setCheckoutEnabled] = useState(false)
   const [feedback, setFeedback] = useState('')
   const [receipt, setReceipt] = useState(null)
+  const [builderVisible, setBuilderVisible] = useState(false)
   const quote = useMemo(() => calculateDecemberQuote({ industry: industryId, layout: layoutId, addons, images }), [industryId, layoutId, addons, images])
   const industry = quote.industry
   const layout = quote.layout
@@ -83,6 +84,13 @@ export default function December() {
     return () => { cancelled = true }
   }, [])
 
+  useEffect(() => {
+    const target = document.querySelector('.dec-builder')
+    if (!target || typeof IntersectionObserver === 'undefined') return
+    const observer = new IntersectionObserver(([entry]) => setBuilderVisible(entry.isIntersecting), { rootMargin: '-100px 0px -60px 0px' })
+    observer.observe(target)
+    return () => observer.disconnect()
+  }, [])
   const selectedSet = new Set(addons)
   const recommended = ADDONS.filter(item => item.recommended.includes(industryId))
   const others = ADDONS.filter(item => !item.recommended.includes(industryId))
@@ -237,7 +245,7 @@ export default function December() {
         </div>
         <aside className="dec-sidebar"><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout ↗</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>
       </div>
-      <div className="dec-floating-mobile-checkout" role="region" aria-label="Your checkout total">
+      <div className={"dec-floating-mobile-checkout" + (builderVisible ? " dec-floating-checkout-in-builder" : "")} role="region" aria-label="Your checkout total">
         <div><span>Your website estimate</span><strong>{money(quote.total)}</strong><small>Due today: {money(paymentMode === 'deposit' ? quote.deposit : quote.total)}</small></div>
         <a href="#dec-checkout" className="dec-floating-mobile-button">Checkout ↗</a>
       </div>
