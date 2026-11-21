@@ -6,6 +6,8 @@ import { Routes, Route } from 'react-router-dom'
   import Home from './pages/Home.jsx'
   import December from './pages/December.jsx'
   import PaymentCallback from './pages/PaymentCallback.jsx'
+  import DecemberDetails from './pages/DecemberDetails.jsx'
+  import DecemberDemo from './pages/DecemberDemo.jsx'
   import Content from './pages/Content.jsx'
   import Products from './pages/Products.jsx'
   import Hire from './pages/Hire.jsx'
@@ -32,6 +34,8 @@ import { Routes, Route } from 'react-router-dom'
                   <Route path="/experience" element={<Experience />} />
                   <Route path="/class" element={<Class />} />
                   <Route path="/december" element={<December />} />
+                  <Route path="/december/demo/:industry" element={<DecemberDemo />} />
+                  <Route path="/december/details" element={<DecemberDetails />} />
                   <Route path="/payment/callback" element={<PaymentCallback />} />
                   <Route path="/services/:serviceSlug" element={<Service />} />
                 </Routes>
