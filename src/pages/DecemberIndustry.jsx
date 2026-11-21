@@ -90,7 +90,7 @@ function IndustryContent({industryId}){
  const quote=useMemo(()=>calculateDecemberQuote({industry:industryId,layout:draft.layout,addons:draft.addons,images:draft.images}),[industryId,draft.layout,draft.addons,draft.images])
  const selected=new Set(draft.addons)
  const industryGroups=getIndustryGroups(industryId)
- const sharedGroups=getSharedGroups()
+ const sharedGroups=getSharedGroups(industryId)
  const project=demoCatalogue[industryId]
 
  useEffect(()=>{try{window.sessionStorage.setItem(storageKey(industryId),JSON.stringify(draft))}catch{}},[industryId,draft])
