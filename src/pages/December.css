@@ -601,3 +601,31 @@
 @media(max-height:610px) and (min-width:901px){
   .dec-sidebar-sticky{max-height:calc(100dvh - 90px)!important;}
 }
+
+
+/* Preserve the value of the finished base storefront. Paid enhancements are
+   interactive experiences, not ordinary checkout or enquiry elements. */
+.dec-included-basics{
+  margin:23px 0 30px;padding:22px 24px;
+  border:1px solid #dccdc1;border-left:4px solid #f01820;
+  background:#fffdfa;
+}
+.dec-included-basics>span{
+  display:block;font:800 .63rem/1.5 'Space Mono',monospace;
+  letter-spacing:.04em;color:#f01820;margin-bottom:12px;
+}
+.dec-included-basics>p{
+  color:#655e57;font:.79rem/1.7 Inter,sans-serif;
+  margin:0 0 13px;
+}
+.dec-included-basics>strong{
+  color:#111;display:block;font:700 .77rem/1.65 Inter,sans-serif;
+}
+.dec-feature-integrations-note{
+  border-top:1px solid #dcd2ca;padding:17px 0 0;margin:20px 0 25px;
+  color:#79716a;font:.76rem/1.7 Inter,sans-serif;
+}
+@media(max-width:600px){
+  .dec-included-basics{padding:17px;}
+  .dec-included-basics>span{font-size:.55rem;}
+}
