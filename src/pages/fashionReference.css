@@ -415,3 +415,31 @@
 .her-product-img img,.her-look-picture img,.her-selected-rail img,.her-recs img,
 .rush-scroll img,.rush-garment>img {object-fit:contain;background:#f4f2f0;}
 .loco-best-image img {mix-blend-mode:multiply;}
+
+/* Matched looks always render their corresponding model photograph.
+   A custom garment mix renders an honest product-based outfit board. */
+.ref-look-tabs {position:absolute;z-index:6;bottom:76px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:5px;background:#ffffffd9;backdrop-filter:blur(15px);border-radius:22px;padding:5px;box-shadow:0 6px 22px #0001;white-space:nowrap;}
+.ref-look-tabs button {font-size:9px;padding:9px 11px;border-radius:18px;font-weight:700;letter-spacing:.03em;}
+.ref-look-tabs button.active {background:#211c1e;color:white;}
+.ref-outfit-board {position:absolute;inset:17% 10% 17%;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;background:#ffffff16;border-radius:25px;backdrop-filter:blur(8px);padding:21px;z-index:2;text-align:center;}
+.ref-outfit-board>span {font-size:11px;letter-spacing:.15em;font-weight:700;margin-bottom:15px;}
+.ref-outfit-board>div {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:100%;max-width:370px;}
+.ref-outfit-board>div>img {height:150px;width:100%;object-fit:contain;background:#f5f2ee;border-radius:11px;}
+.ref-outfit-board small {font-size:10px;line-height:1.4;margin-top:14px;color:#fff;max-width:300px;}
+.ref-rush-looks {position:absolute;z-index:4;left:50%;transform:translateX(-50%);top:14px;display:flex;gap:4px;white-space:nowrap;background:#fff9;border-radius:20px;padding:5px;backdrop-filter:blur(7px);}
+.ref-rush-looks button {font-size:9px;border-radius:20px;padding:7px 10px;}
+.ref-rush-looks button.active {background:#ffe242;font-weight:800;}
+.rush-composed-board {display:flex;flex-direction:column;align-items:center;justify-content:center;max-width:100%;height:100%;padding:50px 10px;}
+.rush-composed-board>strong {font-size:12px;letter-spacing:.1em;margin-bottom:15px;}
+.rush-composed-board>div {display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:420px;width:100%;}
+.rush-composed-board>div>img {max-height:150px;width:100%;object-fit:contain;background:#f4f2f0;border-radius:12px;}
+.rush-composed-board>small {font-size:10px;margin-top:14px;color:#736f69;}
+@media(max-width:700px){
+ .ref-look-tabs {bottom:85px;gap:3px;padding:4px;}
+ .ref-look-tabs button {font-size:8px;padding:8px 10px;}
+ .ref-outfit-board {inset:13% 14% 18%;}
+ .ref-outfit-board>div>img {height:140px;}
+ .ref-rush-looks {top:6px;gap:2px;}
+ .ref-rush-looks button {font-size:8px;padding:6px;}
+ .rush-composed-board>div>img {max-height:110px;}
+}
