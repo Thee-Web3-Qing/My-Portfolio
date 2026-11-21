@@ -145,12 +145,12 @@ const staticRoutes = {
     type: 'WebPage',
   },
   '/december': {
-    title: 'December Website Sale | Business Websites from ₦120,000 | Qing The Creator',
+    title: 'December Website Sale | Business Websites from ₦100,000 | Qing The Creator',
     description: 'Get a beautiful website for your clothing, food, gifting, beauty, events or hospitality business. Choose an industry, a layout and optional features with clear prices.',
     label: 'December Website Sale',
     heading: 'December websites for businesses, with industry templates and optional add-ons.',
     paragraphs: [
-      'Every December website starts at ₦120,000 and includes a responsive branded storefront, up to 12 listings, a seasonal offer and WhatsApp ordering or enquiries.',
+      'Every December website starts at ₦100,000 and includes a responsive branded storefront, up to 12 listings, a seasonal offer and WhatsApp ordering or enquiries.',
       'Browse industry layouts and choose optional features, AI product photos and a 60% deposit or full-payment checkout.',
     ],
     type: 'WebPage',
@@ -171,12 +171,12 @@ const staticRoutes = {
 const demoRoutes = Object.fromEntries(INDUSTRIES.map(industry => [
   '/december/demo/' + industry.id, {
     title: industry.label + ' Storefront Preview | December Website Sale',
-    description: 'Explore a seasonal sample website for ' + industry.label.toLowerCase() + '. Choose a layout, add features and book a branded website from ₦120,000.',
+    description: 'Explore a seasonal sample website for ' + industry.label.toLowerCase() + '. Choose a layout, add features and book a branded website from ₦100,000.',
     label: industry.label + ' website example',
     heading: 'Interactive ' + industry.label.toLowerCase() + ' demo website.',
     paragraphs: [
       'This is an illustrative working storefront with sample product photography, pricing and editorial layouts.',
-      'Customise your own December website from ₦120,000, with optional add-on features.',
+      'Customise your own December website from ₦100,000, with optional add-on features.',
     ],
     type: 'WebPage',
   }
@@ -191,7 +191,7 @@ const industryRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
       description: 'Create a ' + industry.label.toLowerCase() + ' business website with an editorial template, up to 12 listings and individually priced optional features.',
       label: industry.label + ' ' + pageName.toLowerCase(),
       heading: industry.label + ' ' + pageName.toLowerCase() + '.',
-      paragraphs: ['Choose from three independent design styles and an expanded set of features tailored to this industry.', 'Websites start at ₦120,000, with a 60% deposit or full payment through Paystack.'],
+      paragraphs: ['Choose from three independent design styles and an expanded set of features tailored to this industry.', 'Websites start at ₦100,000, with a 60% deposit or full payment through Paystack.'],
       type:'WebPage',
       noindex:stage === '/checkout',
     }]

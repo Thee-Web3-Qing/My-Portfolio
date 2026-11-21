@@ -22,7 +22,7 @@ export default function DecemberDirectory() {
         <h1>Pick your business.<br/><em>Make it yours.</em></h1>
         <p>Choose a website made for what you sell. Explore the available features for your business, pick a design direction and see your price before checkout.</p>
         <a className="ds-primary-link" href="#industries">Explore business types <span>↗</span></a>
-        <div className="ds-hero-facts"><div><span>WEBSITE STARTS AT</span><strong>{money(120000)}</strong></div><div><span>ESTIMATED DELIVERY</span><strong>3–7 days*</strong></div><div><span>UPFRONT OPTION</span><strong>60% deposit</strong></div></div>
+        <div className="ds-hero-facts"><div><span>WEBSITE STARTS AT</span><strong>{money(100000)}</strong></div><div><span>ESTIMATED DELIVERY</span><strong>3–7 days*</strong></div><div><span>UPFRONT OPTION</span><strong>60% deposit</strong></div></div>
       </div>
       <div className="ds-directory-hero-photo"><img src={demoCatalogue.fashion.hero} alt="Editorial fashion photography illustrating a business storefront"/><div><span>YOUR BUSINESS</span><strong>DESERVES<br/>A BETTER<br/>STORE.</strong><small>THE DECEMBER EDIT / 2026</small></div></div>
     </section>

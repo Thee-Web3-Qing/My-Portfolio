@@ -1,6 +1,6 @@
 import { INDUSTRY_ADDONS, getIndustryGroups } from './decemberIndustryAddons.js'
 
-export const BASE_PRICE = 120000
+export const BASE_PRICE = 100000
 
 export const INDUSTRIES = [
   { id: 'fashion', label: 'Clothing & fashion', kicker: 'New season, new collection', category: 'Shop', type: 'products', colour: '#c85843', backdrop: '#ead4bd', exampleBrand: 'ATELIER NO. 4', sample: ['The holiday edit', 'Ready-to-wear', 'New arrivals'], feature: 'Holiday collections, sizes and prices' },

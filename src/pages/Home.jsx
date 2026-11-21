@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <div className="portfolio-home editorial-home">
       <div className="editorial-december-banner" role="region" aria-label="December website sale">
-        <div><span className="editorial-december-tag">THE DECEMBER EDIT 2026 ✳</span><p>Your brand deserves a beautiful place to sell this season. <strong>Websites from ₦120,000.</strong></p></div>
+        <div><span className="editorial-december-tag">THE DECEMBER EDIT 2026 ✳</span><p>Your brand deserves a beautiful place to sell this season. <strong>Websites from ₦100,000.</strong></p></div>
         <Link to="/december" className="editorial-december-button">December sales <span aria-hidden="true">↗</span></Link>
       </div>
       <section className="editorial-hero">

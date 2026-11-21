@@ -161,7 +161,7 @@ export default function December() {
           <p>Give customers one place to browse what you sell, see your prices and send an order. Pick your industry, choose your layout and add only what you need.</p>
           <div className="dec-hero-actions">
             <a href="#build-your-site" className="dec-btn dec-btn-light">Build my website <Arrow /></a>
-            <span>Starting at <strong>₦120,000</strong></span>
+            <span>Starting at <strong>₦100,000</strong></span>
           </div>
           <div className="dec-hero-meta"><span>01 / Select your business</span><span>02 / Make it yours</span><span>03 / Reserve your slot</span><span>Delivery: 3–7 days after assets are confirmed</span></div>
         </div>
@@ -210,7 +210,7 @@ export default function December() {
 
           <section className="dec-builder-step" id="dec-designs">
             <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>One brand. Three directions.</h2></div></div>
-            <p className="dec-section-description">All three starting layouts are included in the ₦120,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
+            <p className="dec-section-description">All three starting layouts are included in the ₦100,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
             <div className="dec-layout-choices">
               {LAYOUTS.map((item, index) => <button type="button" key={item.id} className={'dec-layout-option' + (layoutId === item.id ? ' is-active' : '')} onClick={() => setLayoutId(item.id)} aria-pressed={layoutId === item.id}>
                 <span className={'dec-layout-doodle dec-layout-doodle-' + item.id}><i /><i /><i /></span>
@@ -241,7 +241,7 @@ export default function December() {
             <div className="dec-step-title"><span>03</span><div><p className="dec-kicker">INTERACTIVE FEATURE UPGRADES</p><h2>Add something your customers can actually use.</h2></div></div>
             <p className="dec-section-description">Your {industry.label.toLowerCase()} website already includes the essentials. The options below are interactive experiences beyond the finished template. Switch industries to see genuinely different tools. Prices include the December 5% discount.</p>
             <div className="dec-included-basics">
-              <span>ALREADY INCLUDED IN YOUR ₦120,000 WEBSITE</span>
+              <span>ALREADY INCLUDED IN YOUR ₦100,000 WEBSITE</span>
               <p>Mobile-friendly design, up to 12 listings, product or service information, ordinary menus and categories, WhatsApp enquiries and ordering, basic order or appointment request details, a December offer, contact information and one revision round.</p>
               <strong>There is no extra fee for a normal order basket, a standard enquiry form or ordinary storefront navigation.</strong>
             </div>
