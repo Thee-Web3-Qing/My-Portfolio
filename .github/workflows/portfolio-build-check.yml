@@ -21,3 +21,6 @@ jobs:
         run: npm ci --ignore-scripts
       - name: Compile Vite and pre-render public pages
         run: npm run build
+
+      - name: Test Paystack verification rules
+        run: node --test tests/paystack-verification.test.mjs
