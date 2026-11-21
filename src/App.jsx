@@ -10,14 +10,14 @@ import { Routes, Route } from 'react-router-dom'
   import Experience from './pages/Experience.jsx'
   import Class from './pages/Class.jsx'
   import Service from './pages/Service.jsx'
-  import { FashionEditorial, FashionCatalogue, FashionMinimal } from './pages/FashionReference.jsx'
+  import FashionPlatform from './pages/FashionPlatform.jsx'
 
   export default function App() {
     return (
       <Routes>
-        <Route path="/fashioneditorial" element={<FashionEditorial />} />
-        <Route path="/fashioncatalogue" element={<FashionCatalogue />} />
-        <Route path="/fashionminimal" element={<FashionMinimal />} />
+        <Route path="/fashioneditorial/*" element={<FashionPlatform mode="editorial" />} />
+        <Route path="/fashioncatalogue/*" element={<FashionPlatform mode="catalogue" />} />
+        <Route path="/fashionminimal/*" element={<FashionPlatform mode="minimal" />} />
         <Route
           path="*"
           element={
