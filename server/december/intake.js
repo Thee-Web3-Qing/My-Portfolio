@@ -1,4 +1,4 @@
-import { confirmPayment, db, environment } from '../_lib/payments.js'
+import { confirmPayment, db, environment } from '../../api/_lib/payments.js'
 import { ADDONS, calculateDecemberQuote } from '../../src/data/december.js'
 
 const clean = (value, max=500) => typeof value === 'string' ? value.trim().slice(0,max) : ''

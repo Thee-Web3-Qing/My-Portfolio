@@ -1,4 +1,4 @@
-import { db, environment, confirmPayment } from '../_lib/payments.js'
+import { db, environment, confirmPayment } from '../../api/_lib/payments.js'
 const getType = bytes => {
  if(bytes.subarray(0,3).equals(Buffer.from([255,216,255]))) return 'image/jpeg'
  if(bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))) return 'image/png'

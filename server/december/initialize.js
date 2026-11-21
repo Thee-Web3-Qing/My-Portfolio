@@ -1,5 +1,5 @@
 import { INDUSTRIES, LAYOUTS, calculateDecemberQuote, getAvailableAddons } from '../../src/data/december.js'
-import { configuredKey, db, environment, makeReference, initializePayment } from '../_lib/payments.js'
+import { configuredKey, db, environment, makeReference, initializePayment } from '../../api/_lib/payments.js'
 
 const good = (value, max) => typeof value === 'string' && value.trim().length >= 2 && value.trim().length <= max
 const emailValid = value => typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) && value.length <= 160
