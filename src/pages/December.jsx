@@ -60,8 +60,14 @@ function Summary({ quote, paymentMode, setPaymentMode, small = false }) {
 }
 
 export default function December() {
-  const [industryId, setIndustryId] = useState('fashion')
-  const [layoutId, setLayoutId] = useState('editorial')
+  const [industryId, setIndustryId] = useState(() => {
+    const query = new URLSearchParams(window.location.search).get('industry')
+    return INDUSTRIES.some(x=>x.id===query) ? query : 'fashion'
+  })
+  const [layoutId, setLayoutId] = useState(() => {
+    const query = new URLSearchParams(window.location.search).get('layout')
+    return LAYOUTS.some(x=>x.id===query) ? query : 'editorial'
+  })
   const [addons, setAddons] = useState([])
   const [images, setImages] = useState(0)
   const [paymentMode, setPaymentMode] = useState('deposit')
