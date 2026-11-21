@@ -27,12 +27,14 @@ export default function DecemberAdmin(){
  const [search,setSearch]=useState('')
  const [active,setActive]=useState('')
  const [saving,setSaving]=useState(false)
+ const [rechecking,setRechecking]=useState(false)
+ const [paymentDiagnosis,setPaymentDiagnosis]=useState(null)
  const [progress,setProgress]=useState({
   stage:'awaiting_assets',percent:0,publicNote:'',privateNote:'',eta:'',assetsConfirmed:false
  })
  const [modes,setModes]=useState([])
- const loadOrders=useCallback(async()=>{
-  setBusy(true);setNotice('')
+ const loadOrders=useCallback(async({silent=false}={})=>{
+  setBusy(true);if(!silent)setNotice('')
   try{
    const response=await fetch('/api/admin/orders',{cache:'no-store',credentials:'same-origin'})
    const json=await response.json().catch(()=>({}))
@@ -63,6 +65,7 @@ export default function DecemberAdmin(){
  const choose=order=>{
   setActive(order.reference)
   setNotice('')
+  setPaymentDiagnosis(null)
   setProgress({
    stage:order.stage||'awaiting_assets',percent:Number(order.percent_complete||0),
    publicNote:order.public_note||'We are working on your website. Check back here for the next update.',
@@ -85,6 +88,22 @@ export default function DecemberAdmin(){
   await fetch('/api/admin/session',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'logout'})})
   setAuth(false);setOrders([]);setActive('')
  }
+ async function recheckPayment(order){
+  if(!order||order.status==='paid'||rechecking)return
+  setRechecking(true);setPaymentDiagnosis(null);setNotice('')
+  try{
+   const response=await fetch('/api/admin/reconcile',{
+    method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({environment:order.environment,reference:order.reference})
+   })
+   const result=await response.json().catch(()=>({}))
+   if(!response.ok)throw Error(result.error||'Paystack could not confirm the payment.')
+   setPaymentDiagnosis(result)
+   await loadOrders({silent:true})
+   setNotice(result.message)
+  }catch(error){setNotice(error.message)}
+  finally{setRechecking(false)}
+ }
  async function updateProgress(e){
   e.preventDefault()
   if(!chosen||chosen.status!=='paid')return
@@ -101,8 +120,8 @@ export default function DecemberAdmin(){
    })
    const json=await response.json().catch(()=>({}))
    if(!response.ok)throw Error(json.error||'Unable to save progress')
+   await loadOrders({silent:true})
    setNotice('✓ '+json.message)
-   await loadOrders()
   }catch(error){setNotice(error.message)}
   finally{setSaving(false)}
  }
@@ -125,11 +144,11 @@ export default function DecemberAdmin(){
   </header>
   <div className="da-stats"><div><span>TOTAL TRANSACTIONS</span><strong>{orders.length}</strong></div>
    <div><span>VERIFIED PAID</span><strong>{stats?.paid||0}</strong></div>
-   <div><span>PENDING / UNPAID</span><strong>{stats?.pending||0}</strong></div>
+   <div><span>UNCONFIRMED TEST CHECKOUTS</span><strong>{stats?.pending||0}</strong></div>
    <div><span>WEBSITE PROJECTS</span><strong>{stats?.websiteOrders||0}</strong></div></div>
   <div className="da-layout">
    <section className="da-orders">
-    <div className="da-orders-head"><div><h2>Transactions</h2><p>Test and live records stay separate and are labelled clearly.</p></div><span>{visible.length} shown</span></div>
+    <div className="da-orders-head"><div><h2>Transactions</h2><p>Live shows verified payments only. Test also shows unconfirmed simulations for troubleshooting. Recent payments are checked with Paystack when this page loads.</p></div><span>{visible.length} shown</span></div>
     <div className="da-filters">
       <label>Payment environment<select value={filter} onChange={e=>setFilter(e.target.value)}>
         <option value="all">All environments</option>{modes.map(m=><option key={m} value={m}>{m==='live'?'Live payments':'Test payments'}</option>)}
@@ -149,6 +168,13 @@ export default function DecemberAdmin(){
      {!chosen?<div className="da-select-empty"><span>✳</span><h2>Select a client.</h2><p>Choose a transaction to see purchase details, WhatsApp contacts, business resources and project progress.</p></div>:<>
       <div className="da-details-title"><div><span className="da-eyebrow">CLIENT RECORD / {chosen.environment.toUpperCase()}</span><h2>{chosen.business_name||chosen.customer_name}</h2><p>{chosen.customer_name} · {chosen.customer_email}</p></div><span className={'da-status'+(chosen.status==='paid'?' da-paid':'')}>{chosen.status==='paid'?'Verified payment':'Payment pending'}</span></div>
       <div className="da-reference"><span>PAYMENT REFERENCE</span><strong>{chosen.reference}</strong><button onClick={()=>navigator.clipboard?.writeText(chosen.reference)}>Copy ↗</button></div>
+      {chosen.status!=='paid'&&chosen.environment==='test'&&<div className="da-pending-review">
+        <strong>This is an unconfirmed test checkout, not a paid client project.</strong>
+        <p>Paystack may have displayed a success screen, but the matching test transaction hasn't been verified in our database yet.</p>
+        <button type="button" disabled={rechecking} onClick={()=>recheckPayment(chosen)}>{rechecking?'Checking Paystack…':'Verify this test payment with Paystack ↻'}</button>
+        {paymentDiagnosis&&paymentDiagnosis.reference===chosen.reference&&
+          <p role="status"><b>Paystack status: {paymentDiagnosis.providerStatus}</b>. {paymentDiagnosis.message}</p>}
+      </div>}
       <div className="da-payment-info">
        <div><span>Amount received</span><strong>{chosen.status==='paid'?money(chosen.amount_kobo):'Not confirmed'}</strong></div>
        <div><span>Total quote</span><strong>{money(chosen.quote_total_kobo)}</strong></div>
@@ -194,9 +220,9 @@ export default function DecemberAdmin(){
            <label>Estimated completion date<input type="date" value={progress.eta} onChange={e=>setProgress(p=>({...p,eta:e.target.value}))}/></label>
            <label className="da-confirm"><input type="checkbox" checked={progress.assetsConfirmed} onChange={e=>setProgress(p=>({...p,assetsConfirmed:e.target.checked}))}/> <span>I've reviewed and confirmed all required client resources.</span></label>
          </div>
-         <button type="submit" disabled={saving||chosen.status!=='paid'}>{saving?'Saving…':'Save project progress ↗'}</button>
-         {chosen.status!=='paid'&&<small>Progress updates become available after Paystack confirms this payment.</small>}
-         <Link target="_blank" to={'/december/track?reference='+encodeURIComponent(chosen.reference)}>Open the customer's progress page ↗</Link>
+         <button type="submit" disabled={saving||chosen.status!=='paid'}>{saving?'Saving…':chosen.status!=='paid'?'Verify payment to unlock updates':'Save project progress ↗'}</button>
+         {chosen.status!=='paid'&&<small>Progress updates are locked until the transaction has been successfully verified with Paystack. Use the verification button above to refresh its status.</small>}
+         <Link target="_blank" to={'/december/track?reference='+encodeURIComponent(chosen.reference)+(chosen.environment==='test'?'&mode=test':'')}>Open the customer's progress page ↗</Link>
        </form>
       </>}
      </>}
