@@ -1,4 +1,5 @@
 import { services } from './data/services.js'
+import { INDUSTRIES } from './data/december.js'
 
 export const SITE_URL = 'https://www.qingthecreator.xyz'
 export const SOCIAL_IMAGE = `${SITE_URL}/qing-class-portrait.jpg`
@@ -143,12 +144,35 @@ const staticRoutes = {
   },
 }
 
+const demoRoutes = Object.fromEntries(INDUSTRIES.map(industry => [
+  '/december/demo/' + industry.id, {
+    title: industry.label + ' Storefront Preview | December Website Sale',
+    description: 'Explore a seasonal sample website for ' + industry.label.toLowerCase() + '. Choose a layout, add features and book a branded website from ₦120,000.',
+    label: industry.label + ' website example',
+    heading: 'Interactive ' + industry.label.toLowerCase() + ' demo website.',
+    paragraphs: [
+      'This is an illustrative working storefront with sample product photography, pricing and editorial layouts.',
+      'Customise your own December website from ₦120,000, with optional add-on features.',
+    ],
+    type: 'WebPage',
+  }
+]))
+
 export const servicePaths = Object.keys(services).map((slug) => `/services/${slug}`)
-export const publicPaths = [...Object.keys(staticRoutes), ...servicePaths]
+export const publicPaths = [...Object.keys(staticRoutes), ...Object.keys(demoRoutes), ...servicePaths]
 
 export function getSeoForPath(pathname) {
   const cleanPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '')
   if (staticRoutes[cleanPath]) return { path: cleanPath, ...staticRoutes[cleanPath] }
+  if (demoRoutes[cleanPath]) return { path: cleanPath, ...demoRoutes[cleanPath] }
+  if (cleanPath === '/december/details') return {
+    path:cleanPath, title:'Submit Business Information | Qing The Creator',
+    description:'Complete your December website order using a verified Paystack reference.',
+    label:'December website onboarding',
+    heading:'Complete your business information after payment.',
+    paragraphs:['Use your Paystack reference and payment email to submit your business name, product photos, services and brand assets.'],
+    type:'WebPage'
+  }
 
   const serviceMatch = cleanPath.match(/^\/services\/([^/]+)$/)
   const service = serviceMatch ? services[serviceMatch[1]] : null
