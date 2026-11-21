@@ -28,7 +28,7 @@ const ICON = {
   bookmark:'M6 3h12v18l-6-4-6 4V3',info:'M12 11v6m0-9h.01M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
 }
 function I({name,size=19}) {return <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ICON[name]||ICON.arrow}/></svg>}
-function Img({src,alt,className=''}) {return <img className={className} src={src} alt={alt} loading="lazy" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=pic('photo-1483985988355-763728e1935b')}}/>}
+function Img({src,alt,className=''}) {return <img className={className} src={src} alt={alt} loading="lazy" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=fashionImage['campaign-street']}}/>}
 const demoBrands={ivory:'ZARA',pleat:'MANGO',boots:'ZARA',tabby:'COACH',wine:'MANGO',winepants:'MANGO',croco:'COACH',heels:'ASOS',bluecoat:'ZARA',whiteboots:'ZARA',rosebag:'COACH',greyskirt:'MANGO'}
 const brandOptions=['ZARA','H&M','MANGO','ASOS','COACH']
 const initial=fashionInventory.map((product,index)=>({...product,brand:demoBrands[product.id]||brandOptions[index%brandOptions.length],tone:product.colour}))
