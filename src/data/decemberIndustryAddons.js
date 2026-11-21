@@ -1,105 +1,87 @@
 /**
- * Flat, scoped optional features for the December storefront offer.
- * All displayed amounts already include the 5% December add-on discount.
- * These are bounded template enhancements, not bespoke integrations.
+ * Only distinctive, interactive enhancements are sold as December feature add-ons.
+ * A complete functional storefront, catalogue, ordinary enquiries and WhatsApp
+ * orders are covered by the base package. Prices include the 5% December reduction.
+ *
+ * These are bounded, rules-based interfaces using merchant-supplied content.
+ * AI fitting/AR, live availability and ongoing third-party services are NOT implied.
  */
 export const INDUSTRY_ADDON_GROUPS = {
   fashion: [
-    { title:'Product discovery', description:'Help shoppers find the right piece.', items:[
-      ['fashion-collections','Shop by collection','Collection landing sections and a category filter for up to six collections.',14250],
-      ['fashion-size-guide','Size and measurement guide','One branded size chart and measurement guidance.',9500],
-      ['fashion-variants','Size and colour choices','Display selectable sizes and colours on up to 12 product listings.',19000],
-      ['fashion-product-pages','Individual product detail pages','Reusable product detail page with gallery, specifications and enquiry button.',23750],
+    { title:'Interactive styling', description:'Give customers an experience beyond browsing ordinary product cards.', items:[
+      ['fashion-outfit-builder','Mix-and-match outfit builder','Customers combine tops, bottoms and accessories visually, then send the chosen pieces and total in one enquiry.',42750],
+      ['fashion-style-quiz','Personal style finder quiz','A short guided quiz recommends products using a fixed matching guide supplied by your brand.',28500],
+      ['fashion-fit-finder','Guided fit recommendation','A measurement-based selector suggests the closest listed size using your supplied size chart. No body scanning.',33250],
     ]},
-    { title:'Campaigns & conversion', description:'Make the December collection easier to shop.', items:[
-      ['fashion-lookbook','Editorial lookbook','A styled campaign gallery with linked product cards.',19000],
-      ['fashion-outfits','Shop-the-look bundles','Display curated outfit combinations and a combined WhatsApp enquiry.',33250],
-      ['fashion-wishlist','Save favourites','Browser-based wishlist on the demo storefront, without user accounts.',23750],
-      ['fashion-stock','Stock and preorder labels','Display availability, preorder and limited-edition labels from supplied data.',9500],
+    { title:'Immersive product experiences', description:'Show how pieces work together and help shoppers make choices.', items:[
+      ['fashion-shop-the-look','Interactive shop-the-look hotspots','Clickable styling images reveal each outfit item and its price, with an outfit total.',28500],
+      ['fashion-360-viewer','360° product spin','Shoppers rotate selected products with the angle-by-angle photos you provide. Includes up to five items.',28500],
     ]},
   ],
   food: [
-    {title:'Menu & portions',description:'Help customers order the right portions and combinations.',items:[
-      ['food-categories','Menu categories & filters','Organise dishes into categories and add menu filters.',14250],
-      ['food-portions','Portion and tray sizes','Show small, medium and large servings with their supplied prices.',14250],
-      ['food-options','Meal customisation','Add up to five selectable options such as protein or spice level.',19000],
-      ['food-allergens','Dietary and allergen labels','Display clearly supplied allergen and dietary information.',9500],
+    {title:'Build your order',description:'Turn complex menus into interactive ordering experiences.',items:[
+      ['food-party-tray-builder','Build-your-own party tray','Customers select trays, protein combinations and portions, with a live itemised estimate.',42750],
+      ['food-cake-builder','Interactive custom cake builder','Choose cake size, flavour, finish and inscription, then preview the estimated price and order summary.',38000],
+      ['food-bundle-builder','Mix-and-match meal bundles','Let customers assemble a set menu from allowed courses and see the total update.',33250],
     ]},
-    {title:'Ordering & events',description:'Make December preorders less stressful.',items:[
-      ['food-preorder','Preorder date requests','Collect requested delivery or pickup dates without claiming live availability.',23750],
-      ['food-delivery','Delivery area selector','Show delivery zones and quoted fees from your supplied price list.',19000],
-      ['food-catering','Catering enquiry form','Capture guest count, event date, budget and catering requirements.',23750],
-      ['food-cakes','Custom cake request form','Collect flavours, sizes, inscriptions and design references.',23750],
+    {title:'Smart planning tools',description:'Useful calculators for feeding a crowd.',items:[
+      ['food-portion-calculator','Guest-to-portion calculator','Customers enter guest count and select meal type to see suggested portions based on your serving guidelines.',28500],
+      ['food-delivery-calculator','Live delivery fee estimator','Calculate an estimated delivery charge from your supplied area, order-size and service fee rules.',23750],
     ]},
   ],
   gifts: [
-    {title:'Gift discovery',description:'Make every present feel considered.',items:[
-      ['gifts-occasion','Shop by occasion','Browse birthdays, Christmas, corporate gifts and other occasions.',9500],
-      ['gifts-tiers','Hamper size and tier options','Show entry, standard and premium versions with their own prices.',14250],
-      ['gifts-wrapping','Wrapping and packaging choices','Display optional packaging finishes and corresponding price labels.',9500],
-      ['gifts-gallery','Recipient inspiration gallery','A visual gift guide organised by recipient or budget.',14250],
+    {title:'Interactive gifting',description:'Make choosing a gift feel personal.',items:[
+      ['gifts-build-box','Visual build-your-own hamper','Choose items and box sizes, see the bundle fill up and watch the total change before enquiry.',42750],
+      ['gifts-gift-finder','Gift finder quiz','A quiz recommends hampers based on recipient, occasion and available budget.',28500],
+      ['gifts-wrapping-preview','Gift packaging preview','Preview pre-photographed wrap, ribbon and box combinations before selecting one.',33250],
     ]},
-    {title:'Personalisation & bulk',description:'Make ordering special gifts easier.',items:[
-      ['gifts-message','Gift note field','Collect a short personalised gift message in enquiries.',9500],
-      ['gifts-build-box','Build-your-own hamper','Select items within defined categories and generate an itemised WhatsApp enquiry.',33250],
-      ['gifts-recipient','Recipient & delivery details','Collect recipient name, delivery instructions and preferred date.',14250],
-      ['gifts-corporate','Corporate bulk gifting form','Collect quantities, company details and a branded-gift enquiry.',23750],
+    {title:'Personal and corporate tools',description:'Better gifting experiences for individuals and teams.',items:[
+      ['gifts-message-preview','Live personalised card preview','Type a gift message and see it rendered on one of your branded card designs.',23750],
+      ['gifts-corporate-estimator','Bulk gifting price calculator','Select hamper tier and quantity to view a live estimate from your approved corporate price bands.',28500],
     ]},
   ],
   beauty: [
-    {title:'Services & portfolio',description:'Show the work and service details clients need.',items:[
-      ['beauty-service-menu','Service menu with durations','Show service categories, duration estimates and prices.',14250],
-      ['beauty-style-gallery','Before and after gallery','A curated beauty or hair results gallery.',14250],
-      ['beauty-team','Stylist and artist profiles','Introduce up to four stylists and their specialities.',14250],
-      ['beauty-care','Aftercare and prep guide','Service preparation instructions and aftercare details.',9500],
+    {title:'Find your look',description:'Help clients visualise the result and choose confidently.',items:[
+      ['beauty-style-match','Hairstyle and beauty match quiz','Guide customers to recommended hairstyles or services using your supplied style rules.',28500],
+      ['beauty-before-after','Interactive before-and-after slider','Compare treatment, hair or makeup results using paired, approved customer images.',14250],
+      ['beauty-bridal-board','Bridal look inspiration board','Customers choose reference looks and save a combined inspiration board with their enquiry.',38000],
     ]},
-    {title:'Enquiries & appointments',description:'Collect organised booking requests.',items:[
-      ['beauty-appointment-request','Appointment request form','Collect preferred dates and times, with manual availability confirmation.',23750],
-      ['beauty-bridal','Bridal and group booking enquiry','Collect event dates, group sizes and package requirements.',23750],
-      ['beauty-consultation','Consultation questionnaire','Capture hair type, service goals and reference-photo links.',14250],
-      ['beauty-packages','Service bundle comparison','Compare up to five packages, inclusions and prices.',19000],
+    {title:'Personalised packages',description:'Plan a service visit before booking.',items:[
+      ['beauty-package-builder','Build your beauty package','Combine service extras from your approved menu to calculate an estimated package cost.',33250],
+      ['beauty-prep-planner','Event beauty preparation planner','Suggest a preparation timeline from a selected event date and your lead-time rules.',28500],
     ]},
   ],
   events: [
-    {title:'Showcase & packages',description:'Give potential clients a clear view of your work.',items:[
-      ['events-categories','Portfolio by event type','Filter galleries by weddings, birthdays, corporate events and more.',14250],
-      ['events-packages','Package comparison','Compare up to five event service packages side by side.',19000],
-      ['events-testimonials','Client story and testimonial gallery','Feature provided reviews and event photographs.',14250],
-      ['events-case-study','Detailed project case study','One structured project story with goals, delivery and photography.',23750],
+    {title:'Interactive event planning',description:'Move beyond a static services portfolio.',items:[
+      ['events-package-builder','Build-your-own event package','Select coverage, decor, staffing and service extras with a live estimate.',38000],
+      ['events-budget-planner','Event budget breakdown tool','Allocate an entered budget across service categories using configurable percentages.',38000],
+      ['events-moodboard','Interactive event moodboard','Select provided decor themes, reference photos and colour palettes to create a shareable enquiry board.',38000],
     ]},
-    {title:'Planning & enquiries',description:'Capture useful details before the first call.',items:[
-      ['events-date','Event date enquiry','Collect preferred date and venue without a live booking guarantee.',19000],
-      ['events-brief','Detailed event brief form','Collect guest count, service scope, budget and theme.',23750],
-      ['events-extras','Event extras selector','Add optional service packages to one combined enquiry.',23750],
-      ['events-estimate','Illustrative quote estimator','Show indicative package totals from a fixed approved price list.',33250],
+    {title:'Planning assistance',description:'Give customers useful guidance before their first consultation.',items:[
+      ['events-guest-estimator','Guest count and service calculator','Estimate seating and service quantities based on guest number and your event rules.',28500],
+      ['events-timeline-builder','Event timeline planner','Produce a basic suggested run-of-show from the event type, date and milestones you provide.',33250],
     ]},
   ],
   accessories: [
-    {title:'Shop & explore',description:'Bring attention to your products and details.',items:[
-      ['accessories-categories','Category and collection filters','Filter bags, jewellery, watches and accessories by collection.',14250],
-      ['accessories-variants','Product colour and finish options','Show available colours, material finishes or styles.',14250],
-      ['accessories-detail','Product details and care page','Reusable product detail section with care instructions.',23750],
-      ['accessories-stock','Availability indicators','Display supplied in-stock, sold-out and preorder labels.',9500],
+    {title:'Make it yours',description:'Interactive product experiences for premium accessories.',items:[
+      ['accessories-engraving-preview','Live engraving preview','Type initials or a name and preview its position on your prepared product mockups.',33250],
+      ['accessories-stack-builder','Mix-and-match accessory builder','Visually combine watches, bracelets or jewellery into a styled set with a calculated total.',38000],
+      ['accessories-style-quiz','Accessory style matcher','Recommend pieces based on occasion, preference and budget through a short quiz.',28500],
     ]},
-    {title:'Gifting & conversion',description:'Encourage meaningful combined orders.',items:[
-      ['accessories-bundles','Accessory bundles','Present curated gift sets with a combined enquiry.',19000],
-      ['accessories-engraving','Personalisation request','Collect engraving text or customisation notes.',14250],
-      ['accessories-size','Ring and bracelet size guide','Provide an accurate guide using the merchant’s measurements.',9500],
-      ['accessories-lookbook','Styled accessory editorial','Create a curated imagery section showing products in context.',19000],
+    {title:'Detailed product discovery',description:'Let shoppers explore your collection more deeply.',items:[
+      ['accessories-360-viewer','360° accessory viewer','A drag-to-rotate product viewer using photography you provide. Includes up to five products.',28500],
+      ['accessories-comparison','Side-by-side product comparison','Compare up to three products at once on dimensions, materials, finishes and prices.',23750],
     ]},
   ],
   hospitality: [
-    {title:'Properties & discovery',description:'Make listings easier to compare.',items:[
-      ['hospitality-amenities','Amenity filters','Filter listings by Wi-Fi, parking, kitchen and other listed amenities.',19000],
-      ['hospitality-property-page','Detailed property page','Show gallery, amenities, check-in notes and house rules for each listing.',23750],
-      ['hospitality-gallery','Room and property gallery','Dedicated gallery with up to 20 supplied property photos.',14250],
-      ['hospitality-neighbourhood','Neighbourhood and directions','Add a location map, area highlights and directions.',14250],
+    {title:'Plan a stay',description:'Give visitors clearer information before sending an enquiry.',items:[
+      ['hospitality-stay-calculator','Interactive stay cost estimator','Enter dates and guests to estimate nights, cleaning charges and extras from supplied rates. No availability claims.',33250],
+      ['hospitality-property-comparison','Compare properties side by side','Compare up to three listings by amenities, capacity, location and listed prices.',28500],
+      ['hospitality-floorplan','Clickable room and floorplan tour','Explore a supplied floorplan with hotspots opening property photographs and descriptions.',38000],
     ]},
-    {title:'Rates & enquiries',description:'Clarify rates before someone asks for availability.',items:[
-      ['hospitality-rates','Nightly and weekly rate display','Show merchant-supplied rate periods and their prices.',14250],
-      ['hospitality-request','Stay date enquiry','Collect preferred dates and guest numbers without real-time availability.',23750],
-      ['hospitality-policies','House rules and policies','Show check-in, cancellation and property policies.',9500],
-      ['hospitality-activities','Experiences and add-ons','Show optional stay extras and request information together.',19000],
+    {title:'Personalised stays',description:'Help visitors discover experiences beyond the room.',items:[
+      ['hospitality-stay-builder','Build your stay experience','Choose room packages and available optional experiences to see a combined enquiry estimate.',33250],
+      ['hospitality-nearby-guide','Interactive neighbourhood guide','A curated interactive guide to nearby places with map links, based on your approved local recommendations.',28500],
     ]},
   ],
 }
@@ -107,7 +89,7 @@ export const INDUSTRY_ADDON_GROUPS = {
 export const INDUSTRY_ADDONS = Object.entries(INDUSTRY_ADDON_GROUPS).flatMap(([industry, groups]) =>
   groups.flatMap(group => group.items.map(([id,name,description,price]) => ({
     id,name,description,price,industries:[industry],group:group.title,
-    recommended:[industry],scope:'industry',
+    recommended:[industry],scope:'interactive-enhancement',
   })))
 )
 
