@@ -1,8 +1,10 @@
 import { needAdmin, enabledOrderModes, ordersDb } from '../_lib/decemberAdmin.js'
 import { confirmPayment } from '../_lib/payments.js'
+import reconcile from '../../server/admin/reconcile.js'
 
 export default async function handler(req,res){
  res.setHeader('X-Robots-Tag','noindex, nofollow')
+ if(req.method==='POST')return reconcile(req,res)
  if(!needAdmin(req,res))return
  const allowed=enabledOrderModes()
  const requested=String(req.query?.environment||'all')
