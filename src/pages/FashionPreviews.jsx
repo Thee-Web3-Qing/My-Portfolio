@@ -99,7 +99,7 @@ function ShopOverlays({ shop }) {
 }
 
 function QuickView({ product, onClose, onAdd }) {
-  const [size, setSize] = useState('M')
+  const [size, setSize] = useState(product.category === 'Shoes' ? '39' : 'M')
   const [quantity, setQuantity] = useState(1)
   return (
     <div className="fashion-modal-layer" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose() }}>
@@ -141,13 +141,13 @@ function Newsletter({ variant = '' }) {
   const [done, setDone] = useState(false)
   return (
     <form className={'fashion-newsletter-form ' + variant} onSubmit={(event) => { event.preventDefault(); if (email.includes('@')) setDone(true) }}>
-      {done ? <p role="status">You are on the list. Welcome to the edit.</p> : <><label className="sr-only" htmlFor={'fashion-email-' + variant}>Email address</label><input id={'fashion-email-' + variant} type="email" required placeholder="Your email address" value={email} onChange={(event) => setEmail(event.target.value)} /><button aria-label="Join mailing list" type="submit"><Icon name="arrow" /></button></>}
+      {done ? <p role="status">This form is a preview. Mailing-list signup will be connected during client setup.</p> : <><label className="sr-only" htmlFor={'fashion-email-' + variant}>Email address</label><input id={'fashion-email-' + variant} type="email" required placeholder="Your email address" value={email} onChange={(event) => setEmail(event.target.value)} /><button aria-label="Join mailing list" type="submit"><Icon name="arrow" /></button></>}
     </form>
   )
 }
 
 function FashionFooter({ brand, tone = '' }) {
-  return <footer className={'fashion-footer ' + tone}><div><span className="fashion-footer-brand">{brand}</span><p>Good clothes. Great stories. Your kind of style.</p></div><div className="fashion-footer-links"><a href="#top">Back to top ↑</a><a href="mailto:hello@example.com" onClick={(event) => event.preventDefault()} title="Placeholder contact for demo">Contact</a><span>© 2026 {brand}</span></div><small>CONCEPT STOREFRONT · SAMPLE CONTENT & PRICING</small></footer>
+  return <footer className={'fashion-footer ' + tone}><div><span className="fashion-footer-brand">{brand}</span><p>Good clothes. Great stories. Your kind of style.</p></div><div className="fashion-footer-links"><a href="#top">Back to top ↑</a><span>Contact available at launch</span><span>© 2026 {brand}</span></div><small>CONCEPT STOREFRONT · SAMPLE CONTENT & PRICING</small></footer>
 }
 
 function FashionRouteMeta({ title }) {
