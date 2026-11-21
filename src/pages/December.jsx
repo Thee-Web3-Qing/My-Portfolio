@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { ADDONS, INDUSTRIES, LAYOUTS, calculateDecemberQuote, money } from '../data/december.js'
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { INDUSTRIES, LAYOUTS, calculateDecemberQuote, getIndustryGroups, getSharedGroups, money } from '../data/december.js'
 import './December.css'
 
 const Arrow = () => <span aria-hidden="true">↗</span>
@@ -77,6 +77,7 @@ export default function December() {
   const [feedback, setFeedback] = useState('')
   const [receipt, setReceipt] = useState(null)
   const [builderVisible, setBuilderVisible] = useState(false)
+  const [previewDevice, setPreviewDevice] = useState('desktop')
   const quote = useMemo(() => calculateDecemberQuote({ industry: industryId, layout: layoutId, addons, images }), [industryId, layoutId, addons, images])
   const industry = quote.industry
   const layout = quote.layout
@@ -103,8 +104,10 @@ export default function December() {
     return () => observer.disconnect()
   }, [])
   const selectedSet = new Set(addons)
-  const recommended = ADDONS.filter(item => item.recommended.includes(industryId))
-  const others = ADDONS.filter(item => !item.recommended.includes(industryId))
+  const industryGroups = getIndustryGroups(industryId)
+  const sharedGroups = getSharedGroups(industryId)
+  const featureCount = industryGroups.reduce((sum, group) => sum + group.items.length, 0)
+  const previewUrl = '/' + industryId + layoutId
   const updateCustomer = event => setCustomer(previous => ({ ...previous, [event.target.name]: event.target.value }))
   const toggleAddon = id => setAddons(previous => previous.includes(id) ? previous.filter(item => item !== id) : [...previous, id])
 
@@ -132,7 +135,7 @@ export default function December() {
       const response = await fetch('/api/december/initialize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ industry: industryId, layout: layoutId, addons, images: quote.images, paymentMode, customer }),
+        body: JSON.stringify({ industry: industryId, layout: layoutId, addons: quote.selectedAddons.map(item => item.id), images: quote.images, paymentMode, customer }),
       })
       const data = await response.json()
       if (!response.ok || !data.authorization_url) throw new Error(data.error || 'Payment could not be started.')
@@ -194,7 +197,7 @@ export default function December() {
             </div>
           </section>
 
-          <section className="dec-builder-step">
+          <section className="dec-builder-step" id="dec-designs">
             <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>One brand. Three directions.</h2></div></div>
             <p className="dec-section-description">All three starting layouts are included in the ₦120,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
             <div className="dec-layout-choices">
@@ -205,18 +208,51 @@ export default function December() {
               </button>)}
             </div>
             <div className="dec-preview-wrap">
-              <div className="dec-preview-header"><span><i /> INTERACTIVE WEBSITE PREVIEW</span><span>{industry.label} / {layout.label}</span></div>
-              <div className="dec-real-preview-frame"><iframe key={industryId+'-'+layoutId} title={industry.label+' '+layout.label+' sample website'} loading="lazy" src={'/december/demo/'+industryId+'?layout='+layoutId}/></div>
-              <div className="dec-real-preview-actions"><Link className="dec-real-preview-open" target="_blank" rel="noreferrer" to={'/december/demo/'+industryId+'?layout='+layoutId}>Explore full live demo ↗</Link><a href="#dec-checkout">Choose this layout and continue ↓</a></div>
-              <p>Interactive sample storefront. Images, product names and prices are illustrative. Your own branding, photos and chosen features replace them after payment.</p>
+              <div className="dec-preview-header"><span><i /> LIVE WEBSITE PREVIEW</span><span>{industry.label} / {layout.label}</span></div>
+              <div className="dec-preview-device-bar">
+                <div className="dec-preview-address"><span className="dec-preview-browser-dots"><i/><i/><i/></span><span>{industryId}{layoutId}.sample</span></div>
+                <div className="dec-preview-device-controls" aria-label="Preview screen size">
+                  <button type="button" aria-pressed={previewDevice === 'desktop'} className={previewDevice === 'desktop' ? 'is-active' : ''} onClick={() => setPreviewDevice('desktop')}>Desktop</button>
+                  <button type="button" aria-pressed={previewDevice === 'mobile'} className={previewDevice === 'mobile' ? 'is-active' : ''} onClick={() => setPreviewDevice('mobile')}>Mobile</button>
+                </div>
+              </div>
+              <div className={'dec-real-preview-stage dec-real-preview-stage-' + previewDevice}>
+                <div className={'dec-real-preview-frame dec-real-preview-frame-' + previewDevice}>
+                  <iframe key={industryId + '-' + layoutId} title={industry.label + ' ' + layout.label + ' interactive website sample'} loading="lazy" src={previewUrl} />
+                </div>
+              </div>
+              <div className="dec-real-preview-actions"><a className="dec-real-preview-open" href={previewUrl} target="_blank" rel="noreferrer">Open larger preview ↗</a><a href="#dec-features">Choose optional features ↓</a></div>
+              <p>The selected website loads inside this preview. Product names, prices and photographs are illustrative and will be replaced with your supplied business resources.</p>
             </div>
           </section>
 
-          <section className="dec-builder-step">
-            <div className="dec-step-title"><span>03</span><div><p className="dec-kicker">THE EXTRAS</p><h2>Only pay for what you need.</h2></div></div>
-            <p className="dec-section-description">Everything below is optional. These are one-time build fees, and all add-on prices already include the December 5% reduction.</p>
-            {recommended.length > 0 && <div className="dec-addon-group"><p className="dec-addon-subheading">GOOD FIT FOR {industry.label.toUpperCase()}</p>{recommended.map(item => <label key={item.id} className={'dec-addon' + (selectedSet.has(item.id) ? ' is-active' : '')}><input type="checkbox" checked={selectedSet.has(item.id)} onChange={() => toggleAddon(item.id)} /><span className="dec-check">✓</span><span className="dec-addon-copy"><strong>{item.name}</strong><small>{item.description}</small></span><b>+{money(item.price)}</b></label>)}</div>}
-            <div className="dec-addon-group"><p className="dec-addon-subheading">OTHER AVAILABLE FEATURES</p>{others.map(item => <label key={item.id} className={'dec-addon' + (selectedSet.has(item.id) ? ' is-active' : '')}><input type="checkbox" checked={selectedSet.has(item.id)} onChange={() => toggleAddon(item.id)} /><span className="dec-check">✓</span><span className="dec-addon-copy"><strong>{item.name}</strong><small>{item.description}</small></span><b>+{money(item.price)}</b></label>)}</div>
+          <section className="dec-builder-step" id="dec-features">
+            <div className="dec-step-title"><span>03</span><div><p className="dec-kicker">OPTIONAL FEATURE ADD-ONS</p><h2>Choose what your business needs.</h2></div></div>
+            <p className="dec-section-description">You're viewing <strong>{industry.label}</strong> features. Switch industries above to see a different set of options without leaving this page. Everything here is optional, and the prices already include the December 5% discount.</p>
+            <div className="dec-feature-headline"><span>FEATURES FOR {industry.label.toUpperCase()}</span><strong>{featureCount} industry-specific options</strong></div>
+            {industryGroups.map((group, groupIndex) => (
+              <details key={industryId + '-' + group.title} className="dec-feature-group" open={groupIndex === 0}>
+                <summary><span>{String(groupIndex + 1).padStart(2, '0')}</span><span><strong>{group.title}</strong><small>{group.description}</small></span><b aria-hidden="true">+</b></summary>
+                <div className="dec-feature-group-items">
+                  {group.items.map(item => <label key={item.id} className={'dec-addon' + (selectedSet.has(item.id) ? ' is-active' : '')}>
+                    <input type="checkbox" checked={selectedSet.has(item.id)} onChange={() => toggleAddon(item.id)} />
+                    <span className="dec-check">✓</span><span className="dec-addon-copy"><strong>{item.name}</strong><small>{item.description}</small></span><b>+{money(item.price)}</b>
+                  </label>)}
+                </div>
+              </details>
+            ))}
+            <div className="dec-feature-headline dec-feature-shared"><span>AVAILABLE FOR MOST BUSINESSES</span><strong>Shared website upgrades</strong></div>
+            {sharedGroups.map((group, groupIndex) => (
+              <details key={industryId + '-shared-' + group.title} className="dec-feature-group">
+                <summary><span>{String(groupIndex + 1 + industryGroups.length).padStart(2, '0')}</span><span><strong>{group.title}</strong><small>{group.description}</small></span><b aria-hidden="true">+</b></summary>
+                <div className="dec-feature-group-items">
+                  {group.items.map(item => <label key={item.id} className={'dec-addon' + (selectedSet.has(item.id) ? ' is-active' : '')}>
+                    <input type="checkbox" checked={selectedSet.has(item.id)} onChange={() => toggleAddon(item.id)} />
+                    <span className="dec-check">✓</span><span className="dec-addon-copy"><strong>{item.name}</strong><small>{item.description}</small></span><b>+{money(item.price)}</b>
+                  </label>)}
+                </div>
+              </details>
+            ))}
             <div className="dec-photo-addon">
               <div className="dec-photo-top"><span className="dec-photo-graphic" aria-hidden="true">✳</span><div><p className="dec-kicker">OPTIONAL AI PHOTO STUDIO</p><h3>Product images that look ready for a campaign.</h3><p>AI-reimagined product photos from the reference photos you supply. We keep important product details intact wherever possible, but you approve the results before use.</p></div></div>
               <div className="dec-photo-controls">
@@ -257,7 +293,7 @@ export default function December() {
             </form>
           </section>
         </div>
-        <aside className={"dec-sidebar"+(builderVisible?" is-visible":"")}><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout ↗</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>
+        <aside className={"dec-sidebar"+(builderVisible?" is-visible":"")} aria-label="Your website price and selected features"><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout ↗</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>
       </div>
       <div className={"dec-floating-mobile-checkout" + (builderVisible ? " dec-floating-checkout-in-builder" : "")} role="region" aria-label="Your checkout total">
         <div><span>Your website estimate</span><strong>{money(quote.total)}</strong><small>Due today: {money(paymentMode === 'deposit' ? quote.deposit : quote.total)}</small></div>
@@ -266,4 +302,11 @@ export default function December() {
       <section className="dec-bottom-cta"><span>NOT JUST FOR THE HOLIDAYS</span><h2>Built for December.<br /><em>Useful all year.</em></h2><p>Your December banners can come down in January. Your website stays.</p><Link to="/products">See what I've built <Arrow /></Link></section>
     </div>
   )
+}
+
+export function DecemberShortcut() {
+  const { industry, stage } = useParams()
+  const valid = INDUSTRIES.some(item => item.id === industry)
+  const section = stage === 'features' ? '#dec-features' : stage === 'checkout' ? '#dec-checkout' : '#dec-designs'
+  return <Navigate to={'/december' + (valid ? '?industry=' + industry : '') + section} replace />
 }
