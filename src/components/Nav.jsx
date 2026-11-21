@@ -63,7 +63,7 @@ import { useLocation } from 'react-router-dom'
                   to={link.to}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
-                    `portfolio-nav-link px-4 py-3 rounded-full transition-colors ${
+                    `portfolio-nav-link ${link.to === '/december' ? 'portfolio-nav-december' : ''} px-4 py-3 rounded-full transition-colors ${
                       isActive ? 'bg-ink text-paper' : 'bg-white/60 text-ink'
                     }`
                   }
