@@ -10,7 +10,7 @@ import { Routes, Route } from 'react-router-dom'
   import Experience from './pages/Experience.jsx'
   import Class from './pages/Class.jsx'
   import Service from './pages/Service.jsx'
-  import { FashionEditorial, FashionCatalogue, FashionMinimal } from './pages/FashionPreviews.jsx'
+  import { FashionEditorial, FashionCatalogue, FashionMinimal } from './pages/FashionReference.jsx'
 
   export default function App() {
     return (
