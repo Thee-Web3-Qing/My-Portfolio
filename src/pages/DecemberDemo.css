@@ -363,3 +363,12 @@
  .demo-generic-feature>img{height:300px;}
 }
 @media(prefers-reduced-motion:reduce){.demo-product-image img{transition:none;}}
+
+
+/* The full-screen demos must look like real client websites, not the portfolio shell. */
+.portfolio-clay:has(.dec-demo)>.portfolio-nav,
+.portfolio-clay:has(.dec-demo)>.portfolio-footer,
+.portfolio-clay:has(.dec-demo) .portfolio-nav,
+.portfolio-clay:has(.dec-demo) .portfolio-footer {display:none!important;}
+.portfolio-clay:has(.dec-demo){background:#fff;}
+.portfolio-clay:has(.dec-demo) .portfolio-main{padding:0;max-width:100%;}
