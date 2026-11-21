@@ -73,7 +73,7 @@ export async function confirmPayment(reference, mode = environment()) {
     (String(transaction.customer?.email || '').toLowerCase() === String(order.customer_email).toLowerCase())
   if (!valid) return { found:true, paid:false, reference, status:transaction.status === 'success' ? 'unverified' : 'pending' }
   if (order.product === 'qing-class') {
-    const info = safeMetadata(paidOrder.configuration)
+    const info = safeMetadata(order.configuration)
     const details = info.registration || {}
     const registrationEmail = String(order.customer_email).trim().toLowerCase()
     const phone = String(order.customer_whatsapp || '').replace(/\D/g,'')
