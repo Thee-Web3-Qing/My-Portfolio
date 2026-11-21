@@ -8,6 +8,8 @@ import { Routes, Route } from 'react-router-dom'
   import { INDUSTRIES, LAYOUTS } from './data/december.js'
   import PaymentCallback from './pages/PaymentCallback.jsx'
   import DecemberDetails from './pages/DecemberDetails.jsx'
+  import DecemberProgress from './pages/DecemberProgress.jsx'
+  import DecemberAdmin from './pages/DecemberAdmin.jsx'
   import DecemberDemo from './pages/DecemberDemo.jsx'
   import Content from './pages/Content.jsx'
   import Products from './pages/Products.jsx'
@@ -42,6 +44,8 @@ import { Routes, Route } from 'react-router-dom'
                       element={<DecemberDemo previewIndustry={industry.id} previewLayout={style.id} />} />
                   ))}
                   <Route path="/december/details" element={<DecemberDetails />} />
+                  <Route path="/december/track" element={<DecemberProgress />} />
+                  <Route path="/admin" element={<DecemberAdmin />} />
                   <Route path="/payment/callback" element={<PaymentCallback />} />
                   <Route path="/services/:serviceSlug" element={<Service />} />
                 </Routes>
