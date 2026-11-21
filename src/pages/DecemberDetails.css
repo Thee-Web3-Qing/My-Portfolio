@@ -78,3 +78,9 @@
  .dec-verified-banner{grid-template-columns:1fr;}
  .dec-intake-submit{padding:23px;}
 }
+
+
+.dec-upload-control{display:flex!important;flex-direction:column;justify-content:center;gap:8px;padding:15px;border:1px dashed #cdbfb3;background:#fff8f4;}
+.dec-upload-control input[type=file]{border:0;background:transparent!important;padding:7px;margin:3px 0 0;font-size:.71rem;}
+.dec-upload-control small{color:#f01820;font-size:.7rem;}
+.dec-upload-control img{max-width:160px;width:auto;max-height:130px;object-fit:contain;border:1px solid #e1dad4;background:white;}
