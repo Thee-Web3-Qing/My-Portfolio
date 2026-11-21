@@ -3,6 +3,14 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/admin",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/december/track",
+      "destination": "/index.html"
+    },
+    {
       "source": "/december/details",
       "destination": "/index.html"
     }
