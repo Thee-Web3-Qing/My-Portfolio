@@ -19,6 +19,7 @@ import { Routes, Route } from 'react-router-dom'
   import Service from './pages/Service.jsx'
   import FashionPlatform from './pages/FashionPlatform.jsx'
   import FoodStorefront from './pages/FoodStorefront.jsx'
+  import GiftStorefront from './pages/GiftStorefront.jsx'
 
   export default function App() {
     return (
@@ -30,6 +31,9 @@ import { Routes, Route } from 'react-router-dom'
         <Route path="/foodcatalogue/*" element={<FoodStorefront type="catalogue" />} />
         <Route path="/foodminimal/*" element={<FoodStorefront type="minimal" />} />
         <Route path="/foodartisan/*" element={<FoodStorefront type="artisan" />} />
+        <Route path="/giftseditorial/*" element={<GiftStorefront mode="editorial" />} />
+        <Route path="/giftscatalogue/*" element={<GiftStorefront mode="catalogue" />} />
+        <Route path="/giftsminimal/*" element={<GiftStorefront mode="minimal" />} />
         <Route
           path="*"
           element={

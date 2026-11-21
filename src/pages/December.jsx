@@ -188,7 +188,7 @@ export default function December() {
       <nav className="dec-inpage-nav" aria-label="December website sections">
         <a href="#build-your-site">01 / Industries</a>
         <a href="#dec-designs">02 / Website preview</a>
-        <a href="#website-previews">See all seven previews</a>
+        <a href="#website-previews">See all ten previews</a>
         <a href="#dec-features">03 / Feature add-ons</a>
         <a href="#dec-checkout">04 / Checkout</a>
       </nav>

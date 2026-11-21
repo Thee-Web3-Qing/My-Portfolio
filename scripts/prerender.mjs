@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { buildSchema, getSeoForPath, publicPaths, SITE_URL, SOCIAL_IMAGE } from '../src/seo.js'
 import { fashionInventory, fashionLooks } from '../src/pages/fashionInventory.js'
+import { giftProducts, giftBrands } from '../src/pages/giftStoreData.js'
 
 const distDirectory = new URL('../dist/', import.meta.url)
 const templatePath = new URL('index.html', distDirectory)
@@ -168,5 +169,25 @@ for(const [root,ids] of Object.entries(foodMenus)){
 }
 console.log(`Pre-rendered ${foodCount} standalone food website preview routes.`)
 
+
+
+/* Complete independent gift website entrypoints. Standalone Vite pages retain
+ * the existing portfolio host and avoid duplicate header/SEO scaffolding. */
+const giftPages=['shop','build','corporate','about','faq','contact','cart','wishlist']
+let giftCount=0
+for(const [style,brand] of Object.entries(giftBrands)){
+  const prefix=brand.root
+  const pages=[prefix,...giftPages.map(p=>prefix+'/'+p),...giftProducts.map(p=>prefix+'/product/'+p.id)]
+  for(const pathname of pages){
+    const label=pathname.slice(prefix.length).replaceAll('/',' ').trim()
+    const title=(label?label+' | ':'')+brand.name+' | Gift & Hamper Website Preview'
+    const html=cleanedTemplate.replace('</head>','<title>'+escapeHtml(title)+'</title><meta name="description" content="A designed gift and hamper store demonstration with product pages and a custom hamper builder." /><meta name="robots" content="noindex, nofollow" />\n  </head>')
+    const dest=outputPathForRoute(pathname)
+    await mkdir(dirname(dest),{recursive:true})
+    await writeFile(dest,html)
+    giftCount++
+  }
+}
+console.log('Pre-rendered '+giftCount+' complete gift website routes.')
 
 console.log(`Pre-rendered ${publicPaths.length} public portfolio routes.`)
