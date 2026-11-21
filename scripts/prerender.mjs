@@ -106,9 +106,9 @@ for (const pathname of publicPaths) {
 // Standalone fashion prototypes use the regular React entrypoint, not the portfolio's SEO body.
 // Emitting a real HTML file for each route makes direct links work with Vercel cleanUrls.
 const fashionPreviewRoutes = [
-  { path: '/fashioneditorial', title: 'MØDE | Editorial Fashion Store Preview' },
-  { path: '/fashioncatalogue', title: 'The Edit | Fashion Catalogue Preview' },
-  { path: '/fashionminimal', title: 'FORME | Minimal Fashion Store Preview' },
+  { path: '/fashioneditorial', title: 'LOCO | Fashion Editorial Store Preview' },
+  { path: '/fashioncatalogue', title: 'HER FASHION | Fashion Catalogue and Styling Preview' },
+  { path: '/fashionminimal', title: 'RUSH | Minimal Fashion Fitting Room Preview' },
 ]
 
 for (const preview of fashionPreviewRoutes) {
