@@ -112,6 +112,30 @@ const staticRoutes = {
     ],
     type: 'ProfilePage',
   },
+  '/admin': {
+    title: 'Private Admin Studio | Qing The Creator',
+    description: 'Private website project and payment administration.',
+    label: 'Private admin studio',
+    heading: 'Private client management dashboard.',
+    paragraphs: ['Administrator access is required.'],
+    type:'WebPage',noindex:true,
+  },
+  '/december/track': {
+    title: 'Track Your December Website | Qing The Creator',
+    description: 'Check the current stage of your December website using your Paystack order reference.',
+    label:'December website progress',
+    heading:'Customer project progress tracking.',
+    paragraphs:['Use the reference saved after your payment to see the latest public project update.'],
+    type:'WebPage',noindex:true,
+  },
+  '/december/details': {
+    title:'Submit Business Information | Qing The Creator',
+    description:'Securely provide your branding and product information after Paystack verifies your payment.',
+    label:'December website onboarding',
+    heading:'Complete your business information after payment.',
+    paragraphs:['Use your Paystack transaction reference and payment email to submit your website requirements.'],
+    type:'WebPage',noindex:true,
+  },
   '/payment/callback': {
     title: 'Payment Verification | Qing The Creator',
     description: 'Verify the status of a Paystack payment for the December website sale or Qing’s Vibecoding Class.',
@@ -188,7 +212,7 @@ const previewRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
 ))
 
 export const servicePaths = Object.keys(services).map((slug) => `/services/${slug}`)
-export const publicPaths = [...Object.keys(staticRoutes), ...Object.keys(demoRoutes), ...Object.keys(previewRoutes), ...servicePaths]
+export const publicPaths = [...Object.keys(staticRoutes).filter(path => !['/admin','/december/track','/december/details','/payment/callback'].includes(path)), ...Object.keys(demoRoutes), ...Object.keys(previewRoutes), ...servicePaths]
 
 export function getSeoForPath(pathname) {
   const cleanPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '')
