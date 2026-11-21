@@ -111,6 +111,14 @@ const staticRoutes = {
     ],
     type: 'ProfilePage',
   },
+  '/payment/callback': {
+    title: 'Payment Verification | Qing The Creator',
+    description: 'Verify the status of a Paystack payment for the December website sale or Qing’s Vibecoding Class.',
+    label: 'Payment status',
+    heading: 'Secure payment verification.',
+    paragraphs: ['Your payment status is verified directly with Paystack.'],
+    type: 'WebPage',
+  },
   '/december': {
     title: 'December Website Sale | Business Websites from ₦120,000 | Qing The Creator',
     description: 'Get a beautiful website for your clothing, food, gifting, beauty, events or hospitality business. Choose an industry, a layout and optional features with clear prices.',
