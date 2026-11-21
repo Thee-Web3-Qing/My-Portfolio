@@ -103,4 +103,21 @@ for (const pathname of publicPaths) {
   await writeFile(outputPath, html)
 }
 
+// Standalone fashion prototypes use the regular React entrypoint, not the portfolio's SEO body.
+// Emitting a real HTML file for each route makes direct links work with Vercel cleanUrls.
+const fashionPreviewRoutes = [
+  { path: '/fashioneditorial', title: 'MØDE | Editorial Fashion Store Preview' },
+  { path: '/fashioncatalogue', title: 'The Edit | Fashion Catalogue Preview' },
+  { path: '/fashionminimal', title: 'FORME | Minimal Fashion Store Preview' },
+]
+
+for (const preview of fashionPreviewRoutes) {
+  const head = '<title>' + escapeHtml(preview.title) + '</title>' +
+    '<meta name="description" content="Fashion storefront concept designed by Qing The Creator. Sample products and temporary imagery." />' +
+    '<meta name="robots" content="noindex, nofollow" />'
+  const html = cleanedTemplate.replace('</head>', head + '\n  </head>')
+  const path = outputPathForRoute(preview.path)
+  await mkdir(dirname(path), { recursive: true })
+  await writeFile(path, html)
+}
 console.log(`Pre-rendered ${publicPaths.length} public portfolio routes.`)
