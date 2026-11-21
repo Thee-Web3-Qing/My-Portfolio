@@ -22,7 +22,7 @@ export default function RouteMeta() {
     document.title = seo.title
 
     setMeta('name', 'description', seo.description)
-    setMeta('name', 'robots', 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')
+    setMeta('name', 'robots', seo.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1')
     setMeta('property', 'og:type', seo.type === 'ProfilePage' ? 'profile' : 'website')
     setMeta('property', 'og:site_name', 'Qing The Creator')
     setMeta('property', 'og:title', seo.title)

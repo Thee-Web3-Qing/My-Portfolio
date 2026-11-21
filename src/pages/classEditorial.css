@@ -95,3 +95,12 @@
   .portfolio-clay .editorial-class-page .editorial-class-screen{max-height:260px}
   .portfolio-clay .editorial-class-page .editorial-class-screen-controls button{min-height:52px;padding:.55rem .25rem;font-size:.56rem;flex-direction:column;gap:.2rem}
 }
+
+
+/* Separate Paystack and bank transfer options, without altering the existing class theme. */
+.clay-paystack-options {display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:20px 0 16px;}
+.clay-paystack-options button {background:#fffdf8;color:#111;border:1px solid #cbbdb5;padding:12px 15px;border-radius:10px;font:700 .77rem/1.35 Inter,sans-serif;cursor:pointer;}
+.clay-paystack-options button.is-active {color:#fff;background:#f01820;border-color:#f01820;box-shadow:0 4px 0 #8f121b;}
+.clay-paystack-options button:focus-visible {outline:3px solid #111;outline-offset:3px;}
+.clay-paystack-note {padding:14px 16px;background:#fff4ef;border:1px solid #e9cbbd;color:#533b36;font:.79rem/1.65 Inter,sans-serif;border-radius:10px;}
+@media(max-width:480px){.clay-paystack-options{grid-template-columns:1fr;}}

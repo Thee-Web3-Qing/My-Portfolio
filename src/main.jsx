@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import './index.css'
 import './portfolioClay.css'
+import './decemberPromo.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

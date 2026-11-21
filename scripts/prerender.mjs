@@ -45,7 +45,7 @@ function buildHead(seo) {
   return `
     <title>${escapeHtml(seo.title)}</title>
     <meta name="description" content="${escapeHtml(seo.description)}" />
-    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="robots" content="${seo.noindex ? 'noindex, follow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}" />
     <link rel="canonical" href="${canonicalUrl}" />
     <meta property="og:type" content="${ogType}" />
     <meta property="og:site_name" content="Qing The Creator" />

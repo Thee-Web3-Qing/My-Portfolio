@@ -1,4 +1,5 @@
 import { services } from './data/services.js'
+import { INDUSTRIES, LAYOUTS } from './data/december.js'
 
 export const SITE_URL = 'https://www.qingthecreator.xyz'
 export const SOCIAL_IMAGE = `${SITE_URL}/qing-class-portrait.jpg`
@@ -111,6 +112,49 @@ const staticRoutes = {
     ],
     type: 'ProfilePage',
   },
+  '/admin': {
+    title: 'Private Admin Studio | Qing The Creator',
+    description: 'Private website project and payment administration.',
+    label: 'Private admin studio',
+    heading: 'Private client management dashboard.',
+    paragraphs: ['Administrator access is required.'],
+    type:'WebPage',noindex:true,
+  },
+  '/december/track': {
+    title: 'Track Your December Website | Qing The Creator',
+    description: 'Check the current stage of your December website using your Paystack order reference.',
+    label:'December website progress',
+    heading:'Customer project progress tracking.',
+    paragraphs:['Use the reference saved after your payment to see the latest public project update.'],
+    type:'WebPage',noindex:true,
+  },
+  '/december/details': {
+    title:'Submit Business Information | Qing The Creator',
+    description:'Securely provide your branding and product information after Paystack verifies your payment.',
+    label:'December website onboarding',
+    heading:'Complete your business information after payment.',
+    paragraphs:['Use your Paystack transaction reference and payment email to submit your website requirements.'],
+    type:'WebPage',noindex:true,
+  },
+  '/payment/callback': {
+    title: 'Payment Verification | Qing The Creator',
+    description: 'Verify the status of a Paystack payment for the December website sale or Qing’s Vibecoding Class.',
+    label: 'Payment status',
+    heading: 'Secure payment verification.',
+    paragraphs: ['Your payment status is verified directly with Paystack.'],
+    type: 'WebPage',
+  },
+  '/december': {
+    title: 'December Website Sale | Business Websites from ₦120,000 | Qing The Creator',
+    description: 'Get a beautiful website for your clothing, food, gifting, beauty, events or hospitality business. Choose an industry, a layout and optional features with clear prices.',
+    label: 'December Website Sale',
+    heading: 'December websites for businesses, with industry templates and optional add-ons.',
+    paragraphs: [
+      'Every December website starts at ₦120,000 and includes a responsive branded storefront, up to 12 listings, a seasonal offer and WhatsApp ordering or enquiries.',
+      'Browse industry layouts and choose optional features, AI product photos and a 60% deposit or full-payment checkout.',
+    ],
+    type: 'WebPage',
+  },
   '/class': {
     title: 'Beginner Vibecoding Class | Learn to Build with AI',
     description: 'Join Qing’s beginner vibecoding class and learn how to turn an idea into a mobile-first product using AI, GitHub, Vercel and Supabase.',
@@ -124,12 +168,66 @@ const staticRoutes = {
   },
 }
 
+const demoRoutes = Object.fromEntries(INDUSTRIES.map(industry => [
+  '/december/demo/' + industry.id, {
+    title: industry.label + ' Storefront Preview | December Website Sale',
+    description: 'Explore a seasonal sample website for ' + industry.label.toLowerCase() + '. Choose a layout, add features and book a branded website from ₦120,000.',
+    label: industry.label + ' website example',
+    heading: 'Interactive ' + industry.label.toLowerCase() + ' demo website.',
+    paragraphs: [
+      'This is an illustrative working storefront with sample product photography, pricing and editorial layouts.',
+      'Customise your own December website from ₦120,000, with optional add-on features.',
+    ],
+    type: 'WebPage',
+  }
+]))
+
+const industryRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
+  ['', '/features', '/checkout'].map(stage => {
+    const path = '/december/' + industry.id + stage
+    const pageName = stage === '/features' ? 'Optional features and prices' : stage === '/checkout' ? 'Website checkout' : 'Website designs'
+    return [path, {
+      title: industry.label + ' ' + pageName + ' | December Website Sale',
+      description: 'Create a ' + industry.label.toLowerCase() + ' business website with an editorial template, up to 12 listings and individually priced optional features.',
+      label: industry.label + ' ' + pageName.toLowerCase(),
+      heading: industry.label + ' ' + pageName.toLowerCase() + '.',
+      paragraphs: ['Choose from three independent design styles and an expanded set of features tailored to this industry.', 'Websites start at ₦120,000, with a 60% deposit or full payment through Paystack.'],
+      type:'WebPage',
+      noindex:stage === '/checkout',
+    }]
+  })
+))
+const previewRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
+  LAYOUTS.map(style => {
+    const path = '/' + industry.id + style.id
+    return [path, {
+      title:industry.label + ' ' + style.label + ' Website Sample | December Sale',
+      description:'Sample ' + style.label.toLowerCase() + ' website layout for ' + industry.label.toLowerCase() + '.',
+      label:industry.label + ' ' + style.label.toLowerCase() + ' sample storefront',
+      heading:style.label + ' sample website for ' + industry.label.toLowerCase() + '.',
+      paragraphs:['This preview currently shows illustrative demo content until the standalone industry interface is completed.'],
+      type:'WebPage',
+    }]
+  })
+))
+
 export const servicePaths = Object.keys(services).map((slug) => `/services/${slug}`)
-export const publicPaths = [...Object.keys(staticRoutes), ...servicePaths]
+export const publicPaths = [...Object.keys(staticRoutes).filter(path => !['/admin','/december/track','/december/details','/payment/callback'].includes(path)), ...Object.keys(demoRoutes), ...Object.keys(previewRoutes), ...servicePaths]
 
 export function getSeoForPath(pathname) {
   const cleanPath = pathname === '/' ? '/' : pathname.replace(/\/$/, '')
   if (staticRoutes[cleanPath]) return { path: cleanPath, ...staticRoutes[cleanPath] }
+  if (demoRoutes[cleanPath]) return { path: cleanPath, ...demoRoutes[cleanPath] }
+  if (industryRoutes[cleanPath]) return { path: cleanPath, ...industryRoutes[cleanPath] }
+  if (previewRoutes[cleanPath]) return { path: cleanPath, ...previewRoutes[cleanPath] }
+  if (cleanPath === '/december/details') return {
+    path:cleanPath, title:'Submit Business Information | Qing The Creator',
+    description:'Complete your December website order using a verified Paystack reference.',
+    label:'December website onboarding',
+    heading:'Complete your business information after payment.',
+    paragraphs:['Use your Paystack reference and payment email to submit your business name, product photos, services and brand assets.'],
+    type:'WebPage'
+  }
 
   const serviceMatch = cleanPath.match(/^\/services\/([^/]+)$/)
   const service = serviceMatch ? services[serviceMatch[1]] : null

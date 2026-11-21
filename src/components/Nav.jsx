@@ -8,11 +8,12 @@ import { useLocation } from 'react-router-dom'
     { to: '/hire', label: 'Hire Me' },
     { to: '/experience', label: 'Experience' },
     { to: '/class', label: 'Class' },
+    { to: '/december', label: 'December Sale' },
   ]
   export default function Nav() {
     const [open, setOpen] = useState(false)
     const { pathname } = useLocation()
-    const section = pathname === '/' ? 'home' : pathname.startsWith('/products') ? 'products' : pathname.startsWith('/class') ? 'class' : pathname.startsWith('/experience') ? 'experience' : pathname.startsWith('/content') ? 'content' : 'other'
+    const section = pathname === '/' ? 'home' : pathname.startsWith('/products') ? 'products' : pathname.startsWith('/class') ? 'class' : pathname.startsWith('/experience') ? 'experience' : pathname.startsWith('/content') ? 'content' : pathname.startsWith('/december') ? 'december' : 'other'
     return (
       <header className={`portfolio-nav portfolio-nav-${section} sticky top-0 z-50 bg-paper/90 backdrop-blur border-b border-line`}>
         <div className="portfolio-nav-inner max-w-6xl mx-auto px-5 sm:px-6 py-4">
@@ -43,7 +44,7 @@ import { useLocation } from 'react-router-dom'
                   key={link.to}
                   to={link.to}
                   className={({ isActive }) =>
-                    `portfolio-nav-link px-4 py-3 rounded-full transition-colors ${
+                    `portfolio-nav-link ${link.to === '/december' ? 'portfolio-nav-december' : ''} px-4 py-3 rounded-full transition-colors ${
                       isActive ? 'bg-ink text-paper' : 'hover:bg-line text-ink'
                     }`
                   }
@@ -62,7 +63,7 @@ import { useLocation } from 'react-router-dom'
                   to={link.to}
                   onClick={() => setOpen(false)}
                   className={({ isActive }) =>
-                    `portfolio-nav-link px-4 py-3 rounded-full transition-colors ${
+                    `portfolio-nav-link ${link.to === '/december' ? 'portfolio-nav-december' : ''} px-4 py-3 rounded-full transition-colors ${
                       isActive ? 'bg-ink text-paper' : 'bg-white/60 text-ink'
                     }`
                   }

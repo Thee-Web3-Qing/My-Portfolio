@@ -4,6 +4,13 @@ import { Routes, Route } from 'react-router-dom'
   import PortfolioInteractions from './components/PortfolioInteractions.jsx'
   import Footer from './components/Footer.jsx'
   import Home from './pages/Home.jsx'
+  import December, { DecemberShortcut } from './pages/December.jsx'
+  import { INDUSTRIES, LAYOUTS } from './data/december.js'
+  import PaymentCallback from './pages/PaymentCallback.jsx'
+  import DecemberDetails from './pages/DecemberDetails.jsx'
+  import DecemberProgress from './pages/DecemberProgress.jsx'
+  import DecemberAdmin from './pages/DecemberAdmin.jsx'
+  import DecemberDemo from './pages/DecemberDemo.jsx'
   import Content from './pages/Content.jsx'
   import Products from './pages/Products.jsx'
   import Hire from './pages/Hire.jsx'
@@ -29,6 +36,17 @@ import { Routes, Route } from 'react-router-dom'
                   <Route path="/hire" element={<Hire />} />
                   <Route path="/experience" element={<Experience />} />
                   <Route path="/class" element={<Class />} />
+                  <Route path="/december" element={<December />} />
+                  <Route path="/december/:industry/:stage?" element={<DecemberShortcut />} />
+                  <Route path="/december/demo/:industry" element={<DecemberDemo />} />
+                  {INDUSTRIES.flatMap(industry => LAYOUTS.map(style =>
+                    <Route key={industry.id + style.id} path={'/' + industry.id + style.id}
+                      element={<DecemberDemo previewIndustry={industry.id} previewLayout={style.id} />} />
+                  ))}
+                  <Route path="/december/details" element={<DecemberDetails />} />
+                  <Route path="/december/track" element={<DecemberProgress />} />
+                  <Route path="/admin" element={<DecemberAdmin />} />
+                  <Route path="/payment/callback" element={<PaymentCallback />} />
                   <Route path="/services/:serviceSlug" element={<Service />} />
                 </Routes>
               </main>
