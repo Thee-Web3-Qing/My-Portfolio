@@ -338,3 +338,27 @@
  .dec-live-dot,.dec-ticker div {animation:none;}
  .december-page .dec-btn,.dec-industry-card {transition:none;}
 }
+
+
+/* Persistent mobile checkout summary. The desktop quote remains sticky at the right. */
+.dec-floating-mobile-checkout {display:none;}
+@media(max-width:900px) {
+  .portfolio-clay:has(.december-page) {padding-bottom:84px;}
+  .dec-floating-mobile-checkout {
+    display:flex;position:fixed;z-index:85;bottom:0;left:0;right:0;align-items:center;justify-content:space-between;
+    gap:12px;padding:10px max(20px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom));
+    border-top:2px solid #f01820;background:rgba(251,248,242,.98);box-shadow:0 -8px 25px rgba(0,0,0,.12);
+    backdrop-filter:blur(12px);
+  }
+  .dec-floating-mobile-checkout > div {display:flex;flex-direction:column;gap:2px;min-width:0;}
+  .dec-floating-mobile-checkout span {font:800 .54rem 'Space Mono',monospace;letter-spacing:.04em;text-transform:uppercase;color:#67615d;}
+  .dec-floating-mobile-checkout strong {font:700 1.5rem/1.03 Georgia,serif;white-space:nowrap;color:#111;}
+  .dec-floating-mobile-checkout small {font:.58rem Inter,sans-serif;color:#766f69;}
+  .dec-floating-mobile-button {flex:none;display:inline-flex;align-items:center;justify-content:center;min-height:44px;
+    padding:12px 18px;border-radius:999px;background:#f01820;color:white;font:800 .7rem/1 'Space Mono',monospace;text-transform:uppercase;}
+  .dec-floating-mobile-button:focus-visible {outline:3px solid #111;outline-offset:3px;}
+}
+@media(max-width:370px) {
+  .dec-floating-mobile-checkout strong {font-size:1.22rem;}
+  .dec-floating-mobile-button {font-size:.62rem;padding-inline:13px;}
+}
