@@ -69,6 +69,19 @@ export function verifySignature(rawBody, signature, mode) {
   const b = Buffer.from(signature, 'hex')
   return a.length === b.length && timingSafeEqual(a, b)
 }
+export function paymentVerificationChecks(transaction,order,reference,mode){
+  const amount=Number(transaction?.amount)
+  return {
+    reference:transaction?.reference===reference,
+    status:transaction?.status==='success',
+    environment:transaction?.domain===mode,
+    currency:transaction?.currency==='NGN',
+    amount:Number.isFinite(amount) && amount>0 && amount===Number(order.amount_kobo),
+    customerEmail:!!transaction?.customer?.email &&
+      String(transaction.customer.email).trim().toLowerCase()===String(order.customer_email).trim().toLowerCase(),
+  }
+}
+
 export async function confirmPayment(reference, mode = environment()) {
   if (!/^[A-Za-z0-9._-]{6,120}$/.test(reference)) throw new Error('Invalid payment reference')
   const sql = dbForMode(mode)
@@ -77,10 +90,8 @@ export async function confirmPayment(reference, mode = environment()) {
   const order = orders[0]
   if (order.status === 'paid') return publicStatus(order)
   const transaction = await paystackGet('/transaction/verify/' + encodeURIComponent(reference), mode)
-  const valid = transaction.reference === reference && transaction.status === 'success' &&
-    transaction.domain === mode && transaction.currency === 'NGN' && Number(transaction.amount) === Number(order.amount_kobo) &&
-    Number(transaction.amount) > 0 &&
-    (String(transaction.customer?.email || '').toLowerCase() === String(order.customer_email).toLowerCase())
+  const checks=paymentVerificationChecks(transaction,order,reference,mode)
+  const valid=Object.values(checks).every(Boolean)
   if (!valid) return { found:true, paid:false, reference, status:transaction.status === 'success' ? 'unverified' : 'pending' }
   if (order.product === 'qing-class') {
     const info = safeMetadata(order.configuration)
