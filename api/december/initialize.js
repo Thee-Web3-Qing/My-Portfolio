@@ -1,4 +1,4 @@
-import { ADDONS, INDUSTRIES, LAYOUTS, calculateDecemberQuote } from '../../src/data/december.js'
+import { INDUSTRIES, LAYOUTS, calculateDecemberQuote, getAvailableAddons } from '../../src/data/december.js'
 import { configuredKey, db, environment, makeReference, initializePayment } from '../_lib/payments.js'
 
 const good = (value, max) => typeof value === 'string' && value.trim().length >= 2 && value.trim().length <= max
@@ -10,8 +10,12 @@ export default async function handler(req, res) {
   if (!configuredKey() || !process.env.DATABASE_URL) return res.status(503).json({ error: 'Payment setup is not complete.' })
   const b = typeof req.body === 'object' && req.body ? req.body : {}
   if (!INDUSTRIES.some(x => x.id === b.industry) || !LAYOUTS.some(x => x.id === b.layout)) return res.status(400).json({ error:'Choose a valid industry and layout.' })
-  if (!Array.isArray(b.addons) || b.addons.length > ADDONS.length ||
-    b.addons.some(id => !ADDONS.some(x => x.id === id))) return res.status(400).json({ error:'Invalid add-ons.' })
+  const availableIds = new Set(getAvailableAddons(b.industry).map(x=>x.id))
+  if (!Array.isArray(b.addons) || b.addons.length > availableIds.size ||
+    b.addons.length !== new Set(b.addons).size ||
+    b.addons.some(id=>typeof id!=='string'||!availableIds.has(id))) {
+    return res.status(400).json({error:'One or more selected features are not available for this industry.'})
+  }
   if (!Number.isInteger(b.images) || b.images < 0 || b.images > 200) return res.status(400).json({ error:'Choose 0–200 images.' })
   if (!['deposit','full'].includes(b.paymentMode)) return res.status(400).json({ error:'Choose deposit or full payment.' })
   const customer = b.customer || {}
