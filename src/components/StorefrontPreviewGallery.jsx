@@ -36,7 +36,7 @@ function GalleryCard({site,device}){
    <span className="site-preview-category">{site.category} <i/> {site.style}</span>
   </div>
   <div className="site-preview-browser">
-   <div className="site-preview-chrome"><span className="site-preview-dots"><i/><i/><i/></span><code>{site.url}</code><a href={site.url} target="_blank" rel="noopener noreferrer" aria-label={'Open '+site.label+' in a full tab'}>↗</a></div>
+   <div className="site-preview-chrome"><span className="site-preview-dots"><i/><i/><i/></span><code>{site.url}</code><a href={site.url} target="_blank" rel="noopener noreferrer" aria-label={'Open '+site.label+' in a full tab'}>Open</a></div>
    <div className={'site-preview-viewport site-preview-viewport-'+device}>
     <ScaledWebsitePreview
       key={site.id + '-' + device}
