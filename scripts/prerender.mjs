@@ -103,4 +103,36 @@ for (const pathname of publicPaths) {
   await writeFile(outputPath, html)
 }
 
+
+/* Standalone food storefront pages.
+ * Each exact route gets a real index entrypoint, so direct links, refresh and
+ * nested product-detail URLs work on a static Vercel/Vite deployment.
+ * These are client demonstrations and deliberately not search indexed. */
+const foodMenus = {
+  foodeditorial: ['bibimbap','bulgogi','tteokbokki','chicken','kimchi-rice','banchan','korean-soup','seoul-set','lime-spritz','beef-feast'],
+  foodcatalogue: ['butter-croissant','pain-choc','cinnamon-bun','choc-cookie','birthday-cake','brownie','donuts','sourdough','latte','party-box'],
+  foodminimal: ['mutton-biryani','chicken-biryani','jeera-rice','kadai-chicken','palak-paneer','butter-chicken','veg-biryani','samosa','naan','royal-feast'],
+  foodartisan: ['mutton-biryani','chicken-biryani','jeera-rice','kadai-chicken','palak-paneer','butter-chicken','veg-biryani','samosa','naan','royal-feast'],
+}
+const foodBrands={foodeditorial:'HANSIK',foodcatalogue:'Crumb & Co.',foodminimal:'KANIGIRI',foodartisan:'MATBOR'}
+const foodSubpages=['menu','about','contact','catering','events','experience','reservations','locations','faq','cart']
+let foodCount=0
+for(const [root,ids] of Object.entries(foodMenus)){
+  const paths=['/'+root,...foodSubpages.map(slug=>'/'+root+'/'+slug),...ids.map(id=>'/'+root+'/item/'+id)]
+  for(const pathname of paths){
+    const segment=pathname.split('/').filter(Boolean).slice(1).join(' · ')
+    const title=(segment?segment+' | ':'')+foodBrands[root]+' | December Food Website Preview'
+    const html=cleanedTemplate.replace('</head>',`
+    <title>${escapeHtml(title)}</title>
+    <meta name="description" content="A complete food-business website demonstration with a menu, product details, enquiry forms and a sample shopping bag." />
+    <meta name="robots" content="noindex, nofollow" />
+  </head>`)
+    const outputPath=outputPathForRoute(pathname)
+    await mkdir(dirname(outputPath),{recursive:true})
+    await writeFile(outputPath,html)
+    foodCount++
+  }
+}
+console.log(`Pre-rendered ${foodCount} standalone food website preview routes.`)
+
 console.log(`Pre-rendered ${publicPaths.length} public portfolio routes.`)
