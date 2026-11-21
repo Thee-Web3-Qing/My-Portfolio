@@ -38,18 +38,23 @@ function Summary({ quote, paymentMode, setPaymentMode, small = false }) {
     <div className={'dec-summary' + (small ? ' dec-summary-small' : '')}>
       <p className="dec-kicker">Your estimate · NGN</p>
       <h3>{money(quote.total)}</h3>
+      <div className="dec-summary-choice">
+        <span>Industry: <strong>{quote.industry.label}</strong></span>
+        <span>Layout: <strong>{quote.layout.label}</strong></span>
+      </div>
       <div className="dec-summary-lines">
-        <div><span>Branded website</span><strong>{money(quote.base)}</strong></div>
+        <div><span>Branded website + 12 listings</span><strong>{money(quote.base)}</strong></div>
         {quote.selectedAddons.map(item => <div key={item.id}><span>{item.name}</span><strong>{money(item.price)}</strong></div>)}
         {quote.images > 0 && <div><span>{quote.images} AI product {quote.images === 1 ? 'image' : 'images'} × {money(quote.imageUnitPrice)}</span><strong>{money(quote.imagesSubtotal)}</strong></div>}
       </div>
+      <div className="dec-summary-subtotal"><span>Project subtotal</span><strong>{money(quote.total)}</strong></div>
       <div className="dec-summary-payment">
         <p>Choose how to pay</p>
         <label className={paymentMode === 'deposit' ? 'is-active' : ''}><input type="radio" name={small ? 'mobile-payment' : 'desktop-payment'} checked={paymentMode === 'deposit'} onChange={() => setPaymentMode('deposit')} /><span>60% deposit <small>Pay {money(quote.deposit)} today</small></span></label>
         <label className={paymentMode === 'full' ? 'is-active' : ''}><input type="radio" name={small ? 'mobile-payment' : 'desktop-payment'} checked={paymentMode === 'full'} onChange={() => setPaymentMode('full')} /><span>Pay in full <small>Pay {money(quote.total)} today</small></span></label>
       </div>
       <div className="dec-summary-today"><span>Due today</span><strong>{money(paymentMode === 'deposit' ? quote.deposit : quote.total)}</strong></div>
-      {paymentMode === 'deposit' && <p className="dec-summary-note">The remaining {money(quote.balance)} is due before your site goes live.</p>}
+      {paymentMode === 'deposit' && <p className="dec-summary-note">Balance before launch: {money(quote.balance)}.</p>}
     </div>
   )
 }
@@ -194,9 +199,10 @@ export default function December() {
               </button>)}
             </div>
             <div className="dec-preview-wrap">
-              <div className="dec-preview-header"><span><i /> LIVE STYLE PREVIEW</span><span>{industry.label} / {layout.label}</span></div>
-              <IndustryPreview industry={industry} layout={layout} />
-              <p>Illustrative layout preview. Your finished website will use your own photographs, logo, colours and content.</p>
+              <div className="dec-preview-header"><span><i /> INTERACTIVE WEBSITE PREVIEW</span><span>{industry.label} / {layout.label}</span></div>
+              <div className="dec-real-preview-frame"><iframe key={industryId+'-'+layoutId} title={industry.label+' '+layout.label+' sample website'} loading="lazy" src={'/december/demo/'+industryId+'?layout='+layoutId}/></div>
+              <div className="dec-real-preview-actions"><Link className="dec-real-preview-open" target="_blank" rel="noreferrer" to={'/december/demo/'+industryId+'?layout='+layoutId}>Explore full live demo ↗</Link><a href="#dec-checkout">Choose this layout and continue ↓</a></div>
+              <p>Interactive sample storefront. Images, product names and prices are illustrative. Your own branding, photos and chosen features replace them after payment.</p>
             </div>
           </section>
 
@@ -220,7 +226,8 @@ export default function December() {
             </div>
           </section>
 
-          <section className="dec-builder-step" id="dec-checkout">
+          <div className="dec-delivery-note"><span>DELIVERY TIMELINE</span><strong>3–7 days after your assets are confirmed.</strong><p>After payment, keep your Paystack reference. You will use it to fill in the business information form and share your product prices, images and other resources. The build timeline starts after we review and confirm that everything required is complete.</p><Link to="/december/details">Already paid? Submit business information ↗</Link></div>
+      <section className="dec-builder-step" id="dec-checkout">
             <div className="dec-step-title"><span>04</span><div><p className="dec-kicker">RESERVE YOUR SLOT</p><h2>Ready to make it real?</h2></div></div>
             {status === 'paid' && <div className="dec-notice dec-notice-success" role="status"><strong>Payment verified ✓</strong><p>{feedback}</p><p>Reference: {receipt?.reference}</p><p>Amount received: {money((receipt?.amount || 0) / 100)}</p></div>}
             {status === 'pending' && <div className="dec-notice" role="status">{feedback}</div>}
@@ -238,12 +245,13 @@ export default function December() {
                 <button className="dec-btn dec-btn-dark" type="submit" disabled={!checkoutEnabled || status === 'loading' || status === 'verifying'}>{status === 'loading' ? 'Opening secure checkout…' : checkoutEnabled ? 'Pay with Paystack ↗' : 'Paystack setup pending'} </button>
                 <a href={'mailto:qinglidah@gmail.com?subject=' + encodeURIComponent('December website enquiry') + '&body=' + encodeURIComponent(emailSummary)} className="dec-link-text">Email me this quote ↗</a>
               </div>
-              {!checkoutEnabled && <p className="dec-checkout-warning">Online checkout will be enabled after Paystack test and live credentials are configured. You can still email your selected quote.</p>}
-              <p className="dec-form-fineprint">Your selected total covers the website build and chosen extras. Domain registration, hosting, third-party charges and maintenance are quoted separately. A 60% deposit reserves your slot; the balance is due before launch. Work starts when the required assets are received.</p>
+              {!checkoutEnabled && <p className="dec-checkout-warning">Online checkout is currently unavailable. You can still email your selected quote.</p>}
+              <p className="dec-checkout-nextstep">AFTER PAYMENT: Keep your Paystack transaction reference. You will need it, alongside your payment email, to submit business information and product assets.</p>
+              <p className="dec-form-fineprint">Your selected total covers the website build and chosen extras. Domain registration, hosting, third-party charges and maintenance are quoted separately. A 60% deposit reserves your slot; the balance is due before launch. Build time is approximately 3–7 days after we confirm all required product images, information and other resources are complete.</p>
             </form>
           </section>
         </div>
-        <aside className="dec-sidebar"><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout ↗</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>
+        <aside className={"dec-sidebar"+(builderVisible?" is-visible":"")}><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout ↗</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>
       </div>
       <div className={"dec-floating-mobile-checkout" + (builderVisible ? " dec-floating-checkout-in-builder" : "")} role="region" aria-label="Your checkout total">
         <div><span>Your website estimate</span><strong>{money(quote.total)}</strong><small>Due today: {money(paymentMode === 'deposit' ? quote.deposit : quote.total)}</small></div>
