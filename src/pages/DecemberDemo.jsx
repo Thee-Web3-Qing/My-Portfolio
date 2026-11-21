@@ -122,7 +122,7 @@ export default function DecemberDemo(){
  :industry==='food'?(layout==='editorial'?<FoodEditorial data={data} category={category} setCategory={setCategory} onChoose={add}/>:layout==='catalogue'?<FoodCatalogue data={data} category={category} setCategory={setCategory} onChoose={add}/>:<FoodMinimal data={data} category={category} setCategory={setCategory} onChoose={add}/>)
  :<GenericDemo data={data} category={category} setCategory={setCategory} onChoose={add} layout={layout}/>
  return <div className={'dec-demo dec-demo-'+industry+' dec-demo-'+layout}>
-   <div className="dec-demo-bar"><Link to={'/december?industry='+industry+'&layout='+layout+'#build-your-site'}>← Back to December sale</Link><span>LIVE DEMO WEBSITE · {selected?.label}</span><Link to="/december">GET THIS STYLE ↗</Link></div>
+   <div className="dec-demo-bar"><Link to={'/december?industry='+industry+'&layout='+layout+'#build-your-site'}>← Back to December sale</Link><span>LIVE DEMO WEBSITE · {selected?.label}</span><Link to={"/december?industry="+industry+"&layout="+layout+"#build-your-site"}>GET THIS STYLE ↗</Link></div>
    <div className="dec-demo-layout-switch"><span>EXPLORE THIS DEMO</span><div>{LAYOUTS.map(l=><Link key={l.id} to={'/december/demo/'+industry+'?layout='+l.id} className={layout===l.id?'is-active':''}>{l.label}</Link>)}</div><span>EXAMPLE CONTENT · NOT A REAL BUSINESS</span></div>
    <div className="dec-demo-site"><nav className="dec-demo-nav"><a href="#demo-top" className="dec-demo-wordmark">{data.brand}</a><div><a href="#demo-collection">Collection</a><a href="#demo-story">Our story</a><a href="#demo-contact">Contact</a></div><button onClick={()=>setShowBag(true)}>ENQUIRY ({bag.length}) <span>↗</span></button></nav><div id="demo-top"></div>
     {shown}
