@@ -18,15 +18,12 @@ export const LAYOUTS = [
   { id: 'minimal', label: 'Minimal', description: 'Quiet typography, large images and lots of breathing room.' },
 ]
 
+// These change the scope of the website job, not the basic functionality.
+// Standard product browsing, WhatsApp ordering and routine enquiries are included.
 export const SHARED_ADDONS = [
-  { id: 'custom-design', name: 'Custom homepage design', description: 'Unique hero, typography and section arrangement.', price: 57000, recommended: ['fashion', 'beauty', 'events'] },
-  { id: 'expanded-catalogue', name: 'Expanded catalogue', description: 'Increase your included listings from 12 to 30.', price: 19000, recommended: ['fashion', 'food', 'gifts', 'accessories'] },
-  { id: 'cart', name: 'Multi-item order basket', description: 'Customers combine items into one WhatsApp order.', price: 33250, recommended: ['fashion', 'food', 'gifts', 'accessories'] },
-  { id: 'order-form', name: 'Custom enquiry / order form', description: 'Collect details like dates, sizes or delivery instructions.', price: 23750, recommended: ['food', 'gifts', 'events'] },
-  { id: 'booking', name: 'Appointment booking', description: 'Customers request a slot; you confirm availability.', price: 61750, recommended: ['beauty', 'events', 'hospitality'] },
-  { id: 'gallery', name: 'Extra image gallery', description: 'A dedicated gallery for up to 20 photos.', price: 14250, recommended: ['beauty', 'events', 'hospitality'] },
-  { id: 'page', name: 'Additional standard page', description: 'One extra page from your existing design components.', price: 28500, recommended: ['events', 'hospitality'] },
-  { id: 'payment', name: 'Customer online payments', description: 'Hosted payment checkout for your storefront, subject to provider approval.', price: 66500, recommended: ['fashion', 'food', 'gifts', 'accessories'] },
+  { id:'custom-design', name:'Fully custom homepage design', description:'A newly art-directed hero, typography and section arrangement beyond the selected starter design.', price:57000, recommended:['fashion','food','gifts','beauty','events','accessories','hospitality'], scope:'design-extension' },
+  { id:'expanded-catalogue', name:'Expand catalogue to 30 listings', description:'Increase the supplied catalogue from 12 to a total of 30 ready-to-publish products or services.', price:19000, recommended:['fashion','food','gifts','accessories','hospitality'], scope:'content-extension' },
+  { id:'page', name:'Additional designed page', description:'One additional page using the approved template's existing components, with your supplied content.', price:28500, recommended:['events','hospitality'], scope:'content-extension' },
 ]
 
 export const ADDONS = [...SHARED_ADDONS, ...INDUSTRY_ADDONS]
@@ -34,8 +31,6 @@ export { getIndustryGroups }
 
 const SHARED_ADDON_ELIGIBILITY = {
   'expanded-catalogue':['fashion','food','gifts','accessories','hospitality'],
-  cart:['fashion','food','gifts','accessories'],
-  booking:['beauty','events','hospitality'],
 }
 
 export function getAvailableAddons(industry) {
@@ -47,8 +42,11 @@ export function getAvailableAddons(industry) {
 export function getSharedGroups(industry) {
   const allowed = new Set(getAvailableAddons(industry).map(item=>item.id))
   return [
-    { title:'Design & presentation', description:'Change how your storefront is displayed.', items:SHARED_ADDONS.filter(x=>allowed.has(x.id) && ['custom-design','expanded-catalogue','gallery','page'].includes(x.id)) },
-    { title:'Orders & customer enquiries', description:'Add optional ordering and communication tools.', items:SHARED_ADDONS.filter(x=>allowed.has(x.id) && ['cart','order-form','booking','payment'].includes(x.id)) },
+    {
+      title:'Optional design & content extensions',
+      description:'Only if you need more design or content work than the complete starter template includes.',
+      items: SHARED_ADDONS.filter(x=>allowed.has(x.id)),
+    },
   ].filter(group=>group.items.length>0)
 }
 
