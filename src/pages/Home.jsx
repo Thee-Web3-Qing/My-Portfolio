@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import StorefrontPreviewGallery from '../components/StorefrontPreviewGallery.jsx'
 
 const WHATSAPP_URL = 'https://askbookie.xyz/store/qingthecreator'
 
@@ -77,6 +78,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <StorefrontPreviewGallery placement="home" />
 
       <section className="editorial-section editorial-stories">
         <div className="editorial-section-head">

@@ -9,7 +9,7 @@ import { INDUSTRIES, LAYOUTS } from './december.js'
  * When a standalone interface is completed, remove its placeholder route
  * in App.jsx and add the new component there. Then add its slug below.
  */
-export const FINISHED_PREVIEWS = new Set([])
+export const FINISHED_PREVIEWS = new Set(['fashioneditorial','fashioncatalogue','fashionminimal','foodeditorial','foodcatalogue','foodminimal'])
 
 export const PREVIEW_ROUTES = Object.fromEntries(INDUSTRIES.map(industry => [
   industry.id, Object.fromEntries(LAYOUTS.map(style => [

@@ -1,6 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { buildSchema, getSeoForPath, publicPaths, SITE_URL, SOCIAL_IMAGE } from '../src/seo.js'
+import { fashionInventory, fashionLooks } from '../src/pages/fashionInventory.js'
 
 const distDirectory = new URL('../dist/', import.meta.url)
 const templatePath = new URL('index.html', distDirectory)
@@ -102,5 +103,70 @@ for (const pathname of publicPaths) {
   await mkdir(dirname(outputPath), { recursive: true })
   await writeFile(outputPath, html)
 }
+
+// Standalone fashion prototypes use the regular React entrypoint, not the portfolio's SEO body.
+// Emitting a real HTML file for each route makes direct links work with Vercel cleanUrls.
+const fashionPreviewRoutes = [
+  { path: '/fashioneditorial', title: 'LOCO | Fashion Editorial Store Preview' },
+  { path: '/fashioncatalogue', title: 'HER FASHION | Fashion Catalogue and Styling Preview' },
+  { path: '/fashionminimal', title: 'RUSH | Minimal Fashion Fitting Room Preview' },
+]
+
+const commercePages = ['shop','looks','about','faq','wishlist','cart']
+const extras = {fashioneditorial:['campaign'],fashioncatalogue:['stylist'],fashionminimal:['fitting-room']}
+for (const base of Object.keys(extras)) {
+  const brand=base==='fashioneditorial'?'LOCO':base==='fashioncatalogue'?'HER FASHION':'RUSH'
+  for (const section of [...commercePages,...extras[base]]) {
+    fashionPreviewRoutes.push({path:'/'+base+'/'+section,title:brand+' | '+section.replaceAll('-',' ')})
+  }
+  for (const product of fashionInventory) {
+    fashionPreviewRoutes.push({path:'/'+base+'/product/'+product.id,title:product.name+' | '+brand})
+  }
+  for (const look of fashionLooks) {
+    fashionPreviewRoutes.push({path:'/'+base+'/looks/'+look.id,title:look.title+' | '+brand})
+  }
+}
+
+for (const preview of fashionPreviewRoutes) {
+  const head = '<title>' + escapeHtml(preview.title) + '</title>' +
+    '<meta name="description" content="Fashion storefront concept designed by Qing The Creator. Sample products and temporary imagery." />' +
+    '<meta name="robots" content="noindex, nofollow" />'
+  const html = cleanedTemplate.replace('</head>', head + '\n  </head>')
+  const path = outputPathForRoute(preview.path)
+  await mkdir(dirname(path), { recursive: true })
+  await writeFile(path, html)
+}
+
+/* Standalone food storefront pages.
+ * Each exact route gets a real index entrypoint, so direct links, refresh and
+ * nested product-detail URLs work on a static Vercel/Vite deployment.
+ * These are client demonstrations and deliberately not search indexed. */
+const foodMenus = {
+  foodeditorial: ['bibimbap','bulgogi','tteokbokki','chicken','kimchi-rice','banchan','korean-soup','seoul-set','lime-spritz','beef-feast'],
+  foodcatalogue: ['butter-croissant','pain-choc','cinnamon-bun','choc-cookie','birthday-cake','brownie','donuts','sourdough','latte','party-box'],
+  foodminimal: ['mutton-biryani','chicken-biryani','jeera-rice','kadai-chicken','palak-paneer','butter-chicken','veg-biryani','samosa','naan','royal-feast'],
+  foodartisan: ['mutton-biryani','chicken-biryani','jeera-rice','kadai-chicken','palak-paneer','butter-chicken','veg-biryani','samosa','naan','royal-feast'],
+}
+const foodBrands={foodeditorial:'HANSIK',foodcatalogue:'Crumb & Co.',foodminimal:'KANIGIRI',foodartisan:'MATBOR'}
+const foodSubpages=['menu','about','contact','catering','events','experience','reservations','locations','faq','cart']
+let foodCount=0
+for(const [root,ids] of Object.entries(foodMenus)){
+  const paths=['/'+root,...foodSubpages.map(slug=>'/'+root+'/'+slug),...ids.map(id=>'/'+root+'/item/'+id)]
+  for(const pathname of paths){
+    const segment=pathname.split('/').filter(Boolean).slice(1).join(' · ')
+    const title=(segment?segment+' | ':'')+foodBrands[root]+' | December Food Website Preview'
+    const html=cleanedTemplate.replace('</head>',`
+    <title>${escapeHtml(title)}</title>
+    <meta name="description" content="A complete food-business website demonstration with a menu, product details, enquiry forms and a sample shopping bag." />
+    <meta name="robots" content="noindex, nofollow" />
+  </head>`)
+    const outputPath=outputPathForRoute(pathname)
+    await mkdir(dirname(outputPath),{recursive:true})
+    await writeFile(outputPath,html)
+    foodCount++
+  }
+}
+console.log(`Pre-rendered ${foodCount} standalone food website preview routes.`)
+
 
 console.log(`Pre-rendered ${publicPaths.length} public portfolio routes.`)
