@@ -2,7 +2,7 @@ import { confirmPayment, db, environment } from '../_lib/payments.js'
 import { ADDONS, calculateDecemberQuote } from '../../src/data/december.js'
 
 const clean = (value, max=500) => typeof value === 'string' ? value.trim().slice(0,max) : ''
-const isURL = (value) => !value || (value.length <= 1200 && /^https:\/\//i.test(value))
+const isURL = (value) => !value || (value.length <= 1200 && (/^https:\/\//i.test(value) || /^\/api\/december\/image\?id=[0-9a-f-]{36}$/i.test(value)))
 const emailOK = value => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
 const FIELDS = {
   businessName:120, businessDescription:2200, assetFolderUrl:1200, logoUrl:1200,
