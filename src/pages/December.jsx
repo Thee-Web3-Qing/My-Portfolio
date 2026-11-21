@@ -237,6 +237,10 @@ export default function December() {
         </div>
         <aside className="dec-sidebar"><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout ↗</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>
       </div>
+      <div className="dec-floating-mobile-checkout" role="region" aria-label="Your checkout total">
+        <div><span>Your website estimate</span><strong>{money(quote.total)}</strong><small>Due today: {money(paymentMode === 'deposit' ? quote.deposit : quote.total)}</small></div>
+        <a href="#dec-checkout" className="dec-floating-mobile-button">Checkout ↗</a>
+      </div>
       <section className="dec-bottom-cta"><span>NOT JUST FOR THE HOLIDAYS</span><h2>Built for December.<br /><em>Useful all year.</em></h2><p>Your December banners can come down in January. Your website stays.</p><Link to="/products">See what I've built <Arrow /></Link></section>
     </div>
   )
