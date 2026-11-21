@@ -4,7 +4,9 @@ import { Routes, Route } from 'react-router-dom'
   import PortfolioInteractions from './components/PortfolioInteractions.jsx'
   import Footer from './components/Footer.jsx'
   import Home from './pages/Home.jsx'
-  import December from './pages/December.jsx'
+  import DecemberDirectory from './pages/DecemberDirectory.jsx'
+  import DecemberIndustry from './pages/DecemberIndustry.jsx'
+  import { INDUSTRIES, LAYOUTS } from './data/december.js'
   import PaymentCallback from './pages/PaymentCallback.jsx'
   import DecemberDetails from './pages/DecemberDetails.jsx'
   import DecemberDemo from './pages/DecemberDemo.jsx'
@@ -33,8 +35,13 @@ import { Routes, Route } from 'react-router-dom'
                   <Route path="/hire" element={<Hire />} />
                   <Route path="/experience" element={<Experience />} />
                   <Route path="/class" element={<Class />} />
-                  <Route path="/december" element={<December />} />
+                  <Route path="/december" element={<DecemberDirectory />} />
+                  <Route path="/december/:industry/:stage?" element={<DecemberIndustry />} />
                   <Route path="/december/demo/:industry" element={<DecemberDemo />} />
+                  {INDUSTRIES.flatMap(industry => LAYOUTS.map(style =>
+                    <Route key={industry.id + style.id} path={'/' + industry.id + style.id}
+                      element={<DecemberDemo previewIndustry={industry.id} previewLayout={style.id} />} />
+                  ))}
                   <Route path="/december/details" element={<DecemberDetails />} />
                   <Route path="/payment/callback" element={<PaymentCallback />} />
                   <Route path="/services/:serviceSlug" element={<Service />} />
