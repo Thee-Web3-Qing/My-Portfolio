@@ -105,12 +105,12 @@ function GenericDemo({data,category,setCategory,onChoose,layout}){
    <section className="demo-generic-feature"><DemoImage src={data.second} alt={data.brand+' seasonal feature'}/><div><span>WHY CHOOSE US</span><h2>A little more<br/>thoughtful.</h2><p>{data.promise}</p><a href="#demo-collection">EXPLORE MORE ↗</a></div></section>
  </div>
 }
-export default function DecemberDemo(){
+export default function DecemberDemo({previewIndustry,previewLayout}){
  const {industry:raw}=useParams()
  const [search]=useSearchParams()
- const industry=demoCatalogue[raw]?raw:'fashion'
+ const industry=demoCatalogue[previewIndustry]?previewIndustry:demoCatalogue[raw]?raw:'fashion'
  const data=demoCatalogue[industry]
- const layout=['editorial','catalogue','minimal'].includes(search.get('layout'))?search.get('layout'):'editorial'
+ const layout=['editorial','catalogue','minimal'].includes(previewLayout)?previewLayout:['editorial','catalogue','minimal'].includes(search.get('layout'))?search.get('layout'):'editorial'
  const [category,setCategory]=useState('All')
  const [bag,setBag]=useState([])
  const [showBag,setShowBag]=useState(false)
@@ -122,8 +122,8 @@ export default function DecemberDemo(){
  :industry==='food'?(layout==='editorial'?<FoodEditorial data={data} category={category} setCategory={setCategory} onChoose={add}/>:layout==='catalogue'?<FoodCatalogue data={data} category={category} setCategory={setCategory} onChoose={add}/>:<FoodMinimal data={data} category={category} setCategory={setCategory} onChoose={add}/>)
  :<GenericDemo data={data} category={category} setCategory={setCategory} onChoose={add} layout={layout}/>
  return <div className={'dec-demo dec-demo-'+industry+' dec-demo-'+layout}>
-   <div className="dec-demo-bar"><Link to={'/december?industry='+industry+'&layout='+layout+'#build-your-site'}>← Back to December sale</Link><span>LIVE DEMO WEBSITE · {selected?.label}</span><Link to={"/december?industry="+industry+"&layout="+layout+"#build-your-site"}>GET THIS STYLE ↗</Link></div>
-   <div className="dec-demo-layout-switch"><span>EXPLORE THIS DEMO</span><div>{LAYOUTS.map(l=><Link key={l.id} to={'/december/demo/'+industry+'?layout='+l.id} className={layout===l.id?'is-active':''}>{l.label}</Link>)}</div><span>EXAMPLE CONTENT · NOT A REAL BUSINESS</span></div>
+   <div className="dec-demo-bar"><Link to={'/december/'+industry+'?layout='+layout}>← Back to {selected?.label}</Link><span>SAMPLE STOREFRONT · {selected?.label}</span><Link to={'/december/'+industry+'?layout='+layout}>GET THIS STYLE ↗</Link></div>
+   <div className="dec-demo-layout-switch"><span>EXPLORE THIS DEMO</span><div>{LAYOUTS.map(l=><Link key={l.id} to={'/'+industry+l.id} className={layout===l.id?'is-active':''}>{l.label}</Link>)}</div><span>EXAMPLE CONTENT · NOT A REAL BUSINESS</span></div>
    <div className="dec-demo-site"><nav className="dec-demo-nav"><a href="#demo-top" className="dec-demo-wordmark">{data.brand}</a><div><a href="#demo-collection">Collection</a><a href="#demo-story">Our story</a><a href="#demo-contact">Contact</a></div><button onClick={()=>setShowBag(true)}>ENQUIRY ({bag.length}) <span>↗</span></button></nav><div id="demo-top"></div>
     {shown}
     <section className="demo-last-call" id="demo-story"><p>DESIGNED FOR DECEMBER. READY FOR EVERY SEASON.</p><h2>Make something<br/><em>worth remembering.</em></h2><span>{data.promise}</span><a href="#demo-collection">EXPLORE {industry==='food'?'THE MENU':'THE COLLECTION'} ↗</a></section>
