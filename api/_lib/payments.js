@@ -111,11 +111,18 @@ export function publicStatus(order) {
   const quote = order.product === 'december-website'
     ? calculateDecemberQuote({ industry:config.industry, layout:config.layout, addons:config.addons, images:config.images })
     : null
-  const items = quote ? [
-    { name:'Branded website (12 listings)', price:quote.base },
-    ...quote.selectedAddons.map(x=>({name:x.name,price:x.price})),
-    ...(quote.images>0?[{name:quote.images+' AI product images × ₦'+quote.imageUnitPrice,price:quote.imagesSubtotal}]:[]),
-  ] : [{name:'Vibecoding Starter Class',price:Number(order.quote_total_kobo)/100}]
+  // Orders are quoted at checkout time. Never rewrite a customer's historical
+  // invoice if the December add-on catalogue changes later.
+  const orderSnapshot = Array.isArray(config.line_items) ? config.line_items.filter(item=>
+    typeof item?.name==='string' && Number.isFinite(Number(item.price)) && Number(item.price)>=0
+  ).map(item=>({name:item.name,price:Number(item.price)})) : []
+  const items = order.product==='december-website'
+    ? orderSnapshot.length ? orderSnapshot : [
+        { name:'Branded website (12 listings)', price:quote?.base || 120000 },
+        ...(quote?.selectedAddons || []).map(x=>({name:x.name,price:x.price})),
+        ...(quote?.images>0?[{name:quote.images+' AI product images × ₦'+quote.imageUnitPrice,price:quote.imagesSubtotal}]:[]),
+      ]
+    : [{name:'Vibecoding Starter Class',price:Number(order.quote_total_kobo)/100}]
   return { items, industry:quote?.industry.label || null, layout:quote?.layout.label || null,
     found:true, paid, reference:order.reference, product:order.product,
     amount:paid ? Number(order.amount_kobo) : 0,
