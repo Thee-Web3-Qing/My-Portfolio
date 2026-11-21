@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import './PaymentCallback.css'
 
 const naira=n=>'₦'+Number(n||0).toLocaleString('en-NG')
 
