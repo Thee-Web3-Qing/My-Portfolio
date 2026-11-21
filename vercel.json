@@ -3,6 +3,34 @@
   "trailingSlash": false,
   "rewrites": [
     {
+      "source": "/api/december/image",
+      "destination": "/api/december?operation=image"
+    },
+    {
+      "source": "/api/december/initialize",
+      "destination": "/api/december?operation=initialize"
+    },
+    {
+      "source": "/api/december/intake",
+      "destination": "/api/december?operation=intake"
+    },
+    {
+      "source": "/api/december/progress",
+      "destination": "/api/december?operation=progress"
+    },
+    {
+      "source": "/api/december/status",
+      "destination": "/api/december?operation=status"
+    },
+    {
+      "source": "/api/december/upload",
+      "destination": "/api/december?operation=upload"
+    },
+    {
+      "source": "/api/december/verify",
+      "destination": "/api/december?operation=verify"
+    },
+    {
       "source": "/admin",
       "destination": "/index.html"
     },

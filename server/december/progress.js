@@ -1,4 +1,4 @@
-import { confirmPayment, db, environment } from '../_lib/payments.js'
+import { confirmPayment, db, environment } from '../../api/_lib/payments.js'
 const clean=x=>typeof x==='string'?x.trim():''
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store')
