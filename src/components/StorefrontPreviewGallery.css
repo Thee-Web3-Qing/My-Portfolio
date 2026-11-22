@@ -90,3 +90,65 @@
   .site-preview-filters>div:first-child button{flex:none}
   .site-preview-viewport .site-preview-scaled-frame{height:100%}
 }
+
+
+/* December sales gallery only: 22 sample sites become a swipeable editorial
+   rail on phones rather than 22 very tall stacked browser cards. */
+.site-preview-swipe-hint{display:none;}
+@media(max-width:650px){
+  .site-preview-gallery-december{padding:43px 0 54px;overflow:hidden;}
+  .site-preview-gallery-december .site-preview-intro,
+  .site-preview-gallery-december .site-preview-filters{
+    margin-left:18px;margin-right:18px;
+  }
+  .site-preview-gallery-december .site-preview-intro{padding-bottom:20px;}
+  .site-preview-gallery-december .site-preview-intro h2{font-size:clamp(2.15rem,9.1vw,3.1rem);}
+  .site-preview-gallery-december .site-preview-intro>div>span{margin-top:13px;line-height:1.55;}
+  .site-preview-gallery-december .site-preview-filters{margin-bottom:12px;padding-top:15px;}
+  .site-preview-gallery-december .site-preview-filters button{
+    padding:8px 11px;font-size:10px;white-space:nowrap;
+  }
+  .site-preview-gallery-december .site-preview-swipe-hint{
+    display:block;margin:0 18px 11px;
+    color:#a92932;font:700 .66rem 'Space Mono',monospace;
+  }
+  .site-preview-gallery-december .site-preview-grid{
+    display:flex;
+    grid-template-columns:none;
+    max-width:none;
+    width:100%;
+    overflow-x:auto;
+    overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory;
+    scroll-padding-inline:18px;
+    -webkit-overflow-scrolling:touch;
+    gap:12px;
+    padding:0 18px 19px;
+    scrollbar-width:thin;
+    scrollbar-color:#bbada3 transparent;
+  }
+  .site-preview-gallery-december .site-preview-card{
+    flex:0 0 min(82vw,335px);
+    width:min(82vw,335px);
+    scroll-snap-align:start;
+    box-shadow:0 5px 15px #3c2d1b10;
+  }
+  .site-preview-gallery-december .site-preview-card-top{padding:10px 12px;}
+  .site-preview-gallery-december .site-preview-browser{margin:0 7px;}
+  .site-preview-gallery-december .site-preview-chrome{height:27px;}
+  .site-preview-gallery-december .site-preview-viewport{height:225px;}
+  .site-preview-gallery-december .site-preview-controls{padding:7px 9px;gap:5px;}
+  .site-preview-gallery-december .site-preview-controls>a{padding:8px 10px;}
+  .site-preview-gallery-december .site-preview-unlock{padding:10px 12px;font-size:10px!important;}
+  .site-preview-gallery-december .site-preview-copy{
+    padding:11px 13px 14px;gap:5px;min-height:84px;
+  }
+  .site-preview-gallery-december .site-preview-copy h3{font-size:1.38rem;margin-top:4px;}
+  .site-preview-gallery-december .site-preview-copy>p{
+    display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;
+    overflow:hidden;font-size:.68rem;line-height:1.4;
+  }
+  .site-preview-gallery-december .site-preview-footnote{
+    margin:11px 18px 0;line-height:1.55;
+  }
+}
