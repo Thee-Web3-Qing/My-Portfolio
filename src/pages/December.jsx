@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { INDUSTRIES, LAYOUTS, calculateDecemberQuote, getIndustryGroups, getSharedGroups, money } from '../data/december.js'
-import StorefrontPreviewGallery from '../components/StorefrontPreviewGallery.jsx'
 import ScaledWebsitePreview from '../components/ScaledWebsitePreview.jsx'
 import './December.css'
 
@@ -189,7 +188,6 @@ export default function December() {
       <nav className="dec-inpage-nav" aria-label="December website sections">
         <a href="#build-your-site">01 / Industries</a>
         <a href="#dec-designs">02 / Website preview</a>
-        <a href="#website-previews">Explore all 22 previews</a>
         <a href="#dec-features">03 / Feature add-ons</a>
         <a href="#dec-checkout">04 / Checkout</a>
       </nav>
@@ -321,7 +319,6 @@ export default function December() {
         <div><span>Your website estimate</span><strong>{money(quote.total)}</strong><small>Due today: {money(paymentMode === 'deposit' ? quote.deposit : quote.total)}</small></div>
         <a href="#dec-checkout" className="dec-floating-mobile-button">Checkout</a>
       </div>
-      <StorefrontPreviewGallery placement="december" />
       <section className="dec-bottom-cta"><span>NOT JUST FOR THE HOLIDAYS</span><h2>Built for December.<br /><em>Useful all year.</em></h2><p>Your December banners can come down in January. Your website stays.</p><Link to="/products">See what I've built <Arrow /></Link></section>
     </div>
   )
