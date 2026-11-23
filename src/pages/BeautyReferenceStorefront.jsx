@@ -4,6 +4,7 @@ import IndustryStorefront from './IndustryStorefront.jsx'
 import {storeData,money} from './industryStoreData.js'
 import './BeautyReferenceStorefront.css'
 import './BeautyReferenceFidelity.css'
+import './BeautyReferenceDesktop.css'
 
 const p=(id,w=1400)=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w='+w+'&q=84'
 const px=(id,w=1200)=>'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&w='+w
