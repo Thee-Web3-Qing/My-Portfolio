@@ -1,0 +1,506 @@
+/* Four complete demonstration websites. Interior pages intentionally share
+   functional accessibility but NOT their editorial compositions. */
+.bi-wrapper{--bi-bg:#fffdfa;--bi-ink:#272226;--bi-accent:#8b132b;--bi-soft:#f5eef0;--bi-line:#dcd4d5;background:var(--bi-bg);color:var(--bi-ink);font-family:'DM Sans',sans-serif}
+.bi-wrapper *{box-sizing:border-box}
+.bi-wrapper h1,.bi-wrapper h2,.bi-wrapper h3,.bi-wrapper p{margin:0}
+.bi-wrapper img{width:100%;height:100%;object-fit:cover;display:block}
+.bi-wrapper a{color:inherit;text-decoration:none}
+.bi-wrapper button,.bi-wrapper input,.bi-wrapper select,.bi-wrapper textarea{font:inherit}
+.bi-wrapper button{cursor:pointer}
+.bi-wrapper button:disabled{opacity:.4;cursor:not-allowed}
+.bi-wrapper button:focus-visible,.bi-wrapper a:focus-visible,.bi-wrapper input:focus-visible,.bi-wrapper select:focus-visible,.bi-wrapper textarea:focus-visible{outline:2px solid var(--bi-accent);outline-offset:3px}
+.bi-inner{min-height:70vh;padding:0 5.2% 65px}
+.bi-trail{display:flex;align-items:center;gap:10px;padding:24px 0;color:var(--bi-ink);font:600 10px 'DM Sans',sans-serif;border-bottom:1px solid var(--bi-line);opacity:.76}
+.bi-trail>a{text-decoration:underline;text-underline-offset:3px}
+.bi-demo-word{margin-left:auto;letter-spacing:.11em}
+.bi-label{display:block;font:700 10px/1.4 'DM Sans',sans-serif;letter-spacing:.14em;color:var(--bi-accent);text-transform:uppercase}
+.bi-cta,.bi-primary{display:inline-flex;align-items:center;justify-content:center;padding:15px 24px;background:var(--bi-accent);color:#fff!important;border:1px solid var(--bi-accent);font:700 12px/1.25 'DM Sans',sans-serif;min-height:47px;width:max-content;max-width:100%;text-align:center;cursor:pointer}
+.bi-cta-light{background:#fbf9f1;color:#1e291d!important;border-color:#fbf9f1}
+.bi-sample-note{max-width:710px;margin:65px auto 0!important;text-align:center;color:var(--bi-ink);opacity:.54;font:500 10px/1.7 'DM Sans',sans-serif}
+.bi-section-top{display:grid;grid-template-columns:120px minmax(0,1fr) 220px;gap:25px;align-items:start;margin-bottom:36px}
+.bi-section-top>h2{font:700 clamp(45px,5.4vw,87px)/.91 'Outfit',sans-serif;letter-spacing:-.075em}
+.bi-section-top>h2 em{font:italic 500 clamp(52px,5.7vw,91px)/.82 'Cormorant Garamond',serif;white-space:normal;color:var(--bi-accent)}
+.bi-section-top>p,.bi-section-top>span:last-child{font:500 11px/1.65 'DM Sans',sans-serif;align-self:center;max-width:250px}
+.bi-filters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 30px}
+.bi-filters button{border:1px solid var(--bi-line);background:transparent;color:var(--bi-ink);padding:10px 17px;font-size:11px;border-radius:0}
+.bi-filters button.selected{background:var(--bi-accent);color:white;border-color:var(--bi-accent)}
+.bi-product-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.bi-product{display:flex;flex-direction:column;min-width:0}
+.bi-product-image{height:315px;background:var(--bi-soft);position:relative;overflow:hidden}
+.bi-product-image img{transition:transform .3s}
+.bi-product:hover img{transform:scale(1.035)}
+.bi-product-image>span{position:absolute;top:13px;left:13px;padding:6px 10px;background:#fbfaf4e8;color:#353129;font-size:9px}
+.bi-product-text{padding:15px 2px 24px}
+.bi-product-text>small{font:700 9px 'DM Sans',sans-serif;letter-spacing:.11em;color:var(--bi-accent)}
+.bi-product-text h3{font:500 clamp(27px,3vw,45px)/1.04 'Cormorant Garamond',serif;margin:11px 0 8px}
+.bi-product-text>p{font:400 12px/1.65 'DM Sans',sans-serif;max-width:340px;opacity:.75;min-height:42px}
+.bi-product-text>div{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid var(--bi-line);padding-top:16px;margin-top:16px}
+.bi-product-text strong{font-size:13px}
+.bi-product-text div span{font-size:9px;font-weight:700;letter-spacing:.08em}
+.bi-product-text div span:hover{text-decoration:underline}
+.bi-toast{position:fixed;right:22px;bottom:25px;z-index:99;padding:16px 20px;max-width:min(440px,90vw);background:#fefcf5;box-shadow:0 10px 35px #0003;color:#171712;display:flex;gap:12px;align-items:center;font-size:12px;line-height:1.4}
+.bi-toast a{font-weight:700;text-decoration:underline;white-space:nowrap}
+.bi-toast button{border:0;background:transparent;font-size:22px}
+.bi-missing{padding:100px 6%}
+.bi-missing h1{font:600 clamp(42px,5vw,72px) 'Cormorant Garamond',serif;margin-bottom:25px}
+
+/* SALON interiors use deliberate burgundy, white, split photography. */
+.bi-editorial{--bi-bg:#fff;--bi-ink:#201c1e;--bi-accent:#870e2b;--bi-soft:#f8f3f3;--bi-line:#dfd8d9}
+.bi-salon-menu-hero{display:grid;grid-template-columns:55% 45%;min-height:590px;background:#faf5f6;margin:24px 0 0}
+.bi-salon-menu-hero>div{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:7% 10%}
+.bi-salon-menu-hero h1{font:700 clamp(64px,7.8vw,120px)/.83 'Outfit',sans-serif;letter-spacing:-.09em;margin:23px 0 31px}
+.bi-salon-menu-hero h1 em{font:italic 500 clamp(72px,8.5vw,129px)/.78 'Cormorant Garamond',serif;letter-spacing:-.075em;white-space:nowrap;color:var(--bi-accent)}
+.bi-salon-menu-hero p{font-size:13px;line-height:1.8;max-width:340px;margin-bottom:23px}
+.bi-salon-menu-hero img{object-position:center 34%}
+.bi-salon-catalog{padding:83px 0}
+.bi-products-salon .bi-product-image{height:340px}
+.bi-products-salon .bi-product:nth-child(2){padding-top:30px}
+.bi-products-salon .bi-product:nth-child(5){padding-top:30px}
+.bi-salon-process{display:grid;grid-template-columns:.78fr 1.2fr;gap:60px;background:#351f28;color:#fff;padding:88px 7%;margin:0 -5.85%}
+.bi-salon-process .bi-label{color:#f0aab8}
+.bi-salon-process h2{font:700 clamp(42px,5.3vw,79px)/.91 'Outfit',sans-serif;letter-spacing:-.076em;margin:22px 0}
+.bi-salon-process h2 em{font:italic 500 1.2em 'Cormorant Garamond',serif;color:#dda2ae}
+.bi-salon-process>div:first-child p{max-width:310px;font-size:12px;line-height:1.7}
+.bi-salon-process>div:last-child{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;align-items:center}
+.bi-salon-process article{border-top:1px solid #ffffff5b;padding-top:21px;align-self:stretch}
+.bi-salon-process article>span{font-size:11px;color:#e7bdc7}
+.bi-salon-process article h3{font:500 39px/1.05 'Cormorant Garamond',serif;margin:24px 0 13px}
+.bi-salon-process article p{font-size:11px;line-height:1.7;color:#e8dee0}
+.bi-salon-room{display:grid;grid-template-columns:1fr .82fr;min-height:520px}
+.bi-salon-room img{object-position:center}
+.bi-salon-room>div{padding:10%;background:#f9f6f5;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.bi-salon-room h2{font:700 clamp(64px,6vw,98px)/.85 'Outfit',sans-serif;letter-spacing:-.09em;margin:24px 0}
+.bi-salon-room p{font-size:13px;line-height:1.7;max-width:390px;margin-bottom:24px}
+
+/* SKINCARE interiors belong to Véra, never the old pink catalogue. */
+.bi-catalogue{--bi-bg:#f3f4ee;--bi-ink:#253126;--bi-accent:#40583e;--bi-soft:#e5e9dc;--bi-line:#cbd1c4;font-family:'Outfit',sans-serif}
+.bi-catalogue .bi-label{font-family:'Outfit',sans-serif;font-weight:500}
+.bi-catalogue .bi-cta,.bi-catalogue .bi-primary{font-family:'Outfit',sans-serif;border-radius:28px}
+.bi-catalogue .bi-filters button{border-radius:25px;font-family:'Outfit',sans-serif}
+.bi-catalogue .bi-section-top h2{font:300 clamp(58px,7vw,104px)/.88 'Outfit',sans-serif;letter-spacing:-.09em}
+.bi-catalogue .bi-section-top h2 em{font:300 1em 'Outfit',sans-serif;color:#98a78f}
+.bi-skin-hero{display:grid;grid-template-columns:49% 51%;min-height:680px;margin-top:21px;background:#1b2d1e;color:#f7f6eb;border-radius:25px;overflow:hidden}
+.bi-skin-hero>div{padding:12% 9%;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.bi-skin-hero .bi-label{color:#bcc9b3}
+.bi-skin-hero h1{font:300 clamp(100px,9vw,151px)/.8 'Outfit',sans-serif;letter-spacing:-.105em;margin:29px 0}
+.bi-skin-hero h1 span{color:#b1bda7}
+.bi-skin-hero p{font:400 15px/1.55 'Outfit',sans-serif;max-width:360px;margin-bottom:28px}
+.bi-skin-hero img{object-position:55% 33%}
+.bi-skin-shop{padding:90px 0}
+.bi-products-skin{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.bi-products-skin .bi-product{background:#f7f8f2;border-radius:23px;overflow:hidden;border:1px solid #dee3d7}
+.bi-products-skin .bi-product-image{height:345px;background:#e7ebde}
+.bi-products-skin .bi-product-text{padding:18px 20px 24px}
+.bi-products-skin .bi-product-text h3{font:400 clamp(26px,2.6vw,39px) 'Outfit',sans-serif;letter-spacing:-.055em}
+.bi-products-skin .bi-product-text>p{font-family:'Outfit',sans-serif}
+.bi-skin-ritual{display:grid;grid-template-columns:50% 50%;background:#e7ece2;border-radius:28px;overflow:hidden;margin:5px 0 42px}
+.bi-skin-ritual>div{padding:75px 11%}
+.bi-skin-ritual h2{font:300 clamp(65px,7vw,107px)/.89 'Outfit',sans-serif;letter-spacing:-.09em;margin:24px 0 38px}
+.bi-skin-ritual article{border-top:1px solid #b7c3b5;padding:14px 0;display:grid;grid-template-columns:115px 1fr;gap:15px;align-items:start}
+.bi-skin-ritual article strong{font-size:10px;letter-spacing:.1em}
+.bi-skin-ritual article p{font-size:12px;line-height:1.65}
+.bi-skin-ritual .bi-cta{margin-top:26px}
+.bi-skin-collection-cta{display:grid;grid-template-columns:.85fr 1fr;gap:0;border-radius:25px;overflow:hidden;min-height:450px}
+.bi-skin-collection-cta>div{padding:10%;background:#31402e;color:#f4f3e8;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.bi-skin-collection-cta .bi-label{color:#cbd7c0}
+.bi-skin-collection-cta h2{font:300 clamp(58px,6vw,95px)/.91 'Outfit',sans-serif;letter-spacing:-.08em;margin:18px 0 21px}
+.bi-skin-collection-cta h2 em{font-style:normal;color:#b7c9a5}
+.bi-skin-collection-cta p{font-size:12px;line-height:1.7;max-width:420px;margin-bottom:21px}
+.bi-skin-collection-cta .bi-cta{background:#f4f3e9;color:#23321d!important;border-color:#f4f3e9}
+
+/* DENTAL interiors: architectural black, sober type, treatment-specific art. */
+.bi-minimal{--bi-bg:#090909;--bi-ink:#f5f2ed;--bi-accent:#e7cfbf;--bi-soft:#241d19;--bi-line:#49403c;font-family:'Manrope',sans-serif}
+.bi-minimal .bi-label{font-family:'Manrope',sans-serif;font-weight:500}
+.bi-minimal .bi-cta,.bi-minimal .bi-primary{background:#f4f1e8;color:#0e0e0e!important;border-color:#f4f1e8;border-radius:26px;font:600 11px 'Manrope',sans-serif}
+.bi-minimal .bi-section-top h2{font:400 clamp(58px,6vw,99px)/.93 'Manrope',sans-serif;letter-spacing:-.075em}
+.bi-minimal .bi-filters button.selected{background:#eeeae3;color:#171515;border-color:#eeeae3}
+.bi-minimal .bi-product-text h3{font:400 clamp(26px,2.5vw,39px) 'Manrope',sans-serif;letter-spacing:-.06em}
+.bi-dental-hero{display:grid;grid-template-columns:55% 45%;min-height:650px;margin-top:15px;background:#1a1513}
+.bi-dental-hero>div{padding:10%;display:flex;flex-direction:column;align-items:start;justify-content:center}
+.bi-dental-hero h1{font:400 clamp(61px,6.2vw,101px)/1 'Manrope',sans-serif;letter-spacing:-.08em;margin:29px 0}
+.bi-dental-hero h1 em{font-style:normal;color:#ccb09d}
+.bi-dental-hero p{font-size:13px;line-height:1.75;max-width:440px;margin-bottom:24px;color:#dfd6ce}
+.bi-dental-hero img{filter:brightness(.73) saturate(.62)}
+.bi-dental-services{padding:88px 0}
+.bi-products-dental{gap:12px}
+.bi-products-dental .bi-product{background:#181616}
+.bi-products-dental .bi-product-image{height:310px;background:#231e1d}
+.bi-products-dental .bi-product-image img{filter:brightness(.81) saturate(.7)}
+.bi-products-dental .bi-product-text{padding:23px 20px 25px}
+.bi-products-dental .bi-product-text>p{color:#d6cbc5}
+.bi-dental-process{background:#f1ece5;color:#1d1713;margin:0 -5.85%;padding:92px 6%}
+.bi-dental-process .bi-label{color:#766250}
+.bi-dental-process h2{font:400 clamp(59px,6.3vw,105px)/.97 'Manrope',sans-serif;letter-spacing:-.085em;margin:21px 0 50px}
+.bi-dental-process>div{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
+.bi-dental-process article{border-top:1px solid #8e8174;padding-top:20px}
+.bi-dental-process article b{font-size:12px}
+.bi-dental-process article h3{font:500 clamp(24px,2.5vw,38px)/1.15 'Manrope',sans-serif;margin:32px 0 17px}
+.bi-dental-process article p{font-size:12px;line-height:1.8;max-width:270px}
+.bi-dental-callout{display:grid;grid-template-columns:1fr 1fr;min-height:560px}
+.bi-dental-callout>div{background:#1e1a18;padding:10%;display:flex;flex-direction:column;justify-content:center;align-items:start}
+.bi-dental-callout h2{font:400 clamp(55px,5.5vw,95px)/.98 'Manrope',sans-serif;letter-spacing:-.075em;margin:24px 0}
+.bi-dental-callout p{font-size:13px;line-height:1.7;max-width:450px;margin-bottom:28px}
+
+/* BOTANICAL interiors: cream, plant shapes and arched objects. */
+.bi-botanical{--bi-bg:#faf9f0;--bi-ink:#374623;--bi-accent:#526934;--bi-soft:#e6eacb;--bi-line:#c5cfa9}
+.bi-botanical .bi-cta,.bi-botanical .bi-primary{border-radius:28px;font-size:11px}
+.bi-botanical .bi-filters button{border-radius:28px}
+.bi-botanical .bi-section-top h2{font:600 clamp(58px,6.8vw,106px)/.87 'Cormorant Garamond',serif;letter-spacing:-.065em}
+.bi-botanical .bi-section-top h2 em{font:italic 600 1.08em 'Cormorant Garamond',serif;color:#889c55}
+.bi-botanical-hero{height:630px;margin-top:17px;position:relative;overflow:hidden;background:#73834a}
+.bi-botanical-hero>img{width:100%;height:100%;object-position:center 52%;filter:brightness(.84) saturate(.8)}
+.bi-botanical-hero:after{position:absolute;content:'';inset:0;background:linear-gradient(90deg,#3143219e,transparent 85%)}
+.bi-botanical-hero>div{position:absolute;z-index:1;left:5%;top:14%;width:min(490px,43%);background:#f7f7e9f0;padding:43px;color:#31421c;border-radius:8px}
+.bi-botanical-hero h1{font:600 clamp(60px,6.4vw,105px)/.86 'Cormorant Garamond',serif;letter-spacing:-.06em;margin:25px 0}
+.bi-botanical-hero h1 em{color:#7f9355}
+.bi-botanical-hero p{font-size:12px;line-height:1.7;max-width:370px;margin-bottom:20px}
+.bi-botanical-shop{padding:80px 0}
+.bi-products-botanical{gap:22px}
+.bi-products-botanical .bi-product-image{height:350px;border-radius:47% 47% 8px 8px;overflow:hidden;background:#d1d9b1}
+.bi-products-botanical .bi-product:nth-child(3n+2) .bi-product-image{background:#c0cfa2}
+.bi-products-botanical .bi-product-text{text-align:center;padding:17px 4px 25px}
+.bi-products-botanical .bi-product-text>p{margin:auto}
+.bi-products-botanical .bi-product-text>div{padding-top:13px}
+.bi-botanical-pair{display:grid;grid-template-columns:1.15fr .8fr;min-height:510px;border-radius:18px;overflow:hidden}
+.bi-botanical-pair>div{padding:11%;background:#4e6134;color:#f7f5e8;display:flex;flex-direction:column;justify-content:center;align-items:start}
+.bi-botanical-pair .bi-label{color:#d6dfbe}
+.bi-botanical-pair h2{font:600 clamp(60px,6.4vw,97px)/.86 'Cormorant Garamond',serif;margin:19px 0}
+.bi-botanical-pair h2 em{color:#c6d59d}
+.bi-botanical-pair p{font-size:12px;line-height:1.75;max-width:360px;margin-bottom:25px}
+.bi-botanical-pair .bi-cta{background:#f5f3e6;color:#3c4c27!important;border-color:#f5f3e6}
+.bi-botanical-process{padding:86px 0}
+.bi-botanical-process>div{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:31px}
+.bi-botanical-process article{border-top:1px solid #b9c6a3;padding:20px 7px}
+.bi-botanical-process article>span{font-size:11px}
+.bi-botanical-process h3{font:600 40px 'Cormorant Garamond',serif;margin:24px 0 9px}
+.bi-botanical-process p{font-size:12px;line-height:1.7;max-width:310px}
+
+/* Product detail: photographic hero, real content, adjustable sample bag. */
+.bi-detail{padding-bottom:65px}
+.bi-detail-grid{display:grid;grid-template-columns:1.06fr .94fr;gap:0;margin-top:24px;min-height:590px}
+.bi-detail-visual{background:var(--bi-soft);position:relative;height:625px;overflow:hidden}
+.bi-detail-visual img{object-position:center 38%}
+.bi-detail-visual>span{position:absolute;bottom:17px;left:18px;color:#232323;background:#ffffffdd;padding:10px;font-size:9px;letter-spacing:.12em}
+.bi-detail-content{display:flex;flex-direction:column;align-items:start;padding:10%;justify-content:center;background:var(--bi-soft)}
+.bi-detail-content h1{font:500 clamp(65px,6.7vw,105px)/.89 'Cormorant Garamond',serif;letter-spacing:-.045em;margin:21px 0}
+.bi-detail-price{font:700 20px 'DM Sans',sans-serif;margin:0 0 20px!important}
+.bi-detail-price span{font:500 10px 'DM Sans',sans-serif}
+.bi-detail-description{font:400 13px/1.75 'DM Sans',sans-serif;max-width:440px;margin-bottom:25px!important}
+.bi-detail-attributes{width:100%;border-top:1px solid var(--bi-line);padding:20px 0;display:flex;gap:20px;flex-wrap:wrap}
+.bi-detail-attributes>div{display:flex;flex-direction:column;gap:9px;min-width:100px}
+.bi-detail-attributes span{font-size:9px;letter-spacing:.12em}
+.bi-detail-attributes strong{font-size:12px}
+.bi-quantity{display:flex;align-items:center;gap:17px;margin:15px 0}
+.bi-quantity>span{font-size:10px;letter-spacing:.1em;margin-right:5px}
+.bi-quantity>button{width:35px;height:35px;background:transparent;border:1px solid var(--bi-line)}
+.bi-quantity output{font-size:14px}
+.bi-detail-content .bi-primary,.bi-detail-content .bi-cta{margin:8px 0}
+.bi-detail-sample{font-size:10px;line-height:1.6;margin-top:19px!important;opacity:.62}
+.bi-detail-below{display:grid;grid-template-columns:1fr 1fr;gap:40px;padding:85px 5%;border-bottom:1px solid var(--bi-line)}
+.bi-detail-below h2{font:500 clamp(52px,5.7vw,91px)/.9 'Cormorant Garamond',serif;margin:23px 0}
+.bi-detail-below p{font-size:13px;line-height:1.75;max-width:470px}
+.bi-detail-points{align-self:center}
+.bi-detail-points>div{display:flex;gap:24px;align-items:center;padding:21px 0;border-bottom:1px solid var(--bi-line)}
+.bi-detail-points span{font-size:11px;color:var(--bi-accent)}
+.bi-detail-points strong{font-size:14px}
+.bi-detail-related{padding:75px 0 30px}
+.bi-detail-related .bi-product-image{height:280px}
+.bi-catalogue .bi-detail-content h1,.bi-catalogue .bi-detail-below h2{font-family:'Outfit',sans-serif;font-weight:300;letter-spacing:-.075em}
+.bi-minimal .bi-detail-content h1,.bi-minimal .bi-detail-below h2{font-family:'Manrope',sans-serif;font-weight:400;letter-spacing:-.065em}
+.bi-botanical .bi-detail-visual{border-radius:45% 45% 10px 10px}
+
+/* Brand stories combine monumental type, an editorial collage and clear beliefs. */
+.bi-about-hero{display:grid;grid-template-columns:54% 46%;min-height:620px;margin-top:22px;background:var(--bi-soft)}
+.bi-about-hero>div{padding:10%;display:flex;flex-direction:column;justify-content:center;align-items:start}
+.bi-about-hero h1{font:500 clamp(57px,6.2vw,99px)/.93 'Cormorant Garamond',serif;letter-spacing:-.06em;margin:24px 0}
+.bi-about-hero p{font:400 13px/1.8 'DM Sans',sans-serif;max-width:430px;margin-bottom:26px}
+.bi-about-hero>img{object-position:center 30%}
+.bi-about-statement{padding:95px 11%;text-align:center;max-width:1050px;margin:auto}
+.bi-about-statement h2{font:500 clamp(54px,6.8vw,108px)/.93 'Cormorant Garamond',serif;letter-spacing:-.055em;margin:22px 0}
+.bi-about-statement p{font-size:13px;line-height:1.8;max-width:610px;margin:auto}
+.bi-about-gallery{display:grid;grid-template-columns:1fr 1.2fr .8fr;gap:12px;align-items:start}
+.bi-about-gallery img{height:410px;object-position:center 40%}
+.bi-about-gallery img:nth-child(2){margin-top:60px;height:490px}
+.bi-about-gallery img:nth-child(3){margin-top:125px;height:345px}
+.bi-about-values{display:grid;grid-template-columns:1fr 1.15fr;gap:55px;padding:115px 3% 85px}
+.bi-about-values h2{font:500 clamp(58px,6vw,92px)/.88 'Cormorant Garamond',serif;margin:25px 0}
+.bi-about-values h2 em{color:var(--bi-accent)}
+.bi-about-values article{display:grid;grid-template-columns:60px 1fr;gap:5px 10px;border-top:1px solid var(--bi-line);padding:22px 0}
+.bi-about-values article span{grid-row:1/3;font-size:10px}
+.bi-about-values article h3{font:500 30px 'Cormorant Garamond',serif}
+.bi-about-values article p{font-size:12px;line-height:1.7}
+.bi-endcta{background:var(--bi-soft);padding:85px 8%;text-align:center;display:flex;align-items:center;flex-direction:column}
+.bi-endcta h2{font:500 clamp(50px,6vw,92px)/.95 'Cormorant Garamond',serif;margin:25px 0 33px;max-width:900px}
+.bi-catalogue .bi-about-hero h1,.bi-catalogue .bi-about-statement h2,.bi-catalogue .bi-about-values h2,.bi-catalogue .bi-endcta h2{font-family:'Outfit',sans-serif;font-weight:300}
+.bi-minimal .bi-about-hero h1,.bi-minimal .bi-about-statement h2,.bi-minimal .bi-about-values h2,.bi-minimal .bi-endcta h2{font-family:'Manrope',sans-serif;font-weight:400}
+.bi-botanical .bi-about-hero{border-radius:18px;overflow:hidden}
+
+/* Booking/contact forms must demonstrate a real customer workflow but
+   must never assert a booking, payment or outgoing message happened. */
+.bi-enquiry-layout{display:grid;grid-template-columns:.93fr 1.07fr;gap:0;margin-top:23px;min-height:720px}
+.bi-enquiry-aside{background:var(--bi-soft);padding:10%;display:flex;flex-direction:column;align-items:start}
+.bi-enquiry-aside h1{font:500 clamp(53px,5.9vw,93px)/.94 'Cormorant Garamond',serif;letter-spacing:-.06em;margin:23px 0}
+.bi-enquiry-aside p{font-size:12px;line-height:1.8;margin-bottom:20px;max-width:420px}
+.bi-enquiry-aside img{width:100%;height:285px;object-position:center 37%;margin-top:auto}
+.bi-enquiry-facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}
+.bi-enquiry-facts span{font-size:8px;letter-spacing:.07em}
+.bi-enquiry-form{background:var(--bi-bg);border:1px solid var(--bi-line);padding:10%;display:flex;flex-direction:column;justify-content:center}
+.bi-enquiry-form form{display:flex;flex-direction:column;gap:18px}
+.bi-enquiry-form h2{font:500 clamp(41px,4.6vw,71px)/1 'Cormorant Garamond',serif;margin:7px 0 12px}
+.bi-enquiry-form label{display:flex;flex-direction:column;gap:10px;font:700 10px 'DM Sans',sans-serif;letter-spacing:.08em}
+.bi-enquiry-form input,.bi-enquiry-form select,.bi-enquiry-form textarea{background:transparent;color:var(--bi-ink);border:1px solid var(--bi-line);padding:15px 14px;min-width:0;width:100%;border-radius:0;font:400 14px 'DM Sans',sans-serif;letter-spacing:0}
+.bi-minimal .bi-enquiry-form select{background:#171310;color:#f6f0eb}
+.bi-form-two{display:grid;grid-template-columns:1fr 1fr;gap:14px;min-width:0}
+.bi-enquiry-form button.bi-primary{width:100%;min-height:52px}
+.bi-privacy{font-size:10px;line-height:1.6;opacity:.6}
+.bi-complete{display:flex;flex-direction:column;align-items:start;gap:22px}
+.bi-complete h2{font:500 clamp(45px,5vw,80px)/.94 'Cormorant Garamond',serif}
+.bi-complete p{font-size:13px;line-height:1.7}
+.bi-contact-extra{padding:90px 5% 30px}
+.bi-contact-extra h2{font:500 clamp(48px,5.8vw,92px)/.96 'Cormorant Garamond',serif;margin:23px 0}
+.bi-contact-extra>div{display:grid;grid-template-columns:1fr 1fr;gap:45px;margin:22px 0 35px}
+.bi-contact-extra h3{font:500 29px 'Cormorant Garamond',serif;margin-bottom:12px}
+.bi-contact-extra p{font-size:12px;line-height:1.75}
+.bi-catalogue .bi-enquiry-aside h1,.bi-catalogue .bi-enquiry-form h2{font-family:'Outfit',sans-serif;font-weight:300}
+.bi-minimal .bi-enquiry-aside h1,.bi-minimal .bi-enquiry-form h2{font-family:'Manrope',sans-serif;font-weight:400}
+.bi-minimal .bi-enquiry-form{background:#120f0e}
+.bi-botanical .bi-enquiry-layout{border-radius:18px;overflow:hidden}
+
+/* Accordion questions, with real buttons. */
+.bi-faq-layout{display:grid;grid-template-columns:.87fr 1.13fr;gap:80px;margin-top:90px;min-height:570px}
+.bi-faq-layout h1{font:500 clamp(57px,6.2vw,99px)/.92 'Cormorant Garamond',serif;margin:24px 0}
+.bi-faq-layout h1 em{color:var(--bi-accent)}
+.bi-faq-layout>div:first-child p{font-size:13px;line-height:1.75;max-width:365px;margin-bottom:26px}
+.bi-faq-accordions section{border-top:1px solid var(--bi-line)}
+.bi-faq-accordions section:last-child{border-bottom:1px solid var(--bi-line)}
+.bi-faq-accordions button{border:0;background:none;color:inherit;width:100%;padding:23px 5px;display:flex;justify-content:space-between;align-items:center;text-align:left;gap:20px;font-size:15px}
+.bi-faq-accordions button b{font-size:20px;font-weight:400}
+.bi-faq-accordions p{font-size:12px;line-height:1.8;max-width:520px;padding-bottom:23px}
+.bi-catalogue .bi-faq-layout h1{font-family:'Outfit',sans-serif;font-weight:300}
+.bi-minimal .bi-faq-layout h1{font-family:'Manrope',sans-serif;font-weight:400}
+
+/* Order prototype with working quantity controls and example message. */
+.bi-bag-head{display:flex;justify-content:space-between;gap:30px;align-items:end;padding:65px 0 42px}
+.bi-bag-head h1{font:500 clamp(57px,6vw,97px)/.9 'Cormorant Garamond',serif;margin:20px 0}
+.bi-bag-head h1 em{color:var(--bi-accent)}
+.bi-bag-head p{font-size:13px;line-height:1.7;max-width:450px}
+.bi-bag-layout{display:grid;grid-template-columns:1.25fr .75fr;gap:45px}
+.bi-bag-lines{border-top:1px solid var(--bi-line)}
+.bi-bag-lines article{display:grid;grid-template-columns:145px 1fr auto;gap:20px;border-bottom:1px solid var(--bi-line);padding:19px 0;align-items:center}
+.bi-bag-lines article img{height:150px}
+.bi-bag-lines article>div span{font-size:10px;letter-spacing:.09em}
+.bi-bag-lines article h3{font:500 34px 'Cormorant Garamond',serif;margin:11px 0}
+.bi-bag-lines article p{font-size:11px}
+.bi-bag-lines article>strong{align-self:start;font-size:14px;white-space:nowrap}
+.bi-bag-quantity{display:flex;gap:15px;align-items:center;margin-top:18px}
+.bi-bag-quantity button{width:30px;height:30px;background:transparent;border:1px solid var(--bi-line)}
+.bi-bag-quantity .bi-remove{border:0;width:auto;font-size:10px;text-decoration:underline}
+.bi-bag-summary{background:var(--bi-soft);padding:34px 27px;height:max-content;position:sticky;top:20px}
+.bi-bag-summary h2{font:500 70px 'Cormorant Garamond',serif;margin:15px 0}
+.bi-bag-summary>p{font-size:12px;margin-bottom:23px}
+.bi-bag-summary>div{display:flex;justify-content:space-between;gap:25px;font-size:12px;border-top:1px solid var(--bi-line);padding:16px 0}
+.bi-bag-summary label{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;margin:12px 0}
+.bi-bag-summary textarea{background:transparent;border:1px solid var(--bi-line);color:var(--bi-ink);padding:12px;width:100%;margin-top:10px;font:400 11px/1.6 'DM Sans',sans-serif;resize:vertical}
+.bi-bag-summary .bi-primary{width:100%}
+.bi-bag-summary .bi-privacy{margin-top:16px}
+.bi-bag-empty{padding:55px 0}
+.bi-bag-empty h2{font:500 50px 'Cormorant Garamond',serif;margin-bottom:15px}
+.bi-bag-empty p{font-size:13px;margin-bottom:22px}
+.bi-catalogue .bi-bag-head h1,.bi-catalogue .bi-bag-lines h3,.bi-catalogue .bi-bag-summary h2{font-family:'Outfit',sans-serif;font-weight:300}
+.bi-botanical .bi-bag-lines img{border-radius:45% 45% 8px 8px}
+
+/* Extra homepage content keeps the references intact and adds a visible
+   invitation to the now-functional deeper pages. */
+.bi-home-extras{background:#f7f3f1;color:#242024;padding:76px 5%;font-family:'DM Sans',sans-serif}
+.bi-extra-heading{max-width:840px}
+.bi-extra-heading h2{font:500 clamp(52px,5.7vw,90px)/.94 'Cormorant Garamond',serif;letter-spacing:-.05em;margin:17px 0}
+.bi-extra-heading p{font-size:13px;line-height:1.7;margin-bottom:40px}
+.bi-extra-options{display:grid;grid-template-columns:1.15fr 1fr .85fr;gap:14px}
+.bi-extra-options a{height:330px;position:relative;overflow:hidden;display:block;background:#ddd}
+.bi-extra-options img{filter:brightness(.7)}
+.bi-extra-options span{position:absolute;left:18px;right:10px;bottom:20px;color:#fff;font:500 clamp(24px,2.8vw,45px)/1 'Cormorant Garamond',serif}
+.bi-extra-catalogue{background:#e8ece2;color:#31412d}
+.bi-extra-catalogue .bi-extra-heading h2{font:300 clamp(57px,6vw,93px)/.94 'Outfit',sans-serif}
+.bi-extra-minimal{background:#0c0c0c;color:#f1eae3}
+.bi-extra-minimal .bi-extra-heading h2{font:400 clamp(57px,6vw,93px)/1 'Manrope',sans-serif}
+.bi-extra-botanical{background:#e9edda;color:#3e4e2b}
+.bi-extra-botanical .bi-extra-options a{border-radius:43% 43% 9px 9px}
+
+@media(max-width:1020px){
+ .bi-section-top{grid-template-columns:95px 1fr;gap:18px}
+ .bi-section-top>p,.bi-section-top>span:last-child{grid-column:2}
+ .bi-skin-hero h1{font-size:91px}
+ .bi-salon-menu-hero h1{font-size:74px}
+ .bi-dental-hero h1{font-size:65px}
+ .bi-botanical-hero h1{font-size:66px}
+ .bi-bag-layout{gap:20px}
+}
+@media(max-width:700px){
+ .bi-inner{padding:0 13px 43px}
+ .bi-trail{padding:13px 0;font-size:8px;gap:6px}
+ .bi-demo-word{font-size:7px}
+ .bi-label{font-size:8px}
+ .bi-cta,.bi-primary{padding:11px 15px;font-size:10px;min-height:39px}
+ .bi-section-top{grid-template-columns:1fr;gap:7px;margin-bottom:21px}
+ .bi-section-top>p,.bi-section-top>span:last-child{grid-column:1;max-width:100%;font-size:10px}
+ .bi-section-top h2{font-size:39px}
+ .bi-section-top h2 em{font-size:45px}
+ .bi-filters{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none;margin-bottom:18px}
+ .bi-filters button{flex-shrink:0;padding:9px 12px;font-size:9px}
+ .bi-product-list{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .bi-product-image{height:185px}
+ .bi-product-image>span{font-size:7px;padding:4px}
+ .bi-product-text{padding:9px 1px 15px}
+ .bi-product-text>small{font-size:7px}
+ .bi-product-text h3{font-size:27px;margin:7px 0}
+ .bi-product-text>p{font-size:9px;line-height:1.5;min-height:42px}
+ .bi-product-text>div{margin-top:10px;padding-top:10px}
+ .bi-product-text strong{font-size:10px}
+ .bi-product-text div span{font-size:7px}
+ .bi-sample-note{margin:35px auto 0!important;font-size:8px}
+ .bi-salon-menu-hero{grid-template-columns:1fr 1fr;min-height:310px;margin-top:10px}
+ .bi-salon-menu-hero>div{padding:14px 7px}
+ .bi-salon-menu-hero h1{font-size:clamp(31px,7.5vw,52px);margin:10px 0 12px}
+ .bi-salon-menu-hero h1 em{font-size:clamp(34px,8vw,55px);white-space:normal}
+ .bi-salon-menu-hero p{font-size:9px;line-height:1.45;margin-bottom:12px}
+ .bi-salon-catalog{padding:37px 0}
+ .bi-products-salon .bi-product-image{height:205px}
+ .bi-products-salon .bi-product:nth-child(2),.bi-products-salon .bi-product:nth-child(5){padding-top:0}
+ .bi-salon-process{grid-template-columns:1fr;gap:25px;padding:42px 21px;margin:0 -13px}
+ .bi-salon-process h2{font-size:43px}
+ .bi-salon-process>div:last-child{gap:10px}
+ .bi-salon-process article h3{font-size:25px;margin:13px 0 6px}
+ .bi-salon-process article p,.bi-salon-process>div:first-child p{font-size:9px}
+ .bi-salon-room{grid-template-columns:1fr 1fr;min-height:290px}
+ .bi-salon-room>div{padding:16px}
+ .bi-salon-room h2{font-size:39px;margin:10px 0}
+ .bi-salon-room p{font-size:9px;line-height:1.4;margin-bottom:12px}
+ .bi-skin-hero{grid-template-columns:55% 45%;min-height:380px;border-radius:10px;margin-top:10px}
+ .bi-skin-hero>div{padding:18px 11px}
+ .bi-skin-hero h1{font-size:clamp(43px,11vw,70px);margin:15px 0}
+ .bi-skin-hero p{font-size:9px;line-height:1.4;margin-bottom:15px}
+ .bi-skin-shop{padding:42px 0}
+ .bi-catalogue .bi-section-top h2{font-size:48px}
+ .bi-products-skin{gap:8px}
+ .bi-products-skin .bi-product{border-radius:11px}
+ .bi-products-skin .bi-product-image{height:180px}
+ .bi-products-skin .bi-product-text{padding:10px}
+ .bi-products-skin .bi-product-text h3{font-size:20px}
+ .bi-skin-ritual{grid-template-columns:1fr 1fr;border-radius:9px}
+ .bi-skin-ritual>div{padding:22px 13px}
+ .bi-skin-ritual h2{font-size:44px;margin:12px 0 20px}
+ .bi-skin-ritual article{display:block}
+ .bi-skin-ritual article p{font-size:9px;margin-top:5px}
+ .bi-skin-collection-cta{min-height:285px;border-radius:9px}
+ .bi-skin-collection-cta>div{padding:20px 12px}
+ .bi-skin-collection-cta h2{font-size:36px}
+ .bi-skin-collection-cta p{font-size:9px}
+ .bi-dental-hero{grid-template-columns:55% 45%;min-height:350px}
+ .bi-dental-hero>div{padding:17px 12px}
+ .bi-dental-hero h1{font-size:clamp(29px,7vw,48px);margin:13px 0}
+ .bi-dental-hero p{font-size:9px;line-height:1.5}
+ .bi-dental-services{padding:42px 0}
+ .bi-minimal .bi-section-top h2{font-size:41px}
+ .bi-products-dental .bi-product-image{height:185px}
+ .bi-products-dental .bi-product-text{padding:13px 10px}
+ .bi-products-dental .bi-product-text h3{font-size:20px}
+ .bi-dental-process{margin:0 -13px;padding:42px 20px}
+ .bi-dental-process h2{font-size:47px;margin:15px 0 25px}
+ .bi-dental-process>div{gap:10px}
+ .bi-dental-process article h3{font-size:17px;margin:18px 0 9px}
+ .bi-dental-process article p{font-size:9px}
+ .bi-dental-callout{grid-template-columns:1fr 1fr;min-height:310px}
+ .bi-dental-callout>div{padding:17px 12px}
+ .bi-dental-callout h2{font-size:33px}
+ .bi-dental-callout p{font-size:9px}
+ .bi-botanical-hero{height:380px}
+ .bi-botanical-hero>div{left:12px;top:48px;width:52%;padding:16px}
+ .bi-botanical-hero h1{font-size:clamp(31px,8vw,51px);margin:14px 0}
+ .bi-botanical-hero p{font-size:9px}
+ .bi-botanical-shop{padding:45px 0}
+ .bi-botanical .bi-section-top h2{font-size:45px}
+ .bi-products-botanical{gap:8px}
+ .bi-products-botanical .bi-product-image{height:190px}
+ .bi-products-botanical .bi-product-text{padding:11px 3px}
+ .bi-products-botanical .bi-product-text h3{font-size:26px}
+ .bi-botanical-pair{grid-template-columns:1fr 1fr;min-height:290px}
+ .bi-botanical-pair>div{padding:15px}
+ .bi-botanical-pair h2{font-size:38px}
+ .bi-botanical-pair p{font-size:9px}
+ .bi-botanical-process{padding:40px 0}
+ .bi-botanical-process>div{gap:10px}
+ .bi-botanical-process h3{font-size:25px;margin:10px 0}
+ .bi-botanical-process p{font-size:9px}
+ .bi-detail-grid{grid-template-columns:1fr;min-height:0;margin-top:12px}
+ .bi-detail-visual{height:370px}
+ .bi-detail-content{padding:25px 20px}
+ .bi-detail-content h1{font-size:60px;margin:13px 0}
+ .bi-detail-description{font-size:11px}
+ .bi-detail-below{grid-template-columns:1fr;padding:45px 4%;gap:20px}
+ .bi-detail-below h2{font-size:54px}
+ .bi-detail-below p{font-size:11px}
+ .bi-detail-points>div{padding:15px 0}
+ .bi-detail-points strong{font-size:11px}
+ .bi-detail-related{padding:39px 0 10px}
+ .bi-detail-related .bi-product-image{height:165px}
+ .bi-about-hero{grid-template-columns:1fr 1fr;min-height:350px}
+ .bi-about-hero>div{padding:17px 12px}
+ .bi-about-hero h1{font-size:clamp(34px,8.8vw,55px);margin:10px 0}
+ .bi-about-hero p{font-size:9px;line-height:1.5;margin-bottom:12px}
+ .bi-about-statement{padding:50px 6%}
+ .bi-about-statement h2{font-size:52px}
+ .bi-about-statement p{font-size:10px}
+ .bi-about-gallery{gap:5px}
+ .bi-about-gallery img{height:165px}
+ .bi-about-gallery img:nth-child(2){height:220px;margin-top:30px}
+ .bi-about-gallery img:nth-child(3){height:155px;margin-top:65px}
+ .bi-about-values{grid-template-columns:1fr;gap:16px;padding:57px 3%}
+ .bi-about-values h2{font-size:56px}
+ .bi-about-values article{padding:15px 0}
+ .bi-about-values article h3{font-size:24px}
+ .bi-about-values article p{font-size:10px}
+ .bi-endcta{padding:50px 6%}
+ .bi-endcta h2{font-size:50px}
+ .bi-enquiry-layout{grid-template-columns:1fr;min-height:0}
+ .bi-enquiry-aside{padding:30px 23px}
+ .bi-enquiry-aside h1{font-size:56px}
+ .bi-enquiry-aside img{height:235px;margin-top:20px}
+ .bi-enquiry-form{padding:30px 21px}
+ .bi-enquiry-form h2{font-size:54px}
+ .bi-form-two{grid-template-columns:1fr}
+ .bi-enquiry-form input,.bi-enquiry-form select,.bi-enquiry-form textarea{font-size:16px;padding:13px}
+ .bi-contact-extra{padding:50px 5%}
+ .bi-contact-extra h2{font-size:49px}
+ .bi-contact-extra>div{gap:12px}
+ .bi-contact-extra h3{font-size:25px}
+ .bi-contact-extra p{font-size:10px}
+ .bi-faq-layout{grid-template-columns:1fr;gap:25px;margin-top:45px}
+ .bi-faq-layout h1{font-size:60px}
+ .bi-faq-accordions button{font-size:12px;padding:18px 0}
+ .bi-faq-accordions p{font-size:11px}
+ .bi-bag-head{align-items:start;flex-direction:column;padding:36px 0}
+ .bi-bag-head h1{font-size:57px}
+ .bi-bag-head p{font-size:11px}
+ .bi-bag-layout{grid-template-columns:1fr;gap:18px}
+ .bi-bag-lines article{grid-template-columns:90px 1fr auto;gap:10px}
+ .bi-bag-lines article img{height:100px}
+ .bi-bag-lines article h3{font-size:26px}
+ .bi-bag-lines article>strong{font-size:10px}
+ .bi-bag-summary{position:static;padding:25px 18px}
+ .bi-bag-summary h2{font-size:54px}
+ .bi-home-extras{padding:50px 14px}
+ .bi-extra-heading h2{font-size:52px}
+ .bi-extra-heading p{font-size:11px}
+ .bi-extra-options{gap:6px;grid-template-columns:repeat(3,minmax(0,1fr))}
+ .bi-extra-options a{height:170px}
+ .bi-extra-options span{font-size:20px;left:7px;bottom:10px;right:5px}
+}
+@media(max-width:375px){
+ .bi-salon-menu-hero h1{font-size:30px}
+ .bi-skin-hero h1{font-size:40px}
+ .bi-dental-hero h1{font-size:28px}
+ .bi-botanical-hero h1{font-size:29px}
+ .bi-product-image{height:160px}
+ .bi-extra-options a{height:145px}
+}
+@media(prefers-reduced-motion:reduce){.bi-wrapper *{scroll-behavior:auto!important;transition:none!important}}
