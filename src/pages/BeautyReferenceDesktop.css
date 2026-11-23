@@ -1,0 +1,185 @@
+/*
+  Reference alignment, DESKTOP ONLY.
+  All original grids and section order are retained. The iframe uses a real
+  1440px desktop viewport even when the parent website is viewed on iPhone.
+*/
+.br-site .br-action,
+.br-site .br-head-book{justify-content:center;text-align:center}
+.br-site .br-action:hover,
+.br-site .br-head-book:hover{filter:brightness(.92)}
+.br-site .br-action:focus-visible,
+.br-site .br-head-book:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.br-olive-product-float a{font:700 9px 'Outfit',sans-serif;text-decoration:underline;text-underline-offset:3px}
+.br-olive-trust span{position:relative;padding-left:11px}
+.br-olive-trust span:before{content:'';width:5px;height:5px;border:1px solid currentColor;border-radius:50%;position:absolute;top:.36em;left:0}
+.br-salon-service-cards>a>div{grid-template-columns:1fr}
+.br-salon-teamgrid article>span small{letter-spacing:.06em}
+.br-dark-tiles a>div{display:flex;align-items:end}
+.br-dark-tiles a>div span{white-space:normal}
+.br-botanical-arches button>small{letter-spacing:.07em}
+.br-botanical-arches button:hover>div,
+.br-botanical-explore button:hover img{filter:brightness(.95)}
+.br-botanical-arches button:focus-visible>div{outline:3px solid #3c4b2b;outline-offset:4px}
+
+@media(min-width:701px){
+ /* SALON: match dense magazine typography, large hairline serif overlaps,
+    three equally wide photographic services, split interior, asymmetric results. */
+ .br-salon .br-head{height:72px;padding-inline:5.4%}
+ .br-salon .br-wordmark{font-size:24px;letter-spacing:-.055em}
+ .br-salon .br-head nav{gap:25px}
+ .br-salon .br-head nav a{font-size:10px}
+ .br-salon-hero-main{height:clamp(580px,46vw,750px);min-height:0;max-height:none;background:#f4edec}
+ .br-salon-hero-main>img:first-of-type{width:58%;height:100%;object-position:50% 31%}
+ .br-salon-title{width:63%;padding-left:6.7%;padding-right:2%;background:linear-gradient(90deg,#f9f5f4 47%,#f9f5f4e8 73%,transparent 100%)}
+ .br-salon-title h1{font:700 clamp(67px,6.4vw,105px)/.89 'Outfit',sans-serif;letter-spacing:-.09em;max-width:730px}
+ .br-salon-title h1 em{font:italic 500 clamp(70px,6.7vw,113px)/.84 'Cormorant Garamond',serif;margin-top:7px;white-space:nowrap}
+ .br-salon-title>p{max-width:280px;font-size:12px}
+ .br-salon-face-two{width:20%;height:44%;right:1.5%;bottom:1.5%;border:7px solid #fff}
+ .br-salon-services{padding:80px 5.3% 88px}
+ .br-salon-results{padding:78px 5.3% 97px}
+ .br-salon-team{padding:77px 5.3% 55px}
+ .br-salon .br-section-line{display:grid;grid-template-columns:105px minmax(0,1fr) 210px;column-gap:25px;align-items:start;margin-bottom:55px}
+ .br-salon .br-section-line>span{letter-spacing:.07em;font-size:9px;align-self:start}
+ .br-salon .br-section-line h2{font:700 clamp(54px,5.8vw,88px)/.9 'Outfit',sans-serif;letter-spacing:-.084em}
+ .br-salon .br-section-line h2 em{font:italic 500 clamp(58px,5.9vw,93px)/.69 'Cormorant Garamond',serif;white-space:nowrap;letter-spacing:-.08em;margin-top:-.23em;margin-left:23%;text-align:left;position:relative;z-index:1}
+ .br-salon .br-section-line>div{padding-top:13px}
+ .br-salon .br-section-line>div>p{font:500 10px/1.6 'DM Sans',sans-serif;letter-spacing:.015em;max-width:190px}
+ .br-salon-service-cards{gap:10px}
+ .br-salon-service-cards>a{height:clamp(305px,27vw,410px)}
+ .br-salon-service-cards>a>div{bottom:22px;left:18px}
+ .br-salon-service-cards h3{font:italic 500 clamp(43px,4.2vw,64px)/.85 'Cormorant Garamond',serif}
+ .br-salon-service-cards small{font-size:10px}
+ .br-salon-about{min-height:575px;background:#faf8f7;grid-template-columns:49% 51%}
+ .br-salon-about-copy{padding:80px 9% 65px 11%}
+ .br-salon-about-copy h2{font:700 clamp(55px,5.9vw,91px)/.83 'Outfit',sans-serif;letter-spacing:-.09em}
+ .br-salon-about-copy h2 em{font:italic 500 clamp(67px,6.6vw,106px)/.77 'Cormorant Garamond',serif;white-space:nowrap;margin-left:18%}
+ .br-salon-reasons{gap:28px 20px;margin-top:43px}
+ .br-salon-reasons strong{font-size:12px}
+ .br-salon-reasons small{font-size:10px;line-height:1.5}
+ .br-salon-interior{height:100%;min-height:575px}
+ .br-salon-interior img{height:100%;width:100%;object-position:55% center}
+ .br-salon-mosaic{grid-template-columns:.9fr .75fr 1.24fr .95fr .7fr;gap:10px;align-items:start}
+ .br-salon-mosaic>div:nth-child(1){margin-top:0}
+ .br-salon-mosaic>div:nth-child(2){margin-top:72px}
+ .br-salon-mosaic>div:nth-child(3){margin-top:18px}
+ .br-salon-mosaic>div:nth-child(4){margin-top:82px}
+ .br-salon-mosaic>div:nth-child(5){margin-top:150px}
+ .br-salon-mosaic img{height:320px}
+ .br-salon-mosaic>div:nth-child(2) img,.br-salon-mosaic>div:nth-child(5) img{height:240px}
+ .br-salon-mosaic>div:nth-child(3) img{height:395px}
+ .br-salon-mosaic small{margin-top:6px;display:block}
+ .br-salon-teamgrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:0;background:#f5f1ef}
+ .br-salon-teamgrid article{height:clamp(375px,36vw,550px);background:#f7f5f3;overflow:hidden}
+ .br-salon-teamgrid article:nth-child(2){background:#f1efed}
+ .br-salon-teamgrid article:nth-child(3){background:#f8f6f4}
+ .br-salon-teamgrid img{height:100%;width:100%;object-position:center 12%;filter:saturate(.82) contrast(.95)}
+ .br-salon-teamgrid article>span{left:12px;bottom:18px;padding:11px 20px;background:#6c505abf;color:#fff;font:italic 500 34px/1 'Cormorant Garamond',serif}
+ .br-salon-teamgrid article>span small{font:600 10px 'DM Sans',sans-serif;margin-top:8px}
+
+ /* SKINCARE: single warm frame, olive photograph on the RIGHT and thin pale
+    typography on the LEFT, restrained off-white editorial content. */
+ .br-olive{background:#ebece7;padding:20px 22px 0}
+ .br-olive .br-head{left:22px;right:22px;top:20px;height:76px;padding-inline:4%;border-radius:18px 18px 0 0;background:transparent}
+ .br-olive .br-head nav a{font-size:10px}
+ .br-olive-hero{height:clamp(650px,52vw,760px);border-radius:20px;overflow:hidden}
+ .br-olive-hero>img{object-position:72% 36%;filter:brightness(.66) saturate(.72)}
+ .br-olive-hero:after{background:linear-gradient(90deg,#0b170cbf 0%,#0b180b98 31%,#0b160a08 85%)}
+ .br-olive-overlay{padding:132px 4.5% 60px;max-width:760px;justify-content:center}
+ .br-olive-overlay h1{font:300 clamp(132px,12.8vw,195px)/.82 'Outfit',sans-serif;letter-spacing:-.095em;margin:25px 0 22px}
+ .br-olive-overlay h1 em{color:#adb49c}
+ .br-olive-overlay>p{font:400 15px/1.52 'Outfit',sans-serif;max-width:290px}
+ .br-olive-trust{margin-top:70px;gap:25px}
+ .br-olive-product-float{right:6%;bottom:130px;width:270px;max-width:27%;background:#464f3cdd;color:#fffaf0;backdrop-filter:blur(12px);border:1px solid #ffffff4d;padding:12px}
+ .br-olive-product-float>img{width:77px;height:85px;object-fit:cover}
+ .br-olive-experts{background:#f6f6f3;padding:62px 5.7% 85px;border-radius:0}
+ .br-olive-expert-top{align-items:start;gap:35px}
+ .br-olive-expert-grid{grid-template-columns:1.07fr .9fr 1.01fr;gap:18px;margin-top:48px}
+ .br-olive-expert-grid h2{font:400 clamp(65px,6.6vw,101px)/.9 'Outfit',sans-serif;letter-spacing:-.075em}
+ .br-olive-expert-photo{height:clamp(335px,33vw,440px);transform:rotate(-6deg);border:0}
+ .br-olive-expert-grid h3{font:300 clamp(63px,6.8vw,103px)/.9 'Outfit',sans-serif}
+ .br-olive-products{background:#f6f6f3;padding:65px 5.7% 85px;border-radius:23px}
+ .br-olive-products-grid{gap:13px;margin-top:38px}
+ .br-olive-products-grid button{background:#eff0ec;border-radius:24px;padding:12px;border:1px solid #daddd6}
+ .br-olive-products-grid img{height:clamp(230px,26vw,355px);border-radius:16px}
+ .br-olive-products-grid strong{font:500 clamp(19px,2.6vw,34px)/1.18 'Outfit',sans-serif}
+ .br-olive-final{min-height:505px;border-radius:22px;overflow:hidden;margin-top:16px}
+ .br-olive .br-footer{margin-top:20px;border-radius:17px 17px 0 0}
+
+ /* DENTAL: warm charcoal outer frame, precision sans display and photo-first
+    hero, then black paired treatment narrative and three image-led services. */
+ .br-dark{background:#211715;padding:23px 24px 0}
+ .br-dark .br-head{top:23px;left:24px;right:24px;height:66px;padding:0 4.5%;background:transparent;border:0}
+ .br-dark .br-wordmark{font:700 20px 'Manrope',sans-serif}
+ .br-dark-hero{height:clamp(645px,49vw,735px);border-radius:12px 12px 0 0;overflow:hidden}
+ .br-dark-hero>img{object-position:72% 40%;filter:brightness(.67) saturate(.8)}
+ .br-dark-hero:after{background:linear-gradient(90deg,#170f0fca 0%,#170f0f70 46%,#160f0f0a 93%)}
+ .br-dark-shade{padding:110px 4.7% 54px;justify-content:center}
+ .br-dark-shade h1{font:400 clamp(70px,6.5vw,106px)/1.04 'Manrope',sans-serif;letter-spacing:-.07em;max-width:780px;white-space:normal}
+ .br-dark-shade h1 em{color:#f4eee7}
+ .br-dark-shade>p{max-width:360px;line-height:1.6}
+ .br-dark-highlights{gap:27px;margin-top:74px}
+ .br-dark-float{width:260px;bottom:29px;right:5%;background:#fffbf4;color:#181210}
+ .br-dark-reasons{grid-template-columns:1fr .9fr .78fr;gap:30px;padding:77px 5% 82px}
+ .br-dark-reasons h2{font:400 clamp(52px,5.2vw,84px)/.97 'Manrope',sans-serif;letter-spacing:-.07em}
+ .br-dark-reasons>img{height:clamp(390px,36vw,525px);object-position:50% center}
+ .br-dark-reasons-list{display:flex;flex-direction:column;grid-column:auto;gap:20px}
+ .br-dark-reasons-list>div{border-bottom:1px solid #ffffff27;padding:0 0 14px}
+ .br-dark-reasons-list strong{font-size:14px}
+ .br-dark-reasons-list p{font-size:11px}
+ .br-dark-services{padding:70px 5% 88px;background:#050505}
+ .br-dark-services>div:first-child{align-items:end;gap:35px}
+ .br-dark-services h2{font:400 clamp(56px,5.9vw,91px)/1 'Manrope',sans-serif}
+ .br-dark-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+ .br-dark-tiles>a{height:clamp(295px,25vw,395px);border-radius:12px}
+ .br-dark-tiles img{object-position:50% 42%;filter:brightness(.85) saturate(.6)}
+ .br-dark-tiles strong{font:500 clamp(13px,1.3vw,18px)/1.3 'Manrope',sans-serif;max-width:180px}
+ .br-dark-fullbleed{min-height:clamp(535px,46vw,665px)}
+ .br-dark-fullbleed img{object-position:55% 37%;filter:brightness(.57) saturate(.65)}
+ .br-dark-fullbleed h2{font:400 clamp(60px,6.3vw,96px)/1.02 'Manrope',sans-serif;letter-spacing:-.07em}
+ .br-dark .br-footer{margin-top:0}
+
+ /* BOTANICAL: olive pedestal image, cream floating card, three product arches
+    and a two-column promotional composition, with no unnecessary iconography. */
+ .br-botanical .br-head{height:64px;padding:0 5%}
+ .br-botanical .br-wordmark{font:700 29px/.95 'Cormorant Garamond',serif;letter-spacing:-.055em}
+ .br-botanical-hero{height:clamp(585px,45vw,690px);background:#77874d}
+ .br-botanical-photo>img{object-position:52% 50%;filter:brightness(.91) saturate(.84)}
+ .br-botanical-photo:after{background:linear-gradient(90deg,#33482150,transparent 76%)}
+ .br-botanical-hero-note{left:5.1%;top:23%;width:355px;max-width:34%;padding:32px 31px;border-radius:11px;background:#faf9f0f5}
+ .br-botanical-hero-note h1{font:700 clamp(60px,5.7vw,92px)/.88 'Cormorant Garamond',serif;letter-spacing:-.065em}
+ .br-botanical-hero-note>small{font:600 9px 'DM Sans',sans-serif}
+ .br-botanical-hero-note p{font-size:12px;line-height:1.65}
+ .br-botanical-ticker{padding:11px 0;background:#e1e9c9}
+ .br-botanical-ticker span{font:600 10px 'DM Sans',sans-serif;letter-spacing:.09em}
+ .br-botanical-collection{padding:78px 5.5% 59px}
+ .br-botanical-collection h2{font:600 clamp(63px,6.6vw,98px)/.89 'Cormorant Garamond',serif;margin:20px 0 47px}
+ .br-botanical-arches{grid-template-columns:repeat(3,minmax(0,1fr));gap:23px;max-width:1130px}
+ .br-botanical-arches button>div{height:clamp(340px,31vw,448px);border-radius:46% 46% 15px 15px;background:#bcc99b}
+ .br-botanical-arches button:nth-child(2)>div{background:#ccd5ae}
+ .br-botanical-arches button:nth-child(3)>div{background:#b7c493}
+ .br-botanical-arches button>div>span{width:82px;height:82px;right:7%;top:10%;background:#e8ebc5;color:#53643b;font-size:9px}
+ .br-botanical-arches button>strong{font:600 clamp(22px,2.4vw,31px)/1.1 'Cormorant Garamond',serif;margin:16px 0 10px}
+ .br-botanical-arches button>small{font-size:9px}
+ .br-botanical-feature{grid-template-columns:1.54fr .77fr;gap:13px;padding:0 3% 65px}
+ .br-botanical-feature>div:first-child{height:clamp(450px,36vw,535px);border-radius:17px}
+ .br-botanical-feature>div:last-child{padding:10%;border-radius:17px;background:#4d6234}
+ .br-botanical-feature h2{font:600 clamp(65px,5.5vw,90px)/.91 'Cormorant Garamond',serif;letter-spacing:-.05em}
+ .br-botanical-feature p{font-size:12px;line-height:1.6}
+ .br-botanical-labels{padding:35px 5%;gap:17px;justify-content:space-evenly}
+ .br-botanical-labels span{font:600 clamp(15px,1.8vw,25px)/1 'Cormorant Garamond',serif}
+ .br-botanical-explore{padding:75px 5.5% 105px}
+ .br-botanical-explore h2{font:600 clamp(63px,6vw,95px)/.88 'Cormorant Garamond',serif}
+ .br-botanical-explore>div:last-child{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+ .br-botanical-explore button img{height:clamp(270px,25vw,390px)}
+}
+@media(min-width:701px) and (max-width:1040px){
+ .br-salon .br-section-line{grid-template-columns:70px minmax(0,1fr) 150px;gap:15px}
+ .br-salon .br-section-line h2{font-size:51px}
+ .br-salon .br-section-line h2 em{font-size:57px}
+ .br-salon-reasons strong{font-size:10px}
+ .br-olive-overlay h1{font-size:115px}
+ .br-olive-expert-grid h2{font-size:65px}
+ .br-dark-shade h1{font-size:65px}
+ .br-dark-reasons h2{font-size:55px}
+ .br-botanical-hero-note h1{font-size:60px}
+}

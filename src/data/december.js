@@ -18,6 +18,15 @@ export const LAYOUTS = [
   { id: 'minimal', label: 'Minimal', description: 'Quiet typography, large images and lots of breathing room.' },
 ]
 
+// Beauty-only reference styles; other industries retain their three existing designs.
+export const BEAUTY_LAYOUTS = [
+  {id:'editorial',label:'Salon Editorial',description:'White and burgundy salon with treatments, results, studio and team.'},
+  {id:'catalogue',label:'Skincare',description:'Olive skincare campaign with product and ritual displays.'},
+  {id:'minimal',label:'Dark Luxury',description:'Cinematic black beauty studio with treatments and service photography.'},
+  {id:'botanical',label:'Botanical',description:'Green skincare store with arched product collections.'},
+]
+export const getLayoutsForIndustry = industry => industry==='beauty' ? BEAUTY_LAYOUTS : LAYOUTS
+
 // These change the scope of the website job, not the basic functionality.
 // Standard product browsing, WhatsApp ordering and routine enquiries are included.
 export const SHARED_ADDONS = [
@@ -60,7 +69,8 @@ export function imageUnitPrice(count) {
 
 export function calculateDecemberQuote({ industry = 'fashion', layout = 'editorial', addons = [], images = 0 } = {}) {
   const selectedIndustry = INDUSTRIES.find(item => item.id === industry) || INDUSTRIES[0]
-  const selectedLayout = LAYOUTS.find(item => item.id === layout) || LAYOUTS[0]
+  const allowedLayouts = getLayoutsForIndustry(selectedIndustry.id)
+  const selectedLayout = allowedLayouts.find(item => item.id === layout) || allowedLayouts[0]
   const chosenIds = new Set(Array.isArray(addons) ? addons : [])
   const selectedAddons = getAvailableAddons(selectedIndustry.id).filter(item => chosenIds.has(item.id))
   const imageCount = Number.isInteger(Number(images)) ? Math.max(0, Math.min(200, Number(images))) : 0

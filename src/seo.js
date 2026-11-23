@@ -1,5 +1,5 @@
 import { services } from './data/services.js'
-import { INDUSTRIES, LAYOUTS } from './data/december.js'
+import { INDUSTRIES, LAYOUTS, getLayoutsForIndustry } from './data/december.js'
 
 export const SITE_URL = 'https://www.qingthecreator.xyz'
 export const SOCIAL_IMAGE = `${SITE_URL}/qing-class-portrait.jpg`
@@ -198,7 +198,7 @@ const industryRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
   })
 ))
 const previewRoutes = Object.fromEntries(INDUSTRIES.flatMap(industry =>
-  LAYOUTS.map(style => {
+  getLayoutsForIndustry(industry.id).map(style => {
     const path = '/' + industry.id + style.id
     return [path, {
       title:industry.label + ' ' + style.label + ' Website Sample | December Sale',
