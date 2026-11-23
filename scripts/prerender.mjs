@@ -122,15 +122,16 @@ console.log('Pre-rendered '+privateUtilityPages.length+' secure utility route en
 // Standalone fashion prototypes use the regular React entrypoint, not the portfolio's SEO body.
 // Emitting a real HTML file for each route makes direct links work with Vercel cleanUrls.
 const fashionPreviewRoutes = [
-  { path: '/fashioneditorial', title: 'LOCO | Fashion Editorial Store Preview' },
-  { path: '/fashioncatalogue', title: 'HER FASHION | Fashion Catalogue and Styling Preview' },
-  { path: '/fashionminimal', title: 'RUSH | Minimal Fashion Fitting Room Preview' },
+  { path: '/fashioneditorial', title: 'MAISON RUE | Fashion Atelier Preview' },
+  { path: '/fashioncatalogue', title: 'ELOMA STUDIO | Fashion Campaign Preview' },
+  { path: '/fashionminimal', title: 'ATELIER 09 | Noir Fashion Preview' },
+  { path: '/fashionbotanical', title: 'VERDANT STUDIO | Olive Fashion Preview' },
 ]
 
 const commercePages = ['shop','looks','about','faq','wishlist','cart']
-const extras = {fashioneditorial:['campaign'],fashioncatalogue:['stylist'],fashionminimal:['fitting-room']}
+const extras = {fashioneditorial:['campaign'],fashioncatalogue:['stylist'],fashionminimal:['fitting-room'],fashionbotanical:[]}
 for (const base of Object.keys(extras)) {
-  const brand=base==='fashioneditorial'?'LOCO':base==='fashioncatalogue'?'HER FASHION':'RUSH'
+  const brand={fashioneditorial:'MAISON RUE',fashioncatalogue:'ELOMA STUDIO',fashionminimal:'ATELIER 09',fashionbotanical:'VERDANT STUDIO'}[base]
   for (const section of [...commercePages,...extras[base]]) {
     fashionPreviewRoutes.push({path:'/'+base+'/'+section,title:brand+' | '+section.replaceAll('-',' ')})
   }
