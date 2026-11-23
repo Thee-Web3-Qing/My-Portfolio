@@ -246,9 +246,9 @@ function Core({ctx}) {
  useEffect(()=>{document.title=(section==='item'?getItem(ctx.store,id)?.title:section?section.charAt(0).toUpperCase()+section.slice(1):'Home')+' | '+ctx.brand.name+' | December Website Preview'},[ctx.brand.name,ctx.store,id,section])
  return <div className={'ix-store ix-store-'+ctx.store.slug+' ix-'+ctx.store.slug+' ix-'+ctx.store.slug+'-'+ctx.style+' ix-'+ctx.style}><Header ctx={ctx} shop={shop}/>{Page}<Footer ctx={ctx}/>{ctx.store.slug==='accessories'&&<Drawer ctx={ctx} shop={shop}/>}</div>
 }
-export default function IndustryStorefront({industry='beauty',style='editorial'}) {
+export default function IndustryStorefront({industry='beauty',style='editorial',rootOverride}) {
  const store=storeData[industry]||storeData.beauty
  const mode=styles.includes(style)?style:'editorial'
- const ctx={store,style:mode,brand:getBrand(store,mode),root:getRoot(store.slug,mode)}
+ const ctx={store,style:mode,brand:getBrand(store,mode),root:rootOverride||getRoot(store.slug,mode)}
  return <Core ctx={ctx}/>
 }
