@@ -19,9 +19,9 @@ const images={
  makeup:p('photo-1740389702808-b63f49277fcc',1050),
  skin:px(6925483,1050),hair:p('photo-1595476108010-b4d1f102b1b1',1050),
  team1:px(5128118,1000),team2:px(26616192,1000),team3:px(33867522,1000),
- serumHero:px(6925487,1800),dropper:px(7795661,1100),product:px(7038150,1100),cream:px(7797010,1100),
- botanics:px(7038185,1600),botanicsAlt:px(7797010,1300),botanicsTwo:px(7795661,950),
- darkSmile:px(20744304,1800),dentalImplant:px(7788499,1000),dentalModel:px(33748060,1000),dentalCosmetic:px(33748059,1000),darkTeam:px(19976577,1200),treatment:px(3845689,1500),detail:px(6812444,1200),
+ serumHero:px(6925487,1800),dropper:px(7795661,1100),product:px(7317129,1100),cream:px(8490091,1100),
+ botanics:px(10496086,1600),botanicsAlt:px(8049838,1300),botanicsTwo:px(7317129,950),
+ darkSmile:px(34683936,1800),dentalImplant:px(6502305,1000),dentalModel:px(6529056,1000),dentalCosmetic:px(4971500,1000),darkTeam:px(37458354,1200),treatment:px(3845626,1500),detail:px(6812444,1200),
 }
 const to=(variant,segment='')=>'/beauty'+variant+(segment?'/'+segment:'')
 function Photo({src,alt,className='',...props}){
