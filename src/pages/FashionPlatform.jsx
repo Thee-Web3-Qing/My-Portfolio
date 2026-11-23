@@ -190,7 +190,7 @@ function PlatformBody({mode}){
  return <div className={'commerce-platform commerce-platform--'+mode}>
   {!home&&<SiteNav config={config} mode={mode}/>}
   {home?homeLanding:commerce}
-  <Footer mode={mode} config={config}/>
+  {!home&&<Footer mode={mode} config={config}/>}
   <Bag shop={shop}/>
  </div>
 }
