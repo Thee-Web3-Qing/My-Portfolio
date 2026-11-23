@@ -3,6 +3,7 @@ import {Link,useLocation} from 'react-router-dom'
 import IndustryStorefront from './IndustryStorefront.jsx'
 import {storeData,money} from './industryStoreData.js'
 import './BeautyReferenceStorefront.css'
+import './BeautyReferenceFidelity.css'
 
 const p=(id,w=1400)=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w='+w+'&q=84'
 const px=(id,w=1200)=>'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&w='+w
@@ -76,26 +77,26 @@ function OliveSkin(){
  const v='catalogue'
  const [chosen,setChosen]=useState(0)
  return <div className="br-site br-olive">
-  <Head variant={v} brand="LUMÉRA" dark/>
+  <Head variant={v} brand="VÉRA SKIN" dark/>
   <section className="br-olive-hero"><Photo src={images.serumHero} alt="Luminous natural skincare editorial portrait"/><div className="br-olive-overlay"><small>SKINCARE, MORE INTENTIONALLY.</small><h1>GLOW<br/><em>BETTER.</em></h1><p>Healthy-looking skin. A little more confidence. A ritual that feels like yours.</p><Action variant={v} section="explore">Explore skin rituals</Action><div className="br-olive-trust"><span>✳ Thoughtful care</span><span>✳ Made for your routine</span><span>✳ Feel-good formulas</span></div></div>
    <div className="br-olive-product-float"><Photo src={images.dropper} alt="Featured botanical serum bottle"/><div><small>THE DAILY RITUAL</small><strong>Everyday Glow</strong><span>EXPLORE ↗</span></div></div>
    <div className="br-olive-counter"><strong>01 / 03</strong><span>THE SKIN STORY</span></div></section>
   <section className="br-olive-experts"><div className="br-olive-expert-top"><div><strong>01</strong><span>YOUR ROUTINE, YOUR WAY</span></div><div><span>BEAUTY THAT GOES BEYOND THE SURFACE.</span><p>Care that makes space for real skin and real life.</p></div></div><div className="br-olive-expert-grid"><div><span>THE PEOPLE BEHIND THE RITUALS</span><h2>Skilled<br/>Skin<br/><em>Experts.</em></h2></div><div className="br-olive-expert-photo"><Photo src={images.skin} alt="Natural skincare face treatment"/><span>DESIGNED TO FEEL GOOD</span></div><div><span>SKIN, AT YOUR PACE.</span><h3>Results-<br/>Driven.</h3><p>Choose what your skin is asking for, and make room for the little moments.</p><Action variant={v} section="explore">View treatments</Action></div></div></section>
   <section className="br-olive-products"><div className="br-olive-heading"><span>02 / YOUR DAILY EDIT</span><h2>Take a tour of<br/><em>your skincare routine.</em></h2><p>Explore the sample collection. Finished client sites use real products, photographs and pricing.</p></div><div className="br-olive-products-grid">{botanicsProducts.slice(0,3).map((item,i)=><button type="button" key={item.name} className={chosen===i?'selected':''} onClick={()=>setChosen(i)}><Photo src={item.img} alt={item.name+' product photograph'}/><span>0{i+1} / THE DAILY EDIT</span><strong>{item.name}</strong><small>{money(item.price)} · DEMO</small></button>)}</div><div className="br-olive-collection-note"><span>SELECTED / {botanicsProducts[chosen].name.toUpperCase()}</span><p>{botanicsProducts[chosen].desc}</p><Action variant={v} section="explore">Discover the full collection</Action></div></section>
   <section className="br-olive-final"><Photo src={images.botanics} alt="Editorial beauty skincare product photography"/><div><span>LET YOUR SKIN SET THE PACE</span><h2>Feel comfortable.<br/><em>Look luminous.</em></h2><Action variant={v} section="book">Explore a skin session</Action></div></section>
-  <Foot variant={v} brand="LUMÉRA"/>
+  <Foot variant={v} brand="VÉRA SKIN"/>
  </div>
 }
 function DarkLuxury(){
  const v='minimal'
  const offerings=[['COSMETIC DENTISTRY',images.darkSmile],['ORTHODONTICS',images.detail],['SMILE CONSULTATIONS',images.treatment]]
  return <div className="br-site br-dark">
-  <Head variant={v} brand="LUMIDENT" dark/>
-  <section className="br-dark-hero"><Photo src={images.darkSmile} alt="Woman smiling naturally with healthy teeth"/><div className="br-dark-shade"><span>THE LUMIDENT STUDIO / CONFIDENCE, CONSIDERED</span><h1>Crafting<br/>Naturally<br/><em>Confident Smiles.</em></h1><p>Dental care inspired by people, shaped with precision, and designed around you.</p><Action variant={v}>Book a consultation</Action><div className="br-dark-highlights"><span>CONSIDERED CARE</span><span>PERSONALISED TREATMENTS</span><span>PRECISION IN THE DETAILS</span></div></div><div className="br-dark-float"><Photo src={images.darkTeam} alt="Professional in a dental treatment clinic"/><div><strong>MEET THE DENTAL TEAM</strong><span>PERSONAL CARE / YOUR COMFORT</span></div></div></section>
+  <Head variant={v} brand="AURA DENTAL" dark/>
+  <section className="br-dark-hero"><Photo src={images.darkSmile} alt="Woman smiling naturally with healthy teeth"/><div className="br-dark-shade"><span>THE AURA DENTAL STUDIO / CONFIDENCE, CONSIDERED</span><h1>Crafting<br/>Naturally<br/><em>Confident Smiles.</em></h1><p>Dental care inspired by people, shaped with precision, and designed around you.</p><Action variant={v}>Book a consultation</Action><div className="br-dark-highlights"><span>CONSIDERED CARE</span><span>PERSONALISED TREATMENTS</span><span>PRECISION IN THE DETAILS</span></div></div><div className="br-dark-float"><Photo src={images.darkTeam} alt="Professional in a dental treatment clinic"/><div><strong>MEET THE DENTAL TEAM</strong><span>PERSONAL CARE / YOUR COMFORT</span></div></div></section>
   <section className="br-dark-reasons"><div><span>CRAFTED WITH PRECISION</span><h2>Why patients<br/>choose<br/><em>LumiDent?</em></h2><p>A calm, comfortable setting for a more personal dental experience.</p></div><Photo src={images.detail} alt="Professional dental chair and treatment equipment"/><div className="br-dark-reasons-list">{[['Experienced professionals','Thoughtful attention, from consultation to aftercare.'],['A considered setting','A welcoming space, with comfort built into the visit.'],['Personalised plans','Treatment options explained clearly and with care.']].map(([a,b])=><div key={a}><strong>{a}</strong><p>{b}</p></div>)}<Action variant={v} section="contact">Meet the team</Action></div></section>
   <section className="br-dark-services"><div><span>OUR SPECIALTIES / THE DENTAL EDIT</span><h2>Comprehensive<br/><em>Dental Care.</em></h2><Action variant={v} section="contact">View services</Action></div><div className="br-dark-tiles">{offerings.map(([name,img])=><Link to={to(v,'contact')} key={name}><Photo src={img} alt={name+' sample service photograph'}/><div><strong>{name}</strong><span>Ask about this treatment <b>↗</b></span></div></Link>)}</div></section>
   <section className="br-dark-fullbleed"><Photo src={images.treatment} alt="Patient during dental consultation"/><div><span>THE ART OF CARE</span><h2>Every Smile<br/><em>Begins With Trust.</em></h2><p>Your consultation is a conversation. We take time to listen, explain and find the next step with you.</p><Action variant={v} section="contact">Book a consultation</Action></div></section>
-  <Foot variant={v} brand="LUMIDENT"/>
+  <Foot variant={v} brand="AURA DENTAL"/>
  </div>
 }
 function BotanicalStore(){
@@ -104,14 +105,14 @@ function BotanicalStore(){
  const current=botanicsProducts[selected]
  return <div className="br-site br-botanical">
   <div className="br-botanical-shipping">A LITTLE EXTRA CARE / YOUR EVERYDAY ROUTINE</div>
-  <Head variant={v} brand="VERDURE BOTANICALS"/>
+  <Head variant={v} brand="FOLIA BOTANICS"/>
   <section className="br-botanical-hero"><div className="br-botanical-photo"><Photo src={images.botanics} alt="Botanical skincare bottles and greenery"/><span>THE BOTANICAL COLLECTION / 2026</span></div><div className="br-botanical-hero-note"><small>THE DECEMBER SKIN EDIT</small><h1>A softer<br/><em>kind of glow.</em></h1><p>Gentle rituals, thoughtful ingredients, and everyday care that feels good.</p><Action variant={v} section="explore">Explore collection</Action></div></section>
   <div className="br-botanical-ticker"><span>SKIN, SIMPLIFIED ✳ THE DAILY RITUAL ✳ NOURISH YOUR GLOW ✳ SKIN, SIMPLIFIED ✳ THE DAILY RITUAL ✳ NOURISH YOUR GLOW ✳</span></div>
   <section className="br-botanical-collection"><span>01 / CURATED FOR YOUR DAILY ROUTINE</span><h2>The featured <em>collection.</em></h2><div className="br-botanical-arches">{botanicsProducts.slice(0,3).map((item,i)=><button key={item.name} type="button" className={selected===i?'selected':''} onClick={()=>setSelected(i)}><div><Photo src={item.img} alt={'Botanical product '+item.name}/><span>{['DAILY CLEANSE','SKIN ESSENTIAL','SOFT MOISTURE'][i]}</span></div><strong>{item.name}</strong><small>VIEW PRODUCT ↗</small></button>)}</div></section>
   <section className="br-botanical-feature"><div><Photo src={current.img} alt={'Selected botanical product '+current.name}/></div><div><span>YOUR NEW FAVOURITE / 02</span><h2>Meet your<br/><em>daily ritual.</em></h2><h3>{current.name}</h3><p>{current.desc} Sample collection, ready to be replaced with your own products and photos.</p><Action variant={v} section="explore">Shop your edit</Action></div></section>
   <div className="br-botanical-labels"><span>THE BOTANICAL EDIT</span><span>THOUGHTFUL CARE</span><span>THE EVERYDAY RITUAL</span><span>VERDURE / 2026</span></div>
   <section className="br-botanical-explore"><div><span>03 / YOUR BEAUTY ROUTINE</span><h2>Good skin days,<br/><em>your way.</em></h2></div><div>{botanicsProducts.slice(1).map((item,i)=><button key={item.name} type="button" onClick={()=>setSelected(i+1)}><Photo src={item.img} alt={item.name+' botanical product'}/><span>DISCOVER 0{i+1}</span><strong>{item.name}</strong></button>)}</div></section>
-  <Foot variant={v} brand="VERDURE BOTANICALS"/>
+  <Foot variant={v} brand="FOLIA BOTANICS"/>
  </div>
 }
 export default function BeautyReferenceStorefront({variant='editorial'}){
