@@ -5,30 +5,20 @@ import {storeData,money} from './industryStoreData.js'
 import './BeautyReferenceStorefront.css'
 
 const p=(id,w=1400)=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w='+w+'&q=84'
+const px=(id,w=1200)=>'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&w='+w
+// Hand-selected free-use photo subjects that match the original page compositions.
 const images={
-  salonHero:p('photo-1524504388940-b1c1722653e1',1600),
-  salonSecond:p('photo-1517841905240-472988babdf9',1000),
-  salonRoom:p('photo-1522335789203-aabd1fc54bc9',1500),
-  nails:p('photo-1604654894610-df63bc536371',950),
-  lashes:p('photo-1487412720507-e7ab37603c6f',950),
-  brows:p('photo-1534528741775-53994a69daeb',950),
-  makeup:p('photo-1524504388940-b1c1722653e1',1050),
-  skin:p('photo-1570172619644-dfd03ed5d881',1050),
-  hair:p('photo-1595476108010-b4d1f102b1b1',1050),
-  team1:p('photo-1534528741775-53994a69daeb',1000),
-  team2:p('photo-1524504388940-b1c1722653e1',1000),
-  team3:p('photo-1517841905240-472988babdf9',1000),
-  serumHero:p('photo-1517841905240-472988babdf9',1800),
-  dropper:p('photo-1608248543803-ba4f8c70ae0b',1100),
-  product:p('photo-1556228578-0d85b1a4d571',1100),
-  cream:p('photo-1571781926291-c477ebfd024b',1100),
-  botanics:p('photo-1608248543803-ba4f8c70ae0b',1600),
-  botanicsAlt:p('photo-1556228578-0d85b1a4d571',1300),
-  botanicsTwo:p('photo-1571781926291-c477ebfd024b',950),
-  darkSmile:p('photo-1524504388940-b1c1722653e1',1800),
-  darkTeam:p('photo-1534528741775-53994a69daeb',1200),
-  treatment:p('photo-1512290923902-8a9f81dc236c',1500),
-  detail:p('photo-1522335789203-aabd1fc54bc9',1000),
+ salonHero:p('photo-1740389702808-b63f49277fcc',1600),
+ salonSecond:p('photo-1524504388940-b1c1722653e1',1000),
+ salonRoom:px(7750090,1500),
+ nails:px(8377206,950),lashes:px(5128234,950),
+ brows:p('photo-1534528741775-53994a69daeb',950),
+ makeup:p('photo-1740389702808-b63f49277fcc',1050),
+ skin:px(6954657,1050),hair:p('photo-1595476108010-b4d1f102b1b1',1050),
+ team1:px(5128118,1000),team2:px(5128191,1000),team3:px(20593111,1000),
+ serumHero:px(6954657,1800),dropper:px(7795661,1100),product:px(7038150,1100),cream:px(7797010,1100),
+ botanics:px(7038150,1600),botanicsAlt:px(7797010,1300),botanicsTwo:px(7795661,950),
+ darkSmile:px(20744304,1800),darkTeam:px(5355856,1200),treatment:px(3845684,1500),detail:px(6812480,1200),
 }
 const serviceItems=storeData.beauty.items
 const to=(variant,segment='')=>'/beauty'+variant+(segment?'/'+segment:'')
@@ -64,7 +54,7 @@ function StudioEditorial(){
  return <div className="br-site br-salon">
   <Head variant={v} brand="MAISON BEAUTÉ"/>
   <section className="br-salon-hero">
-   <div className="br-salon-hero-main"><div className="br-salon-title"><span>THE BEAUTY HOUSE / EST. 2026</span><h1>Beautiful<br/>things begin<br/><em>with you.</em></h1><p>Your beauty, your way. Hair, brows, lashes and nails, all treated with intention.</p><Action variant={v}>Book your beauty moment</Action></div>
+   <div className="br-salon-hero-main"><div className="br-salon-title"><span>THE BEAUTY HOUSE / EST. 2026</span><h1>BEAUTY<br/>IS PERSONAL.<br/><em>It's your moment.</em></h1><p>A little luxury, a lot of attention. Lashes, nails, brows and beautifully considered care.</p><Action variant={v}>Book your beauty moment</Action></div>
    <Photo src={images.salonHero} alt="Elegant portrait for salon hero"/><Photo className="br-salon-face-two" src={images.salonSecond} alt="Second beauty campaign portrait"/><span className="br-salon-heronote">THE ART OF FEELING LIKE YOURSELF</span></div>
   </section>
   <section className="br-salon-services"><div className="br-section-line"><span>OUR SERVICES / 01</span><h2>EVERYTHING YOU NEED FOR <em>complete beauty</em></h2><div><p>From lashes to nails and brows, find a service that feels entirely yours.</p><Action variant={v} section="explore">View all services</Action></div></div>
@@ -90,7 +80,7 @@ function OliveSkin(){
   <section className="br-olive-hero"><Photo src={images.serumHero} alt="Luminous natural skincare editorial portrait"/><div className="br-olive-overlay"><small>SKINCARE, MORE INTENTIONALLY.</small><h1>GLOW<br/><em>BETTER.</em></h1><p>Healthy-looking skin. A little more confidence. A ritual that feels like yours.</p><Action variant={v} section="explore">Explore skin rituals</Action><div className="br-olive-trust"><span>✳ Thoughtful care</span><span>✳ Made for your routine</span><span>✳ Feel-good formulas</span></div></div>
    <div className="br-olive-product-float"><Photo src={images.dropper} alt="Featured botanical serum bottle"/><div><small>THE DAILY RITUAL</small><strong>Everyday Glow</strong><span>EXPLORE ↗</span></div></div>
    <div className="br-olive-counter"><strong>01 / 03</strong><span>THE SKIN STORY</span></div></section>
-  <section className="br-olive-experts"><div className="br-olive-expert-top"><div><strong>01</strong><span>YOUR ROUTINE, YOUR WAY</span></div><div><span>BEAUTY THAT GOES BEYOND THE SURFACE.</span><p>Care that makes space for real skin and real life.</p></div></div><div className="br-olive-expert-grid"><div><span>THE PEOPLE BEHIND THE RITUALS</span><h2>Beautiful skin.<br/><em>Beautifully simple.</em></h2></div><div className="br-olive-expert-photo"><Photo src={images.skin} alt="Natural skincare face treatment"/><span>DESIGNED TO FEEL GOOD</span></div><div><span>SKIN, AT YOUR PACE.</span><h3>A routine<br/>with intention.</h3><p>Choose what your skin is asking for, and make room for the little moments.</p><Action variant={v} section="explore">View treatments</Action></div></div></section>
+  <section className="br-olive-experts"><div className="br-olive-expert-top"><div><strong>01</strong><span>YOUR ROUTINE, YOUR WAY</span></div><div><span>BEAUTY THAT GOES BEYOND THE SURFACE.</span><p>Care that makes space for real skin and real life.</p></div></div><div className="br-olive-expert-grid"><div><span>THE PEOPLE BEHIND THE RITUALS</span><h2>Skilled<br/>Skin<br/><em>Experts.</em></h2></div><div className="br-olive-expert-photo"><Photo src={images.skin} alt="Natural skincare face treatment"/><span>DESIGNED TO FEEL GOOD</span></div><div><span>SKIN, AT YOUR PACE.</span><h3>Results-<br/>Driven.</h3><p>Choose what your skin is asking for, and make room for the little moments.</p><Action variant={v} section="explore">View treatments</Action></div></div></section>
   <section className="br-olive-products"><div className="br-olive-heading"><span>02 / YOUR DAILY EDIT</span><h2>Take a tour of<br/><em>your skincare routine.</em></h2><p>Explore the sample collection. Finished client sites use real products, photographs and pricing.</p></div><div className="br-olive-products-grid">{botanicsProducts.slice(0,3).map((item,i)=><button type="button" key={item.name} className={chosen===i?'selected':''} onClick={()=>setChosen(i)}><Photo src={item.img} alt={item.name+' product photograph'}/><span>0{i+1} / THE DAILY EDIT</span><strong>{item.name}</strong><small>{money(item.price)} · DEMO</small></button>)}</div><div className="br-olive-collection-note"><span>SELECTED / {botanicsProducts[chosen].name.toUpperCase()}</span><p>{botanicsProducts[chosen].desc}</p><Action variant={v} section="explore">Discover the full collection</Action></div></section>
   <section className="br-olive-final"><Photo src={images.botanics} alt="Editorial beauty skincare product photography"/><div><span>LET YOUR SKIN SET THE PACE</span><h2>Feel comfortable.<br/><em>Look luminous.</em></h2><Action variant={v} section="book">Explore a skin session</Action></div></section>
   <Foot variant={v} brand="LUMÉRA"/>
@@ -98,14 +88,14 @@ function OliveSkin(){
 }
 function DarkLuxury(){
  const v='minimal'
- const offerings=[['Skin consultations','skin-reset',images.skin],['Facial treatments','calm-body',images.treatment],['Signature beauty looks','soft-glam',images.makeup]]
+ const offerings=[['COSMETIC DENTISTRY',images.darkSmile],['ORTHODONTICS',images.detail],['SMILE CONSULTATIONS',images.treatment]]
  return <div className="br-site br-dark">
-  <Head variant={v} brand="NOIR BEAUTY" dark/>
-  <section className="br-dark-hero"><Photo src={images.darkSmile} alt="Confident smiling woman in cinematic beauty portrait"/><div className="br-dark-shade"><span>THE ART OF BEAUTY / NOIR STUDIO</span><h1>CRAFTING<br/>NATURAL<br/><em>CONFIDENCE.</em></h1><p>Every detail considered. Every treatment shaped around you.</p><Action variant={v}>BOOK YOUR EXPERIENCE</Action><div className="br-dark-highlights"><span>01 / CONSULTATION FIRST</span><span>02 / CONSIDERED CARE</span><span>03 / PERSONALISED RESULTS</span></div></div><div className="br-dark-float"><Photo src={images.darkTeam} alt="Beauty artist portrait"/><div><strong>MEET THE BEAUTY TEAM</strong><span>THE STUDIO / 2026</span></div></div></section>
-  <section className="br-dark-reasons"><div><span>NOIR BEAUTY, BY DESIGN</span><h2>Why people<br/>choose <em>us.</em></h2><p>A calm setting, a clear conversation, and beauty treatments that feel personal.</p></div><Photo src={images.salonRoom} alt="Beautifully designed treatment studio"/><div className="br-dark-reasons-list">{[['Expert care','Thoughtful, tailored attention to each appointment.'],['An elegant space','A relaxing environment that puts you at ease.'],['Your kind of confidence','Treatments adapted to your own style and goals.']].map(([a,b])=><div key={a}><strong>{a}</strong><p>{b}</p></div>)}<Action variant={v} section="book">Request a visit</Action></div></section>
-  <section className="br-dark-services"><div><span>THE NOIR STUDIO EDIT</span><h2>Comprehensive<br/><em>beauty care.</em></h2><Action variant={v} section="explore">View all services</Action></div><div className="br-dark-tiles">{offerings.map(([a,id,img])=><Link to={to(v,'item/'+id)} key={id}><Photo src={img} alt={a+' sample service photograph'}/><div><strong>{a}</strong><span>Explore service <b>↗</b></span></div></Link>)}</div></section>
-  <section className="br-dark-fullbleed"><Photo src={images.treatment} alt="Beauty treatment and care experience"/><div><span>BEAUTY STARTS WITH TRUST</span><h2>Feel the difference.<br/><em>See the artistry.</em></h2><p>From the first conversation to the finishing touches, we're here for your kind of beautiful.</p><Action variant={v}>Book a consultation</Action></div></section>
-  <Foot variant={v} brand="NOIR BEAUTY"/>
+  <Head variant={v} brand="LUMIDENT" dark/>
+  <section className="br-dark-hero"><Photo src={images.darkSmile} alt="Woman smiling naturally with healthy teeth"/><div className="br-dark-shade"><span>THE LUMIDENT STUDIO / CONFIDENCE, CONSIDERED</span><h1>Crafting<br/>Naturally<br/><em>Confident Smiles.</em></h1><p>Dental care inspired by people, shaped with precision, and designed around you.</p><Action variant={v}>Book a consultation</Action><div className="br-dark-highlights"><span>CONSIDERED CARE</span><span>PERSONALISED TREATMENTS</span><span>PRECISION IN THE DETAILS</span></div></div><div className="br-dark-float"><Photo src={images.darkTeam} alt="Professional in a dental treatment clinic"/><div><strong>MEET THE DENTAL TEAM</strong><span>PERSONAL CARE / YOUR COMFORT</span></div></div></section>
+  <section className="br-dark-reasons"><div><span>CRAFTED WITH PRECISION</span><h2>Why patients<br/>choose<br/><em>LumiDent?</em></h2><p>A calm, comfortable setting for a more personal dental experience.</p></div><Photo src={images.detail} alt="Professional dental chair and treatment equipment"/><div className="br-dark-reasons-list">{[['Experienced professionals','Thoughtful attention, from consultation to aftercare.'],['A considered setting','A welcoming space, with comfort built into the visit.'],['Personalised plans','Treatment options explained clearly and with care.']].map(([a,b])=><div key={a}><strong>{a}</strong><p>{b}</p></div>)}<Action variant={v} section="contact">Meet the team</Action></div></section>
+  <section className="br-dark-services"><div><span>OUR SPECIALTIES / THE DENTAL EDIT</span><h2>Comprehensive<br/><em>Dental Care.</em></h2><Action variant={v} section="contact">View services</Action></div><div className="br-dark-tiles">{offerings.map(([name,img])=><Link to={to(v,'contact')} key={name}><Photo src={img} alt={name+' sample service photograph'}/><div><strong>{name}</strong><span>Ask about this treatment <b>↗</b></span></div></Link>)}</div></section>
+  <section className="br-dark-fullbleed"><Photo src={images.treatment} alt="Patient during dental consultation"/><div><span>THE ART OF CARE</span><h2>Every Smile<br/><em>Begins With Trust.</em></h2><p>Your consultation is a conversation. We take time to listen, explain and find the next step with you.</p><Action variant={v} section="contact">Book a consultation</Action></div></section>
+  <Foot variant={v} brand="LUMIDENT"/>
  </div>
 }
 function BotanicalStore(){
