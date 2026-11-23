@@ -5,6 +5,7 @@ import { fashionInventory, fashionLooks } from '../src/pages/fashionInventory.js
 import { giftProducts, giftBrands } from '../src/pages/giftStoreData.js'
 import { allPaths as industryPaths,storeData as industryData } from '../src/pages/industryStoreData.js'
 import { beautyCollections } from '../src/pages/beautySiteContent.js'
+import {eventOffers} from '../src/pages/eventsReferenceData.js'
 
 const distDirectory = new URL('../dist/', import.meta.url)
 const templatePath = new URL('index.html', distDirectory)
@@ -241,6 +242,26 @@ for (const [variant,brand] of Object.entries(beautyCollections)){
  }
 }
 console.log('Pre-rendered '+beautyRouteCount+' brand-specific beauty routes, including all direct product and booking links.')
+
+/* Each editorial event brand has its own independently built pages. Vercel
+ * cleanUrls requires real static entrypoints for direct links and refresh. */
+const eventRoutes=['explore','agenda','speakers','about','contact','plan','faq','stories','showreel']
+let eventRouteCount=0
+for(const [variant,items] of Object.entries(eventOffers)){
+ const prefix='/events'+variant
+ const routes=[prefix,...eventRoutes.map(s=>prefix+'/'+s),...items.map(p=>prefix+'/item/'+p.id)]
+ for(const pathname of routes){
+  const name=variant==='editorial'?'CONVERGE / 26':variant==='catalogue'?'THE LIVE LAB':variant==='minimal'?'ODDLY STUDIO':'GOOD COMPANY'
+  const suffix=pathname.slice(prefix.length).replace(/^\/+/,'')
+  const html=cleanedTemplate.replace('</head>','<title>'+escapeHtml((suffix?suffix.replaceAll('/',' · ')+' | ':'')+name)+' | December Website Preview</title><meta name="description" content="Original independent events and creatives demonstration. Explore sessions, creative projects, example packages and working enquiry forms." /><meta name="robots" content="noindex, nofollow" />\n  </head>')
+  const output=outputPathForRoute(pathname)
+  await mkdir(dirname(output),{recursive:true})
+  await writeFile(output,html)
+  eventRouteCount++
+ }
+}
+console.log('Pre-rendered '+eventRouteCount+' independent events and creative website pages.')
+
 
 
 console.log(`Pre-rendered ${publicPaths.length} public portfolio routes.`)
