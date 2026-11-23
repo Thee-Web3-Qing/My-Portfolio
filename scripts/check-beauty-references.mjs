@@ -8,6 +8,7 @@ try{
  const {default:BeautyReferenceStorefront}=await vite.ssrLoadModule('/src/pages/BeautyReferenceStorefront.jsx')
  const {default:FashionPlatform}=await vite.ssrLoadModule('/src/pages/FashionPlatform.jsx')
  const {calculateDecemberQuote,getLayoutsForIndustry,BASE_PRICE}=await vite.ssrLoadModule('/src/data/december.js')
+ const {beautyCollections}=await vite.ssrLoadModule('/src/pages/beautySiteContent.js')
  const styleMarkers={
   editorial:['br-salon','br-salon-service-cards','br-salon-about','br-salon-mosaic','br-salon-teamgrid'],
   catalogue:['br-olive','br-olive-product-float','br-olive-expert-grid','br-olive-products-grid'],
@@ -19,9 +20,25 @@ try{
   const html=renderToStaticMarkup(React.createElement(StaticRouter,{location:route},React.createElement(BeautyReferenceStorefront,{variant:style})))
   for(const marker of markers)if(!html.includes(marker))throw Error('Beauty '+style+' lacks '+marker)
   if(html.length<2500)throw Error('Beauty '+style+' page unexpectedly small')
-  const sub=renderToStaticMarkup(React.createElement(StaticRouter,{location:route+'/explore'},React.createElement(BeautyReferenceStorefront,{variant:style})))
-  if(!sub.includes('ix-store-beauty')||!sub.includes(route+'/item/'))throw Error('Beauty '+style+' browse route broken')
-  console.log('PASS: '+route+' reference sections and linked browse page')
+  const pages=['explore','about','contact','book','faq','bag','item/'+beautyCollections[style].items[0].id]
+  for(const suffix of pages){
+   const target=route+'/'+suffix
+   const content=renderToStaticMarkup(React.createElement(StaticRouter,{location:target},React.createElement(BeautyReferenceStorefront,{variant:style})))
+   if(content.includes('ix-store-beauty'))throw Error('Legacy mismatched beauty layout leaked into '+target)
+   if(!content.includes('bi-wrapper bi-'+style))throw Error('Missing matched branding on '+target)
+   if(content.length<3500)throw Error('Subpage unexpectedly empty: '+target)
+   if(!content.includes(beautyCollections[style].brand))throw Error('Wrong brand on '+target)
+   if(suffix==='explore'){
+    for(const item of beautyCollections[style].items){
+     if(!content.includes('/item/'+item.id))throw Error('Unlinked item '+item.id+' on '+target)
+    }
+   }
+   if(suffix==='book'&&!content.includes('type="date"'))throw Error('Booking controls missing: '+target)
+   if(suffix.startsWith('item/')&&!content.includes('bi-detail-visual'))throw Error('Product detail missing: '+target)
+   if(suffix==='bag'&&!content.includes('bi-bag-summary'))throw Error('Sample order summary missing: '+target)
+   if(suffix==='contact'&&!content.includes('PREVIEW'))throw Error('Demo enquiry form missing: '+target)
+  }
+  console.log('PASS: '+route+' reference home, matching catalogue, product, about, contact, booking, FAQ and sample order routes')
  }
  for(const mode of ['editorial','catalogue','minimal']){
   const page=renderToStaticMarkup(React.createElement(StaticRouter,{location:'/fashion'+mode},React.createElement(FashionPlatform,{mode})))
