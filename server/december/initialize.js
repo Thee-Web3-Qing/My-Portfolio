@@ -1,4 +1,4 @@
-import { INDUSTRIES, LAYOUTS, calculateDecemberQuote, getAvailableAddons } from '../../src/data/december.js'
+import { INDUSTRIES, getLayoutsForIndustry, calculateDecemberQuote, getAvailableAddons } from '../../src/data/december.js'
 import { configuredKey, db, environment, makeReference, initializePayment } from '../../api/_lib/payments.js'
 
 const good = (value, max) => typeof value === 'string' && value.trim().length >= 2 && value.trim().length <= max
@@ -9,7 +9,7 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed.' })
   if (!configuredKey() || !process.env.DATABASE_URL) return res.status(503).json({ error: 'Payment setup is not complete.' })
   const b = typeof req.body === 'object' && req.body ? req.body : {}
-  if (!INDUSTRIES.some(x => x.id === b.industry) || !LAYOUTS.some(x => x.id === b.layout)) return res.status(400).json({ error:'Choose a valid industry and layout.' })
+  if (!INDUSTRIES.some(x => x.id === b.industry) || !getLayoutsForIndustry(b.industry).some(x => x.id === b.layout)) return res.status(400).json({ error:'Choose a valid industry and layout.' })
   const availableIds = new Set(getAvailableAddons(b.industry).map(x=>x.id))
   if (!Array.isArray(b.addons) || b.addons.length > availableIds.size ||
     b.addons.length !== new Set(b.addons).size ||
