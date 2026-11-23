@@ -29,7 +29,8 @@ try{
     if(!html.includes('ev-foot'))throw Error('Homepage missing footer '+url)
    }
    if(url.endsWith('/explore')){
-    if(!html.includes('ev-inner-projects'))throw Error('Industry project collection missing '+url)
+    const correct={editorial:'vx-conference-programme',catalogue:'vx-merch-projects',minimal:'vx-creative-work',playful:'vx-festival-programme'}
+    if(!html.includes(correct[variant]))throw Error('Wrong project layout for '+variant+' on '+url)
     for(const p of items)if(!html.includes('/item/'+p.id))throw Error('Missing project link '+p.id+' '+url)
    }
    if(url.endsWith('/plan')&&(!html.includes('type="email"')||!html.includes('YOUR INTEREST')))throw Error('Enquiry controls missing '+url)
