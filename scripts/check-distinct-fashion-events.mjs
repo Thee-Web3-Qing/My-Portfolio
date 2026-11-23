@@ -1,6 +1,6 @@
 import React from 'react'
 import {createServer} from 'vite'
-import {renderToStaticMarkup} from 'react-dom/server.js'
+import {renderToStaticMarkup} from 'react-dom/server'
 import {StaticRouter} from 'react-router-dom/server.js'
 import {access} from 'node:fs/promises'
 import {fashionInventory,fashionLooks} from '../src/pages/fashionInventory.js'

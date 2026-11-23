@@ -34,7 +34,7 @@ try{
     for(const p of items)if(!html.includes('/item/'+p.id))throw Error('Missing project link '+p.id+' '+url)
    }
    if(url.endsWith('/plan')&&(!html.includes('type="email"')||!html.includes('YOUR INTEREST')))throw Error('Enquiry controls missing '+url)
-   if(url.includes('/item/')&&!html.includes('ev-inner-detail'))throw Error('Detail page missing '+url)
+   if(url.includes('/item/')&&!html.includes('vx-detail-'+variant))throw Error('Brand-specific detail page missing '+url)
    total++
   }
   console.log('PASS: '+root+' matched desktop reference composition and all '+paths.length+' deep-linked pages.')
