@@ -48,10 +48,11 @@ try{
   if(page.length<3000)throw Error('Fashion '+mode+' unexpectedly changed or crashed')
  }
  if(BASE_PRICE!==100000)throw Error('December base price changed')
- for(const industry of ['fashion','food','gifts','events','accessories','hospitality']){
+ for(const industry of ['fashion','food','gifts','accessories','hospitality']){
   if(getLayoutsForIndustry(industry).length!==3)throw Error('Non-beauty layouts changed: '+industry)
  }
  if(getLayoutsForIndustry('beauty').length!==4)throw Error('Beauty fourth layout missing')
+ if(getLayoutsForIndustry('events').length!==4)throw Error('Events fourth reference layout missing')
  const quote=calculateDecemberQuote({industry:'beauty',layout:'botanical',addons:[],images:0})
  if(quote.layout.id!=='botanical'||quote.total!==100000||quote.deposit!==60000)throw Error('Botanical quote or deposit invalid')
  console.log('PASS: All original fashion variants, industry options and December prices remain intact.')
