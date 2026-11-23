@@ -15,11 +15,11 @@ const images={
  nails:px(8377206,950),lashes:px(5128234,950),
  brows:p('photo-1534528741775-53994a69daeb',950),
  makeup:p('photo-1740389702808-b63f49277fcc',1050),
- skin:px(6954657,1050),hair:p('photo-1595476108010-b4d1f102b1b1',1050),
- team1:px(5128118,1000),team2:px(5128191,1000),team3:px(20593111,1000),
- serumHero:px(6954657,1800),dropper:px(7795661,1100),product:px(7038150,1100),cream:px(7797010,1100),
- botanics:px(7038150,1600),botanicsAlt:px(7797010,1300),botanicsTwo:px(7795661,950),
- darkSmile:px(20744304,1800),darkTeam:px(5355856,1200),treatment:px(3845684,1500),detail:px(6812480,1200),
+ skin:px(6925483,1050),hair:p('photo-1595476108010-b4d1f102b1b1',1050),
+ team1:px(5128118,1000),team2:px(26616192,1000),team3:px(33867522,1000),
+ serumHero:px(6925487,1800),dropper:px(7795661,1100),product:px(7038150,1100),cream:px(7797010,1100),
+ botanics:px(7038185,1600),botanicsAlt:px(7797010,1300),botanicsTwo:px(7795661,950),
+ darkSmile:px(20744304,1800),dentalImplant:px(7788499,1000),dentalModel:px(33748060,1000),dentalCosmetic:px(33748059,1000),darkTeam:px(19976577,1200),treatment:px(3845689,1500),detail:px(6812444,1200),
 }
 const serviceItems=storeData.beauty.items
 const to=(variant,segment='')=>'/beauty'+variant+(segment?'/'+segment:'')
@@ -43,7 +43,7 @@ function Foot({variant,brand}){
  return <footer className="br-footer">
   <div><span>GOOD BEAUTY, GOOD PEOPLE.</span><h2>{brand}</h2><p>{variant==='botanical'?'Your everyday essentials, considered from beginning to end.':variant==='minimal'?'A different kind of dental experience, designed around you.':'Your next favourite beauty moment starts here.'}</p></div>
   <div><Link to={to(variant,'explore')}>{variant==='botanical'?'Shop collection':'Explore services'}</Link><Link to={to(variant,variant==='botanical'?'explore':'book')}>{variant==='botanical'?'View the edit':variant==='minimal'?'Book consultation':'Book a session'}</Link><Link to={to(variant,'contact')}>Contact us</Link></div>
-  <small>Illustrative concept by Qing The Creator. All photographs, products, prices and services are sample content, not live inventory or appointment availability.</small>
+  <small>Design sample by Qing The Creator. Photography, prices and availability are illustrative.</small>
  </footer>
 }
 function Action({variant,children,section='book',className=''}){return <Link className={'br-action '+className} to={to(variant,section)}>{children}</Link>}
@@ -89,7 +89,7 @@ function OliveSkin(){
 }
 function DarkLuxury(){
  const v='minimal'
- const offerings=[['COSMETIC DENTISTRY',images.darkSmile],['ORTHODONTICS',images.detail],['SMILE CONSULTATIONS',images.treatment]]
+ const offerings=[['DENTAL IMPLANTS',images.dentalImplant],['ORTHODONTICS',images.dentalModel],['COSMETIC DENTISTRY',images.dentalCosmetic]]
  return <div className="br-site br-dark">
   <Head variant={v} brand="AURA DENTAL" dark/>
   <section className="br-dark-hero"><Photo src={images.darkSmile} alt="Woman smiling naturally with healthy teeth"/><div className="br-dark-shade"><span>THE AURA DENTAL STUDIO / CONFIDENCE, CONSIDERED</span><h1>Crafting<br/>Naturally<br/><em>Confident Smiles.</em></h1><p>Dental care inspired by people, shaped with precision, and designed around you.</p><Action variant={v} section="contact">Book a consultation</Action><div className="br-dark-highlights"><span>CONSIDERED CARE</span><span>PERSONALISED TREATMENTS</span><span>PRECISION IN THE DETAILS</span></div></div><div className="br-dark-float"><Photo src={images.darkTeam} alt="Professional in a dental treatment clinic"/><div><strong>MEET THE DENTAL TEAM</strong><span>PERSONAL CARE / YOUR COMFORT</span></div></div></section>
@@ -110,7 +110,7 @@ function BotanicalStore(){
   <div className="br-botanical-ticker"><span>SKIN, SIMPLIFIED / THE DAILY RITUAL / NOURISH YOUR GLOW / SKIN, SIMPLIFIED / THE DAILY RITUAL / NOURISH YOUR GLOW</span></div>
   <section className="br-botanical-collection"><span>01 / CURATED FOR YOUR DAILY ROUTINE</span><h2>The featured <em>collection.</em></h2><div className="br-botanical-arches">{botanicsProducts.slice(0,3).map((item,i)=><button key={item.name} type="button" className={selected===i?'selected':''} onClick={()=>setSelected(i)}><div><Photo src={item.img} alt={'Botanical product '+item.name}/><span>{['DAILY CLEANSE','SKIN ESSENTIAL','SOFT MOISTURE'][i]}</span></div><strong>{item.name}</strong><small>VIEW PRODUCT</small></button>)}</div></section>
   <section className="br-botanical-feature"><div><Photo src={current.img} alt={'Selected botanical product '+current.name}/></div><div><span>YOUR NEW FAVOURITE / 02</span><h2>Meet your<br/><em>daily ritual.</em></h2><h3>{current.name}</h3><p>{current.desc} Sample collection, ready to be replaced with your own products and photos.</p><Action variant={v} section="explore">Shop your edit</Action></div></section>
-  <div className="br-botanical-labels"><span>THE BOTANICAL EDIT</span><span>THOUGHTFUL CARE</span><span>THE EVERYDAY RITUAL</span><span>VERDURE / 2026</span></div>
+  <div className="br-botanical-labels"><span>THE BOTANICAL EDIT</span><span>THOUGHTFUL CARE</span><span>THE EVERYDAY RITUAL</span><span>FOLIA / 2026</span></div>
   <section className="br-botanical-explore"><div><span>03 / YOUR BEAUTY ROUTINE</span><h2>Good skin days,<br/><em>your way.</em></h2></div><div>{botanicsProducts.slice(1).map((item,i)=><button key={item.name} type="button" onClick={()=>setSelected(i+1)}><Photo src={item.img} alt={item.name+' botanical product'}/><span>DISCOVER 0{i+1}</span><strong>{item.name}</strong></button>)}</div></section>
   <Foot variant={v} brand="FOLIA BOTANICS"/>
  </div>
