@@ -1,7 +1,7 @@
 import {useEffect,useState} from 'react'
 import {Link,useLocation} from 'react-router-dom'
-import IndustryStorefront from './IndustryStorefront.jsx'
-import {storeData,money} from './industryStoreData.js'
+import BeautyInnerPages,{BeautyHomeExtras} from './BeautyInnerPages.jsx'
+import {money} from './industryStoreData.js'
 import './BeautyReferenceStorefront.css'
 import './BeautyReferenceFidelity.css'
 import './BeautyReferenceDesktop.css'
@@ -22,7 +22,6 @@ const images={
  botanics:px(7038185,1600),botanicsAlt:px(7797010,1300),botanicsTwo:px(7795661,950),
  darkSmile:px(20744304,1800),dentalImplant:px(7788499,1000),dentalModel:px(33748060,1000),dentalCosmetic:px(33748059,1000),darkTeam:px(19976577,1200),treatment:px(3845689,1500),detail:px(6812444,1200),
 }
-const serviceItems=storeData.beauty.items
 const to=(variant,segment='')=>'/beauty'+variant+(segment?'/'+segment:'')
 function Photo({src,alt,className='',...props}){
  const [err,setErr]=useState(false)
@@ -34,9 +33,13 @@ function Head({variant,brand,dark=false}){
  return <header className={'br-head'+(dark?' br-head-dark':'')}>
   <Link to={to(variant)} className="br-wordmark">{brand}</Link>
   <nav className={open?'br-open':''} aria-label="Beauty demo navigation">
-    <Link to={to(variant)}>Home</Link><Link to={to(variant,'explore')}>{variant==='botanical'?'Shop the collection':variant==='minimal'?'Dental treatments':'Services & treatments'}</Link><Link to={to(variant,'about')}>Our story</Link><Link to={to(variant,'contact')}>Contact</Link>
+    <Link onClick={()=>setOpen(false)} to={to(variant)}>Home</Link>
+    <Link onClick={()=>setOpen(false)} to={to(variant,'explore')}>{variant==='botanical'?'Shop the collection':variant==='catalogue'?'Shop skincare':variant==='minimal'?'Dental treatments':'Services & treatments'}</Link>
+    <Link onClick={()=>setOpen(false)} to={to(variant,'about')}>{variant==='catalogue'?'Our philosophy':variant==='minimal'?'The practice':'Our story'}</Link>
+    <Link onClick={()=>setOpen(false)} to={to(variant,'contact')}>Contact</Link>
+    {(variant==='catalogue'||variant==='botanical')&&<Link onClick={()=>setOpen(false)} to={to(variant,'bag')}>Your sample bag</Link>}
   </nav>
-  <Link to={to(variant,variant==='botanical'?'explore':'book')} className="br-head-book">{variant==='botanical'?'Shop now':variant==='minimal'?'Book consultation':'Book a session'} </Link>
+  <Link to={to(variant,(variant==='botanical'||variant==='catalogue')?'explore':'book')} className="br-head-book">{variant==='botanical'?'Shop now':variant==='catalogue'?'Find your routine':variant==='minimal'?'Book consultation':'Book a session'}</Link>
   <button className="br-menu" aria-label="Toggle navigation" aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open?'Close':'Menu'}</button>
  </header>
 }
@@ -125,9 +128,15 @@ export default function BeautyReferenceStorefront({variant='editorial'}){
   document.title=(labels[variant]||labels.editorial)+' | December Website Preview'
  },[variant])
  if(pathname!==root){
-   return <IndustryStorefront industry="beauty" style={variant==='botanical'?'catalogue':variant} rootOverride={root}/>
+  const pageClasses={editorial:'br-salon',catalogue:'br-olive',minimal:'br-dark',botanical:'br-botanical'}
+  const brandNames={editorial:'MAISON BEAUTÉ',catalogue:'VÉRA SKIN',minimal:'AURA DENTAL',botanical:'FOLIA BOTANICS'}
+  return <div className={'br-site '+pageClasses[variant]}>
+   <Head variant={variant} brand={brandNames[variant]} dark={variant==='minimal'||variant==='catalogue'}/>
+   <BeautyInnerPages variant={variant} root={root} Photo={Photo}/>
+   <Foot variant={variant} brand={brandNames[variant]}/>
+  </div>
  }
  const pages={editorial:StudioEditorial,catalogue:OliveSkin,minimal:DarkLuxury,botanical:BotanicalStore}
  const Page=pages[variant]||StudioEditorial
- return <Page/>
+ return <><Page/><BeautyHomeExtras variant={variant} Photo={Photo}/></>
 }
