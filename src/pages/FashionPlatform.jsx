@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { FashionCatalogue, FashionEditorial, FashionMinimal, FashionStoreProvider, useStore, Bag } from './FashionReference.jsx'
 import { fashionImage, fashionInventory, fashionLooks, fashionCategories, getFashionProduct, getFashionLook, fashionMoney as money } from './fashionInventory.js'
 import './fashionCommerce.css'
+import FashionDistinctPages from './FashionDistinctPages.jsx'
 
 const CONFIG = {
  editorial: { root: '/fashioneditorial', name: 'LOCO', subtitle: 'FEEL THE VIBES', accent: '#de4b3a', hero: fashionImage['campaign-bright'], tone: 'editorial' },
@@ -175,16 +176,15 @@ function PlatformBody({mode}){
  const home=!section
  const homeLanding=mode==='editorial'?<FashionEditorial/>:mode==='catalogue'?<FashionCatalogue/>:<FashionMinimal/>
  const shop=useStore()
- const commerce = section==='shop'?<ShopPage key={location.search} config={config}/>:
- section==='product'?<ProductPage config={config} key={segment} id={segment}/>:
- section==='looks'?<LooksPage config={config} key={segment||'all'} lookId={segment}/>:
- section==='about'?<AboutPage config={config}/>:
- section==='faq'?<FAQPage config={config}/>:
- section==='cart'?<CartPage config={config}/>:
- section==='wishlist'?<WishlistPage config={config}/>:
- section==='fitting-room'&&mode==='minimal'?<FashionMinimal/>:
- section==='stylist'&&mode==='catalogue'?<FashionCatalogue/>:
- section==='campaign'&&mode==='editorial'?<FashionEditorial/>:<NotFound config={config}/>
+ const distinct=['shop','product','looks','about','faq'].includes(section)
+ const commerce = distinct
+ ? <FashionDistinctPages key={section==='product'?(segment||'missing'):section==='shop'?location.search:section==='looks'?(segment||'all'):section} mode={mode} section={section} id={segment} config={config}/>
+ : section==='cart'?<CartPage config={config}/>
+ : section==='wishlist'?<WishlistPage config={config}/>
+ : section==='fitting-room'&&mode==='minimal'?<FashionMinimal/>
+ : section==='stylist'&&mode==='catalogue'?<FashionCatalogue/>
+ : section==='campaign'&&mode==='editorial'?<FashionEditorial/>
+ : <NotFound config={config}/> 
  return <div className={'commerce-platform commerce-platform--'+mode}>
   {(!home||mode!=='editorial')&&<SiteNav config={config} mode={mode}/>}
   {home?homeLanding:commerce}
