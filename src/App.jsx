@@ -28,6 +28,7 @@ import { Routes, Route } from 'react-router-dom'
         <Route path="/fashioneditorial/*" element={<FashionPlatform mode="editorial" />} />
         <Route path="/fashioncatalogue/*" element={<FashionPlatform mode="catalogue" />} />
         <Route path="/fashionminimal/*" element={<FashionPlatform mode="minimal" />} />
+        <Route path="/fashionbotanical/*" element={<FashionPlatform mode="botanical" />} />
         <Route path="/foodeditorial/*" element={<FoodStorefront type="editorial" />} />
         <Route path="/foodcatalogue/*" element={<FoodStorefront type="catalogue" />} />
         <Route path="/foodminimal/*" element={<FoodStorefront type="minimal" />} />

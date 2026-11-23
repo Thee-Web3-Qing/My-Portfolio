@@ -1,14 +1,16 @@
 
 import { useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { FashionCatalogue, FashionEditorial, FashionMinimal, FashionStoreProvider, useStore, Bag } from './FashionReference.jsx'
+import { FashionStoreProvider, useStore, Bag } from './FashionReference.jsx'
+import FashionReferenceRebuild from './FashionReferenceRebuild.jsx'
 import { fashionImage, fashionInventory, fashionLooks, fashionCategories, getFashionProduct, getFashionLook, fashionMoney as money } from './fashionInventory.js'
 import './fashionCommerce.css'
 
 const CONFIG = {
- editorial: { root: '/fashioneditorial', name: 'LOCO', subtitle: 'FEEL THE VIBES', accent: '#de4b3a', hero: fashionImage['campaign-bright'], tone: 'editorial' },
- catalogue: { root: '/fashioncatalogue', name: 'HER FASHION', subtitle: 'YOUR STYLE, YOUR WAY', accent: '#51212e', hero: fashionImage['look-mono'], tone: 'catalogue' },
- minimal: { root: '/fashionminimal', name: 'RUSH', subtitle: 'A WARDROBE BUILT AROUND YOU', accent: '#f6d935', hero: fashionImage['campaign-luxury'], tone: 'minimal' },
+ editorial: { root: '/fashioneditorial', name: 'MAISON RUE', subtitle: 'GOOD STYLE IS NEVER AN ACCIDENT', accent: '#8e1d36', hero: fashionImage['campaign-bright'], tone: 'editorial' },
+ catalogue: { root: '/fashioncatalogue', name: 'ELOMA / STUDIO', subtitle: 'DRESS BETTER', accent: '#384b37', hero: fashionImage['campaign-luxury'], tone: 'catalogue' },
+ minimal: { root: '/fashionminimal', name: 'ATELIER 09', subtitle: 'CONFIDENT STYLE', accent: '#cbb7a6', hero: fashionImage['campaign-street'], tone: 'minimal' },
+ botanical: { root: '/fashionbotanical', name: 'VERDANT / STUDIO', subtitle: 'BETTER THINGS TO WEAR', accent: '#465d35', hero: fashionImage['campaign-luxury'], tone: 'botanical' },
 }
 const fallback = fashionImage['campaign-street']
 function Image({src,alt, ...rest}) { return <img src={src} alt={alt} loading="lazy" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=fallback}} {...rest} /> }
@@ -173,7 +175,7 @@ function PlatformBody({mode}){
  const path=location.pathname.slice(config.root.length).replace(/^\//,'')
  const [section,segment]=path.split('/')
  const home=!section
- const homeLanding=mode==='editorial'?<FashionEditorial/>:mode==='catalogue'?<FashionCatalogue/>:<FashionMinimal/>
+ const homeLanding=<FashionReferenceRebuild mode={mode} root={config.root}/>
  const shop=useStore()
  const commerce = section==='shop'?<ShopPage key={location.search} config={config}/>:
  section==='product'?<ProductPage config={config} key={segment} id={segment}/>:
@@ -182,15 +184,14 @@ function PlatformBody({mode}){
  section==='faq'?<FAQPage config={config}/>:
  section==='cart'?<CartPage config={config}/>:
  section==='wishlist'?<WishlistPage config={config}/>:
- section==='fitting-room'&&mode==='minimal'?<FashionMinimal/>:
- section==='stylist'&&mode==='catalogue'?<FashionCatalogue/>:
- section==='campaign'&&mode==='editorial'?<FashionEditorial/>:<NotFound config={config}/>
+ section==='fitting-room'&&mode==='minimal'?<FashionReferenceRebuild mode={mode} root={config.root}/>:
+ section==='stylist'&&mode==='catalogue'?<FashionReferenceRebuild mode={mode} root={config.root}/>:
+ section==='campaign'&&mode==='editorial'?<FashionReferenceRebuild mode={mode} root={config.root}/>:<NotFound config={config}/>
  return <div className={'commerce-platform commerce-platform--'+mode}>
-  {(!home||mode!=='editorial')&&<SiteNav config={config} mode={mode}/>}
+  {!home&&<SiteNav config={config} mode={mode}/>}
   {home?homeLanding:commerce}
-  {home&&<HomeSections mode={mode} config={config}/>}
-  <Footer mode={mode} config={config}/>
-  {!home&&!['stylist','campaign','fitting-room'].includes(section)&&<Bag shop={shop}/>}
+  {!home&&<Footer mode={mode} config={config}/>}
+  <Bag shop={shop}/>
  </div>
 }
 export default function FashionPlatform({mode='catalogue'}){return <FashionStoreProvider site={mode}><PlatformBody mode={mode}/></FashionStoreProvider>}

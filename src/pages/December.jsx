@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { INDUSTRIES, LAYOUTS, calculateDecemberQuote, getIndustryGroups, getSharedGroups, money } from '../data/december.js'
+import { INDUSTRIES, LAYOUTS, getLayoutsForIndustry, calculateDecemberQuote, getIndustryGroups, getSharedGroups, money } from '../data/december.js'
 import ScaledWebsitePreview from '../components/ScaledWebsitePreview.jsx'
 import './December.css'
 
@@ -67,7 +67,8 @@ export default function December() {
   })
   const [layoutId, setLayoutId] = useState(() => {
     const query = new URLSearchParams(window.location.search).get('layout')
-    return LAYOUTS.some(x=>x.id===query) ? query : 'editorial'
+    const selectedIndustry = new URLSearchParams(window.location.search).get('industry') || 'fashion'
+    return getLayoutsForIndustry(selectedIndustry).some(x=>x.id===query) ? query : 'editorial'
   })
   const [addons, setAddons] = useState([])
   const [images, setImages] = useState(0)
@@ -82,6 +83,7 @@ export default function December() {
   const quote = useMemo(() => calculateDecemberQuote({ industry: industryId, layout: layoutId, addons, images }), [industryId, layoutId, addons, images])
   const industry = quote.industry
   const layout = quote.layout
+  const visibleLayouts = getLayoutsForIndustry(industryId)
 
   useEffect(() => {
     fetch('/api/december/status').then(res => res.json()).then(data => setCheckoutEnabled(data.available === true)).catch(() => setCheckoutEnabled(false))
@@ -197,7 +199,7 @@ export default function December() {
           <section className="dec-builder-step">
             <div className="dec-step-title"><span>01</span><div><p className="dec-kicker">PICK YOUR INDUSTRY</p><h2>What do you sell?</h2></div></div>
             <div className="dec-industry-grid">
-              {INDUSTRIES.map((item, index) => <button type="button" key={item.id} className={'dec-industry-card' + (industryId === item.id ? ' is-active' : '')} onClick={() => setIndustryId(item.id)} style={{ '--dec-card-accent': item.colour, '--dec-card-bg': item.backdrop }} aria-pressed={industryId === item.id}>
+              {INDUSTRIES.map((item, index) => <button type="button" key={item.id} className={'dec-industry-card' + (industryId === item.id ? ' is-active' : '')} onClick={() => {setIndustryId(item.id);if (!getLayoutsForIndustry(item.id).some(style => style.id===layoutId)) setLayoutId('editorial')}} style={{ '--dec-card-accent': item.colour, '--dec-card-bg': item.backdrop }} aria-pressed={industryId === item.id}>
                 <span className="dec-industry-number">0{index + 1}</span>
                 <span className="dec-industry-symbol" aria-hidden="true">{['✿', '◒', '✳', '✧', '✺', '◇', '⌂'][index]}</span>
                 <strong>{item.label}</strong>
@@ -208,10 +210,10 @@ export default function December() {
           </section>
 
           <section className="dec-builder-step" id="dec-designs">
-            <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>One brand. Three directions.</h2></div></div>
-            <p className="dec-section-description">All three starting layouts are included in the ₦100,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
-            <div className="dec-layout-choices">
-              {LAYOUTS.map((item, index) => <button type="button" key={item.id} className={'dec-layout-option' + (layoutId === item.id ? ' is-active' : '')} onClick={() => setLayoutId(item.id)} aria-pressed={layoutId === item.id}>
+            <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>One brand. {visibleLayouts.length} directions.</h2></div></div>
+            <p className="dec-section-description">All {visibleLayouts.length} starting layouts are included in the ₦100,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
+            <div className={'dec-layout-choices'+(industryId==='fashion'?' dec-layout-choices-four':'')}>
+              {visibleLayouts.map((item, index) => <button type="button" key={item.id} className={'dec-layout-option' + (layoutId === item.id ? ' is-active' : '')} onClick={() => setLayoutId(item.id)} aria-pressed={layoutId === item.id}>
                 <span className={'dec-layout-doodle dec-layout-doodle-' + item.id}><i /><i /><i /></span>
                 <strong>{item.label} <span>{String(index + 1).padStart(2, '0')}</span></strong>
                 <small>{item.description}</small>

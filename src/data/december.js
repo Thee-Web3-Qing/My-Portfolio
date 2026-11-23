@@ -18,6 +18,19 @@ export const LAYOUTS = [
   { id: 'minimal', label: 'Minimal', description: 'Quiet typography, large images and lots of breathing room.' },
 ]
 
+// Fashion has four independent reference layouts. Other industries retain
+// their existing three choices and all prices stay exactly the same.
+export const FASHION_LAYOUTS = [
+  ...LAYOUTS.map(style => ({
+    ...style,
+    ...(style.id === 'editorial' ? { label:'Atelier', description:'White editorial fashion studio, category cards and a mosaic lookbook.' } : {}),
+    ...(style.id === 'catalogue' ? { label:'Campaign', description:'Olive fashion campaign, floating product feature and styled collections.' } : {}),
+    ...(style.id === 'minimal' ? { label:'Noir', description:'Dark luxury fashion photography, dramatic typography and curated pieces.' } : {}),
+  })),
+  { id:'botanical', label:'Verdant', description:'Sage and olive storefront with arched collections and a seasonal campaign.' },
+]
+export const getLayoutsForIndustry = industry => industry === 'fashion' ? FASHION_LAYOUTS : LAYOUTS
+
 // These change the scope of the website job, not the basic functionality.
 // Standard product browsing, WhatsApp ordering and routine enquiries are included.
 export const SHARED_ADDONS = [
@@ -60,7 +73,7 @@ export function imageUnitPrice(count) {
 
 export function calculateDecemberQuote({ industry = 'fashion', layout = 'editorial', addons = [], images = 0 } = {}) {
   const selectedIndustry = INDUSTRIES.find(item => item.id === industry) || INDUSTRIES[0]
-  const selectedLayout = LAYOUTS.find(item => item.id === layout) || LAYOUTS[0]
+  const selectedLayout = getLayoutsForIndustry(selectedIndustry.id).find(item => item.id === layout) || LAYOUTS[0]
   const chosenIds = new Set(Array.isArray(addons) ? addons : [])
   const selectedAddons = getAvailableAddons(selectedIndustry.id).filter(item => chosenIds.has(item.id))
   const imageCount = Number.isInteger(Number(images)) ? Math.max(0, Math.min(200, Number(images))) : 0
