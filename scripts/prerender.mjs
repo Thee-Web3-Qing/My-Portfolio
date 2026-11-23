@@ -4,6 +4,7 @@ import { buildSchema, getSeoForPath, publicPaths, SITE_URL, SOCIAL_IMAGE } from 
 import { fashionInventory, fashionLooks } from '../src/pages/fashionInventory.js'
 import { giftProducts, giftBrands } from '../src/pages/giftStoreData.js'
 import { allPaths as industryPaths,storeData as industryData } from '../src/pages/industryStoreData.js'
+import { beautyCollections } from '../src/pages/beautySiteContent.js'
 
 const distDirectory = new URL('../dist/', import.meta.url)
 const templatePath = new URL('index.html', distDirectory)
@@ -220,5 +221,26 @@ for(const pathname of industryPaths){
  await writeFile(output,html)
 }
 console.log('Pre-rendered '+industryPaths.length+' independent industry website routes.')
+
+// The four redesigned beauty sites use their own product IDs and some have a
+// fourth style (botanical). Emit actual deep-link entrypoints for every page;
+// cleanUrls on Vercel does not automatically serve index.html for unknown paths.
+const beautySubpages=['explore','about','contact','book','faq','bag']
+let beautyRouteCount=0
+for (const [variant,brand] of Object.entries(beautyCollections)){
+ const prefix='/beauty'+variant
+ const routes=[prefix,...beautySubpages.map(page=>prefix+'/'+page),...brand.items.map(item=>prefix+'/item/'+item.id)]
+ for(const pathname of routes){
+  const suffix=pathname.slice(prefix.length).replace(/^\/+/,'')
+  const title=(suffix?suffix.replaceAll('/',' · ')+' | ':'')+brand.brand+' | Beauty Website Preview'
+  const html=cleanedTemplate.replace('</head>','<title>'+escapeHtml(title)+'</title><meta name="description" content="Interactive '+escapeHtml(brand.label)+' storefront, with realistic product details, enquiry forms and demonstration booking or ordering." /><meta name="robots" content="noindex, nofollow" />\n  </head>')
+  const output=outputPathForRoute(pathname)
+  await mkdir(dirname(output),{recursive:true})
+  await writeFile(output,html)
+  beautyRouteCount++
+ }
+}
+console.log('Pre-rendered '+beautyRouteCount+' brand-specific beauty routes, including all direct product and booking links.')
+
 
 console.log(`Pre-rendered ${publicPaths.length} public portfolio routes.`)
