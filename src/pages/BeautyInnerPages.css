@@ -504,3 +504,39 @@
  .bi-extra-options a{height:145px}
 }
 @media(prefers-reduced-motion:reduce){.bi-wrapper *{scroll-behavior:auto!important;transition:none!important}}
+
+
+/* Inner routes use the same brand header, but it must be in document flow.
+   Homepages deliberately retain their overlaid reference navigation. */
+.br-site:has(> .bi-wrapper) > .br-head{
+ position:relative!important;top:auto!important;left:auto!important;right:auto!important;
+ width:100%;z-index:35;background:var(--br-inner-head,#faf8f5)!important;
+}
+.br-olive:has(> .bi-wrapper){--br-inner-head:#1c2b1f}
+.br-dark:has(> .bi-wrapper){--br-inner-head:#140f0e}
+.br-salon:has(> .bi-wrapper){--br-inner-head:#fcf9f7}
+.br-botanical:has(> .bi-wrapper){--br-inner-head:#faf9ef}
+.br-olive:has(> .bi-wrapper) > .br-head,
+.br-dark:has(> .bi-wrapper) > .br-head{color:#faf5ec}
+.br-site:has(> .bi-wrapper) > .br-footer{margin-top:0}
+.br-olive .bi-wrapper,.br-dark .bi-wrapper{position:relative}
+@media(min-width:701px){
+ .br-olive:has(> .bi-wrapper),.br-dark:has(> .bi-wrapper){padding:0}
+}
+/* Separate product preview selector from the actual product-details link.
+   Both controls work and remain semantically valid. */
+.br-botanical-arches>.br-botanical-product-tile{display:flex;align-items:center;flex-direction:column;min-width:0}
+.br-botanical-product-tile>button{width:100%;flex:1}
+.br-botanical-tile-detail{background:#4f6435;color:#fff!important;padding:10px 16px;border-radius:30px;display:inline-block;margin:12px 0 0;font:700 10px 'DM Sans',sans-serif;letter-spacing:.07em}
+.br-botanical-tile-detail:hover{background:#344528}
+.br-botanical-explore>div:last-child>a{display:flex;flex-direction:column;gap:12px;text-align:left}
+.br-botanical-explore>div:last-child>a>img{width:100%;height:350px;border-radius:45% 45% 12px 12px;object-fit:cover}
+.br-botanical-explore>div:last-child>a>span{font-size:10px;letter-spacing:.09em}
+.br-botanical-explore>div:last-child>a>strong{font:600 30px 'Cormorant Garamond',serif}
+@media(max-width:700px){
+ .br-botanical-tile-detail{font-size:7px;padding:8px 10px;margin-top:9px}
+ .br-botanical-explore>div:last-child>a{gap:8px}
+ .br-botanical-explore>div:last-child>a>img{height:190px}
+ .br-botanical-explore>div:last-child>a>span{font-size:8px}
+ .br-botanical-explore>div:last-child>a>strong{font-size:20px}
+}
