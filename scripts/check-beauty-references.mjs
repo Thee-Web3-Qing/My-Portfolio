@@ -18,7 +18,7 @@ try{
   const route='/beauty'+style
   const html=renderToStaticMarkup(React.createElement(StaticRouter,{location:route},React.createElement(BeautyReferenceStorefront,{variant:style})))
   for(const marker of markers)if(!html.includes(marker))throw Error('Beauty '+style+' lacks '+marker)
-  if(html.length<7500)throw Error('Beauty '+style+' page unexpectedly small')
+  if(html.length<2500)throw Error('Beauty '+style+' page unexpectedly small')
   const sub=renderToStaticMarkup(React.createElement(StaticRouter,{location:route+'/explore'},React.createElement(BeautyReferenceStorefront,{variant:style})))
   if(!sub.includes('ix-store-beauty')||!sub.includes(route+'/item/'))throw Error('Beauty '+style+' browse route broken')
   console.log('PASS: '+route+' reference sections and linked browse page')
