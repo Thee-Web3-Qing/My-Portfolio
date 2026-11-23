@@ -787,3 +787,19 @@
   .december-page .dec-floating-mobile-checkout {padding-inline:11px;}
   .december-page .dec-floating-mobile-button {padding-inline:12px;}
 }
+
+/* Four beauty references have their own balanced 2x2 mobile design selector.
+   Other industry selectors keep their original compact three-card treatment. */
+@media (max-width: 600px) {
+  .december-page .dec-layout-choices-beauty{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .december-page .dec-layout-choices-beauty>.dec-layout-option:last-child{
+    grid-column:auto;display:flex;flex-direction:column;gap:7px;align-items:stretch;min-width:0;
+  }
+  .december-page .dec-layout-choices-beauty>.dec-layout-option:last-child .dec-layout-doodle{
+    grid-column:auto;grid-row:auto;width:100%;height:48px;
+  }
+  .december-page .dec-layout-choices-beauty>.dec-layout-option:last-child strong,
+  .december-page .dec-layout-choices-beauty>.dec-layout-option:last-child small{
+    grid-column:auto;grid-row:auto;align-self:stretch;
+  }
+}
