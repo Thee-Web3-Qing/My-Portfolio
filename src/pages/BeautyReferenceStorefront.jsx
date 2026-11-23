@@ -1,4 +1,4 @@
-import {useState} from 'react'
+import {useEffect,useState} from 'react'
 import {Link,useLocation} from 'react-router-dom'
 import IndustryStorefront from './IndustryStorefront.jsx'
 import {storeData,money} from './industryStoreData.js'
@@ -33,16 +33,16 @@ function Head({variant,brand,dark=false}){
  return <header className={'br-head'+(dark?' br-head-dark':'')}>
   <Link to={to(variant)} className="br-wordmark">{brand}</Link>
   <nav className={open?'br-open':''} aria-label="Beauty demo navigation">
-    <Link to={to(variant)}>Home</Link><Link to={to(variant,'explore')}>Services &amp; treatments</Link><Link to={to(variant,'about')}>Our story</Link><Link to={to(variant,'contact')}>Contact</Link>
+    <Link to={to(variant)}>Home</Link><Link to={to(variant,'explore')}>{variant==='botanical'?'Shop the collection':variant==='minimal'?'Dental treatments':'Services & treatments'}</Link><Link to={to(variant,'about')}>Our story</Link><Link to={to(variant,'contact')}>Contact</Link>
   </nav>
-  <Link to={to(variant,'book')} className="br-head-book">Book a session <span aria-hidden="true">↗</span></Link>
+  <Link to={to(variant,variant==='botanical'?'explore':'book')} className="br-head-book">{variant==='botanical'?'Shop now':variant==='minimal'?'Book consultation':'Book a session'} <span aria-hidden="true">↗</span></Link>
   <button className="br-menu" aria-label="Toggle navigation" aria-expanded={open} onClick={()=>setOpen(v=>!v)}>{open?'Close ×':'Menu ☰'}</button>
  </header>
 }
 function Foot({variant,brand}){
  return <footer className="br-footer">
-  <div><span>GOOD BEAUTY, GOOD PEOPLE.</span><h2>{brand}</h2><p>Your next favourite beauty moment starts here.</p></div>
-  <div><Link to={to(variant,'explore')}>Explore services</Link><Link to={to(variant,'book')}>Book a session</Link><Link to={to(variant,'contact')}>Contact us</Link></div>
+  <div><span>GOOD BEAUTY, GOOD PEOPLE.</span><h2>{brand}</h2><p>{variant==='botanical'?'Your everyday essentials, considered from beginning to end.':variant==='minimal'?'A different kind of dental experience, designed around you.':'Your next favourite beauty moment starts here.'}</p></div>
+  <div><Link to={to(variant,'explore')}>{variant==='botanical'?'Shop collection':'Explore services'}</Link><Link to={to(variant,variant==='botanical'?'explore':'book')}>{variant==='botanical'?'View the edit':variant==='minimal'?'Book consultation':'Book a session'}</Link><Link to={to(variant,'contact')}>Contact us</Link></div>
   <small>Illustrative concept by Qing The Creator. All photographs, products, prices and services are sample content, not live inventory or appointment availability.</small>
  </footer>
 }
@@ -119,6 +119,10 @@ export default function BeautyReferenceStorefront({variant='editorial'}){
  const location=useLocation()
  const pathname=location.pathname.replace(/\/+$/,'')
  const root=to(variant)
+ useEffect(()=>{
+  const labels={editorial:'Maison Beauté | Salon Design',catalogue:'Véra Skin | Skincare Design',minimal:'Aura Dental | Dental Studio Design',botanical:'Folia Botanics | Botanical Store Design'}
+  document.title=(labels[variant]||labels.editorial)+' | December Website Preview'
+ },[variant])
  if(pathname!==root){
    return <IndustryStorefront industry="beauty" style={variant==='botanical'?'catalogue':variant} rootOverride={root}/>
  }
