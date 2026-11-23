@@ -236,7 +236,7 @@ export default function December() {
                   title={industry.label + ' ' + layout.label + ' interactive website sample'}
                 />
               </div>
-              <div className="dec-real-preview-actions"><a className="dec-real-preview-open" href={previewUrl} target="_blank" rel="noreferrer">Open larger preview</a><a href="#dec-features">Choose optional features ↓</a></div>
+              <div className="dec-real-preview-actions"><a href="#dec-features">Choose optional features ↓</a></div>
               <p>The selected website loads inside this preview. Product names, prices and photographs are illustrative and will be replaced with your supplied business resources.</p>
             </div>
           </section>
