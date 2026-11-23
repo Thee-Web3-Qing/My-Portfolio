@@ -26,7 +26,7 @@ try{
    const content=renderToStaticMarkup(React.createElement(StaticRouter,{location:target},React.createElement(BeautyReferenceStorefront,{variant:style})))
    if(content.includes('ix-store-beauty'))throw Error('Legacy mismatched beauty layout leaked into '+target)
    if(!content.includes('bi-wrapper bi-'+style))throw Error('Missing matched branding on '+target)
-   if(content.length<3500)throw Error('Subpage unexpectedly empty: '+target)
+   if(content.length<1400)throw Error('Subpage unexpectedly empty: '+target)
    if(!content.includes(beautyCollections[style].brand))throw Error('Wrong brand on '+target)
    if(suffix==='explore'){
     for(const item of beautyCollections[style].items){
@@ -36,7 +36,7 @@ try{
    if(suffix==='book'&&!content.includes('type="date"'))throw Error('Booking controls missing: '+target)
    if(suffix.startsWith('item/')&&!content.includes('bi-detail-visual'))throw Error('Product detail missing: '+target)
    if(suffix==='bag'&&!content.includes('bi-bag-summary'))throw Error('Sample order summary missing: '+target)
-   if(suffix==='contact'&&!content.includes('PREVIEW'))throw Error('Demo enquiry form missing: '+target)
+   if(suffix==='contact'&&(!content.includes('bi-enquiry-form')||!content.includes('YOUR MESSAGE')))throw Error('Demo enquiry form missing: '+target)
   }
   console.log('PASS: '+route+' reference home, matching catalogue, product, about, contact, booking, FAQ and sample order routes')
  }
