@@ -22,6 +22,7 @@ import { Routes, Route } from 'react-router-dom'
   import GiftStorefront from './pages/GiftStorefront.jsx'
   import IndustryStorefront from './pages/IndustryStorefront.jsx'
   import BeautyReferenceStorefront from './pages/BeautyReferenceStorefront.jsx'
+  import EventsReferenceStorefront from './pages/EventsReferenceStorefront.jsx'
 
   export default function App() {
     return (
@@ -39,7 +40,10 @@ import { Routes, Route } from 'react-router-dom'
         {['editorial','catalogue','minimal','botanical'].map(variant =>
           <Route key={'beauty'+variant} path={'/beauty'+variant+'/*'} element={<BeautyReferenceStorefront variant={variant} />} />
         )}
-        {['events','accessories','hospitality'].flatMap(industry => ['editorial','catalogue','minimal'].map(style =>
+        {['editorial','catalogue','minimal','playful'].map(variant =>
+          <Route key={'events'+variant} path={'/events'+variant+'/*'} element={<EventsReferenceStorefront variant={variant} />} />
+        )}
+        {['accessories','hospitality'].flatMap(industry => ['editorial','catalogue','minimal'].map(style =>
           <Route key={industry+style} path={'/'+industry+style+'/*'} element={<IndustryStorefront industry={industry} style={style} />} />
         ))}
         <Route
