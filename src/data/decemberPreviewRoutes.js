@@ -1,4 +1,4 @@
-import { INDUSTRIES, LAYOUTS } from './december.js'
+import { INDUSTRIES, getLayoutsForIndustry } from './december.js'
 
 /**
  * Each finished industry interface will be built as its own page.
@@ -9,10 +9,10 @@ import { INDUSTRIES, LAYOUTS } from './december.js'
  * When a standalone interface is completed, remove its placeholder route
  * in App.jsx and add the new component there. Then add its slug below.
  */
-export const FINISHED_PREVIEWS = new Set(['fashioneditorial','fashioncatalogue','fashionminimal','foodeditorial','foodcatalogue','foodminimal','giftseditorial','giftscatalogue','giftsminimal','beautyeditorial','beautycatalogue','beautyminimal','eventseditorial','eventscatalogue','eventsminimal','accessorieseditorial','accessoriescatalogue','accessoriesminimal','hospitalityeditorial','hospitalitycatalogue','hospitalityminimal'])
+export const FINISHED_PREVIEWS = new Set(['fashioneditorial','fashioncatalogue','fashionminimal','fashionbotanical','foodeditorial','foodcatalogue','foodminimal','giftseditorial','giftscatalogue','giftsminimal','beautyeditorial','beautycatalogue','beautyminimal','eventseditorial','eventscatalogue','eventsminimal','accessorieseditorial','accessoriescatalogue','accessoriesminimal','hospitalityeditorial','hospitalitycatalogue','hospitalityminimal'])
 
 export const PREVIEW_ROUTES = Object.fromEntries(INDUSTRIES.map(industry => [
-  industry.id, Object.fromEntries(LAYOUTS.map(style => [
+  industry.id, Object.fromEntries(getLayoutsForIndustry(industry.id).map(style => [
     style.id, {
       url:'/'+industry.id+style.id,
       slug:industry.id+style.id,
