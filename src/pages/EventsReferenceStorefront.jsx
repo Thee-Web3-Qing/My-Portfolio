@@ -5,6 +5,7 @@ import {eventOffers} from './eventsReferenceData.js'
 import './EventsReferenceStorefront.css'
 
 const up=(id,w=1500)=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w='+w+'&q=84'
+const stock=(id,w=1500)=>'https://images.pexels.com/photos/'+id+'/pexels-photo-'+id+'.jpeg?auto=compress&cs=tinysrgb&w='+w
 const pics={
  keynote:up('photo-1475721027785-f74eccf877e2'),
  workshop:up('photo-1552664730-d307ca884978'),
@@ -16,13 +17,13 @@ const pics={
  creators:up('photo-1521737711867-e3b97375f902'),
  notebooks:up('photo-1455390582262-044cdead277a'),
  event:up('photo-1492684223066-81342ee5ff30'),
- merch:up('photo-1503342217505-b0a15ec3261c'),
- shirt:up('photo-1523381210434-271e8be1f52b'),
+ merch:stock(3966277),
+ shirt:stock(33650424),
  studio:up('photo-1494438639946-1ebd1d20bf85'),
  apparel:up('photo-1441986300917-64674bd600d8'),
- fabric:up('photo-1558769132-cb1aea458c5e'),
- apparel2:up('photo-1489987707025-afc232f7ea0f'),
- merchday:up('photo-1552664730-d307ca884978'),
+ fabric:stock(33650433),
+ apparel2:stock(33650428),
+ merchday:stock(27893026),
  maker:up('photo-1515378791036-0648a3ef77b2'),
  camera:up('photo-1492691527719-9d1e07e534b4'),
  editing:up('photo-1558655146-d09347e92766'),
