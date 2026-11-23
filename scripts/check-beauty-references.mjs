@@ -2,6 +2,7 @@ import React from 'react'
 import {createServer} from 'vite'
 import {renderToStaticMarkup} from 'react-dom/server'
 import {StaticRouter} from 'react-router-dom/server.js'
+import {access} from 'node:fs/promises'
 
 const vite=await createServer({server:{middlewareMode:true},appType:'custom',logLevel:'error'})
 try{
@@ -17,12 +18,14 @@ try{
  }
  for(const [style,markers] of Object.entries(styleMarkers)){
   const route='/beauty'+style
+  await access(new URL('../dist'+route+'.html',import.meta.url))
   const html=renderToStaticMarkup(React.createElement(StaticRouter,{location:route},React.createElement(BeautyReferenceStorefront,{variant:style})))
   for(const marker of markers)if(!html.includes(marker))throw Error('Beauty '+style+' lacks '+marker)
   if(html.length<2500)throw Error('Beauty '+style+' page unexpectedly small')
   const pages=['explore','about','contact','book','faq','bag','item/'+beautyCollections[style].items[0].id]
   for(const suffix of pages){
    const target=route+'/'+suffix
+   await access(new URL('../dist'+target+'.html',import.meta.url))
    const content=renderToStaticMarkup(React.createElement(StaticRouter,{location:target},React.createElement(BeautyReferenceStorefront,{variant:style})))
    if(content.includes('ix-store-beauty'))throw Error('Legacy mismatched beauty layout leaked into '+target)
    if(!content.includes('bi-wrapper bi-'+style))throw Error('Missing matched branding on '+target)
