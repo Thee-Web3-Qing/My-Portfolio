@@ -162,7 +162,7 @@ const staticRoutes = {
     heading: 'Learn the basics of building digital products with AI.',
     paragraphs: [
       'The beginner class teaches product planning, scaffolding, interface design, backend connections, APIs, debugging and deployment through practical work.',
-      'Students register with their details and payment receipt. Accepted payments determine the active class price tier.',
+      'Students register with their details and pay securely through Paystack. Confirmed registrations determine the active class price tier.',
     ],
     type: 'Course',
   },

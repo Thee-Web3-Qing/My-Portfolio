@@ -1,21 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import { screenReceipt } from '../lib/receiptScreening'
 import './classClay.css'
 import './classEditorial.css'
 
 const PRICING_URL = '/api/class-pricing'
-const REGISTRATION_STORAGE_KEY = 'qing-class-registration-complete'
 
 const formatNaira = (amount) => `₦${Number(amount).toLocaleString('en-NG')}`
-
-const normaliseEmail = (value) => value.trim().toLowerCase()
-
-const normalisePhone = (value) => {
-  const digits = value.replace(/\D/g, '')
-  if (digits.length === 11 && digits.startsWith('0')) return `234${digits.slice(1)}`
-  if (digits.length === 10) return `234${digits}`
-  return digits
-}
 
 const normaliseTelegram = (value) => value.trim().replace(/^@+/, '').toLowerCase()
 
@@ -53,15 +42,8 @@ const classifyReason = (value) => {
 
 export default function Class() {
   const [form, setForm] = useState({ fullName: '', whatsapp: '', telegram: '', email: '', reason: '', mentorship: '' })
-  const [receipt, setReceipt] = useState(null)
-  const [paymentMethod, setPaymentMethod] = useState('transfer')
-  const [previewUrl, setPreviewUrl] = useState('')
   const [status, setStatus] = useState({ type: '', message: '' })
   const [submitting, setSubmitting] = useState(false)
-  const [scanning, setScanning] = useState(false)
-  const [scanProgress, setScanProgress] = useState(0)
-  const [receiptAnalysis, setReceiptAnalysis] = useState(null)
-  const [confirmation, setConfirmation] = useState(null)
   const [pricingLoaded, setPricingLoaded] = useState(false)
   const [activeClassroomScreen, setActiveClassroomScreen] = useState(0)
   const [pricing, setPricing] = useState({ acceptedCount: 0, price: 5000, tierIndex: 0, filledInTier: 0, remainingInTier: 100, batchSize: 100, firstCohortComplete: false, soldOut: false })
@@ -77,13 +59,6 @@ export default function Class() {
     form.reason.trim().length < 20 && 'at least 20 characters explaining why you want to join',
   ].filter(Boolean)
   const category = useMemo(() => classifyReason(form.reason), [form.reason])
-
-  useEffect(() => {
-    if (!receipt) return undefined
-    const url = URL.createObjectURL(receipt)
-    setPreviewUrl(url)
-    return () => URL.revokeObjectURL(url)
-  }, [receipt])
 
   useEffect(() => {
     const loadPricing = () => {
@@ -105,87 +80,23 @@ export default function Class() {
 
   const update = (event) => setForm((current) => ({ ...current, [event.target.name]: event.target.value }))
 
-  const chooseReceipt = async (event) => {
-    const file = event.target.files?.[0]
-    setStatus({ type: '', message: '' })
-    setReceiptAnalysis(null)
-    if (!file) return setReceipt(null)
-    const fileName = file.name.toLowerCase()
-    const isPdf = file.type === 'application/pdf' || fileName.endsWith('.pdf')
-    const isImage = file.type.startsWith('image/') || /\.(jpe?g|png|heic|heif|webp)$/i.test(fileName)
-    if (!isPdf && !isImage) {
-      event.target.value = ''
-      setReceipt(null)
-      return setStatus({ type: 'error', message: 'Please upload the transaction receipt as an image or PDF.' })
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      event.target.value = ''
-      setReceipt(null)
-      return setStatus({ type: 'error', message: 'The receipt file must be smaller than 5 MB.' })
-    }
-    setReceipt(file)
-    setScanning(true)
-    setScanProgress(0)
-    const analysis = await screenReceipt(file, setScanProgress, pricing.price || 5000)
-    setReceiptAnalysis(analysis)
-    setScanning(false)
-  }
-
   const submit = async (event) => {
     event.preventDefault()
-    if (!detailsComplete || (paymentMethod === 'transfer' && (!receipt || !receiptAnalysis || scanning)) || submitting) return
+    if (!detailsComplete || submitting) return
     setSubmitting(true)
     setStatus({ type: '', message: '' })
 
     try {
-      if (window.localStorage.getItem(REGISTRATION_STORAGE_KEY)) {
-        throw new Error('You have already registered. Please do not submit another registration. Keep an eye on your email for your registration code after payment approval.')
-      }
-
-      if (paymentMethod === 'paystack') {
-        const response = await fetch('/api/class-payment/initialize', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...form, reasonCategory: category })
-        })
-        const result = await response.json().catch(() => ({}))
-        if (!response.ok || !result.authorization_url) throw new Error(result.error || 'Could not start class payment.')
-        const checkout = new URL(result.authorization_url)
-        if (checkout.protocol !== 'https:' || !(checkout.hostname === 'paystack.com' || checkout.hostname.endsWith('.paystack.com'))) throw new Error('Unexpected checkout provider.')
-        window.location.assign(checkout.href)
-        return
-      }
-      const cleanEmail = normaliseEmail(form.email)
-      const cleanPhone = normalisePhone(form.whatsapp)
-      const cleanTelegram = normaliseTelegram(form.telegram)
-      const receiptBase64 = await new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = () => resolve(String(reader.result).split(',')[1])
-        reader.onerror = () => reject(new Error('Could not read receipt.'))
-        reader.readAsDataURL(receipt)
-      })
-      const response = await fetch('/api/class-registration', {
+      const response = await fetch('/api/class-payment/initialize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          fullName: form.fullName, whatsapp: cleanPhone, telegram: cleanTelegram, email: cleanEmail,
-          reason: form.reason, reasonCategory: category,
-          mentorshipInterest: form.mentorship, receiptName: receipt.name,
-          receiptType: receipt.type, receiptBase64,
-          fraudScore: receiptAnalysis.score, fraudStatus: receiptAnalysis.status,
-          fraudChecks: receiptAnalysis.checks, receiptText: receiptAnalysis.extractedText || '',
-          receiptHash: receiptAnalysis.hash
-        })
+        body: JSON.stringify({ ...form, reasonCategory: category })
       })
       const result = await response.json().catch(() => ({}))
-      if (!response.ok) throw new Error(result.error || 'Registration failed.')
-
-      setConfirmation({ name: form.fullName.trim(), email: cleanEmail, amount: pricing.price })
-      setStatus({ type: 'success', message: 'Registration received.' })
-      window.localStorage.setItem(REGISTRATION_STORAGE_KEY, 'true')
-      setForm({ fullName: '', whatsapp: '', telegram: '', email: '', reason: '', mentorship: '' })
-      setReceipt(null)
-      setReceiptAnalysis(null)
+      if (!response.ok || !result.authorization_url) throw new Error(result.error || 'Could not start class payment.')
+      const checkout = new URL(result.authorization_url)
+      if (checkout.protocol !== 'https:' || !(checkout.hostname === 'paystack.com' || checkout.hostname.endsWith('.paystack.com'))) throw new Error('Unexpected checkout provider.')
+      window.location.assign(checkout.href)
     } catch (error) {
       setStatus({ type: 'error', message: error.message || 'Something went wrong. Please try again.' })
     } finally {
@@ -222,7 +133,7 @@ export default function Class() {
 
         <ClayNotice compact>
           <span className="clay-notice-symbol" aria-hidden="true">✳</span>
-          <div><strong>Class registration and payment review.</strong><span>Confirm current payment details directly with Qing before paying.</span></div>
+          <div><strong>Class registration and secure payment.</strong><span>Complete the form and pay securely through Paystack.</span></div>
           <a href="#registration" className="clay-notice-link">Read the class update <span aria-hidden="true">↗</span></a>
         </ClayNotice>
 
@@ -282,7 +193,7 @@ export default function Class() {
           </div>
           <ClayCard tone="cream" className="clay-subscription clay-enrollment-card">
             <span className="clay-subscription-icon" aria-hidden="true">✎</span>
-            <div><h3>Required subscriptions and accounts</h3><p>You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Neon accounts before class. Registration requires payment review. Confirm the current payment instructions before transferring.</p></div>
+            <div><h3>Required subscriptions and accounts</h3><p>You need ChatGPT Plus with Codex, or a paid coding assistant through VS Code Copilot or Cursor. You should also create free GitHub, Vercel and Neon accounts before class. Registration is completed through the secure Paystack checkout.</p></div>
           </ClayCard>
         </section>
 
@@ -312,53 +223,19 @@ export default function Class() {
             <p><strong>{pricing.filledInTier} of {pricing.batchSize || 100} spots filled at {formatNaira(pricing.price)}.</strong> {pricing.firstCohortComplete ? 'The first ₦5,000 cohort is complete.' : 'When 100 confirmed students join this cohort, registration moves to ₦10,000.'}</p>{!pricingLoaded && <p>Live pricing connection unavailable. Submissions remain disabled until it reconnects.</p>}
           </ClayCard>
           <ClayCard tone="cream" className="clay-subscription">
-            {confirmation ? (
-              <div className="clay-registration-success" role="status" aria-live="polite">
-                <span className="clay-success-mark" aria-hidden="true">✓</span>
-                <p className="clay-success-kicker">SUBMISSION COMPLETE</p>
-                <h3>Registration received.</h3>
-                <p>Thank you, {confirmation.name}. Your receipt has been saved and is waiting for payment review.</p>
-                <div className="clay-success-details">
-                  <div><span>Current status</span><strong>Payment review pending</strong></div>
-                  <div><span>Amount submitted for</span><strong>{formatNaira(confirmation.amount)}</strong></div>
-                  <div><span>Registration code</span><strong>Sent after approval</strong></div>
-                  <div><span>Delivery email</span><strong>{confirmation.email}</strong></div>
-                </div>
-                <div className="clay-success-next">
-                  <strong>What happens next?</strong>
-                  <p>Qing’s TV will review the payment. Once it is approved, your Classroom registration code will be sent to the email above. Please also check your spam folder.</p>
-                </div>
-                <a className="clay-button clay-button-coral clay-success-home" href="/">Back to homepage</a>
-              </div>
-            ) : <form onSubmit={submit} className="clay-enrollment-form">
+            <form onSubmit={submit} className="clay-enrollment-form">
               <h3>Secure your spot.</h3>
-              <p>Choose Paystack for an online payment or make a bank transfer and upload your receipt. Classroom access codes are issued after registration approval.</p>
-              <div className="clay-paystack-options" role="group" aria-label="Class payment method">
-                <button type="button" className={paymentMethod === 'paystack' ? 'is-active' : ''} onClick={() => setPaymentMethod('paystack')} aria-pressed={paymentMethod === 'paystack'}>Pay with Paystack</button>
-                <button type="button" className={paymentMethod === 'transfer' ? 'is-active' : ''} onClick={() => setPaymentMethod('transfer')} aria-pressed={paymentMethod === 'transfer'}>Bank transfer + receipt</button>
-              </div>
-              {paymentMethod === 'paystack' && <p className="clay-paystack-note">Secure Paystack payment for {formatNaira(pricing.price)}. You will return here after payment verification. Your class access code is issued only after approval.</p>}
-              {paymentMethod === 'transfer' && (
-              <div className="clay-payment-details" aria-label="Official class payment details">
-                <span className="clay-payment-eyebrow">Official payment account</span>
-                <strong className="clay-payment-bank">Moniepoint</strong>
-                <span className="clay-payment-number">8124320659</span>
-                <span className="clay-payment-name">Oluwasheedah Giwa</span>
-                <button type="button" className="clay-payment-copy" onClick={() => { navigator.clipboard?.writeText('8124320659'); }}>Copy account number</button>
-                <small>Transfer exactly {formatNaira(pricing.price)}. Use your own payment reference and keep the receipt.</small>
-              </div>)}
+              <p>Complete your registration details, then continue to Paystack to pay {formatNaira(pricing.price)} securely. Your Classroom access code is issued after payment verification and registration approval.</p>
+              <p className="clay-paystack-note">Paystack is the only payment method for this class. You will return to this website after Paystack verifies your payment.</p>
               <label>Full name<input name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
               <label>WhatsApp number<input name="whatsapp" required value={form.whatsapp} onChange={update} /></label>
               <label>Telegram username<input name="telegram" required minLength={5} maxLength={33} placeholder="@yourusername" autoCapitalize="none" autoCorrect="off" value={form.telegram} onChange={update} /></label>
               <label>Email address<input name="email" type="email" required value={form.email} onChange={update} /></label>
               <label>Why do you want to join?<textarea name="reason" required minLength={20} rows={4} value={form.reason} onChange={update} /></label>
               <label>Interested in mentorship?<select name="mentorship" value={form.mentorship} onChange={update}><option value="">Select</option><option>Yes</option><option>No</option><option>Maybe</option></select></label>
-              {paymentMethod === 'transfer' && <label>Payment receipt (PDF, JPEG, PNG or WebP, up to 5 MB)<input type="file" required accept=".pdf,.png,.jpg,.jpeg,.webp" onChange={chooseReceipt} /></label>}
-              {paymentMethod === 'transfer' && scanning && <p>Screening receipt: {scanProgress}%</p>}
-              {paymentMethod === 'transfer' && receiptAnalysis && <p>Receipt checked. Payment is subject to manual approval.</p>}
               {status.message && <p role="status">{status.message}</p>}
-              <button type="submit" className="clay-button clay-button-coral clay-submit-button" disabled={!pricingLoaded || !detailsComplete || (paymentMethod === 'transfer' && (!receiptAnalysis || scanning)) || submitting}>{submitting ? 'Processing…' : paymentMethod === 'paystack' ? `Pay ${formatNaira(pricing.price)} with Paystack ↗` : `Submit registration at ${formatNaira(pricing.price)}`}</button>
-            </form>}
+              <button type="submit" className="clay-button clay-button-coral clay-submit-button" disabled={!pricingLoaded || !detailsComplete || submitting}>{submitting ? 'Opening secure checkout…' : `Pay ${formatNaira(pricing.price)} with Paystack ↗`}</button>
+            </form>
           </ClayCard>
         </section>
       </div>

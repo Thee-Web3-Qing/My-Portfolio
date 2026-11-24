@@ -17,7 +17,7 @@ async function enumerate(dir, prefix = '') {
 }
 await enumerate(join(root,'api'))
 if (filePaths.length > 12) throw new Error('Vercel Hobby API count exceeded: '+filePaths.length+' > 12')
-if (filePaths.length!==10) throw new Error('Expected ten API functions after consolidation; found '+filePaths.length)
+if (filePaths.length!==9) throw new Error('Expected nine API functions after removing receipt uploads; found '+filePaths.length)
 
 const vercel=JSON.parse(await readFile(join(root,'vercel.json'),'utf8'))
 const operations = {image:'POST',initialize:'GET',intake:'GET',progress:'POST',status:'POST',upload:'GET',verify:'POST'}
