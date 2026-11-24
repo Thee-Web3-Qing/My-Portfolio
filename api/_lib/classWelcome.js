@@ -2,6 +2,7 @@ import { createHash, randomUUID } from 'node:crypto'
 
 export const CLASSROOM_URL = 'https://the-classroom-qing.vercel.app/'
 export const TELEGRAM_GROUP_URL = 'https://t.me/+H9UCWQmbDAY2MjZk'
+export const WHATSAPP_GROUP_URL = 'https://chat.whatsapp.com/Lq23lxSEAJKIJFiktwu5lx?s=cl&p=i&iam=2'
 
 const makeId = prefix => prefix + '_' + randomUUID().replace(/-/g, '').slice(0, 20)
 const activationCode = () => {
