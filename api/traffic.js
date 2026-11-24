@@ -93,10 +93,10 @@ export default async function handler(req,res){
       (count(*) FILTER(WHERE event_type='checkout_started'))::int AS checkout_attempts,
       (count(*) FILTER(WHERE event_type='payment_redirect'))::int AS payment_redirects
      FROM december_analytics_events WHERE occurred_at >= ${since}::timestamptz`,
-    sql`SELECT source,medium,count(*)::int AS views,count(DISTINCT visitor_id)::int AS visitors
+    sql`SELECT source,medium,campaign,count(*)::int AS views,count(DISTINCT visitor_id)::int AS visitors
       FROM december_analytics_events
       WHERE occurred_at >= ${since}::timestamptz AND event_type='page_view' AND page_path='/december'
-      GROUP BY source,medium ORDER BY views DESC LIMIT 12`,
+      GROUP BY source,medium,campaign ORDER BY views DESC LIMIT 12`,
     sql`SELECT to_char(occurred_at AT TIME ZONE 'Africa/Lagos','YYYY-MM-DD') AS day,
       count(*)::int AS views, count(DISTINCT visitor_id)::int AS visitors
       FROM december_analytics_events
