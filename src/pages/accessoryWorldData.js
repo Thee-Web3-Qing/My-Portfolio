@@ -95,7 +95,7 @@ export const ACCESSORY_WORLDS={
 export const accessoryWorld=(style)=>ACCESSORY_WORLDS[style]||ACCESSORY_WORLDS.editorial
 export const accessoryStore=(base,style)=>{
  const world=accessoryWorld(style)
- return {...base,items:world.items,categories:world.categories,hero:world.images.hero,
+ return {...base,items:world.items,categories:world.categories,images:world.images,hero:world.images.hero,
     secondary:world.images.still||world.images.portrait||world.images.model||world.images.hero,
     photos:world.images,brands:{...base.brands,[style]:world}}
 }
