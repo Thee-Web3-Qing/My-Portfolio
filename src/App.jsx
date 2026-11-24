@@ -46,9 +46,12 @@ import DecemberTrafficTracker from './components/DecemberTrafficTracker.jsx'
         {['editorial','catalogue','minimal','playful'].map(variant =>
           <Route key={'events'+variant} path={'/events'+variant+'/*'} element={<EventsReferenceStorefront variant={variant} />} />
         )}
-        {['accessories','hospitality'].flatMap(industry => ['editorial','catalogue','minimal'].map(style =>
-          <Route key={industry+style} path={'/'+industry+style+'/*'} element={<IndustryStorefront industry={industry} style={style} />} />
-        ))}
+        {['editorial','tech','catalogue','playful','market','minimal'].map(style =>
+          <Route key={'accessories'+style} path={'/accessories'+style+'/*'} element={<IndustryStorefront industry="accessories" style={style} />} />
+        )}
+        {['editorial','catalogue','minimal'].map(style =>
+          <Route key={'hospitality'+style} path={'/hospitality'+style+'/*'} element={<IndustryStorefront industry="hospitality" style={style} />} />
+        )}
         <Route
           path="*"
           element={

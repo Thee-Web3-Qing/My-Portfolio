@@ -48,9 +48,10 @@ try{
   if(page.length<3000)throw Error('Fashion '+mode+' unexpectedly changed or crashed')
  }
  if(BASE_PRICE!==100000)throw Error('December base price changed')
- for(const industry of ['fashion','food','gifts','accessories','hospitality']){
+ for(const industry of ['fashion','food','gifts','hospitality']){
   if(getLayoutsForIndustry(industry).length!==3)throw Error('Non-beauty layouts changed: '+industry)
  }
+ if(getLayoutsForIndustry('accessories').length!==6)throw Error('Accessories must include six distinct reference designs')
  if(getLayoutsForIndustry('beauty').length!==4)throw Error('Beauty fourth layout missing')
  if(getLayoutsForIndustry('events').length!==4)throw Error('Events fourth reference layout missing')
  const quote=calculateDecemberQuote({industry:'beauty',layout:'botanical',addons:[],images:0})

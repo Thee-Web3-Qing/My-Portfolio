@@ -1,0 +1,601 @@
+
+/* SIX ACCESSORY WORLDS
+   Reference-based composition: eyewear atelier, AI eyewear, performance shoes,
+   sculptural bags, general goods, fine jewellery.
+   Common shopping pages continue to use IndustryStorefront's working commerce.
+*/
+.ix-store.ix-accessories{--ix-radius:0}
+.ix-accessories.ix-editorial{--ix-ink:#191919;--ix-accent:#111;--ix-paper:#f6f5f1;--ix-soft:#eeeae6;--ix-font:'Manrope',Arial,sans-serif;background:#f6f5f1}
+.ix-accessories.ix-tech{--ix-ink:#171717;--ix-accent:#151515;--ix-paper:#ededed;--ix-soft:#dedede;--ix-font:'Manrope',sans-serif;background:#eee}
+.ix-accessories.ix-catalogue{--ix-ink:#252b23;--ix-accent:#505b43;--ix-paper:#f8f9f6;--ix-soft:#ebeee8;--ix-font:'Manrope',sans-serif;background:#f8f9f6}
+.ix-accessories.ix-playful{--ix-ink:#211d22;--ix-accent:#df83a4;--ix-paper:#fff;--ix-soft:#f9e5ee;--ix-font:'Outfit',sans-serif;background:#fff}
+.ix-accessories.ix-market{--ix-ink:#18263b;--ix-accent:#b85c22;--ix-paper:#fff;--ix-soft:#f0f1f1;--ix-font:'Manrope',sans-serif;background:#fff}
+.ix-accessories.ix-minimal{--ix-ink:#f7f4ef;--ix-accent:#bd9b5e;--ix-paper:#090909;--ix-soft:#202020;--ix-font:'Cormorant Garamond',Georgia,serif;background:#090909}
+.ix-accessories .aw-page{width:100%;min-height:50vh}
+.ix-accessories .aw-page img{display:block;width:100%;height:100%;object-fit:cover}
+.ix-accessories .aw-page h1,.ix-accessories .aw-page h2,.ix-accessories .aw-page h3,.ix-accessories .aw-footer h2{margin:0}
+.ix-accessories .aw-page a,.ix-accessories .aw-header a,.ix-accessories .aw-footer a{text-decoration:none;color:inherit}
+.ix-accessories .aw-page button,.ix-accessories .aw-header button,.ix-accessories .aw-footer button{cursor:pointer}
+.ix-accessories .aw-page button:focus-visible,.ix-accessories .aw-page a:focus-visible,.ix-accessories .aw-header button:focus-visible,.ix-accessories .aw-header a:focus-visible,.ix-accessories .aw-footer button:focus-visible{outline:3px solid #bf744a;outline-offset:3px}
+.aw-cta{display:inline-flex;align-items:center;justify-content:center;gap:15px;min-height:44px;padding:13px 21px;font:800 11px/1.2 'Manrope',Arial,sans-serif;letter-spacing:.035em;background:#141414;color:#fff!important;text-transform:uppercase;transition:transform .2s,opacity .2s}
+.aw-cta:hover{transform:translateY(-2px)}
+/* Distinct header architectures. */
+.ix-accessories .aw-header{min-height:77px;display:flex;align-items:center;justify-content:space-between;gap:26px;padding:0 max(4.2vw,24px);position:relative;z-index:9;background:var(--ix-paper);border-bottom:1px solid #2222;color:var(--ix-ink)}
+.ix-accessories .aw-brand{font:750 29px/1 'Manrope',Arial,sans-serif;letter-spacing:.035em;white-space:nowrap;color:inherit}
+.ix-accessories .aw-brand small{display:block;font:600 8px/1.3 'Manrope',sans-serif;letter-spacing:.27em;margin-top:7px}
+.ix-accessories .aw-nav{display:flex;justify-content:center;align-items:center;gap:clamp(14px,2.1vw,35px);flex:1}
+.ix-accessories .aw-nav>a{font:800 10px/1.4 'Manrope',sans-serif;letter-spacing:.06em;white-space:nowrap}
+.ix-accessories .aw-nav>a:hover,.ix-accessories .aw-nav>a.current{opacity:.6}
+.ix-accessories .aw-header-actions{display:flex;align-items:center;justify-content:flex-end;gap:17px}
+.ix-accessories .aw-header-actions>button,.ix-accessories .aw-header-actions>a:not(.aw-cta){border:0;background:transparent;display:inline-flex;align-items:center;justify-content:center;position:relative;padding:3px;min-width:23px;min-height:26px}
+.ix-accessories .aw-header-actions .aw-bag>b{position:absolute;top:-7px;right:-9px;border-radius:50%;background:#b75f2d;color:#fff;min-width:15px;height:15px;padding:2px;font:800 9px/1.1 Arial,sans-serif;text-align:center}
+.ix-accessories .aw-menu-button{display:none!important}
+.aw-header-editorial .aw-cta{background:#161616;padding:10px 25px;min-height:34px;font-size:10px}
+.aw-header-editorial .aw-cta svg,.aw-header-tech .aw-cta svg{display:none}
+.aw-header-tech{position:absolute!important;inset:0 0 auto!important;background:transparent!important;color:white!important;border:0!important;min-height:90px!important}
+.aw-header-tech .aw-brand{font-size:32px;font-weight:500;letter-spacing:.27em}
+.aw-header-tech .aw-nav>a{font-weight:600;font-size:10px;color:#fff}
+.aw-header-tech .aw-cta{border-radius:100px;background:#fff;color:#111!important;padding:12px 25px}
+.aw-header-catalogue .aw-brand{font-weight:900;color:#283125}
+.aw-header-catalogue .aw-brand>span{display:block;font:700 8px/1.2 'Manrope',sans-serif;color:#737b6d;letter-spacing:.1em;margin-top:5px}
+.aw-header-playful{min-height:125px!important;justify-content:center!important;border:0!important}
+.aw-header-playful .aw-brand{font:900 28px/1 'Outfit',sans-serif;letter-spacing:-.08em;color:#d9739a}
+.aw-header-playful .aw-nav{position:absolute;left:5%;top:25px;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.aw-header-playful .aw-nav a{font:500 12px/1.4 'Outfit',sans-serif;color:#746b72;letter-spacing:0}
+.aw-header-playful .aw-header-actions{position:absolute;right:5%;top:27px}
+.aw-header-market{min-height:73px!important}
+.aw-header-market .aw-brand{font:900 25px/1 'Manrope',sans-serif;color:#1d2b3c;letter-spacing:-.055em}
+.aw-header-market .aw-nav>a{font-size:11px;letter-spacing:-.02em}
+.aw-header-market .aw-header-actions{gap:11px}
+.aw-header-market .aw-header-actions form{display:flex;align-items:center;max-width:235px;border:1px solid #d8dadd;border-radius:8px;background:#f8f9fa}
+.aw-header-market .aw-header-actions form input{width:150px;min-width:0;font:11px 'Manrope',sans-serif;background:transparent;padding:10px 8px;border:0;outline:0;color:#222}
+.aw-header-market .aw-header-actions form button{border:0;background:transparent;padding:8px;color:#1e2a3d}
+.aw-market-top{background:#1b2943;color:#fff;text-align:center;padding:10px;font:500 12px 'Manrope',sans-serif}
+.aw-market-top a{text-decoration:underline;color:#fff}
+.aw-header-minimal{min-height:105px!important;background:#080808!important;color:#fff!important;border:0!important;padding:0 max(4%,30px)!important}
+.aw-header-minimal .aw-brand{font:500 39px/1 'Cormorant Garamond',Georgia,serif;letter-spacing:-.05em}
+.aw-header-minimal .aw-nav{gap:32px}
+.aw-header-minimal .aw-nav a{font:500 11px 'Manrope',sans-serif;letter-spacing:0}
+/* Shared store components, but deliberately different product photography formats. */
+.aw-products{display:grid;gap:23px}
+.aw-product{min-width:0}
+.aw-product-photo{display:block;position:relative;overflow:hidden;background:#e9e6e3;aspect-ratio:1.15}
+.aw-product-photo img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.aw-product-photo:hover img{transform:scale(1.045)}
+.aw-product-photo small{position:absolute;top:11px;left:11px;font:800 9px 'Manrope',sans-serif;letter-spacing:.07em;padding:6px 9px;background:#f8f6f0;color:#191919}
+.aw-product-meta{display:flex;justify-content:space-between;gap:12px;align-items:start;padding:12px 0 7px}
+.aw-product-meta h3{font:800 16px/1.35 'Manrope',sans-serif;color:inherit}
+.aw-product-meta p{font:400 11px/1.55 'Manrope',sans-serif;color:#746c67;margin-top:5px!important;max-width:250px}
+.aw-product-index{display:block;font:700 10px/1.3 'Manrope',sans-serif;letter-spacing:.03em;margin-bottom:3px}
+.aw-product-meta>strong{font:800 12px/1.3 'Manrope',sans-serif;white-space:nowrap}
+.aw-product-actions{display:flex;gap:9px;align-items:center;justify-content:space-between}
+.aw-colour-options{display:flex;gap:7px;align-items:center}
+.aw-colour-options button{border-radius:50%;width:15px;height:15px;background:var(--aw-swatch);border:1px solid #1113;padding:0;box-shadow:0 0 0 2px transparent}
+.aw-colour-options button.chosen{box-shadow:0 0 0 2px #fff,0 0 0 3px #3337}
+.aw-add-button,.aw-view-button{font:800 10px 'Manrope',sans-serif;border:1px solid #aaa;min-height:30px;padding:6px 10px;background:transparent;display:flex;align-items:center;justify-content:center;gap:5px;color:inherit;text-align:center}
+.aw-view-button{min-width:105px}
+.aw-add-button:hover,.aw-view-button:hover{background:#211c1b;color:#fff!important}
+.aw-newsletter{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 4.5%;background:#e7e5e2;color:#171717}
+.aw-newsletter h2{font:750 22px/1.2 'Manrope',sans-serif;color:#161616}
+.aw-newsletter p{font:400 12px/1.55 'Manrope',sans-serif;color:#655f59;margin-top:5px}
+.aw-newsletter form{display:flex;min-width:min(430px,100%);max-width:470px}
+.aw-newsletter input{width:100%;min-width:0;border:1px solid #777;background:transparent;padding:13px 14px;font:12px Arial,sans-serif;color:inherit}
+.aw-newsletter button{padding:13px 18px;border:1px solid #151515;background:#151515;color:#fff;font:800 10px 'Manrope',sans-serif;text-transform:uppercase}
+.aw-newsletter form p{color:#343!important;margin:0!important;font-weight:600}
+.aw-footer{background:#1d1d1d;color:#f7f7f5;padding:0}
+.aw-footer-grid{display:grid;grid-template-columns:2.5fr repeat(3,1fr);gap:35px;padding:34px 5% 32px}
+.aw-footer-grid .aw-footer-main>a{font:650 36px/1 'Manrope',sans-serif;letter-spacing:-.05em}
+.aw-footer-grid p{max-width:290px;font:400 12px/1.7 'Manrope',sans-serif;color:#bdb8b2;margin-top:13px}
+.aw-footer-grid small{display:block;max-width:340px;margin-top:15px;font:400 10px/1.7 'Manrope',sans-serif;color:#918f8c}
+.aw-footer-grid>div:not(:first-child){display:flex;flex-direction:column;gap:9px}
+.aw-footer-grid b{font:800 10px/1.5 'Manrope',sans-serif;letter-spacing:.04em;margin-bottom:6px}
+.aw-footer-grid>div:not(:first-child) a{font:400 11px/1.5 'Manrope',sans-serif;color:#dad4cf}
+.aw-footer-base{border-top:1px solid #ffffff27;display:flex;justify-content:space-between;gap:20px;padding:17px 5%;font:600 9px 'Manrope',sans-serif;letter-spacing:.025em;color:#c4c0bc}
+.aw-footer-editorial{background:#1d1d1d}
+.aw-footer-tech{background:#0c0c0c}
+.aw-footer-catalogue{background:#fafaf8;color:#253023;border-top:1px solid #e5e8e4}
+.aw-footer-catalogue .aw-footer-grid a,.aw-footer-catalogue .aw-footer-grid b{color:#243021}
+.aw-footer-catalogue .aw-footer-grid p,.aw-footer-catalogue .aw-footer-grid small{color:#777e72}
+.aw-footer-catalogue .aw-footer-grid>div:not(:first-child) a{color:#536050}
+.aw-footer-catalogue .aw-footer-base{color:#626b5d;border-color:#d7dcd6}
+.aw-footer-playful{background:#d682a2;color:#fff}
+.aw-footer-playful .aw-newsletter{background:#f5e9ec}
+.aw-footer-market{background:#1b2943;color:#fff}
+.aw-footer-market .aw-newsletter{background:#f1f2f4}
+.aw-footer-minimal{background:#070707;color:#eee}
+.aw-footer-minimal .aw-footer-grid .aw-footer-main>a{font:500 43px 'Cormorant Garamond',Georgia,serif}
+/* 1 / OSSIA / split photography and tightly merchandised gallery */
+.aw-ossia{background:#f5f4f1;padding:30px 4.7% 55px;color:#141414;font-family:'Manrope',sans-serif}
+.aw-ossia-hero{display:grid;grid-template-columns:1.28fr 1fr;gap:2px;min-height:575px}
+.aw-ossia-lead{position:relative;overflow:hidden;min-height:575px;background:#4a3933;color:#fff}
+.aw-ossia-lead>img{position:absolute;inset:0;object-position:center 28%;filter:brightness(.7)}
+.aw-ossia-lead>div{position:absolute;bottom:40px;left:38px;right:26px;z-index:2}
+.aw-ossia-lead>div>span{font:750 11px 'Manrope',sans-serif;letter-spacing:.08em}
+.aw-ossia-lead h1{font:900 clamp(48px,5.5vw,96px)/.94 'Manrope',sans-serif;letter-spacing:-.06em;margin:9px 0!important}
+.aw-ossia-lead p{font:400 13px/1.5 'Manrope',sans-serif;color:#f8eee8}
+.aw-ossia-lead>div>div{display:flex;align-items:center;gap:24px;margin-top:15px}
+.aw-ossia-lead .aw-cta{background:#f9f7f5;color:#121212!important;font-size:10px}
+.aw-ossia-lead .aw-cta svg{display:none}
+.aw-ossia-lead>div>div>a:not(.aw-cta){font:750 10px 'Manrope',sans-serif;text-decoration:underline;text-underline-offset:5px}
+.aw-ossia-side{display:grid;grid-template-rows:1fr 1fr;gap:2px;min-height:575px}
+.aw-ossia-side>img{min-height:0;max-height:287px;object-fit:cover;object-position:center}
+.aw-ossia-edit{padding:47px 0}
+.aw-ossia-edit>header{display:flex;justify-content:space-between;align-items:center;gap:25px;margin-bottom:30px}
+.aw-ossia-edit>header>div:first-child{display:flex;align-items:center;gap:21px}
+.aw-ossia-edit h2{font:900 clamp(26px,3vw,46px)/1 'Manrope',sans-serif;letter-spacing:-.065em}
+.aw-ossia-edit>header span{font:700 10px 'Manrope',sans-serif;white-space:nowrap}
+.aw-ossia-filters{display:flex;gap:2px;align-items:center}
+.aw-ossia-filters button,.aw-ossia-filters select{border:1px solid #dad7d2;background:#f4f2ef;padding:10px 13px;font:800 9px 'Manrope',sans-serif;color:#191919}
+.aw-ossia-filters button.active{background:#131313;color:#fff}
+.aw-ossia-filters select{margin-left:10px;max-width:128px}
+.aw-products-ossia{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:38px;column-gap:26px}
+.aw-product-ossia .aw-product-photo{aspect-ratio:1.7;background:#e5e0dc}
+.aw-product-ossia .aw-product-meta h3{font-size:13px}
+.aw-product-ossia .aw-product-meta p{font-size:10px}
+.aw-product-ossia .aw-product-index{font-size:9px}
+.aw-product-ossia .aw-product-meta>strong{font-size:12px}
+.aw-product-ossia .aw-view-button{font-size:9px}
+.aw-ossia-designer{display:grid;grid-template-columns:1fr 1fr;background:#1b1b1b;color:#fff;min-height:400px;margin-top:30px}
+.aw-ossia-designer>img{min-height:400px;max-height:470px;object-fit:cover;filter:saturate(.7)}
+.aw-ossia-designer>div{padding:35px 6%;display:flex;flex-direction:column;align-items:flex-start}
+.aw-ossia-designer>div>span{font:750 9px 'Manrope',sans-serif;letter-spacing:.09em;margin-bottom:12px}
+.aw-ossia-designer h2{font:900 clamp(35px,4vw,62px)/.98 'Manrope',sans-serif;letter-spacing:-.055em}
+.aw-ossia-designer p{font:400 13px/1.6 'Manrope',sans-serif;margin:12px 0!important;max-width:350px;color:#dfd7d1}
+.aw-ossia-designer blockquote{font:italic 22px/1.3 'Cormorant Garamond',Georgia,serif;padding:15px 0;border-top:1px solid #ffffff7a;margin:6px 0 17px;width:100%}
+.aw-ossia-designer .aw-cta{background:#fff;color:#111!important;font-size:9px;padding:10px 17px}
+.aw-ossia-designer .aw-cta svg{display:none}
+.aw-ossia-designer small{font:650 9px 'Manrope',sans-serif;letter-spacing:.05em;color:#c9c2bd;margin-top:auto}
+/* 2 / VYRA / full-bleed cover and tech collection */
+.aw-tech{color:#111;background:#ebebeb}
+.aw-tech-hero{height:min(830px,73vw);min-height:605px;position:relative;color:#fff;overflow:hidden}
+.aw-tech-hero>img{position:absolute;inset:0;filter:brightness(.59);object-position:center 43%}
+.aw-tech-shade{position:absolute;inset:0;background:linear-gradient(90deg,#141414ac 0%,#33333342 48%,transparent 82%)}
+.aw-tech-hero-content{position:absolute;left:4%;top:29%;width:62%;z-index:2}
+.aw-tech-hero-content>span{font:650 12px/1.5 'Manrope',sans-serif;letter-spacing:.39em}
+.aw-tech-hero h1{font:950 clamp(60px,7.7vw,141px)/.84 'Manrope',sans-serif;letter-spacing:-.08em;margin:30px 0 20px!important;color:#fff}
+.aw-tech-hero p{font:500 18px/1.5 'Manrope',sans-serif;max-width:530px;margin-bottom:25px!important}
+.aw-tech-hero .aw-cta{background:#fff;color:#111!important;border-radius:30px;padding:15px 25px}
+.aw-tech-hero>small{position:absolute;bottom:15%;right:4%;color:#fff;font:750 11px/1.65 'Manrope',sans-serif;letter-spacing:.26em;z-index:2}
+.aw-tech-collection{padding:70px 4% 40px}
+.aw-tech-heading{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:33px}
+.aw-tech-heading>div span{font:650 11px 'Manrope',sans-serif;letter-spacing:.24em}
+.aw-tech-heading h2{font:950 clamp(59px,7.5vw,139px)/.86 'Manrope',sans-serif;letter-spacing:-.075em;margin-top:19px!important}
+.aw-tech-heading>p{max-width:325px;font:500 15px/1.7 'Manrope',sans-serif;color:#5d5d5d;padding-bottom:5px}
+.aw-products-tech{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
+.aw-product-tech .aw-product-photo{aspect-ratio:1.6;background:#e0dfdd}
+.aw-product-tech .aw-product-photo>img{object-fit:cover}
+.aw-product-tech .aw-product-meta{padding:19px 0 5px}
+.aw-product-tech .aw-product-meta h3{font:850 18px 'Manrope',sans-serif}
+.aw-product-tech .aw-product-meta p{max-width:285px}
+.aw-product-tech .aw-product-meta>strong{font-size:15px}
+.aw-tech-features{display:grid;grid-template-columns:repeat(5,1fr);padding:45px 4% 54px;margin:0 4%;border-top:1px solid #cacaca}
+.aw-tech-features article{padding:0 18px;text-align:center;border-right:1px solid #d0d0d0}
+.aw-tech-features article:last-child{border:0}
+.aw-tech-features article svg{margin:0 auto 16px}
+.aw-tech-features h3{font:800 12px 'Manrope',sans-serif;letter-spacing:.07em}
+.aw-tech-features p{font:450 12px/1.5 'Manrope',sans-serif;margin-top:8px!important;color:#666}
+.aw-tech-community{height:500px;position:relative;color:#fff;overflow:hidden}
+.aw-tech-community>img{position:absolute;inset:0;filter:brightness(.44);object-position:center 36%}
+.aw-tech-community>div{position:absolute;right:6%;top:15%;width:42%}
+.aw-tech-community h2{font:930 clamp(45px,5.4vw,90px)/.91 'Manrope',sans-serif;letter-spacing:-.065em}
+.aw-tech-community>div>p{font:450 16px/1.6 'Manrope',sans-serif;max-width:400px;margin:15px 0!important}
+.aw-tech-community .aw-newsletter{padding:0;margin-top:20px;background:transparent}
+.aw-tech-community .aw-newsletter>div{display:none}
+.aw-tech-community .aw-newsletter form{min-width:0;width:100%;max-width:100%}
+.aw-tech-community .aw-newsletter input{color:#fff;background:#12121255;border:1px solid #fff8}
+.aw-tech-community .aw-newsletter button{background:#fff;color:#111;border:0}
+.aw-tech-community>small{position:absolute;left:4%;bottom:20%;font:800 11px/1.7 'Manrope',sans-serif;letter-spacing:.22em}
+/* 3 / AERO / airy sports marketplace */
+.aw-aero{padding:24px 3.7% 60px;color:#1f231e;background:#f9faf7}
+.aw-aero-hero{min-height:550px;background:#f1f2ec;border-radius:29px;display:grid;grid-template-columns:51% 49%;position:relative;overflow:hidden}
+.aw-aero-copy{z-index:2;padding:68px 0 60px 5%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.aw-aero-copy>span{font:800 10px 'Manrope',sans-serif;letter-spacing:.06em;background:#e6e9df;padding:10px 15px;border-radius:60px;margin-bottom:23px}
+.aw-aero-copy h1{font:950 clamp(43px,4.9vw,85px)/.93 'Manrope',sans-serif;letter-spacing:-.073em}
+.aw-aero-copy>p{font:500 13px/1.7 'Manrope',sans-serif;max-width:410px;margin:20px 0!important;color:#5e625b}
+.aw-aero-copy>div{display:flex;gap:12px;align-items:center}
+.aw-aero .aw-cta{border-radius:35px;background:#4b5840;color:#fff!important}
+.aw-aero-copy>div>a:not(.aw-cta){display:inline-flex;padding:13px 20px;background:#e3e7de;border-radius:35px;font:800 10px 'Manrope',sans-serif}
+.aw-aero-hero>img{height:100%;min-height:550px;object-fit:cover;object-position:60% center;mix-blend-mode:multiply}
+.aw-aero-floating{position:absolute;right:3%;top:14%;display:grid;gap:10px;width:165px}
+.aw-aero-floating span{display:block;padding:15px;background:#ffffffe9;border-radius:16px;box-shadow:0 7px 15px #00000008;font:800 9px/1.5 'Manrope',sans-serif;text-align:center;color:#586055}
+.aw-aero-search{display:flex;align-items:center;gap:12px;margin:28px 0 12px;background:#fff;border:1px solid #e4e7de;border-radius:35px;padding:7px 9px 7px 20px;max-width:690px}
+.aw-aero-search input{width:100%;border:0;outline:0;min-width:0;color:#222;background:transparent;font:12px 'Manrope',sans-serif}
+.aw-aero-search button{padding:12px 18px;border:0;background:#4d5942;color:white;border-radius:30px;font:750 10px 'Manrope',sans-serif}
+.aw-aero-pills{display:flex;gap:10px;flex-wrap:wrap;padding-bottom:34px}
+.aw-aero-pills a{padding:10px 18px;border:1px solid #e2e6dd;background:#fff;border-radius:24px;font:700 10px 'Manrope',sans-serif}
+.aw-aero-products{padding-bottom:50px}
+.aw-aero-title,.aw-market-categories header,.aw-market-trending header{display:flex;justify-content:space-between;align-items:center;margin:20px 0 21px}
+.aw-aero-title h2,.aw-market-categories h2,.aw-market-trending h2{font:900 26px 'Manrope',sans-serif;letter-spacing:-.055em}
+.aw-aero-title>a,.aw-market-categories header a,.aw-market-trending header a{display:flex;align-items:center;gap:9px;font:750 11px 'Manrope',sans-serif}
+.aw-products-aero{grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
+.aw-product-aero{background:#fff;border:1px solid #ecece8;border-radius:16px;overflow:hidden;padding-bottom:15px}
+.aw-product-aero .aw-product-photo{aspect-ratio:1.02;background:#eeefec}
+.aw-product-aero .aw-product-meta{display:block;padding:13px 13px 6px}
+.aw-product-aero .aw-product-meta h3{font-size:12px;margin:5px 0!important;line-height:1.3}
+.aw-product-aero .aw-product-index{font-size:9px;color:#747d6d}
+.aw-product-aero .aw-product-meta>strong{display:block;font-size:12px;margin-top:9px}
+.aw-product-aero .aw-product-meta p{display:none}
+.aw-product-aero .aw-product-actions{padding:0 13px;gap:5px}
+.aw-product-aero .aw-view-button{display:none}
+.aw-product-aero .aw-add-button{margin-left:auto;border:0;border-radius:7px;background:#536144;color:#fff}
+.aw-product-aero .aw-add-button span{display:none}
+.aw-aero-tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.aw-aero-tiles>a{position:relative;height:220px;border-radius:20px;overflow:hidden;background:#e8eae5}
+.aw-aero-tiles>a:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#eeeef0ec 0%,#fff5 45%,transparent 95%)}
+.aw-aero-tiles img{position:absolute;inset:0;object-position:center 40%}
+.aw-aero-tiles>a>div{position:absolute;inset:24px auto 25px 28px;z-index:1;width:52%;display:flex;flex-direction:column;align-items:flex-start}
+.aw-aero-tiles span{font:700 10px 'Manrope',sans-serif;letter-spacing:.08em}
+.aw-aero-tiles h3{font:900 32px 'Manrope',sans-serif;letter-spacing:-.045em;text-transform:uppercase;margin:8px 0!important}
+.aw-aero-tiles p{font:500 11px/1.5 'Manrope',sans-serif;color:#555c52}
+.aw-aero-tiles strong{display:flex;align-items:center;gap:5px;margin-top:auto;font:800 10px 'Manrope',sans-serif}
+.aw-aero-tech{padding:57px 0}
+.aw-aero-tech h2{font:900 22px 'Manrope',sans-serif;letter-spacing:-.03em;margin-bottom:20px!important}
+.aw-aero-tech>div{display:grid;grid-template-columns:repeat(6,1fr);gap:9px}
+.aw-aero-tech article{text-align:center;padding:27px 12px;background:#f1f3ed;border-radius:13px;min-width:0}
+.aw-aero-tech article>span{display:block;color:#7d8a74;font:800 13px 'Manrope',sans-serif;margin-bottom:13px}
+.aw-aero-tech h3{font:850 10px 'Manrope',sans-serif;letter-spacing:.015em}
+.aw-aero-tech p{font:400 10px/1.55 'Manrope',sans-serif;color:#717970;margin-top:10px!important}
+.aw-aero-club{background:#e8ebdf;border-radius:22px;display:flex;align-items:center;justify-content:space-between;gap:23px;padding:30px 38px;margin-bottom:29px}
+.aw-aero-club>span{font:800 12px 'Manrope',sans-serif;letter-spacing:.12em;max-width:160px}
+.aw-aero-club h2{font:900 28px 'Manrope',sans-serif;letter-spacing:-.055em}
+.aw-aero-club p{font:500 12px 'Manrope',sans-serif;margin-top:6px!important}
+.aw-aero-perks{display:flex;justify-content:space-around;gap:10px;padding:22px;border-top:1px solid #d7ddd3;color:#596451}
+.aw-aero-perks>span{display:flex;align-items:center;gap:9px;font:750 11px 'Manrope',sans-serif}
+/* 4 / HUSH / playful pink objects and chrome collage */
+.aw-hush{background:#fff;color:#161216;font-family:'Outfit',sans-serif}
+.aw-hush-hero{position:relative;min-height:630px;padding:20px 5% 0;overflow:hidden}
+.aw-hush-hero-kicker{position:absolute;left:5%;top:14px;font:650 10px 'Outfit',sans-serif;letter-spacing:.18em;color:#d787a5}
+.aw-hush-bigword{position:absolute;top:90px;left:-2%;right:-2%;font:500 clamp(120px,20vw,335px)/1 'Outfit',sans-serif;letter-spacing:-.105em;white-space:nowrap;text-align:center;z-index:0}
+.aw-hush-hero>img{position:absolute;width:53%;height:360px;object-fit:contain;left:24%;top:55px;z-index:2;mix-blend-mode:multiply;filter:saturate(.7) sepia(.12)}
+.aw-hush-silver{position:absolute;left:26%;top:100px;font-size:160px;transform:rotate(-25deg);color:#9f9f9f;opacity:.37}
+.aw-hush-intro{position:absolute;bottom:54px;left:5%;right:5%;display:flex;justify-content:space-between;align-items:start;gap:30px}
+.aw-hush-intro>div:first-child span{font:450 12px 'Outfit',sans-serif;color:#8c8288}
+.aw-hush-intro h2{font:750 23px 'Outfit',sans-serif;margin-top:6px!important}
+.aw-hush-intro>div:last-child{max-width:380px}
+.aw-hush-intro p{font:650 19px/1.35 'Outfit',sans-serif;letter-spacing:-.025em;margin-bottom:12px!important}
+.aw-hush .aw-cta{background:#d97b9f;border-radius:25px}
+.aw-hush-arrivals{background:#d786a5;color:#fff;padding:49px 6% 55px}
+.aw-hush-arrivals-title{display:flex;justify-content:center;gap:30px;align-items:center;margin-bottom:33px}
+.aw-hush-arrivals-title>span{font:800 clamp(14px,2vw,22px) 'Outfit',sans-serif;color:#edbfd1}
+.aw-hush-arrivals-title h2{font:900 clamp(29px,4vw,57px)/1 'Outfit',sans-serif;letter-spacing:-.06em}
+.aw-products-hush{grid-template-columns:repeat(3,minmax(0,1fr));gap:30px;max-width:1020px;margin:auto}
+.aw-product-hush .aw-product-photo{aspect-ratio:.95;border-radius:110px 110px 23px 23px;background:#e9b5c9}
+.aw-product-hush .aw-product-photo img{mix-blend-mode:multiply;object-fit:cover}
+.aw-product-hush .aw-product-meta{color:#fff}
+.aw-product-hush .aw-product-meta p{color:#fff}
+.aw-product-hush .aw-view-button,.aw-product-hush .aw-add-button{background:#fff;color:#cc7496;border-color:#fff;border-radius:23px}
+.aw-product-hush .aw-colour-options button.chosen{box-shadow:0 0 0 2px #d786a5,0 0 0 3px #fff}
+.aw-hush-story{display:grid;grid-template-columns:1fr 1.05fr;gap:30px;min-height:570px;padding:70px 6%}
+.aw-hush-text{display:flex;flex-direction:column;align-items:flex-start;padding:30px 4% 0}
+.aw-hush-text>p{font:500 clamp(14px,1.5vw,18px)/1.6 'Outfit',sans-serif;max-width:390px}
+.aw-hush-text .aw-cta{margin-top:25px}
+.aw-hush-text>b{font:950 clamp(120px,14vw,245px)/1 'Outfit',sans-serif;letter-spacing:-.14em;color:#de85a3;margin-top:auto}
+.aw-hush-mosaic{position:relative;min-height:530px}
+.aw-hush-mosaic img{position:absolute;object-fit:cover}
+.aw-hush-mosaic img:nth-child(1){width:45%;height:46%;right:34%;top:7%;object-fit:cover}
+.aw-hush-mosaic img:nth-child(2){width:69%;height:61%;right:1%;bottom:0;filter:grayscale(1)}
+.aw-hush-mosaic img:nth-child(3){width:25%;height:26%;right:34%;bottom:14%;border:7px solid #f8f2f4}
+.aw-hush-collections{padding:45px 6% 95px}
+.aw-hush-collections h2{font:850 35px 'Outfit',sans-serif;letter-spacing:-.06em;margin-bottom:25px!important}
+.aw-products-hush-more{grid-template-columns:repeat(3,1fr)}
+.aw-product-hush-more .aw-product-photo{aspect-ratio:1;border-radius:30px;background:#f3e5eb}
+/* 5 / NOVA / general ecommerce with utility bars, promotions and dense cards */
+.aw-market{background:#fff;color:#182437;font-family:'Manrope',sans-serif;padding:0 3.8% 50px}
+.aw-market-hero{display:grid;grid-template-columns:50% 50%;align-items:center;min-height:420px;background:#f4f4f5;overflow:hidden}
+.aw-market-hero>div:first-child{padding:50px 4%}
+.aw-market-hero>div:first-child>span{font:800 11px 'Manrope',sans-serif;letter-spacing:.2em;display:block;margin-bottom:20px;color:#243148}
+.aw-market-hero h1{font:900 clamp(43px,4.5vw,76px)/1.06 'Manrope',sans-serif;letter-spacing:-.065em;max-width:600px}
+.aw-market-hero p{font:450 14px/1.6 'Manrope',sans-serif;max-width:400px;margin:20px 0!important}
+.aw-market-hero>div:first-child>div{display:flex;gap:10px}
+.aw-market .aw-cta{background:#b65b25;color:#fff!important;border-radius:5px}
+.aw-market-hero>div:first-child>div>a:not(.aw-cta){padding:13px 17px;border:1px solid #17263b;border-radius:5px;font:800 11px 'Manrope',sans-serif}
+.aw-market-still{position:relative;height:420px;overflow:hidden;background:radial-gradient(circle,#b86a39 0 43%,#f4f4f5 44%)}
+.aw-market-still>img{height:100%;width:100%;object-fit:cover;object-position:50% 45%;mix-blend-mode:multiply}
+.aw-market-still>div{position:absolute;bottom:11px;left:0;right:0;display:flex;justify-content:center;gap:8px}
+.aw-market-still>div>img{width:23%;height:105px;object-fit:cover;background:#f3eeee;border-radius:10px;box-shadow:0 4px 16px #0001}
+.aw-market-benefits{display:grid;grid-template-columns:repeat(4,1fr);padding:29px 0;border-bottom:1px solid #e6e8e9}
+.aw-market-benefits>div{display:flex;align-items:center;justify-content:center;gap:13px;padding:5px 14px;border-right:1px solid #e1e4e7}
+.aw-market-benefits>div:last-child{border:0}
+.aw-market-benefits svg{color:#b75f2f}
+.aw-market-benefits span{display:flex;flex-direction:column;gap:4px}
+.aw-market-benefits b{font:850 12px 'Manrope',sans-serif}
+.aw-market-benefits small{font:450 11px 'Manrope',sans-serif;color:#666}
+.aw-market-categories{padding:35px 0}
+.aw-market-categories>div{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.aw-market-categories>div>a{position:relative;height:153px;background:#f0f1f2;border-radius:11px;overflow:hidden}
+.aw-market-categories>div>a img{position:absolute;inset:0;object-fit:cover;object-position:left center;opacity:.85}
+.aw-market-categories>div>a b{position:absolute;top:46%;right:13px;background:#fffd;padding:4px 5px;border-radius:4px;font:900 13px 'Manrope',sans-serif}
+.aw-market-categories>div>a svg{position:absolute;right:12px;bottom:13px;color:#b65b25}
+.aw-market-promos{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:11px 0 40px}
+.aw-market-promos>a{height:210px;position:relative;overflow:hidden;border-radius:11px;color:#fff;background:#1d2d46}
+.aw-market-promos>a:nth-child(2){color:#15223a;background:#e2dfdd}
+.aw-market-promos>a:nth-child(3){color:#fff;background:#233652}
+.aw-market-promos img{position:absolute;inset:0;object-fit:cover;opacity:.38}
+.aw-market-promos>a:nth-child(2) img{opacity:.35}
+.aw-market-promos>a>div{position:relative;z-index:2;padding:24px}
+.aw-market-promos span{font:800 10px 'Manrope',sans-serif;letter-spacing:.17em}
+.aw-market-promos h2{font:950 clamp(24px,2.5vw,40px)/1.07 'Manrope',sans-serif;max-width:250px;letter-spacing:-.055em;margin:12px 0!important}
+.aw-market-promos p{font:500 12px 'Manrope',sans-serif}
+.aw-market-promos strong{display:inline-flex;align-items:center;gap:6px;margin-top:17px;padding:8px 12px;background:#b65b25;color:white;border-radius:4px;font:800 10px 'Manrope',sans-serif}
+.aw-products-market{grid-template-columns:repeat(5,minmax(0,1fr));gap:13px}
+.aw-product-market{border:1px solid #e9ebed;background:#fff;border-radius:9px;overflow:hidden}
+.aw-product-market .aw-product-photo{aspect-ratio:1.16}
+.aw-product-market .aw-product-meta{display:block;padding:11px 11px 8px}
+.aw-product-market .aw-product-meta h3{font:850 11px/1.35 'Manrope',sans-serif}
+.aw-product-market .aw-product-meta p{display:none}
+.aw-product-market .aw-product-meta>strong{display:block;margin-top:7px;font-size:13px}
+.aw-product-market .aw-product-actions{padding:4px 11px 12px}
+.aw-product-market .aw-add-button{margin-left:auto;background:#b65c27;color:#fff;border:0;border-radius:6px}
+.aw-product-market .aw-add-button>span,.aw-product-market .aw-view-button{display:none}
+/* 6 / VELOURA / black luxury, horizontal cropped film strip and gold */
+.aw-veloura{background:#070707;color:#fff;padding-bottom:60px}
+.aw-veloura-hero{padding:25px 4% 55px}
+.aw-veloura-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));align-items:center;gap:18px;height:530px;overflow:hidden}
+.aw-veloura-slide{display:block;position:relative;border-radius:24px;overflow:hidden;height:430px;background:#181312}
+.aw-veloura-slide-0,.aw-veloura-slide-4{height:330px}
+.aw-veloura-slide-1,.aw-veloura-slide-3{height:410px}
+.aw-veloura-slide-2{height:520px}
+.aw-veloura-slide img{object-fit:cover;object-position:center;filter:brightness(.81)}
+.aw-veloura-slide-2>span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:7px 16px;border-radius:20px;background:#a82025;font:700 11px 'Manrope',sans-serif}
+.aw-veloura-arrows{display:flex;justify-content:center;gap:12px;margin-top:20px}
+.aw-veloura-arrows button{width:37px;height:37px;display:grid;place-items:center;border:1px solid #555;border-radius:50%;background:#0c0c0c;color:#fff}
+.aw-veloura-arrows button:hover{border-color:#d8c09a}
+.aw-veloura-products{padding:40px 4% 70px}
+.aw-veloura-heading{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:27px}
+.aw-veloura-heading h2{font:500 clamp(27px,3vw,48px)/1.23 'Cormorant Garamond',Georgia,serif;text-align:center;flex:1}
+.aw-veloura-heading>a{font:600 11px 'Manrope',sans-serif;text-decoration:underline!important;text-underline-offset:4px}
+.aw-products-veloura{grid-template-columns:repeat(5,minmax(0,1fr));gap:19px}
+.aw-product-veloura .aw-product-photo{aspect-ratio:1.05;border-radius:20px;background:#f7f5f1}
+.aw-product-veloura .aw-product-meta{display:block}
+.aw-product-veloura .aw-product-meta h3{font:500 16px 'Cormorant Garamond',Georgia,serif}
+.aw-product-veloura .aw-product-meta p{display:none}
+.aw-product-veloura .aw-product-meta>strong{display:block;font:600 12px 'Manrope',sans-serif;margin-top:7px}
+.aw-product-veloura .aw-product-index{font:500 9px 'Manrope',sans-serif;color:#bfb5aa}
+.aw-product-veloura .aw-view-button{display:none}
+.aw-product-veloura .aw-add-button{color:#fff;border-color:#555}
+.aw-veloura-box{min-height:470px;display:grid;grid-template-columns:1fr 1.25fr 1fr;align-items:center;gap:15px;padding:45px 6%}
+.aw-veloura-box>div>span{font:650 9px 'Manrope',sans-serif;letter-spacing:.12em;color:#ae895d}
+.aw-veloura-box h2{color:#c3a267;font:500 clamp(39px,4vw,70px)/1.1 'Cormorant Garamond',Georgia,serif;margin-top:11px!important}
+.aw-veloura-box>img{height:360px;object-fit:cover;object-position:center;background:#21120f;mix-blend-mode:screen}
+.aw-veloura-box>b{text-align:center;font:500 54px 'Cormorant Garamond',Georgia,serif;color:#cba966}
+.aw-veloura-about{display:grid;grid-template-columns:1fr 2.5fr;gap:26px;align-items:stretch;padding:0 4%;margin-top:30px}
+.aw-veloura-about>img{height:350px;object-fit:cover;filter:grayscale(1);border-radius:20px}
+.aw-veloura-about>div{padding:37px;background:#960a11;border-radius:21px}
+.aw-veloura-about>div>span{font:700 10px 'Manrope',sans-serif;color:#ffb6b9;letter-spacing:.13em}
+.aw-veloura-about h2{font:500 44px 'Cormorant Garamond',Georgia,serif;margin:12px 0!important}
+.aw-veloura-about p{font:450 14px/1.7 'Manrope',sans-serif;max-width:800px;margin:0 0 12px!important}
+.aw-veloura-about .aw-cta{background:#fff;color:#900e1a!important;margin-top:12px}
+.aw-veloura-summer{display:grid;grid-template-columns:1fr 1fr;gap:25px;margin-top:70px;padding:0 4%}
+.aw-veloura-summer>div:first-child{display:grid;grid-template-columns:1fr 1fr;gap:17px;max-height:340px}
+.aw-veloura-summer>div:first-child img{height:320px;object-fit:cover;border-radius:19px}
+.aw-veloura-summer>div:last-child{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+.aw-veloura-summer h2{font:500 43px/1 'Cormorant Garamond',Georgia,serif;white-space:nowrap}
+.aw-veloura-summer a{font:700 10px 'Manrope',sans-serif;color:#e0caad;display:flex;gap:5px;align-items:center;margin:12px 0}
+.aw-veloura-summer>div:last-child img{height:230px;grid-column:2;object-fit:cover;border-radius:17px}
+/* Tablet */
+@media(max-width:1100px){
+ .ix-accessories .aw-header{gap:16px;padding:0 3%}
+ .ix-accessories .aw-nav{gap:14px}
+ .ix-accessories .aw-nav>a{font-size:9px}
+ .aw-header-market .aw-header-actions form{display:none}
+ .aw-ossia-hero{min-height:470px}
+ .aw-ossia-lead,.aw-ossia-side{min-height:470px}
+ .aw-ossia-side>img{max-height:235px}
+ .aw-ossia-lead h1{font-size:clamp(46px,5vw,70px)}
+ .aw-ossia-edit>header{flex-wrap:wrap}
+ .aw-tech-heading h2{font-size:clamp(53px,7.5vw,92px)}
+ .aw-aero-floating{right:2%;width:142px}
+ .aw-products-aero,.aw-products-market{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .aw-aero-tech>div{grid-template-columns:repeat(3,1fr)}
+ .aw-hush-bigword{font-size:clamp(110px,19vw,230px)}
+ .aw-products-veloura{gap:10px}
+}
+/* Mobile: the site truly reflows at phone breakpoints. Preview Desktop remains
+   at 1440 CSS px through ScaledWebsitePreview; mobile is independent. */
+@media(max-width:720px){
+ .ix-accessories .aw-header{min-height:69px;gap:8px;padding:0 18px}
+ .ix-accessories .aw-brand{font-size:23px}
+ .ix-accessories .aw-nav{display:none;position:absolute;top:100%;left:0;right:0;padding:21px 18px;background:var(--ix-paper);color:var(--ix-ink);box-shadow:0 12px 22px #0002;z-index:15;flex-direction:column;align-items:stretch;gap:14px}
+ .ix-accessories .aw-nav.open{display:flex}
+ .ix-accessories .aw-nav>a{font-size:12px}
+ .ix-accessories .aw-header-actions{gap:14px}
+ .ix-accessories .aw-head-saved,.ix-accessories .aw-head-search,.ix-accessories .aw-head-account{display:none!important}
+ .ix-accessories .aw-menu-button{display:inline-flex!important}
+ .aw-header-tech{min-height:69px!important}
+ .aw-header-tech .aw-nav{background:#1e1e1e;color:#fff}
+ .aw-header-tech .aw-nav>a{color:#fff}
+ .aw-header-tech .aw-cta{display:none}
+ .aw-header-playful{justify-content:space-between!important;min-height:76px!important}
+ .aw-header-playful .aw-nav{position:absolute;top:100%;left:0;right:0;background:#fff}
+ .aw-header-playful .aw-header-actions{position:static}
+ .aw-header-market{min-height:70px!important}
+ .aw-header-minimal{min-height:76px!important;padding:0 20px!important}
+ .aw-header-minimal .aw-brand{font-size:33px}
+ .aw-header-editorial .aw-cta{display:none}
+ .aw-newsletter{flex-direction:column;align-items:stretch;gap:16px;padding:25px 19px}
+ .aw-newsletter form{min-width:0;width:100%;max-width:100%}
+ .aw-footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:30px 15px;padding:30px 19px}
+ .aw-footer-main{grid-column:1/-1}
+ .aw-footer-grid .aw-footer-main>a{font-size:29px}
+ .aw-footer-base{padding:14px 19px;flex-wrap:wrap}
+ .aw-product-meta p{font-size:10px}
+ .aw-ossia{padding:16px 16px 42px}
+ .aw-ossia-hero{grid-template-columns:1fr;gap:2px}
+ .aw-ossia-lead{min-height:450px}
+ .aw-ossia-lead>div{left:19px;bottom:23px;right:14px}
+ .aw-ossia-lead h1{font-size:clamp(41px,10vw,65px)}
+ .aw-ossia-lead p{font-size:12px}
+ .aw-ossia-lead>div>div{gap:11px;flex-wrap:wrap}
+ .aw-ossia-side{min-height:150px;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:none}
+ .aw-ossia-side>img{height:165px}
+ .aw-ossia-edit{padding:31px 0}
+ .aw-ossia-edit>header{align-items:start;gap:18px}
+ .aw-ossia-edit>header>div:first-child{gap:11px}
+ .aw-ossia-edit h2{font-size:26px}
+ .aw-ossia-filters{max-width:100%;overflow-x:auto}
+ .aw-ossia-filters button{padding:9px 10px;white-space:nowrap}
+ .aw-ossia-filters select{margin-left:4px;min-width:92px;font-size:8px}
+ .aw-products-ossia{grid-template-columns:repeat(2,minmax(0,1fr));gap:25px 10px}
+ .aw-product-ossia .aw-product-photo{aspect-ratio:1.2}
+ .aw-product-ossia .aw-product-meta{gap:5px}
+ .aw-product-ossia .aw-product-meta h3{font-size:12px}
+ .aw-product-ossia .aw-product-meta>strong{font-size:10px}
+ .aw-product-ossia .aw-product-actions{flex-wrap:wrap}
+ .aw-product-ossia .aw-view-button{flex:1}
+ .aw-ossia-designer{grid-template-columns:1fr}
+ .aw-ossia-designer>img{min-height:260px;height:260px}
+ .aw-ossia-designer>div{padding:26px 22px;gap:12px}
+ .aw-ossia-designer h2{font-size:35px}
+ .aw-ossia-designer blockquote{font-size:21px}
+ .aw-tech-hero{height:690px;min-height:690px}
+ .aw-tech-hero>img{object-position:60% 50%}
+ .aw-tech-shade{background:linear-gradient(0deg,#111b 0%,#1117 50%,#3332)}
+ .aw-tech-hero-content{left:6%;width:90%;top:auto;bottom:55px}
+ .aw-tech-hero h1{font-size:clamp(46px,12.5vw,83px);margin:22px 0!important}
+ .aw-tech-hero-content>span{font-size:10px}
+ .aw-tech-hero p{font-size:13px;max-width:310px}
+ .aw-tech-hero>small{right:6%;top:140px;bottom:auto;font-size:8px}
+ .aw-tech-collection{padding:45px 18px 25px}
+ .aw-tech-heading{align-items:start;flex-direction:column;gap:17px}
+ .aw-tech-heading h2{font-size:clamp(42px,11vw,70px)}
+ .aw-tech-heading>p{font-size:13px}
+ .aw-products-tech{grid-template-columns:1fr;gap:24px}
+ .aw-product-tech .aw-product-photo{aspect-ratio:1.65}
+ .aw-tech-features{display:grid;grid-template-columns:repeat(2,1fr);gap:25px 0;padding:32px 0;margin:0 18px}
+ .aw-tech-features article{padding:0 13px}
+ .aw-tech-features article:nth-child(2n){border:0}
+ .aw-tech-community{height:505px}
+ .aw-tech-community>img{object-position:28% center}
+ .aw-tech-community>div{top:auto;bottom:33px;right:5%;left:5%;width:auto}
+ .aw-tech-community h2{font-size:48px}
+ .aw-tech-community>div>p{font-size:12px}
+ .aw-tech-community>small{top:22px;left:5%;bottom:auto;font-size:8px}
+ .aw-aero{padding:14px 16px 40px}
+ .aw-aero-hero{grid-template-columns:1fr;min-height:690px;border-radius:17px}
+ .aw-aero-copy{padding:34px 22px 0}
+ .aw-aero-copy h1{font-size:clamp(38px,10vw,60px)}
+ .aw-aero-copy p{font-size:12px}
+ .aw-aero-copy>div>a{padding:11px 14px!important;font-size:9px!important}
+ .aw-aero-hero>img{height:280px;min-height:280px;object-position:center}
+ .aw-aero-floating{top:auto;bottom:25px;right:15px;width:130px;gap:5px}
+ .aw-aero-floating span{font-size:8px;padding:8px}
+ .aw-aero-pills{flex-wrap:nowrap;overflow-x:auto;padding-bottom:22px}
+ .aw-aero-pills a{white-space:nowrap}
+ .aw-products-aero{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .aw-aero-title h2{font-size:22px}
+ .aw-aero-title>a{font-size:9px}
+ .aw-aero-tiles{grid-template-columns:1fr;gap:10px}
+ .aw-aero-tiles>a{height:195px}
+ .aw-aero-tiles h3{font-size:27px}
+ .aw-aero-tech{padding:35px 0}
+ .aw-aero-tech>div{grid-template-columns:repeat(2,1fr);gap:7px}
+ .aw-aero-tech article{padding:17px 10px}
+ .aw-aero-club{flex-direction:column;align-items:flex-start;padding:25px 20px}
+ .aw-aero-perks{flex-wrap:wrap;gap:12px;padding:17px 0}
+ .aw-aero-perks>span{font-size:9px}
+ .aw-hush-hero{min-height:540px;padding:10px 16px 0}
+ .aw-hush-bigword{font-size:clamp(73px,20vw,135px);top:95px;left:-1%;text-align:center}
+ .aw-hush-hero>img{top:118px;left:8%;width:84%;height:240px}
+ .aw-hush-silver{font-size:95px;left:11%;top:125px}
+ .aw-hush-intro{left:18px;right:18px;bottom:40px;gap:16px;flex-direction:column}
+ .aw-hush-intro>div:last-child{max-width:100%}
+ .aw-hush-intro h2{font-size:19px}
+ .aw-hush-intro p{font-size:15px}
+ .aw-hush-arrivals{padding:32px 17px 39px}
+ .aw-hush-arrivals-title{gap:7px;justify-content:space-between}
+ .aw-hush-arrivals-title>span{font-size:10px}
+ .aw-hush-arrivals-title h2{font-size:25px}
+ .aw-products-hush{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 11px}
+ .aw-product-hush .aw-product-photo{aspect-ratio:.87;border-radius:65px 65px 15px 15px}
+ .aw-product-hush .aw-product-meta{display:block}
+ .aw-product-hush .aw-product-meta h3{font-size:12px}
+ .aw-product-hush .aw-product-meta>strong{display:block;margin-top:8px}
+ .aw-product-hush .aw-product-actions{flex-wrap:wrap}
+ .aw-product-hush .aw-view-button{flex:1}
+ .aw-hush-story{grid-template-columns:1fr;min-height:0;padding:35px 18px;gap:15px}
+ .aw-hush-text{padding:0}
+ .aw-hush-text>p{font-size:14px}
+ .aw-hush-text>b{font-size:120px}
+ .aw-hush-mosaic{min-height:390px}
+ .aw-hush-collections{padding:27px 18px 65px}
+ .aw-hush-collections h2{font-size:29px}
+ .aw-products-hush-more{grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+ .aw-market{padding:0 14px 35px}
+ .aw-market-top{font-size:10px;padding:8px 10px}
+ .aw-market-hero{grid-template-columns:1fr;min-height:0}
+ .aw-market-hero>div:first-child{padding:28px 19px 20px}
+ .aw-market-hero h1{font-size:35px}
+ .aw-market-hero>div:first-child>span{font-size:9px}
+ .aw-market-hero>div:first-child>div a{font-size:10px}
+ .aw-market-still{height:280px}
+ .aw-market-still>div>img{height:65px}
+ .aw-market-benefits{grid-template-columns:1fr 1fr;gap:13px;padding:22px 0}
+ .aw-market-benefits>div{justify-content:flex-start;padding:0;border:0}
+ .aw-market-benefits b{font-size:10px}
+ .aw-market-benefits small{font-size:9px}
+ .aw-market-benefits svg{width:20px}
+ .aw-market-categories{padding:25px 0}
+ .aw-market-categories header,.aw-market-trending header{align-items:start}
+ .aw-market-categories h2,.aw-market-trending h2{font-size:22px}
+ .aw-market-categories header a,.aw-market-trending header a{font-size:9px}
+ .aw-market-categories>div{grid-template-columns:repeat(2,1fr);gap:9px}
+ .aw-market-categories>div>a{height:132px}
+ .aw-market-categories>div>a b{font-size:11px}
+ .aw-market-promos{grid-template-columns:1fr;gap:10px}
+ .aw-market-promos>a{height:150px}
+ .aw-market-promos h2{font-size:30px}
+ .aw-products-market{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .aw-product-market .aw-product-meta h3{font-size:11px}
+ .aw-veloura-hero{padding:10px 16px 30px}
+ .aw-veloura-gallery{height:310px;gap:6px}
+ .aw-veloura-slide{height:260px;border-radius:12px}
+ .aw-veloura-slide-0,.aw-veloura-slide-4{height:190px}
+ .aw-veloura-slide-1,.aw-veloura-slide-3{height:240px}
+ .aw-veloura-slide-2{height:300px}
+ .aw-veloura-slide-2>span{font-size:8px;padding:5px 7px}
+ .aw-veloura-products{padding:25px 16px 45px}
+ .aw-veloura-heading h2{font-size:27px;text-align:left}
+ .aw-products-veloura{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 10px}
+ .aw-product-veloura .aw-product-photo{border-radius:15px}
+ .aw-veloura-box{grid-template-columns:1fr 1fr;min-height:0;padding:30px 20px}
+ .aw-veloura-box h2{font-size:37px}
+ .aw-veloura-box>img{height:240px}
+ .aw-veloura-box>b{grid-column:1/-1;font-size:43px}
+ .aw-veloura-about{grid-template-columns:1fr;padding:0 18px;gap:10px}
+ .aw-veloura-about>img{height:250px}
+ .aw-veloura-about>div{padding:23px;border-radius:14px}
+ .aw-veloura-about h2{font-size:33px}
+ .aw-veloura-about p{font-size:12px}
+ .aw-veloura-summer{grid-template-columns:1fr;gap:15px;padding:0 18px;margin-top:45px}
+ .aw-veloura-summer>div:first-child{gap:10px}
+ .aw-veloura-summer>div:first-child img{height:185px}
+ .aw-veloura-summer h2{font-size:32px}
+ .aw-veloura-summer>div:last-child img{height:165px}
+}
+/* Small phones: preserve real readable hierarchy and prevent overflow. */
+@media(max-width:390px){
+ .ix-accessories .aw-header-actions{gap:8px}
+ .aw-ossia-lead h1{font-size:39px}
+ .aw-ossia-lead>div>span{font-size:9px}
+ .aw-ossia-lead .aw-cta{padding:11px}
+ .aw-ossia-edit h2{font-size:23px}
+ .aw-ossia-filters button{font-size:8px;padding:9px 7px}
+ .aw-tech-hero h1{font-size:45px}
+ .aw-hush-bigword{font-size:19vw}
+ .aw-products-veloura .aw-product-meta h3{font-size:14px}
+ .aw-product-ossia .aw-view-button{min-width:0}
+}
+
+/* Keep actual product browsing light and legible while retaining the deep
+   black luxury styling of the Veloura homepage and its custom footer. */
+.ix-accessories.ix-minimal .ix-inner{
+ --ix-ink:#2a241f;--ix-paper:#f8f6f2;--ix-soft:#eee9e3;--ix-muted:#726a62;
+ background:#f8f6f2;color:#2a241f;
+ border-top:1px solid #e5dcd3;
+}
+.ix-accessories.ix-minimal .ix-inner-title h1,
+.ix-accessories.ix-minimal .ix-inner h1{color:#2a241f}
+.ix-accessories.ix-minimal .ix-inner .ix-detail-info,
+.ix-accessories.ix-minimal .ix-inner .ix-cart-layout>aside{
+ color:#2a241f;
+}

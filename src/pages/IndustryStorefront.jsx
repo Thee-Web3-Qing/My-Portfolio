@@ -2,6 +2,8 @@ import { useEffect,useMemo,useState } from 'react'
 import { Link,useLocation,useNavigate } from 'react-router-dom'
 import { storeData,styles,money,getItem,getBrand,getRoot } from './industryStoreData.js'
 import './industryStorefront.css'
+import { ACCESSORY_STYLES,accessoryStore } from './accessoryWorldData.js'
+import { AccessoryHome,AccessoryHeader,AccessoryFooter } from './AccessoriesReferenceHome.jsx'
 
 const to=(ctx,part='')=>ctx.root+(part?'/'+part:'')
 const imageFallback=(ctx)=>ctx.store.secondary||ctx.store.hero
@@ -234,7 +236,7 @@ function Core({ctx}) {
  const sub=location.pathname.slice(ctx.root.length).replace(/^\/+/,'')
  const [section,id]=sub.split('/')
  const Home=HOMES[ctx.store.slug][ctx.style]
- const Page=!section?<Home ctx={ctx} shop={shop}/>
+ const Page=!section?(ctx.store.slug==='accessories'?<AccessoryHome ctx={ctx} shop={shop}/>:<Home ctx={ctx} shop={shop}/>)
  :section==='explore'||(section==='search'&&ctx.store.slug==='hospitality')?<Catalogue key={location.search} ctx={ctx} shop={shop} isSearch={section==='search'}/>
  :section==='item'?<Details key={id} ctx={ctx} shop={shop} id={id}/>
  :['book','plan','enquire'].includes(section)?<Inquiry key={location.search} ctx={ctx} type={section}/>
@@ -244,11 +246,12 @@ function Core({ctx}) {
  :section==='about'?<About ctx={ctx}/>:section==='contact'?<Contact ctx={ctx}/>
  :section==='faq'?<FAQ ctx={ctx}/>:<Missing ctx={ctx}/>
  useEffect(()=>{document.title=(section==='item'?getItem(ctx.store,id)?.title:section?section.charAt(0).toUpperCase()+section.slice(1):'Home')+' | '+ctx.brand.name+' | December Website Preview'},[ctx.brand.name,ctx.store,id,section])
- return <div className={'ix-store ix-store-'+ctx.store.slug+' ix-'+ctx.store.slug+' ix-'+ctx.store.slug+'-'+ctx.style+' ix-'+ctx.style}><Header ctx={ctx} shop={shop}/>{Page}<Footer ctx={ctx}/>{ctx.store.slug==='accessories'&&<Drawer ctx={ctx} shop={shop}/>}</div>
+ return <div className={'ix-store ix-store-'+ctx.store.slug+' ix-'+ctx.store.slug+' ix-'+ctx.store.slug+'-'+ctx.style+' ix-'+ctx.style}>{ctx.store.slug==='accessories'?<AccessoryHeader ctx={ctx} shop={shop}/>:<Header ctx={ctx} shop={shop}/>}{Page}{ctx.store.slug==='accessories'?<AccessoryFooter ctx={ctx}/>:<Footer ctx={ctx}/>}{ctx.store.slug==='accessories'&&<Drawer ctx={ctx} shop={shop}/>}</div>
 }
 export default function IndustryStorefront({industry='beauty',style='editorial',rootOverride}) {
  const store=storeData[industry]||storeData.beauty
- const mode=styles.includes(style)?style:'editorial'
- const ctx={store,style:mode,brand:getBrand(store,mode),root:rootOverride||getRoot(store.slug,mode)}
+ const mode=store.slug==='accessories' && ACCESSORY_STYLES.includes(style)?style:styles.includes(style)?style:'editorial'
+ const activeStore=store.slug==='accessories'?accessoryStore(store,mode):store
+ const ctx={store:activeStore,style:mode,brand:getBrand(activeStore,mode),root:rootOverride||getRoot(store.slug,mode)}
  return <Core ctx={ctx}/>
 }

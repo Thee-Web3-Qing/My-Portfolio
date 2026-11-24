@@ -1,3 +1,4 @@
+import { ACCESSORY_STYLES,ACCESSORY_WORLDS } from './accessoryWorldData.js'
 // Temporary, illustrative photo catalogue for December website concepts.
 // These are sample prices, services, properties and imagery, not live inventory.
 const photo=(id,w=1400)=>'https://images.unsplash.com/'+id+'?auto=format&fit=crop&w='+w+'&q=85'
@@ -119,10 +120,10 @@ export const storeData={
 export const styles=['editorial','catalogue','minimal']
 export const money=n=>'₦'+Number(n||0).toLocaleString('en-NG')
 export const getItem=(store,id)=>store.items.find(p=>p.id===id)
-export const getBrand=(store,style)=>store.brands[style]||store.brands.editorial
+export const getBrand=(store,style)=>store.slug==='accessories'?(ACCESSORY_WORLDS[style]||store.brands.editorial):(store.brands[style]||store.brands.editorial)
 export const getRoot=(slug,style)=>'/'+slug+style
-export const allPaths=Object.entries(storeData).flatMap(([slug,store])=>styles.flatMap(style=>{
+export const allPaths=Object.entries(storeData).flatMap(([slug,store])=>(slug==='accessories'?ACCESSORY_STYLES:styles).flatMap(style=>{
  const root=getRoot(slug,style)
  const subpages=['explore','about','contact','faq','saved',...(slug==='beauty'?['book']:slug==='events'?['plan']:slug==='accessories'?['cart','style-kit']:['search','enquire'])]
- return [root,...[...new Set(subpages)].map(page=>root+'/'+page),...store.items.map(p=>root+'/item/'+p.id)]
+ return [root,...[...new Set(subpages)].map(page=>root+'/'+page),...(slug==='accessories'?ACCESSORY_WORLDS[style].items:store.items).map(p=>root+'/item/'+p.id)]
 }))
