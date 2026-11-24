@@ -1,0 +1,574 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+/* Each stay concept uses its own art direction and actual responsive structure.
+   The global site's desktop preview always gives each iframe 1440 CSS pixels;
+   mobile view uses the genuine 390px layout below. */
+.ix-store.ix-hospitality{overflow-x:clip;position:relative}
+.ix-store.ix-hospitality *{box-sizing:border-box}
+.ix-store.ix-hospitality .st-page{width:100%;overflow:hidden}
+.ix-store.ix-hospitality .st-page img{width:100%;height:100%;display:block;object-fit:cover}
+.ix-store.ix-hospitality .st-page p,.ix-store.ix-hospitality .st-page h1,.ix-store.ix-hospitality .st-page h2,.ix-store.ix-hospitality .st-page h3{margin:0}
+.ix-store.ix-hospitality .st-page a,.ix-store.ix-hospitality .st-header a,.ix-store.ix-hospitality .st-footer a{text-decoration:none;color:inherit}
+.ix-store.ix-hospitality .st-page button,.ix-store.ix-hospitality .st-header button,.ix-store.ix-hospitality .st-footer button{cursor:pointer}
+.ix-store.ix-hospitality :is(.st-page,.st-header,.st-footer) :is(button,a,input,select):focus-visible{outline:3px solid #e6b077;outline-offset:3px}
+.ix-store.ix-hospitality.ix-editorial{--ix-paper:#f4f4fb;--ix-ink:#1b183e;--ix-accent:#6954b1;--ix-soft:#e8e6f5;--ix-font:'Manrope',sans-serif;background:#f5f4fb}
+.ix-store.ix-hospitality.ix-catalogue{--ix-paper:#fff;--ix-ink:#252e2e;--ix-accent:#b67b50;--ix-soft:#f6efe7;--ix-font:'Manrope',sans-serif;background:white}
+.ix-store.ix-hospitality.ix-adventure{--ix-paper:#fff;--ix-ink:#152b3b;--ix-accent:#2d89c9;--ix-soft:#e3f2fa;--ix-font:'Outfit',sans-serif;background:white}
+.ix-store.ix-hospitality.ix-minimal{--ix-paper:#f8f5e9;--ix-ink:#35422d;--ix-accent:#667649;--ix-soft:#e7e8d8;--ix-font:'Cormorant Garamond',Georgia,serif;background:#f8f5e9}
+.ix-store.ix-hospitality.ix-architect{--ix-paper:#fff;--ix-ink:#242424;--ix-accent:#343b36;--ix-soft:#f0efea;--ix-font:'Plus Jakarta Sans',sans-serif;background:#f0f0ef}
+.st-button{display:inline-flex;align-items:center;justify-content:center;gap:14px;min-height:46px;padding:12px 22px;background:#151515;color:#fff!important;border-radius:30px;font:800 11px 'Manrope',sans-serif;letter-spacing:.03em;white-space:nowrap;transition:transform .2s,background .2s}
+.st-button:hover{transform:translateY(-2px)}
+/* Shared behavior and layout only. Each search bar is visually rewritten below. */
+.ix-store.ix-hospitality .st-search{display:grid;grid-template-columns:1fr 1fr .7fr 1fr 1fr auto;align-items:stretch;background:#fff;color:#1b232a;box-shadow:0 10px 35px #00000014;border-radius:15px;max-width:100%}
+.ix-store.ix-hospitality .st-search-compact{grid-template-columns:1fr 1fr .75fr 1fr auto}
+.st-search>label{min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:5px;padding:14px 16px;border-right:1px solid #e7e4de}
+.st-search label>span{display:flex;gap:6px;align-items:center;font:800 9px/1.35 'Manrope',sans-serif;letter-spacing:.065em;white-space:nowrap;color:#756e68}
+.st-search :is(select,input){max-width:100%;width:100%;padding:3px 0!important;border:0!important;border-radius:0;outline:0;background:transparent;font:700 12px/1.4 'Manrope',sans-serif;color:#292e30;min-width:0}
+.st-search :is(select,input):focus-visible{outline:2px solid #6d9dd3!important;outline-offset:3px}
+.st-search-go{border:0;background:#151515!important;color:#fff!important;border-radius:0 15px 15px 0;display:flex;align-items:center;justify-content:center;gap:12px;white-space:nowrap;padding:12px 22px!important;font:800 12px 'Manrope',sans-serif!important}
+.st-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.st-card{position:relative;min-width:0}
+.st-card-image{display:block;position:relative;height:270px;overflow:hidden;background:#ddd;border-radius:16px}
+.st-card-image img{transition:transform .35s ease}
+.st-card-image:hover img{transform:scale(1.045)}
+.st-card-image-label{position:absolute;bottom:13px;left:14px;border-radius:30px;padding:8px 11px;font:800 9px 'Manrope',sans-serif;text-transform:uppercase;letter-spacing:.05em;background:#fffef3e3;color:#252722}
+.st-card-save{position:absolute;top:13px;right:13px;border:0;width:35px;height:35px;display:grid;place-items:center;border-radius:50%;background:#fdfbf2ec!important;color:#26201d!important;z-index:2}
+.st-card-save.is-saved{color:#c73c60!important}
+.st-card-save.is-saved svg{fill:currentColor}
+.st-card-detail{display:flex;justify-content:space-between;align-items:start;gap:15px;margin-top:16px}
+.st-card-detail>div{min-width:0}
+.st-card-detail>div>span{display:block;color:#7e7770;font:750 10px 'Manrope',sans-serif;letter-spacing:.035em;margin-bottom:7px}
+.st-card-detail h3{font:750 23px/1.25 'Manrope',sans-serif;letter-spacing:-.05em}
+.st-card-detail p{font:400 12px/1.65 'Manrope',sans-serif;opacity:.7;margin-top:8px!important;max-width:345px}
+.st-card-detail strong{font:800 13px/1.4 'Manrope',sans-serif;white-space:nowrap}
+.st-card-detail strong small{display:block;font-size:9px;font-weight:450;color:#8e837a}
+.st-card-link{display:inline-flex;align-items:center;gap:6px;font:800 11px 'Manrope',sans-serif;padding:13px 0;border-bottom:1px solid #666;white-space:nowrap}
+.st-header{position:relative;z-index:25;display:flex;justify-content:space-between;align-items:center;gap:23px;width:100%;min-height:83px;padding:0 5%;background:transparent;color:#202020}
+.st-logo{font:800 25px/1 'Manrope',sans-serif;letter-spacing:-.065em;white-space:nowrap}
+.st-logo>small{display:block;font:600 8px 'Manrope',sans-serif;letter-spacing:.15em;margin-top:8px}
+.st-header nav{display:flex;gap:clamp(12px,2vw,30px);align-items:center;justify-content:center;flex:1}
+.st-header nav>a{font:700 10px/1.4 'Manrope',sans-serif;white-space:nowrap;letter-spacing:.01em}
+.st-header nav>a:hover,.st-header nav>a.st-current{opacity:.6}
+.st-head-actions{display:flex;align-items:center;justify-content:flex-end;gap:16px}
+.st-head-icon{display:inline-flex;align-items:center;justify-content:center;position:relative;min-width:25px;min-height:30px}
+.st-head-icon sup{position:absolute;right:-8px;top:-6px;border-radius:50%;font:800 9px Arial,sans-serif;background:#a92956;color:#fff;min-width:14px;height:14px;text-align:center;padding:2px}
+.st-head-book{font:800 10px 'Manrope',sans-serif;padding:12px 20px;border:1px solid currentColor;border-radius:24px;white-space:nowrap}
+.st-menu{display:none!important;background:transparent;border:0}
+.st-header-editorial,.st-header-catalogue,.st-header-adventure{position:absolute;top:0;left:0;right:0;color:#fff;background:transparent;z-index:50}
+.st-header-editorial{padding:0 6%;min-height:95px;color:#302c2e}
+.st-header-editorial .st-head-book{background:#f3f1fd;border:0;color:#191c3e}
+.st-header-catalogue{min-height:77px;background:#102d3a33;color:#fff;padding:0 5%}
+.st-header-catalogue .st-logo{font-size:24px}
+.st-header-catalogue .st-head-book{border-color:#ffffff8c}
+.st-header-adventure{min-height:70px;padding:0 4%;background:#0e27352b;color:#fff}
+.st-header-adventure .st-logo{letter-spacing:-.055em}
+.st-header-minimal{position:absolute;z-index:50;top:31px;left:50%;transform:translateX(-50%);width:min(90%,1215px);padding:0 38px;height:77px;min-height:77px;color:#35402a}
+.st-header-minimal .st-logo{font:600 37px 'Cormorant Garamond',Georgia,serif}
+.st-header-minimal .st-head-book{background:#5c6d41;color:#fff!important;border:0}
+.st-header-architect{position:absolute;z-index:50;top:20px;left:50%;transform:translateX(-50%);width:min(90%,1250px);height:68px;min-height:68px;padding:0 3.5%;color:#252525}
+.st-header-architect .st-logo{font:750 22px 'Plus Jakarta Sans',sans-serif;letter-spacing:-.06em}
+.st-header-architect .st-head-book{background:#242424;color:#fff!important;border:0}
+/* Footer architecture adapts to each mood, not shared hero components. */
+.st-footer{display:grid;grid-template-columns:1.4fr .7fr 1.05fr;gap:40px;background:#14171a;color:#f7f6f2;padding:65px 5% 0;font-family:'Manrope',sans-serif}
+.st-footer>div:first-child h2{font:800 40px/1.1 'Manrope',sans-serif;letter-spacing:-.065em}
+.st-footer>div:first-child p{font:500 13px/1.6 'Manrope',sans-serif;margin:12px 0!important;max-width:330px;color:#dad4c9}
+.st-footer>div:first-child small{font:400 10px/1.8 'Manrope',sans-serif;display:block;max-width:430px;opacity:.64}
+.st-footer>div:nth-child(2){display:flex;flex-direction:column;gap:12px;align-items:flex-start}
+.st-footer>div:nth-child(2)>strong{font:800 10px 'Manrope',sans-serif;letter-spacing:.1em;margin-bottom:6px}
+.st-footer>div:nth-child(2)>a{font:500 12px 'Manrope',sans-serif;color:#d9d9d8}
+.st-newsletter>label{font:700 17px 'Manrope',sans-serif}
+.st-newsletter>div{display:flex;align-items:center;border-bottom:1px solid #e9e2d2;margin-top:16px}
+.st-newsletter input{flex:1;width:100%;min-width:0;border:0!important;background:transparent;padding:15px 0!important;outline:0;color:inherit;font:12px 'Manrope',sans-serif}
+.st-newsletter input::placeholder{color:#aaaaa7}
+.st-newsletter button{display:grid;place-items:center;padding:12px;background:transparent;border:0;color:inherit}
+.st-newsletter>span{display:block;font:600 12px/1.6 'Manrope',sans-serif}
+.st-footer-bottom{grid-column:1/-1;display:flex;justify-content:space-between;gap:15px;padding:21px 0;border-top:1px solid #ffffff38;font:700 10px 'Manrope',sans-serif;letter-spacing:.04em;margin-top:20px}
+.st-footer-editorial{background:#222049}
+.st-footer-catalogue{background:#163138}
+.st-footer-adventure{background:#0f293d}
+.st-footer-minimal{background:#34402b;color:#f8f4e8}
+.st-footer-minimal>div:first-child h2{font:600 48px 'Cormorant Garamond',Georgia,serif}
+.st-footer-architect{background:#1c1e1d}
+/* 01 ORIZON: mountain gallery, overlaid glass property finder, side app rail. */
+.st-orizon{position:relative;background:#e6e4e3;padding:225px 4.5% 0;color:#fff;font-family:'Manrope',sans-serif}
+.st-or-bg{position:absolute;inset:0 0 auto;height:1050px}
+.st-or-bg>img{filter:grayscale(1) sepia(.23) saturate(.5) brightness(1.05);opacity:.54;object-position:center 22%}
+.st-or-bg:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#e6e4e3 1%,transparent 75%)}
+.st-or-shell{position:relative;z-index:1;width:min(100%,1520px);margin:auto;background:#e9e9fa;border:5px solid #fefeff;box-shadow:0 12px 46px #3f3d6344;border-radius:85px 85px 65px 65px;overflow:hidden;color:#191b2f}
+.st-or-searchband{min-height:75px;display:flex;align-items:center;justify-content:space-around;gap:12px;padding:10px 28px;background:#f5f4ff}
+.st-or-searchband>div{display:flex;align-items:center;gap:8px;min-width:0}
+.st-or-searchband>div>span{font:750 10px/1.55 'Manrope',sans-serif;letter-spacing:.03em}
+.st-or-searchband>div b{font:500 9px/1.25 'Manrope',sans-serif;color:#5c5e6d}
+.st-or-searchband>button,.st-or-searchband>.st-button{background:#fff!important;border-radius:40px;border:0;min-width:142px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;font:800 10px 'Manrope',sans-serif;white-space:nowrap;box-shadow:0 2px 10px #2221;color:#24243d!important}
+.st-or-expanded{position:relative;z-index:4;padding:12px;background:#cbd5f5}
+.st-or-expanded .st-search{box-shadow:none}
+.st-or-world{min-height:705px;position:relative;border-radius:10px 10px 57px 57px;overflow:hidden;background:#8c97bf}
+.st-or-world>img{position:absolute;inset:0;object-position:center 49%;filter:saturate(1.1) hue-rotate(7deg)}
+.st-or-overlay{position:absolute;inset:0;background:linear-gradient(180deg,#2c4d76b8 0%,#5269a633 37%,#1c254366 100%)}
+.st-or-side{position:absolute;left:17px;top:60px;z-index:3;display:flex;flex-direction:column;gap:5px;align-items:center;background:#f4f5fcdb;border-radius:55px;padding:12px 7px;backdrop-filter:blur(14px)}
+.st-or-side :is(button,a){width:42px;height:42px;border:0;display:grid;place-items:center;background:transparent;border-radius:50%;color:#37416a}
+.st-or-side .is-active,.st-or-side :is(button,a):hover{background:#ffffff;color:#22264b}
+.st-or-headline{position:absolute;top:65px;left:13%;right:8%;z-index:2;text-align:center;color:#fff}
+.st-or-headline span{font:700 10px 'Manrope',sans-serif;letter-spacing:.26em}
+.st-or-headline h1{font:500 clamp(60px,6.3vw,125px)/.96 'Manrope',sans-serif;letter-spacing:-.085em;margin:14px 0!important}
+.st-or-headline p{font:450 13px/1.8 'Manrope',sans-serif;max-width:435px;margin:15px auto!important}
+.st-or-bottom{position:absolute;left:9%;right:4%;bottom:22px;display:flex;align-items:end;justify-content:space-between;gap:25px;z-index:3}
+.st-or-stat{width:min(385px,45%);background:#f9f8ff;border-radius:60px 60px 20px 20px;padding:30px 30px 24px;color:#222337;position:relative}
+.st-or-stat>span{font:700 20px 'Manrope',sans-serif;letter-spacing:-.05em}
+.st-or-stat p{font:400 11px/1.75 'Manrope',sans-serif;color:#747589;max-width:280px;margin:10px 0 23px!important}
+.st-or-stat>b{font:850 49px/1 'Manrope',sans-serif;letter-spacing:-.08em}
+.st-or-stat>b small{display:inline-block;max-width:90px;font:700 9px/1.4 'Manrope',sans-serif;letter-spacing:.05em}
+.st-or-next{display:flex;gap:9px;position:absolute;bottom:20px;right:20px}
+.st-or-next button{width:33px;height:33px;border:1px solid #d6d3e3;border-radius:50%;display:grid;place-items:center;background:#e8e7f2}
+.st-or-feature{width:min(385px,48%);padding:25px;background:#e7e7f8cf;backdrop-filter:blur(18px);border-radius:54px 54px 19px 19px;color:#252441;box-shadow:0 12px 35px #15183d2e}
+.st-or-feature>span{font:800 9px 'Manrope',sans-serif;letter-spacing:.1em;color:#5a4f90}
+.st-or-feature h2{font:750 26px/1.13 'Manrope',sans-serif;letter-spacing:-.055em;margin:9px 0!important}
+.st-or-feature>p:first-of-type{display:flex;align-items:center;gap:6px;font:700 11px 'Manrope',sans-serif}
+.st-or-feature>p:nth-of-type(2){font:400 11px/1.6 'Manrope',sans-serif;color:#5e5b73;margin-top:12px!important}
+.st-or-feature-facts{display:flex;flex-wrap:wrap;gap:8px;margin:15px 0 16px}
+.st-or-feature-facts span{background:#ffffff73;border-radius:30px;padding:7px 9px;font:700 9px 'Manrope',sans-serif}
+.st-or-feature>div:last-child{display:flex;justify-content:flex-end;gap:10px}
+.st-or-feature>div:last-child :is(button,a){width:37px;height:37px;border:0;border-radius:50%;display:grid;place-items:center;background:#faf9ff;color:#514879}
+.st-or-below{position:relative;z-index:1;margin:0 -5vw;padding:100px 6% 95px;background:#e7e6e8;color:#242441}
+.st-or-below>div:first-child{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:33px}
+.st-or-below>div:first-child span{font:700 10px 'Manrope',sans-serif;letter-spacing:.14em}
+.st-or-below h2{font:600 clamp(42px,4vw,68px)/1.07 'Manrope',sans-serif;letter-spacing:-.075em}
+.st-or-below h2 em{color:#6557a6;font-weight:400}
+.st-cards-orizon .st-card-image{border-radius:27px;height:255px}
+.st-orizon-night .st-or-world>img{filter:brightness(.65) saturate(.7)}
+.st-orizon-night .st-or-overlay{background:#0e0d3077}
+/* 02 VISA TRAVELS: panoramic mountain hero, crisp search and photo carousel. */
+.st-visa{background:#fff;color:#202a2d;font-family:'Manrope',sans-serif}
+.st-visa-hero{height:755px;position:relative;color:#fff;background:#344e5c}
+.st-visa-hero>img{position:absolute;inset:0;object-position:center 42%}
+.st-visa-tint{position:absolute;inset:0;background:linear-gradient(180deg,#1728305e 0%,transparent 47%,#322b2880 100%)}
+.st-visa-hero>div:not(.st-visa-tint){position:absolute;z-index:1;top:27%;left:0;right:0;text-align:center}
+.st-visa-hero>div>span{font:800 11px 'Manrope',sans-serif;letter-spacing:.26em}
+.st-visa-hero h1{font:750 clamp(100px,13vw,235px)/.92 'Manrope',sans-serif;letter-spacing:-.11em;margin:6px 0!important}
+.st-visa-hero>div p{max-width:445px;margin:auto!important;font:450 16px/1.6 'Manrope',sans-serif;text-shadow:0 2px 9px #15212250}
+.st-visa-hero .st-search-visa{position:absolute;z-index:3;left:4%;right:4%;bottom:0;border-radius:0;background:#6e4c30d9;color:#fff;backdrop-filter:blur(12px);box-shadow:none}
+.st-search-visa>label{border-color:#f7ead63d}
+.st-search-visa label>span,.st-search-visa :is(select,input){color:#fff!important}
+.st-search-visa :is(input,select){color-scheme:dark}
+.st-search-visa option{background:#fff;color:#333}
+.st-search-visa .st-search-go{background:#fff!important;color:#161616!important;border-radius:0}
+.st-visa-story{padding:95px 5% 105px;max-width:1500px;margin:auto}
+.st-visa-kicker{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;color:#5e777e;font:800 10px 'Manrope',sans-serif;letter-spacing:.04em}
+.st-visa-story>h2{font:500 clamp(55px,7vw,120px)/.96 'Manrope',sans-serif;text-align:center;letter-spacing:-.09em;margin:46px 0 80px!important}
+.st-visa-story>h2 em{font-style:normal;color:#7b9ba3}
+.st-visa-split{display:grid;grid-template-columns:.8fr 1.2fr;gap:50px;align-items:center}
+.st-visa-split>div:first-child>span{font:800 10px 'Manrope',sans-serif;letter-spacing:.1em;color:#5a8188}
+.st-visa-split h3{font:600 clamp(35px,4vw,67px)/1.07 'Manrope',sans-serif;letter-spacing:-.075em;margin:19px 0!important}
+.st-visa-split p{font:450 14px/1.8 'Manrope',sans-serif;max-width:320px;margin-bottom:27px!important;color:#657477}
+.st-visa-photo-row{display:grid;grid-template-columns:1fr .82fr;gap:15px;align-items:center;position:relative;padding-bottom:38px}
+.st-visa-photo-row>a{height:330px;position:relative;display:block;border-radius:25px;overflow:hidden}
+.st-visa-photo-row>a:nth-child(2){height:245px}
+.st-visa-photo-row>a:after{content:'';position:absolute;inset:50% 0 0;background:linear-gradient(0deg,#111a,transparent)}
+.st-visa-photo-row>a span{position:absolute;left:17px;bottom:18px;z-index:2;color:#fff;font:800 12px 'Manrope',sans-serif}
+.st-visa-slider{display:flex;gap:9px;position:absolute;right:0;bottom:-6px}
+.st-visa-slider button{border:1px solid #d1dadd;border-radius:8px;padding:9px;background:#fff;display:grid;place-items:center}
+.st-visa-places{padding:90px 5% 115px;background:#f6f7f7;color:#1e292b}
+.st-visa-places>header{display:flex;justify-content:space-between;gap:25px;align-items:end;margin-bottom:30px}
+.st-visa-places>header span{font:800 10px 'Manrope',sans-serif;letter-spacing:.1em;color:#5e777e}
+.st-visa-places h2{font:550 clamp(54px,6vw,100px)/1 'Manrope',sans-serif;letter-spacing:-.085em;margin-top:17px!important}
+.st-visa-places>header p{max-width:260px;font:450 13px/1.75 'Manrope',sans-serif;color:#718083}
+.st-search-visa-list{margin-bottom:25px;border-radius:12px;border:1px solid #e3e5e5;box-shadow:0 3px 15px #00000006}
+.st-search-visa-list .st-search-go{border-radius:0 12px 12px 0}
+.st-cards-visa .st-card{background:#fff;padding:10px 10px 20px;border:1px solid #eceeee;border-radius:19px}
+.st-cards-visa .st-card-image{height:230px}
+.st-cards-visa .st-card-detail,.st-cards-visa .st-card-link{margin-left:9px;margin-right:9px}
+.st-cards-visa .st-card-detail h3{font-size:23px}
+.st-visa-banner{height:490px;position:relative;color:#fff}
+.st-visa-banner>img{position:absolute;inset:0;filter:brightness(.6)}
+.st-visa-banner>div{position:relative;z-index:1;padding:90px 7%}
+.st-visa-banner span{font:750 10px 'Manrope',sans-serif;letter-spacing:.16em}
+.st-visa-banner h2{font:550 clamp(55px,6vw,105px)/1 'Manrope',sans-serif;letter-spacing:-.085em;margin:20px 0!important}
+.st-visa-banner .st-button{background:#fff;color:#171717!important}
+/* 03 NEPAL: mountain sky, overlapping photo tour gallery, blue accent. */
+.st-nepal{background:#fff;color:#112431;font-family:'Outfit',sans-serif}
+.st-nepal-hero{height:730px;position:relative;color:#fff;overflow:hidden;background:#447baa}
+.st-nepal-hero>img{position:absolute;inset:0;object-position:center 35%;filter:saturate(1.15)}
+.st-nepal-hero-tint{position:absolute;inset:0;background:linear-gradient(180deg,#15304a7a 0%,#18365012 45%,#071b386b 100%)}
+.st-nepal-hero>div:last-child{position:absolute;inset:25% 4% auto;text-align:center;z-index:2}
+.st-nepal-hero h1{font:400 clamp(53px,6.7vw,122px)/1.03 'Outfit',sans-serif;letter-spacing:-.07em}
+.st-nepal-hero h1 em{font-family:'Cormorant Garamond',Georgia,serif;font-weight:500;letter-spacing:-.035em}
+.st-nepal-hero p{max-width:520px;margin:25px auto!important;font:400 14px/1.6 'Outfit',sans-serif}
+.st-nepal-hero .st-button{background:#fff;color:#1c3241!important;padding:15px 32px;margin-top:11px}
+.st-nepal-tours{padding:93px 3% 75px;background:#fff}
+.st-nepal-title{text-align:center}
+.st-nepal-title>span{display:inline-block;font:750 10px 'Outfit',sans-serif;letter-spacing:.16em;background:#f1f4f7;border-radius:20px;padding:9px 18px;color:#667b8c}
+.st-nepal-title h2{font:500 clamp(50px,6vw,106px)/.98 'Outfit',sans-serif;letter-spacing:-.08em;margin:23px 0 17px!important}
+.st-nepal-title h2 em{font:500 clamp(51px,6vw,105px)/1 'Cormorant Garamond',serif;letter-spacing:-.055em;color:#2b86c3}
+.st-nepal-title p{font:450 14px/1.65 'Outfit',sans-serif;color:#7a8a96}
+.st-nepal-tabs{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;margin:29px 0 33px}
+.st-nepal-tabs button{padding:10px 16px;border:1px solid #cdd9e0;border-radius:22px;background:white;color:#49687d;font:650 11px 'Outfit',sans-serif}
+.st-nepal-tabs button.selected{background:#163a56;color:#fff;border-color:#163a56}
+.st-nepal-gallery{display:grid;grid-template-columns:.86fr 1fr 1.18fr 1fr .86fr;gap:11px;align-items:center;max-width:1500px;margin:auto}
+.st-nepal-panel{height:305px;border-radius:24px;display:block;overflow:hidden;position:relative;background:#7997b8}
+.st-nepal-panel-1,.st-nepal-panel-3{height:358px}
+.st-nepal-panel-2{height:440px}
+.st-nepal-panel:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#111b3cbb,transparent 60%)}
+.st-nepal-panel>img{position:absolute;inset:0}
+.st-nepal-panel>div{position:absolute;inset:auto 16px 18px;z-index:2;color:#fff}
+.st-nepal-panel span{font:750 10px 'Outfit',sans-serif;text-transform:uppercase}
+.st-nepal-panel h3{font:750 clamp(15px,1.7vw,28px)/1.1 'Outfit',sans-serif;letter-spacing:-.05em;margin:6px 0!important}
+.st-nepal-panel p{font:450 11px 'Outfit',sans-serif}
+.st-nepal-panel b{display:flex;align-items:center;justify-content:space-between;gap:5px;border-radius:30px;background:#fff;color:#284c66;padding:9px 12px;font:750 10px 'Outfit',sans-serif;margin-top:16px}
+.st-nepal-controls{display:flex;align-items:center;justify-content:center;gap:22px;margin-top:24px}
+.st-nepal-controls button{border:1px solid #cfdae2;border-radius:50%;width:44px;height:44px;display:grid;place-items:center;background:white;color:#1e4762}
+.st-nepal-controls p{font:700 11px 'Outfit',sans-serif;letter-spacing:.1em}
+.st-nepal-why{padding:65px 5% 90px;background:#f5f8fb}
+.st-nepal-grid{display:grid;grid-template-columns:1fr 1fr .8fr;gap:17px;align-items:stretch}
+.st-nepal-grid>div:first-child{border-radius:22px;background:#0c183c;color:#fff;padding:35px;display:flex;flex-direction:column;align-items:flex-start}
+.st-nepal-grid>div:first-child>span{font:750 10px 'Outfit',sans-serif;letter-spacing:.1em;color:#84b2da}
+.st-nepal-grid h2{font:600 clamp(35px,3vw,57px)/1.08 'Outfit',sans-serif;letter-spacing:-.06em;margin:20px 0!important}
+.st-nepal-grid p{font:450 14px/1.75 'Outfit',sans-serif;max-width:330px}
+.st-nepal-grid>div:first-child .st-button{margin-top:auto;background:#394b7d}
+.st-nepal-grid>img{height:360px;border-radius:22px}
+.st-nepal-why-card{border-radius:22px;background:#fff;padding:36px;display:flex;flex-direction:column}
+.st-nepal-why-card>span{font:750 10px 'Outfit',sans-serif;color:#6b8495}
+.st-nepal-why-card>b{font:750 120px/1 'Outfit',sans-serif;letter-spacing:-.1em;margin:20px 0}
+.st-nepal-why-card>b>span{font-size:60px;color:#49a6da}
+.st-nepal-why-card p{color:#71808e}
+.st-nepal-numbers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:65px}
+.st-nepal-numbers>div{text-align:center;border-right:1px solid #dbe4e9}
+.st-nepal-numbers>div:last-child{border:0}
+.st-nepal-numbers b{font:650 clamp(35px,4vw,80px)/1 'Outfit',sans-serif;letter-spacing:-.075em}
+.st-nepal-numbers span{display:block;font:700 10px 'Outfit',sans-serif;letter-spacing:.04em;margin-top:13px;color:#6d8493}
+/* 04 PIGMA: sustainable luxury ivory editorial and organic image cutout. */
+.st-pigma{background:linear-gradient(120deg,#dde4d2,#97ada0 80%);color:#303e2e;padding:33px 5% 55px;font-family:'Cormorant Garamond',Georgia,serif}
+.st-pigma-frame{margin:auto;max-width:1260px;background:#f7f6ea;border-radius:34px;box-shadow:0 30px 90px #35513c2c;overflow:hidden;padding:80px 4% 0}
+.st-pigma-hero{text-align:center;padding:25px 0 15px}
+.st-pigma-kicker{font:700 10px 'DM Sans',sans-serif;letter-spacing:.18em;color:#5d754b}
+.st-pigma-hero h1{font:550 clamp(72px,8vw,135px)/.78 'Cormorant Garamond',Georgia,serif;letter-spacing:-.073em;margin:20px 0 25px!important}
+.st-pigma-hero h1 em{font-style:normal;color:#121511}
+.st-pigma-hero .st-button{margin-bottom:15px;background:#526741}
+.st-pigma-mask{width:100%;height:470px;overflow:hidden;border-radius:37% 45% 25% 22%/27% 36% 15% 17%;background:#b3c2ab;margin-top:14px}
+.st-pigma-mask img{object-position:center 50%}
+.st-pigma-properties{padding:70px 0 30px}
+.st-pigma-properties>header{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:26px}
+.st-pigma-properties h2,.st-pigma-focus h2{font:550 clamp(48px,5.3vw,83px)/1 'Cormorant Garamond',Georgia,serif;letter-spacing:-.06em}
+.st-pigma-properties>header p{max-width:310px;font:450 12px/1.7 'DM Sans',sans-serif}
+.st-pigma-properties>header a{display:flex;align-items:center;gap:8px;font:700 11px 'DM Sans',sans-serif;white-space:nowrap}
+.st-pigma-property-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.st-pigma-property-grid>a{height:275px;border-radius:22px;overflow:hidden}
+.st-pigma-copy-tile{background:#e4e6d8;padding:25px 28px;display:flex;flex-direction:column;align-items:flex-start}
+.st-pigma-copy-tile span{font:800 9px 'DM Sans',sans-serif;letter-spacing:.12em}
+.st-pigma-copy-tile h3{font:600 clamp(28px,3vw,49px)/1.06 'Cormorant Garamond',Georgia,serif;margin:12px 0!important}
+.st-pigma-copy-tile>b{font:700 10px 'DM Sans',sans-serif}
+.st-pigma-copy-tile p{font:450 11px/1.7 'DM Sans',sans-serif;opacity:.7;max-width:330px;margin:12px 0!important}
+.st-pigma-copy-tile strong{display:flex;align-items:center;gap:7px;font:750 10px 'DM Sans',sans-serif;margin-top:auto}
+.st-pigma-image-tile{position:relative}
+.st-pigma-image-tile>span{position:absolute;bottom:13px;left:13px;color:#fff;background:#1c2b238f;padding:9px 13px;border-radius:20px;font:700 10px 'DM Sans',sans-serif}
+.st-pigma-focus{display:grid;grid-template-columns:1fr 1fr;gap:25px;padding:65px 0 45px}
+.st-pigma-focus>div:first-child{min-width:0}
+.st-pigma-map{height:300px;border-radius:22px;background:#e1e4d3;position:relative;overflow:hidden;margin-top:16px}
+.st-pigma-map svg{width:100%;height:100%}
+.st-map-pin{position:absolute;top:30%;left:22%;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;color:#7c5535;background:#fff!important;border:1px solid #d9cbb5}
+.st-map-pin-1{top:54%;left:54%}
+.st-map-pin-2{top:20%;left:72%}
+.st-map-pin.active{background:#5f6c42!important;color:#fff}
+.st-pigma-map>span{position:absolute;left:17px;bottom:33px;font:600 32px/1 'Cormorant Garamond',serif}
+.st-pigma-map>small{position:absolute;left:18px;bottom:12px;font:500 9px 'DM Sans',sans-serif;letter-spacing:.04em}
+.st-pigma-quote{padding:55px 38px 40px;background:#39472c;border-radius:24px;color:#f5f2e6;min-height:360px}
+.st-pigma-quote>span{font:750 10px 'DM Sans',sans-serif;letter-spacing:.13em;color:#d1d8b8}
+.st-pigma-quote h2{font:500 clamp(57px,6.2vw,98px)/.92 'Cormorant Garamond',serif;margin:19px 0!important}
+.st-pigma-quote p{font:450 12px/1.7 'DM Sans',sans-serif;max-width:330px}
+.st-pigma-quote>button{display:flex;align-items:center;gap:10px;margin-top:19px;padding:12px 0;border:0;border-bottom:1px solid #e2e9d4;background:transparent;color:#fff;font:750 10px 'DM Sans',sans-serif}
+.st-pigma-approach{margin-top:16px;padding:15px;background:#ffffff1e;border-radius:10px}
+.st-pigma-approach h3{font:600 23px 'Cormorant Garamond',serif;margin-bottom:4px!important}
+.st-pigma-last{padding:70px 0 55px;text-align:center;position:relative}
+.st-pigma-last h2{font:500 clamp(65px,8vw,122px)/.88 'Cormorant Garamond',serif;letter-spacing:-.055em;margin-bottom:30px!important}
+.st-pigma-last>img{height:340px;border-radius:24px}
+.st-pigma-last .st-button{margin-top:-24px;position:relative;z-index:2;background:#465a37}
+/* 05 APEX ARC: black architectural photography, white canvas, editorial grid. */
+.st-apex{background:#292929;padding:39px 4% 70px;color:#191919;font-family:'Plus Jakarta Sans',sans-serif}
+.st-apex-wrap{max-width:1350px;margin:auto;background:#fff;border-radius:32px;overflow:hidden;padding:43px 4% 75px}
+.st-apex-hero{height:580px;position:relative;margin-bottom:125px;border-radius:25px}
+.st-apex-hero>img{position:absolute;inset:0;border-radius:25px;filter:brightness(.69);object-position:center 48%}
+.st-apex-hero>div{position:absolute;left:4%;bottom:56px;color:#fff;max-width:550px}
+.st-apex-hero>div span{font:750 10px 'Plus Jakarta Sans',sans-serif;letter-spacing:.12em}
+.st-apex-hero h1{font:780 clamp(47px,4vw,79px)/1.09 'Plus Jakarta Sans',sans-serif;letter-spacing:-.065em;margin:12px 0 16px!important}
+.st-apex-hero p{font:450 14px/1.7 'Plus Jakarta Sans',sans-serif;max-width:430px}
+.st-apex-hero>.st-button{position:absolute;left:0;bottom:-34px;width:min(430px,100%);min-height:65px;border-radius:0 30px 30px 0;background:#242424}
+.st-apex-about{display:grid;grid-template-columns:1fr 1fr;gap:8%;padding:0 0 100px;align-items:center}
+.st-apex-about h2{font:800 clamp(30px,3vw,49px)/1.1 'Plus Jakarta Sans',sans-serif;letter-spacing:-.06em;margin-bottom:15px!important}
+.st-apex-about p{font:450 14px/1.85 'Plus Jakarta Sans',sans-serif;max-width:520px;color:#6f7375}
+.st-apex-about a{display:inline-flex;align-items:center;gap:6px;border-bottom:1px solid #444;padding:11px 0;margin-top:13px;font:750 11px 'Plus Jakarta Sans',sans-serif}
+.st-apex-metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:42px 20px}
+.st-apex-metrics b{font:800 clamp(35px,4vw,62px)/1 'Plus Jakarta Sans',sans-serif;letter-spacing:-.07em}
+.st-apex-metrics p{font:500 11px/1.5 'Plus Jakarta Sans',sans-serif;color:#818181;max-width:190px;margin-top:7px!important}
+.st-apex-services{padding-bottom:100px}
+.st-apex-services>header{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.st-apex-services>header h2,.st-apex-portfolio-intro h2{font:800 clamp(31px,3.3vw,49px)/1.14 'Plus Jakarta Sans',sans-serif;letter-spacing:-.06em}
+.st-apex-services>header>div{display:flex;gap:9px}
+.st-apex-services>header button{width:38px;height:38px;border:1px solid #bdc0c1;border-radius:50%;display:grid;place-items:center;background:#fff}
+.st-apex-services>header button:last-child{background:#202020;color:#fff}
+.st-apex-service-cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.st-apex-service-cards>a{display:block}
+.st-apex-service-cards img{height:230px;border-radius:23px}
+.st-apex-service-cards span{display:block;font:700 11px 'Plus Jakarta Sans',sans-serif;color:#a1a1a1;margin:11px 0 5px}
+.st-apex-service-cards h3{font:780 19px/1.2 'Plus Jakarta Sans',sans-serif;letter-spacing:-.04em;margin:6px 0!important}
+.st-apex-service-cards p{font:450 12px/1.6 'Plus Jakarta Sans',sans-serif;color:#777;max-width:260px}
+.st-apex-portfolio{display:grid;grid-template-columns:1.05fr 1.05fr 1.05fr;grid-template-rows:260px 260px;gap:15px;grid-auto-flow:dense}
+.st-apex-portfolio-intro{grid-column:1;grid-row:1;padding:5px 17px 10px 0}
+.st-apex-portfolio-intro h2 em{font-style:normal;color:#6f7771}
+.st-apex-portfolio-intro p{font:450 12px/1.7 'Plus Jakarta Sans',sans-serif;color:#888;max-width:305px;margin:16px 0 24px!important}
+.st-apex-portfolio-intro .st-button{padding:12px 19px;background:#222}
+.st-apex-project{position:relative;display:block;overflow:hidden;border-radius:24px;min-width:0;min-height:0}
+.st-apex-project-0{grid-column:2;grid-row:1}
+.st-apex-project-1{grid-column:3;grid-row:1/span 2}
+.st-apex-project-2{grid-column:1;grid-row:2}
+.st-apex-project-3{grid-column:2;grid-row:2}
+.st-apex-project:after{content:'';position:absolute;inset:40% 0 0;background:linear-gradient(transparent,#0a0c0dc2)}
+.st-apex-project span{position:absolute;bottom:15px;left:16px;right:16px;color:#fff;display:flex;justify-content:space-between;align-items:center;font:700 13px 'Plus Jakarta Sans',sans-serif;z-index:2}
+.st-apex-outro{text-align:center;margin-top:100px;padding:50px 20px 30px;border-top:1px solid #e7e7e7}
+.st-apex-outro h2{font:750 clamp(33px,3.6vw,62px)/1.1 'Plus Jakarta Sans',sans-serif;letter-spacing:-.065em;margin-bottom:25px!important}
+/* Responsive reduction at laptop/tablet sizes. */
+@media(max-width:1150px){
+ .st-header{gap:13px;padding-left:3%;padding-right:3%}
+ .st-header nav{gap:12px}
+ .st-header nav>a{font-size:9px}
+ .st-head-book{padding:10px 13px}
+ .st-orizon{padding-top:178px}
+ .st-or-shell{border-radius:65px 65px 40px 40px}
+ .st-or-searchband{padding:10px 13px}
+ .st-or-searchband>button,.st-or-searchband>.st-button{min-width:112px;padding:12px}
+ .st-or-world{min-height:650px}
+ .st-or-stat{padding:24px}
+ .st-or-feature{padding:23px}
+ .st-cards{gap:14px}
+ .st-visa-story{padding:70px 4%}
+ .st-visa-places{padding:70px 4%}
+ .st-nepal-gallery{gap:6px}
+ .st-nepal-panel{height:275px}
+ .st-nepal-panel-1,.st-nepal-panel-3{height:320px}
+ .st-nepal-panel-2{height:390px}
+ .st-nepal-panel>div{left:10px;right:10px}
+ .st-pigma-frame{padding-left:4%;padding-right:4%}
+ .st-pigma-hero h1{font-size:clamp(59px,7vw,98px)}
+ .st-pigma-mask{height:390px}
+ .st-apex-wrap{padding-left:4%;padding-right:4%}
+ .st-apex-hero{height:515px}
+ .st-apex-service-cards img{height:190px}
+}
+/* Real phone screens. All fields, cards and media reflow without a wide
+   desktop grid, overflowing image mask, or tiny touch targets. */
+@media(max-width:720px){
+ .ix-store.ix-hospitality .st-page{overflow:hidden}
+ .st-header,.st-header-editorial,.st-header-catalogue,.st-header-adventure,.st-header-minimal,.st-header-architect{
+  min-height:66px;height:66px;padding:0 17px;top:0;left:0;right:0;transform:none;width:100%;max-width:none
+ }
+ .st-logo{font-size:21px}
+ .st-header-minimal .st-logo{font-size:28px}
+ .st-head-actions{gap:13px}
+ .st-head-icon{min-height:40px}
+ .st-head-book{display:none}
+ .st-menu{display:grid!important;place-items:center;min-width:42px;min-height:42px;border:0;background:transparent;color:inherit}
+ .st-header nav{display:none;position:absolute;top:100%;left:0;right:0;z-index:51;align-items:stretch;flex-direction:column;gap:0;background:#f9f8f2;color:#202c2b;padding:13px 18px 18px;box-shadow:0 12px 30px #13162130;max-height:calc(100vh - 75px);overflow-y:auto}
+ .st-header nav.st-open{display:flex}
+ .st-header nav>a{font:750 12px 'Manrope',sans-serif;padding:13px 9px;border-bottom:1px solid #eceae7}
+ .st-header-minimal{color:#303d2c;background:#f7f6ea}
+ .st-header-architect{color:#222;background:#fff}
+ .st-button{min-height:45px;max-width:100%;white-space:normal;text-align:center;line-height:1.4;font-size:10px}
+ .st-cards{grid-template-columns:1fr;gap:22px}
+ .st-card-image{height:245px}
+ .st-card-detail h3{font-size:22px}
+ .st-card-detail>strong{font-size:11px}
+ .st-card-detail strong small{font-size:9px}
+ .st-footer{grid-template-columns:1fr 1fr;gap:29px 16px;padding:43px 20px 0}
+ .st-footer>div:first-child{grid-column:1/-1}
+ .st-footer>div:first-child h2{font-size:32px}
+ .st-footer .st-newsletter{grid-column:1/-1}
+ .st-footer-bottom{padding:18px 0;flex-wrap:wrap;font-size:9px}
+ .ix-store.ix-hospitality .st-search,.ix-store.ix-hospitality .st-search-compact{
+  grid-template-columns:repeat(2,minmax(0,1fr));gap:0;border-radius:15px
+ }
+ .st-search>label{padding:14px 12px;border-right:0;border-bottom:1px solid #ddd;min-height:65px}
+ .st-search>label:nth-child(odd){border-right:1px solid #ddd}
+ .st-search label>span{font-size:8px}
+ .st-search :is(select,input){font-size:12px;min-height:22px}
+ .st-search-go{grid-column:1/-1;min-height:49px;border-radius:0 0 15px 15px;font-size:11px!important}
+ /* ORIZON, phone: focused card art direction and reachable nav. */
+ .st-orizon{padding:115px 10px 0}
+ .st-or-bg{height:750px}
+ .st-or-shell{border-width:3px;border-radius:38px 38px 31px 31px}
+ .st-or-searchband{display:grid;grid-template-columns:1fr auto;min-height:69px;padding:10px 12px}
+ .st-or-searchband>div{display:none}
+ .st-or-searchband>button,.st-or-searchband>.st-button{min-width:0;font-size:9px;padding:11px 12px}
+ .st-or-world{min-height:820px;border-radius:0 0 28px 28px}
+ .st-or-world>img{object-position:center}
+ .st-or-side{left:8px;top:102px;padding:6px 3px}
+ .st-or-side :is(a,button){width:35px;height:35px}
+ .st-or-side svg{width:17px}
+ .st-or-headline{top:34px;left:13%;right:8%;text-align:center}
+ .st-or-headline span{font-size:8px;letter-spacing:.13em}
+ .st-or-headline h1{font-size:clamp(37px,10.7vw,64px);margin:9px 0!important;letter-spacing:-.09em}
+ .st-or-headline p{font-size:11px;line-height:1.45;max-width:260px;margin:9px auto!important}
+ .st-or-bottom{left:14px;right:14px;bottom:18px;gap:11px;display:flex;flex-direction:column;align-items:stretch}
+ .st-or-stat,.st-or-feature{width:100%;border-radius:25px 25px 15px 15px}
+ .st-or-stat{padding:20px 18px;min-height:157px}
+ .st-or-stat>span{font-size:15px}
+ .st-or-stat p{font-size:10px;margin:6px 0 11px!important;max-width:220px}
+ .st-or-stat>b{font-size:37px}
+ .st-or-stat>b small{font-size:8px}
+ .st-or-feature{padding:18px;min-height:230px}
+ .st-or-feature h2{font-size:23px}
+ .st-or-feature>p:nth-of-type(2){font-size:10px;margin-top:6px!important}
+ .st-or-feature-facts{margin:10px 0}
+ .st-or-below{margin:0 -10px;padding:45px 20px 64px}
+ .st-or-below>div:first-child{display:block}
+ .st-or-below h2{font-size:37px;margin-top:12px!important}
+ .st-or-expanded .st-search{grid-template-columns:repeat(2,minmax(0,1fr))}
+ /* VISA: keep mountain as an immersive hero but search can be tapped. */
+ .st-visa-hero{height:740px}
+ .st-visa-hero>img{object-position:52% 36%}
+ .st-visa-hero>div:not(.st-visa-tint){top:21%;left:7%;right:7%}
+ .st-visa-hero>div>span{font-size:9px}
+ .st-visa-hero h1{font-size:clamp(89px,20vw,130px)}
+ .st-visa-hero>div p{font-size:13px}
+ .st-visa-hero .st-search-visa{left:11px;right:11px;bottom:10px;border-radius:14px}
+ .st-search-visa .st-search-go{border-radius:0 0 14px 14px}
+ .st-visa-story{padding:60px 20px}
+ .st-visa-kicker{gap:9px}
+ .st-visa-kicker span{font-size:8px}
+ .st-visa-story>h2{font-size:clamp(44px,12vw,70px);margin:28px 0 45px!important}
+ .st-visa-split{grid-template-columns:1fr;gap:30px}
+ .st-visa-split h3{font-size:36px}
+ .st-visa-split p{font-size:12px}
+ .st-visa-photo-row>a{height:230px}
+ .st-visa-photo-row>a:nth-child(2){height:175px}
+ .st-visa-places{padding:57px 19px 70px}
+ .st-visa-places>header{display:block}
+ .st-visa-places h2{font-size:50px}
+ .st-visa-places>header p{margin-top:12px!important;font-size:12px}
+ .st-search-visa-list{margin-bottom:22px}
+ .st-cards-visa .st-card-image{height:215px}
+ .st-visa-banner{height:380px}
+ .st-visa-banner>div{padding:55px 25px}
+ .st-visa-banner h2{font-size:48px}
+ /* NEPAL: wide hero type, swipeable horizontal cards, legible stats. */
+ .st-nepal-hero{height:630px}
+ .st-nepal-hero>div:last-child{inset:25% 6% auto}
+ .st-nepal-hero h1{font-size:clamp(38px,9.4vw,68px)}
+ .st-nepal-hero p{font-size:12px}
+ .st-nepal-tours{padding:58px 0 55px}
+ .st-nepal-title{padding:0 18px}
+ .st-nepal-title h2{font-size:48px}
+ .st-nepal-title h2 em{font-size:50px}
+ .st-nepal-title p{font-size:12px}
+ .st-nepal-tabs{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;padding:0 17px 8px;margin:22px 0}
+ .st-nepal-tabs button{white-space:nowrap;min-height:38px}
+ .st-nepal-gallery{display:flex;gap:12px;align-items:center;overflow-x:auto;scroll-snap-type:x mandatory;padding:12px 17px 22px}
+ .st-nepal-panel,.st-nepal-panel-1,.st-nepal-panel-2,.st-nepal-panel-3{flex:0 0 71vw;height:340px;border-radius:23px;scroll-snap-align:center}
+ .st-nepal-panel-2{height:375px}
+ .st-nepal-panel h3{font-size:23px}
+ .st-nepal-controls{margin-top:6px}
+ .st-nepal-why{padding:45px 18px 55px}
+ .st-nepal-grid{grid-template-columns:1fr;gap:11px}
+ .st-nepal-grid>div:first-child{min-height:290px;padding:25px}
+ .st-nepal-grid h2{font-size:37px}
+ .st-nepal-grid>img{height:260px}
+ .st-nepal-why-card{padding:25px}
+ .st-nepal-why-card>b{font-size:83px;margin:10px 0}
+ .st-nepal-numbers{grid-template-columns:repeat(2,1fr);gap:25px 10px;margin-top:40px}
+ .st-nepal-numbers>div:nth-child(2){border:0}
+ .st-nepal-numbers b{font-size:48px}
+ .st-nepal-numbers span{font-size:9px}
+ /* PIGMA: organic image does not crop to illegible sliver on phone. */
+ .st-pigma{padding:76px 10px 25px}
+ .st-pigma-frame{padding:19px 17px 0;border-radius:25px}
+ .st-pigma-hero{padding:21px 0 4px}
+ .st-pigma-kicker{font-size:8px}
+ .st-pigma-hero h1{font-size:clamp(46px,12vw,72px);margin:15px 0 19px!important;line-height:.92}
+ .st-pigma-mask{height:290px;border-radius:28% 37% 17% 20%/23% 30% 11% 12%}
+ .st-pigma-properties{padding:50px 0 15px}
+ .st-pigma-properties>header{flex-wrap:wrap;align-items:start;gap:9px}
+ .st-pigma-properties h2,.st-pigma-focus h2{font-size:48px}
+ .st-pigma-properties>header p{font-size:11px;max-width:100%}
+ .st-pigma-properties>header a{font-size:10px}
+ .st-pigma-property-grid{grid-template-columns:1fr;gap:10px}
+ .st-pigma-property-grid>a{height:240px;border-radius:17px}
+ .st-pigma-copy-tile{padding:20px}
+ .st-pigma-copy-tile h3{font-size:39px}
+ .st-pigma-copy-tile p{font-size:10px}
+ .st-pigma-focus{grid-template-columns:1fr;gap:20px;padding:43px 0 23px}
+ .st-pigma-map{height:250px}
+ .st-pigma-quote{padding:28px 23px;min-height:0}
+ .st-pigma-quote h2{font-size:68px}
+ .st-pigma-last{padding:40px 0}
+ .st-pigma-last h2{font-size:60px}
+ .st-pigma-last>img{height:250px}
+ /* APEX: architecture mosaic reorganises to a deliberate phone grid. */
+ .st-apex{padding:76px 9px 20px}
+ .st-apex-wrap{padding:15px 14px 30px;border-radius:22px}
+ .st-apex-hero{height:495px;border-radius:16px;margin-bottom:83px}
+ .st-apex-hero>img{border-radius:16px}
+ .st-apex-hero>div{left:18px;right:18px;bottom:48px}
+ .st-apex-hero h1{font-size:clamp(33px,8vw,49px)}
+ .st-apex-hero p{font-size:11px}
+ .st-apex-hero>div span{font-size:8px}
+ .st-apex-hero>.st-button{width:90%;min-height:55px;bottom:-27px;border-radius:0 22px 22px 0}
+ .st-apex-about{grid-template-columns:1fr;gap:30px;padding-bottom:61px}
+ .st-apex-about h2{font-size:31px}
+ .st-apex-about p{font-size:12px}
+ .st-apex-metrics{gap:22px 10px}
+ .st-apex-metrics b{font-size:41px}
+ .st-apex-metrics p{font-size:10px}
+ .st-apex-services{padding-bottom:59px}
+ .st-apex-services>header h2{font-size:27px}
+ .st-apex-service-cards{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:12px}
+ .st-apex-service-cards>a{flex:0 0 74%;min-width:0;scroll-snap-align:start}
+ .st-apex-service-cards img{height:205px}
+ .st-apex-portfolio{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto 190px 190px 190px;gap:9px}
+ .st-apex-portfolio-intro{grid-column:1/-1;grid-row:1;padding:0 0 12px}
+ .st-apex-portfolio-intro h2{font-size:31px}
+ .st-apex-portfolio-intro p{font-size:11px;margin:12px 0 20px!important}
+ .st-apex-project{border-radius:15px}
+ .st-apex-project-0{grid-column:1;grid-row:2}
+ .st-apex-project-1{grid-column:2;grid-row:2/span 2}
+ .st-apex-project-2{grid-column:1;grid-row:3}
+ .st-apex-project-3{grid-column:1/-1;grid-row:4}
+ .st-apex-project span{font-size:10px;left:11px;right:11px;bottom:11px}
+ .st-apex-outro{margin-top:49px;padding:39px 10px 20px}
+ .st-apex-outro h2{font-size:32px}
+ /* Shared catalogue / details / inquiry. Responsiveness must not rely on
+    mobile-only home layouts, or users cannot actually complete journeys. */
+ .ix-store.ix-hospitality .ix-inner{padding:0 17px 65px}
+ .ix-store.ix-hospitality .ix-inner-title{padding:5px 0 25px}
+ .ix-store.ix-hospitality .ix-inner-title h1{font-size:clamp(40px,10vw,60px);line-height:1.03;overflow-wrap:anywhere}
+ .ix-store.ix-hospitality .ix-inner-title>p{font-size:12px}
+ .ix-store.ix-hospitality .ix-crumb{padding:25px 0;font-size:10px;flex-wrap:wrap}
+ .ix-store.ix-hospitality .ix-shop-layout{display:block}
+ .ix-store.ix-hospitality .ix-shop-layout>aside{display:none}
+ .ix-store.ix-hospitality .ix-filter-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ .ix-store.ix-hospitality .ix-filter-search{grid-column:1/-1;max-width:none}
+ .ix-store.ix-hospitality .ix-filter-row select{width:100%;font-size:10px;padding:11px 8px}
+ .ix-store.ix-hospitality .ix-mobile-categories{display:flex;overflow-x:auto;gap:9px;padding:17px 0}
+ .ix-store.ix-hospitality .ix-mobile-categories button{font-size:11px;white-space:nowrap;border:1px solid #ddd;padding:10px 14px}
+ .ix-store.ix-hospitality .ix-mobile-categories button.active{background:var(--ix-ink);color:#fff}
+ .ix-store.ix-hospitality .ix-shop-layout .ix-grid-cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .ix-store.ix-hospitality .ix-product-media{aspect-ratio:4/5}
+ .ix-store.ix-hospitality .ix-product-meta{padding:10px 1px}
+ .ix-store.ix-hospitality .ix-product-meta h3{font-size:18px}
+ .ix-store.ix-hospitality .ix-product-meta p{font-size:10px}
+ .ix-store.ix-hospitality .ix-product-meta strong{font-size:11px}
+ .ix-store.ix-hospitality .ix-stay-tools{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+ .ix-store.ix-hospitality .ix-stay-tools label{min-width:0}
+ .ix-store.ix-hospitality .ix-detail-main{display:block}
+ .ix-store.ix-hospitality .ix-detail-media>img{height:340px;min-height:0}
+ .ix-store.ix-hospitality .ix-photo-thumbs{overflow-x:auto}
+ .ix-store.ix-hospitality .ix-detail-info h1{font-size:clamp(45px,11vw,65px)}
+ .ix-store.ix-hospitality .ix-detail-info>p{font-size:12px}
+ .ix-store.ix-hospitality .ix-inquiry-layout{grid-template-columns:1fr}
+}
+@media(max-width:380px){
+ .st-or-headline h1{font-size:37px}
+ .st-or-searchband>.st-button{font-size:8px;min-height:42px}
+ .st-or-searchband>button{font-size:8px}
+ .st-or-stat{min-height:155px}
+ .st-visa-hero h1{font-size:85px}
+ .st-nepal-title h2,.st-nepal-title h2 em{font-size:41px}
+ .st-pigma-hero h1{font-size:44px}
+ .st-pigma-quote h2{font-size:59px}
+ .st-apex-hero h1{font-size:31px}
+}

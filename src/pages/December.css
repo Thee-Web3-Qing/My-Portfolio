@@ -922,3 +922,53 @@
 .december-page .dec-layout-choices-accessories .dec-layout-doodle-minimal i:nth-child(1){height:80%;align-self:center;background:#e8d7bb;border-radius:14px}
 .december-page .dec-layout-choices-accessories .dec-layout-doodle-minimal i:nth-child(2){height:100%;background:#aa7c64;border-radius:14px}
 .december-page .dec-layout-choices-accessories .dec-layout-doodle-minimal i:nth-child(3){display:block;height:80%;align-self:center;background:#a88c70;border-radius:14px}
+
+/* Five purpose-built Short-lets & Experiences concepts. Keep all five
+   independently visible, instead of hiding styles inside a carousel. */
+.december-page .dec-layout-choices-hospitality{grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.december-page .dec-layout-choices-hospitality .dec-layout-option{min-width:0;min-height:192px}
+.december-page .dec-layout-choices-hospitality .dec-layout-option strong{font-size:1.06rem;line-height:1.2}
+.december-page .dec-layout-choices-hospitality .dec-layout-option small{line-height:1.48}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle{overflow:hidden;height:64px}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-editorial{background:linear-gradient(125deg,#797db3,#dde8f9);grid-template-columns:1.1fr .65fr;gap:5px;border-radius:14px}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-editorial i:first-child{background:#e7ebffb8;border-radius:45% 45% 14% 14%}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-editorial i:nth-child(2){background:#514980;border-radius:27px}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-catalogue{background:linear-gradient(150deg,#3f6473,#bb8356);grid-template-columns:1fr 1fr 1fr;grid-template-rows:1.2fr .3fr;gap:3px}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-catalogue i:first-child{grid-column:1/span 3;background:#f5f2ef57}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-catalogue i:nth-child(2){grid-column:1/span 2;background:#e8e6e1}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-catalogue i:nth-child(3){grid-column:3;display:block;background:#926545}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-adventure{grid-template-columns:repeat(3,1fr);grid-template-rows:1fr;background:linear-gradient(180deg,#80b8dc,#345a7b)}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-adventure i:first-child{background:#ecf2f5;border-radius:40% 40% 12px 12px;height:70%;align-self:end}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-adventure i:nth-child(2){background:#c9e5fb;border-radius:40% 40% 12px 12px}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-adventure i:nth-child(3){display:block;background:#e6f2ff;border-radius:40% 40% 12px 12px;height:80%;align-self:end}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-minimal{grid-template-columns:1fr;grid-template-rows:1fr;background:#f7f4e8}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-minimal i:first-child{height:100%;background:linear-gradient(130deg,#728a5f,#d3dfbf);border-radius:45% 20% 35% 22%}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-minimal i:nth-child(2){display:none}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-architect{grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:4px;background:#f3f3f3}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-architect i:first-child{grid-column:1/span 2;background:linear-gradient(135deg,#242729,#6d7270)}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-architect i:nth-child(2){grid-row:2;background:#aeb1ad}
+.december-page .dec-layout-choices-hospitality .dec-layout-doodle-architect i:nth-child(3){display:block;background:#d8d8d4}
+@media(max-width:700px){
+ .december-page .dec-layout-choices-hospitality{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .december-page .dec-layout-choices-hospitality .dec-layout-option,
+ .december-page .dec-layout-choices-hospitality .dec-layout-option:last-child{
+  min-height:172px;display:flex;flex-direction:column;align-items:stretch;gap:7px;
+  padding:12px;grid-column:auto
+ }
+ .december-page .dec-layout-choices-hospitality .dec-layout-option .dec-layout-doodle,
+ .december-page .dec-layout-choices-hospitality .dec-layout-option:last-child .dec-layout-doodle{
+   grid-column:auto;grid-row:auto;width:100%;height:53px
+ }
+ .december-page .dec-layout-choices-hospitality .dec-layout-option strong,
+ .december-page .dec-layout-choices-hospitality .dec-layout-option:last-child strong{
+  grid-column:auto;grid-row:auto;align-self:stretch;font-size:.99rem
+ }
+ .december-page .dec-layout-choices-hospitality .dec-layout-option small,
+ .december-page .dec-layout-choices-hospitality .dec-layout-option:last-child small{
+  grid-column:auto;grid-row:auto;align-self:stretch;font-size:.63rem;line-height:1.4
+ }
+}
+@media(max-width:390px){
+ .december-page .dec-layout-choices-hospitality .dec-layout-option strong{font-size:.9rem}
+ .december-page .dec-layout-choices-hospitality .dec-layout-option{padding:10px}
+}

@@ -49,7 +49,7 @@ import DecemberTrafficTracker from './components/DecemberTrafficTracker.jsx'
         {['editorial','tech','catalogue','playful','market','minimal'].map(style =>
           <Route key={'accessories'+style} path={'/accessories'+style+'/*'} element={<IndustryStorefront industry="accessories" style={style} />} />
         )}
-        {['editorial','catalogue','minimal'].map(style =>
+        {['editorial','catalogue','adventure','minimal','architect'].map(style =>
           <Route key={'hospitality'+style} path={'/hospitality'+style+'/*'} element={<IndustryStorefront industry="hospitality" style={style} />} />
         )}
         <Route
