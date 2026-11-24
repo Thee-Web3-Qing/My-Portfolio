@@ -64,6 +64,7 @@ try{
    const html=renderToStaticMarkup(React.createElement(StaticRouter,{location:pathname},React.createElement(IndustryStorefront,{industry:'hospitality',style})))
    assert.ok(html.includes('ix-hospitality-'+style),'Missing variant identity on '+pathname)
    assert.ok(html.includes('st-header'),'Missing distinct header '+pathname)
+   assert.equal(html.includes('ix-route-inner'),!!segment,'Incorrect header placement for '+pathname)
    assert.ok(html.includes(expect.name),'Missing brand identity '+pathname)
    assert.ok(html.includes(marker),'Missing '+marker+' on '+pathname)
    assert.ok(html.length>2000,'Suspiciously short markup '+pathname)

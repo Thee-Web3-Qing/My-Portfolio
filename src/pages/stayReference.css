@@ -572,3 +572,29 @@
  .st-pigma-quote h2{font-size:59px}
  .st-apex-hero h1{font-size:31px}
 }
+
+/* Clear header treatment on every inner page. Only homepages use overlaid navigation. */
+.ix-store.ix-hospitality.ix-route-inner .st-header{
+ position:relative;top:auto;left:auto;right:auto;transform:none;
+ width:100%;max-width:none;min-height:77px;height:77px;
+ background:var(--ix-paper);color:var(--ix-ink);
+ border-bottom:1px solid #ddd7ce;padding-left:5%;padding-right:5%;
+}
+.ix-store.ix-hospitality.ix-route-inner .st-header nav>a{color:var(--ix-ink)}
+.ix-store.ix-hospitality.ix-route-inner .st-head-book{
+ background:var(--ix-ink);border:0;color:#fff!important;
+}
+.ix-store.ix-hospitality.ix-route-inner .ix-inner{
+ background:var(--ix-paper);min-height:calc(100vh - 180px)
+}
+.ix-store.ix-hospitality.ix-route-inner.ix-catalogue .ix-inner,
+.ix-store.ix-hospitality.ix-route-inner.ix-adventure .ix-inner{background:#fff}
+@media(max-width:720px){
+ .ix-store.ix-hospitality.ix-route-inner .st-header{
+   min-height:67px;height:67px;padding-left:17px;padding-right:17px
+ }
+ .ix-store.ix-hospitality.ix-route-inner .st-header nav{
+   background:var(--ix-paper);color:var(--ix-ink)
+ }
+ .ix-store.ix-hospitality .ix-stay-tools{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
