@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { INDUSTRIES, LAYOUTS, getLayoutsForIndustry, calculateDecemberQuote, getIndustryGroups, getSharedGroups, money } from '../data/december.js'
 import ScaledWebsitePreview from '../components/ScaledWebsitePreview.jsx'
+import { trackDecemberEvent } from '../components/DecemberTrafficTracker.jsx'
 import './December.css'
 
 const Arrow = () => <span className="dec-desktop-only-decoration" aria-hidden="true">↗</span>
@@ -131,6 +132,7 @@ export default function December() {
   async function beginCheckout(event) {
     event.preventDefault()
     if (!checkoutEnabled || status === 'loading') return
+    trackDecemberEvent('checkout_started',{industry:industryId,layout:layoutId})
     setStatus('loading')
     setFeedback('')
     try {
@@ -145,6 +147,7 @@ export default function December() {
       if (checkoutUrl.protocol !== 'https:' || !(checkoutUrl.hostname === 'paystack.com' || checkoutUrl.hostname.endsWith('.paystack.com'))) throw new Error('Unexpected checkout provider.')
       // The email is kept only in this tab, not in the callback URL.
       try { window.sessionStorage.setItem('qing_december_checkout_email', customer.email.trim().toLowerCase()) } catch {}
+      trackDecemberEvent('payment_redirect',{industry:industryId,layout:layoutId})
       window.location.assign(checkoutUrl.href)
     } catch (error) {
       setFeedback(error.message || 'Payment could not be started. Please try again.')
@@ -198,7 +201,7 @@ export default function December() {
           <section className="dec-builder-step">
             <div className="dec-step-title"><span>01</span><div><p className="dec-kicker">PICK YOUR INDUSTRY</p><h2>What do you sell?</h2></div></div>
             <div className="dec-industry-grid">
-              {INDUSTRIES.map((item, index) => <button type="button" key={item.id} className={'dec-industry-card' + (industryId === item.id ? ' is-active' : '')} onClick={() => { setIndustryId(item.id); if (item.id !== 'beauty' && layoutId === 'botanical') setLayoutId('editorial') }} style={{ '--dec-card-accent': item.colour, '--dec-card-bg': item.backdrop }} aria-pressed={industryId === item.id}>
+              {INDUSTRIES.map((item, index) => <button type="button" key={item.id} className={'dec-industry-card' + (industryId === item.id ? ' is-active' : '')} onClick={() => { if(item.id!==industryId)trackDecemberEvent('preview_selected',{industry:item.id,layout:layoutId}); setIndustryId(item.id); if (item.id !== 'beauty' && layoutId === 'botanical') setLayoutId('editorial') }} style={{ '--dec-card-accent': item.colour, '--dec-card-bg': item.backdrop }} aria-pressed={industryId === item.id}>
                 <span className="dec-industry-number">0{index + 1}</span>
                 <span className="dec-industry-symbol" aria-hidden="true">{['✿', '◒', '✳', '✧', '✺', '◇', '⌂'][index]}</span>
                 <strong>{item.label}</strong>
@@ -212,7 +215,7 @@ export default function December() {
             <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>One brand. Three directions.</h2></div></div>
             <p className="dec-section-description">All three starting layouts are included in the ₦100,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
             <div className={"dec-layout-choices" + (industryId === "beauty" ? " dec-layout-choices-beauty" : "")}>
-              {layoutChoices.map((item, index) => <button type="button" key={item.id} className={'dec-layout-option' + (layoutId === item.id ? ' is-active' : '')} onClick={() => setLayoutId(item.id)} aria-pressed={layoutId === item.id}>
+              {layoutChoices.map((item, index) => <button type="button" key={item.id} className={'dec-layout-option' + (layoutId === item.id ? ' is-active' : '')} onClick={() => { if(item.id!==layoutId)trackDecemberEvent('preview_selected',{industry:industryId,layout:item.id}); setLayoutId(item.id) }} aria-pressed={layoutId === item.id}>
                 <span className={'dec-layout-doodle dec-layout-doodle-' + item.id}><i /><i /><i /></span>
                 <strong>{item.label} <span>{String(index + 1).padStart(2, '0')}</span></strong>
                 <small>{item.description}</small>

@@ -1,4 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
+import DecemberTrafficTracker from './components/DecemberTrafficTracker.jsx'
   import Nav from './components/Nav.jsx'
   import RouteMeta from './components/RouteMeta.jsx'
   import PortfolioInteractions from './components/PortfolioInteractions.jsx'
@@ -26,6 +27,8 @@ import { Routes, Route } from 'react-router-dom'
 
   export default function App() {
     return (
+      <>
+      <DecemberTrafficTracker />
       <Routes>
         <Route path="/fashioneditorial/*" element={<FashionPlatform mode="editorial" />} />
         <Route path="/fashioncatalogue/*" element={<FashionPlatform mode="catalogue" />} />
@@ -80,5 +83,6 @@ import { Routes, Route } from 'react-router-dom'
           }
         />
       </Routes>
+      </>
     )
   }
