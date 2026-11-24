@@ -2,6 +2,7 @@ import { neon } from '@neondatabase/serverless'
 import { calculateDecemberQuote } from '../../src/data/december.js'
 import { randomUUID, createHmac, timingSafeEqual } from 'node:crypto'
 import { finalizeClassWelcome } from './classWelcome.js'
+import { finalizeDecemberProjectEmail } from './decemberProjectEmail.js'
 
 export const PAYSTACK_ORIGIN = 'https://api.paystack.co'
 export const environment = () => process.env.VERCEL_ENV === 'production' ? 'live' : 'test'
@@ -91,7 +92,8 @@ export async function confirmPayment(reference, mode = environment()) {
   const order = orders[0]
   if (order.status === 'paid') {
     const welcome = order.product === 'qing-class' ? await finalizeClassWelcome(sql, reference) : {}
-    return { ...publicStatus(order), ...welcome }
+    const projectNotice = order.product === 'december-website' ? await finalizeDecemberProjectEmail(sql, reference, mode) : {}
+    return { ...publicStatus(order), ...welcome, ...projectNotice }
   }
   const transaction = await paystackGet('/transaction/verify/' + encodeURIComponent(reference), mode)
   const checks=paymentVerificationChecks(transaction,order,reference,mode)
@@ -129,7 +131,8 @@ export async function confirmPayment(reference, mode = environment()) {
     SELECT * FROM payment_orders WHERE reference=${reference} AND environment=${mode} LIMIT 1
   `)[0] || order
   const welcome = order.product === 'qing-class' ? await finalizeClassWelcome(sql, reference) : {}
-  return { ...publicStatus(paidOrder), ...welcome }
+  const projectNotice = paidOrder.product === 'december-website' ? await finalizeDecemberProjectEmail(sql, reference, mode) : {}
+  return { ...publicStatus(paidOrder), ...welcome, ...projectNotice }
 }
 export function publicStatus(order) {
   const paid = order.status === 'paid'
