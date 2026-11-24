@@ -1,5 +1,6 @@
 import { neon } from '@neondatabase/serverless'
 import { createHash } from 'node:crypto'
+import { getClassPricing } from './_lib/classPricing.js'
 const parseReference = text => {
   const match = text.match(/(?:transaction\s*(?:reference|ref|id)|session\s*(?:id|number)|payment\s*(?:reference|ref)|reference\s*(?:number|no|id)?|transfer\s*(?:id|ref))\s*[:#-]?\s*([A-Z0-9][A-Z0-9-]{5,50})/i)
   return match ? match[1].toUpperCase().replace(/-/g,'') : null
@@ -49,8 +50,8 @@ export default async function handler(req, res) {
     const sql = neon(process.env.DATABASE_URL)
     const existing = await sql`SELECT id FROM class_registrations WHERE lower(email) = ${email} OR whatsapp = ${phone} OR lower(telegram_username) = ${telegram} OR payment_reference = ${hash} LIMIT 1`
     if (existing.length) return res.status(409).json({ error: 'This email, phone number, Telegram username or receipt has already been registered.' })
-    const count = await sql`SELECT COALESCE((SELECT integer_value FROM classroom_registration_settings WHERE key = 'legacy_student_offset'), 80)::int + (SELECT count(*)::int FROM class_registrations WHERE payment_status IN ('confirmed','approved')) AS total`
-    const amount = 1000 * (2 ** Math.floor(Number(count[0].total) / 100))
+    const pricing = await getClassPricing(sql)
+    const amount = pricing.price
     const receiptText = String(b.receiptText || '').slice(0, 20_000)
     const screening = receiptText
       ? checkReceipt(receiptText, amount)

@@ -4,7 +4,6 @@ import './classClay.css'
 import './classEditorial.css'
 
 const PRICING_URL = '/api/class-pricing'
-const PRICE_TIERS = [1000, 2000, 4000, 8000, 16000]
 const REGISTRATION_STORAGE_KEY = 'qing-class-registration-complete'
 
 const formatNaira = (amount) => `₦${Number(amount).toLocaleString('en-NG')}`
@@ -65,7 +64,7 @@ export default function Class() {
   const [confirmation, setConfirmation] = useState(null)
   const [pricingLoaded, setPricingLoaded] = useState(false)
   const [activeClassroomScreen, setActiveClassroomScreen] = useState(0)
-  const [pricing, setPricing] = useState({ acceptedCount: 80, price: 1000, tierIndex: 0, filledInTier: 80, remainingInTier: 20, soldOut: false })
+  const [pricing, setPricing] = useState({ acceptedCount: 0, price: 5000, tierIndex: 0, filledInTier: 0, remainingInTier: 100, batchSize: 100, firstCohortComplete: false, soldOut: false })
 
   const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())
   const telegramValid = /^[a-zA-Z0-9_]{5,32}$/.test(normaliseTelegram(form.telegram))
@@ -127,7 +126,7 @@ export default function Class() {
     setReceipt(file)
     setScanning(true)
     setScanProgress(0)
-    const analysis = await screenReceipt(file, setScanProgress, pricing.price || 16000)
+    const analysis = await screenReceipt(file, setScanProgress, pricing.price || 5000)
     setReceiptAnalysis(analysis)
     setScanning(false)
   }
@@ -308,9 +307,9 @@ export default function Class() {
         <section id="registration" className="clay-section clay-update clay-enrollment">
           <div className="clay-section-head"><p className="clay-kicker">Registration</p><h2 className="class-display">Join the Vibecoding Starter Class.</h2></div>
           <ClayCard tone="mint" className="clay-progress-card clay-enrollment-progress">
-            <div className="clay-progress-heading"><span>Batch {pricing.tierIndex + 1}: {formatNaira(pricing.price)}</span><strong>{`${pricing.remainingInTier} spots left`}</strong></div>
-            <ClayProgress value={pricing.filledInTier} max={100} />
-            <p><strong>{pricing.filledInTier} of 100 spots filled in this batch.</strong> {pricing.acceptedCount} total enrolled students, including the original 80. The price doubles when each 100-person batch fills.</p>{!pricingLoaded && <p>Live pricing connection unavailable. Submissions remain disabled until it reconnects.</p>}
+            <div className="clay-progress-heading"><span>Current cohort: {formatNaira(pricing.price)}</span><strong>{`${pricing.remainingInTier} spots left`}</strong></div>
+            <ClayProgress value={pricing.filledInTier} max={pricing.batchSize || 100} />
+            <p><strong>{pricing.filledInTier} of {pricing.batchSize || 100} spots filled at {formatNaira(pricing.price)}.</strong> {pricing.firstCohortComplete ? 'The first ₦5,000 cohort is complete.' : 'When 100 confirmed students join this cohort, registration moves to ₦10,000.'}</p>{!pricingLoaded && <p>Live pricing connection unavailable. Submissions remain disabled until it reconnects.</p>}
           </ClayCard>
           <ClayCard tone="cream" className="clay-subscription">
             {confirmation ? (

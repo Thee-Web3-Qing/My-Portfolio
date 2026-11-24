@@ -1,4 +1,5 @@
 import { configuredKey, db, environment, initializePayment, makeReference } from '../_lib/payments.js'
+import { getClassPricing } from '../_lib/classPricing.js'
 
 const normalisePhone = text => {
   const digits=String(text || '').replace(/\D/g,'')
@@ -31,11 +32,8 @@ export default async function handler(req,res) {
       LIMIT 1
     `
     if(existing.length) return res.status(409).json({error:'An existing registration matches this email, phone or Telegram username'})
-    const counts=await sql`
-      SELECT COALESCE((SELECT integer_value FROM classroom_registration_settings WHERE key='legacy_student_offset'),80)::int
-      + (SELECT count(*)::int FROM class_registrations WHERE payment_status IN ('confirmed','approved')) AS total
-    `
-    const amount=1000 * (2 ** Math.floor(Number(counts[0].total) / 100))
+    const pricing=await getClassPricing(sql)
+    const amount=pricing.price
     if(!Number.isFinite(amount) || amount>1000000) return res.status(503).json({error:'Current class pricing is unavailable'})
     const amountKobo=amount*100
     const reference=makeReference('qing-class')
