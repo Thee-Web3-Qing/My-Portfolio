@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import './DecemberAdmin.css'
 import DecemberTrafficPanel from '../components/DecemberTrafficPanel.jsx'
 
@@ -16,6 +16,10 @@ const digits=x=>String(x||'').replace(/\D/g,'')
 const safeLink=x=>typeof x==='string'&&/^https:\/\//i.test(x)?x:null
 
 export default function DecemberAdmin(){
+ const location=useLocation()
+ const requestedProject=new URLSearchParams(location.search).get('project')||''
+ const projectReference=/^QDEC-[a-f0-9]{32}$/i.test(requestedProject)?requestedProject:''
+ const focusedProject=useRef('')
  const [auth,setAuth]=useState(null)
  const [code,setCode]=useState('')
  const [loginError,setLoginError]=useState('')
@@ -75,6 +79,19 @@ export default function DecemberAdmin(){
    assetsConfirmed:!!order.assets_confirmed_at
   })
  }
+ useEffect(()=>{
+  // Only authenticated orders can populate the record linked from the email.
+  if(!auth||!projectReference||focusedProject.current===projectReference||!orders.length)return
+  const project=orders.find(order=>order.reference===projectReference && order.product==='december-website' && order.environment==='live')
+  if(!project)return
+  focusedProject.current=projectReference
+  setFilter('live')
+  setPaymentFilter('paid')
+  setSearch('')
+  choose(project)
+  const timer=window.setTimeout(()=>document.getElementById('da-project-details')?.scrollIntoView({behavior:'smooth',block:'start'}),140)
+  return()=>window.clearTimeout(timer)
+ },[auth,projectReference,orders])
  async function login(event){
   event.preventDefault();setBusy(true);setLoginError('')
   try{
@@ -166,7 +183,7 @@ export default function DecemberAdmin(){
     </button>)}
     {!visible.length&&<p className="da-empty">{busy?'Loading payment records…':'No transactions match these filters.'}</p>}</div>
    </section>
-   <section className="da-details">
+   <section className="da-details" id="da-project-details">
      {!chosen?<div className="da-select-empty"><span>✳</span><h2>Select a client.</h2><p>Choose a transaction to see purchase details, WhatsApp contacts, business resources and project progress.</p></div>:<>
       <div className="da-details-title"><div><span className="da-eyebrow">CLIENT RECORD / {chosen.environment.toUpperCase()}</span><h2>{chosen.business_name||chosen.customer_name}</h2><p>{chosen.customer_name} · {chosen.customer_email}</p></div><span className={'da-status'+(chosen.status==='paid'?' da-paid':'')}>{chosen.status==='paid'?'Verified payment':'Payment pending'}</span></div>
       <div className="da-reference"><span>PAYMENT REFERENCE</span><strong>{chosen.reference}</strong><button onClick={()=>navigator.clipboard?.writeText(chosen.reference)}>Copy ↗</button></div>
