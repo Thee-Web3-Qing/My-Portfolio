@@ -64,7 +64,7 @@ export const ACCESSORY_WORLDS={
  market:{
   name:'NOVA FINDS',eyebrow:'MODERN GENERAL STORE',heading:'Everyday essentials.',
   strapline:'Curated finds in tech, fashion, home and everyday living.',
-  categories:['All','Electronics','Fashion','Home & Living','Beauty & Care','Footwear','Accessories','Sports'],
+  categories:['All','Electronics','Fashion','Home & Living','Beauty & Care','Footwear','Accessories','Sports','Office & Stationery'],
   images:{hero:photo('photo-1553062407-98eeb64c6a62'),electronics:photo('photo-1505740420928-5e560c06d30e'),fashion:photo('photo-1591047139829-d91aecb6caea'),home:photo('photo-1507473885765-e6ed057f782c'),beauty:photo('photo-1556228578-0d85b1a4d571'),footwear:photo('photo-1542291026-7eec264c27ff'),eyewear:photo('photo-1511499767150-a48a237f0083'),sport:photo('photo-1517836357463-d25dfeac3438'),office:photo('photo-1455390582262-044cdead277a')},
   items:[
    p('urban-pack','URBAN COMMUTER BACKPACK','Accessories',7900,photo('photo-1553062407-98eeb64c6a62'),'Organised everyday carry for work and travel.',['Navy','Black'],'NEW'),
@@ -74,7 +74,8 @@ export const ACCESSORY_WORLDS={
    p('serum','REVITALISING FACE SERUM','Beauty & Care',2400,photo('photo-1556228578-0d85b1a4d571'),'A fresh daily ritual for healthy-looking skin.',['30ml']),
    p('modern-lamp','MODERN DESK LAMP','Home & Living',17900,photo('photo-1507473885765-e6ed057f782c'),'A warm accent for home and workspace.',['Copper','Stone']),
    p('field-jacket','FIELD JACKET','Fashion',15900,photo('photo-1591047139829-d91aecb6caea'),'Everyday layers with clean lines.',['Oat','Black']),
-   p('training-kit','TRAINING KIT','Sports',11500,photo('photo-1517836357463-d25dfeac3438'),'Make every session count with essentials built to last.',['Black'])
+   p('training-kit','TRAINING KIT','Sports',11500,photo('photo-1517836357463-d25dfeac3438'),'Make every session count with essentials built to last.',['Black']),
+   p('desk-notebook','DESK NOTEBOOK','Office & Stationery',3900,photo('photo-1455390582262-044cdead277a'),'An everyday notebook for good ideas and thoughtful plans.',['Navy','Paper'])
   ]
  },
  minimal:{
