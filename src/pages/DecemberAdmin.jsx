@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './DecemberAdmin.css'
+import DecemberTrafficPanel from '../components/DecemberTrafficPanel.jsx'
 
 const money=kobo=>'₦'+(Number(kobo||0)/100).toLocaleString('en-NG',{minimumFractionDigits:0,maximumFractionDigits:0})
 const date=x=>x?new Date(x).toLocaleDateString('en-NG',{day:'numeric',month:'short',year:'numeric'}):'Not set'
@@ -146,6 +147,7 @@ export default function DecemberAdmin(){
    <div><span>VERIFIED PAID</span><strong>{stats?.paid||0}</strong></div>
    <div><span>UNCONFIRMED TEST CHECKOUTS</span><strong>{stats?.pending||0}</strong></div>
    <div><span>WEBSITE PROJECTS</span><strong>{stats?.websiteOrders||0}</strong></div></div>
+  <DecemberTrafficPanel orders={orders} />
   <div className="da-layout">
    <section className="da-orders">
     <div className="da-orders-head"><div><h2>Transactions</h2><p>Live shows verified payments only. Test also shows unconfirmed simulations for troubleshooting. Recent payments are checked with Paystack when this page loads.</p></div><span>{visible.length} shown</span></div>
