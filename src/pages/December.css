@@ -882,3 +882,43 @@
    grid-column:auto;grid-row:auto;align-self:stretch;font-size:.63rem
  }
 }
+
+/* Distinct composition miniatures for the six reference-inspired accessories sites. */
+.december-page .dec-layout-choices-accessories .dec-layout-doodle{height:67px;overflow:hidden}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-editorial{
+  grid-template-columns:1.15fr 1fr;grid-template-rows:1fr 1fr;
+  gap:3px;background:#f7f6f3;border-color:#cac8c5
+}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-editorial i:nth-child(1){
+  grid-row:1/span 2;background:linear-gradient(140deg,#9a786f,#322621);height:100%
+}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-editorial i:nth-child(2){grid-column:2;background:#d6d0cb}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-editorial i:nth-child(3){display:block;grid-column:2;grid-row:2;background:#73635d}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-tech{
+  grid-template-columns:1fr;gap:3px;background:linear-gradient(110deg,#3a3433,#98928f);padding:5px
+}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-tech i:nth-child(1){width:60%;height:46%;align-self:center;background:#f8f6f0}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-tech i:nth-child(2){width:70%;height:12%;background:#c5bdb7}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-catalogue{
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:.85fr 1fr;gap:4px;background:#f0f3ee
+}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-catalogue i:nth-child(1){grid-column:1/span 3;background:linear-gradient(110deg,#f7faf8,#aebbae)}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-catalogue i:nth-child(2){grid-column:1;background:#d9e1d4}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-catalogue i:nth-child(3){grid-column:2/span 2;display:block;background:repeating-linear-gradient(90deg,#cdd5ca 0 18%,#eff1ed 18% 35%)}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-playful{
+  display:flex;align-items:center;justify-content:center;gap:4px;background:#f7e3eb
+}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-playful i:nth-child(1){height:77%;width:43%;border-radius:30px 30px 10px 10px;background:#e391ad}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-playful i:nth-child(2){height:63%;width:22%;border-radius:50% 50% 8px 8px;background:#ba7b96}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-market{
+  grid-template-columns:repeat(3,1fr);grid-template-rows:.95fr 1fr;gap:4px;background:#f3f5f6
+}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-market i:nth-child(1){grid-column:1/span 3;background:linear-gradient(110deg,#2a3e5b,#b96d3c)}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-market i:nth-child(2){grid-column:1;background:#b0bbc8}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-market i:nth-child(3){display:block;grid-column:2/span 2;background:repeating-linear-gradient(90deg,#f6e2d1 0 18%,#d1d5d8 18% 32%)}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-minimal{
+  display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr;gap:4px;background:#141414
+}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-minimal i:nth-child(1){height:80%;align-self:center;background:#e8d7bb;border-radius:14px}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-minimal i:nth-child(2){height:100%;background:#aa7c64;border-radius:14px}
+.december-page .dec-layout-choices-accessories .dec-layout-doodle-minimal i:nth-child(3){display:block;height:80%;align-self:center;background:#a88c70;border-radius:14px}

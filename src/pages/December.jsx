@@ -68,7 +68,8 @@ export default function December() {
   })
   const [layoutId, setLayoutId] = useState(() => {
     const query = new URLSearchParams(window.location.search).get('layout')
-    return (LAYOUTS.some(x=>x.id===query) || query==='botanical') ? query : 'editorial'
+    const industry=new URLSearchParams(window.location.search).get('industry')||'fashion'
+    return getLayoutsForIndustry(industry).some(x=>x.id===query) ? query : 'editorial'
   })
   const [addons, setAddons] = useState([])
   const [images, setImages] = useState(0)
@@ -208,7 +209,12 @@ export default function December() {
               <a className="dec-industry-help-button" href="https://wa.me/2348124320659?text=Hi%2C%20I%27m%20interested%20in%20your%20December%20website%20offer%20and%20need%20help%20choosing%20the%20right%20option." target="_blank" rel="noopener noreferrer" aria-label="Chat with me directly on WhatsApp about the December website offer">Chat with me on WhatsApp</a>
             </div>
             <div className="dec-industry-grid">
-              {INDUSTRIES.map((item, index) => <button type="button" key={item.id} className={'dec-industry-card' + (industryId === item.id ? ' is-active' : '')} onClick={() => { if(item.id!==industryId)trackDecemberEvent('preview_selected',{industry:item.id,layout:layoutId}); setIndustryId(item.id); if (item.id !== 'beauty' && layoutId === 'botanical') setLayoutId('editorial') }} style={{ '--dec-card-accent': item.colour, '--dec-card-bg': item.backdrop }} aria-pressed={industryId === item.id}>
+              {INDUSTRIES.map((item, index) => <button type="button" key={item.id} className={'dec-industry-card' + (industryId === item.id ? ' is-active' : '')} onClick={() => {
+                const nextLayout=getLayoutsForIndustry(item.id).some(style=>style.id===layoutId)?layoutId:'editorial'
+                if(item.id!==industryId)trackDecemberEvent('preview_selected',{industry:item.id,layout:nextLayout})
+                setIndustryId(item.id)
+                if(nextLayout!==layoutId)setLayoutId(nextLayout)
+              }} style={{ '--dec-card-accent': item.colour, '--dec-card-bg': item.backdrop }} aria-pressed={industryId === item.id}>
                 <span className="dec-industry-number">0{index + 1}</span>
                 <span className="dec-industry-symbol" aria-hidden="true">{['✿', '◒', '✳', '✧', '✺', '◇', '⌂'][index]}</span>
                 <strong>{item.label}</strong>
@@ -219,8 +225,8 @@ export default function December() {
           </section>
 
           <section className="dec-builder-step" id="dec-designs">
-            <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>One brand. Three directions.</h2></div></div>
-            <p className="dec-section-description">All three starting layouts are included in the ₦100,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
+            <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>{industryId==='accessories'?'Six distinct directions.':'One brand. Three directions.'}</h2></div></div>
+            <p className="dec-section-description">All {layoutChoices.length} starting layouts are included in the ₦100,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
             <div className={"dec-layout-choices" + (industryId === "beauty" ? " dec-layout-choices-beauty" : industryId === "accessories" ? " dec-layout-choices-accessories" : "")}>
               {layoutChoices.map((item, index) => <button type="button" key={item.id} className={'dec-layout-option' + (layoutId === item.id ? ' is-active' : '')} onClick={() => { if(item.id!==layoutId)trackDecemberEvent('preview_selected',{industry:industryId,layout:item.id}); setLayoutId(item.id) }} aria-pressed={layoutId === item.id}>
                 <span className={'dec-layout-doodle dec-layout-doodle-' + item.id}><i /><i /><i /></span>

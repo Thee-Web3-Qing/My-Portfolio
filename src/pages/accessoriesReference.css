@@ -585,3 +585,17 @@
  .aw-products-veloura .aw-product-meta h3{font-size:14px}
  .aw-product-ossia .aw-view-button{min-width:0}
 }
+
+/* Keep actual product browsing light and legible while retaining the deep
+   black luxury styling of the Veloura homepage and its custom footer. */
+.ix-accessories.ix-minimal .ix-inner{
+ --ix-ink:#2a241f;--ix-paper:#f8f6f2;--ix-soft:#eee9e3;--ix-muted:#726a62;
+ background:#f8f6f2;color:#2a241f;
+ border-top:1px solid #e5dcd3;
+}
+.ix-accessories.ix-minimal .ix-inner-title h1,
+.ix-accessories.ix-minimal .ix-inner h1{color:#2a241f}
+.ix-accessories.ix-minimal .ix-inner .ix-detail-info,
+.ix-accessories.ix-minimal .ix-inner .ix-cart-layout>aside{
+ color:#2a241f;
+}
