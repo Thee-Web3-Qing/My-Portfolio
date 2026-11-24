@@ -2,6 +2,7 @@ import { neon } from '@neondatabase/serverless'
 import { calculateDecemberQuote } from '../../src/data/december.js'
 import { randomUUID, createHmac, timingSafeEqual } from 'node:crypto'
 import { finalizeClassWelcome } from './classWelcome.js'
+import { notifyVerifiedProjectPayment } from './projectPaymentNotification.js'
 
 export const PAYSTACK_ORIGIN = 'https://api.paystack.co'
 export const environment = () => process.env.VERCEL_ENV === 'production' ? 'live' : 'test'
@@ -90,6 +91,7 @@ export async function confirmPayment(reference, mode = environment()) {
   if (!orders.length) return { found:false, paid:false, reference }
   const order = orders[0]
   if (order.status === 'paid') {
+    if (order.product === 'december-website') await notifyVerifiedProjectPayment(sql, order)
     const welcome = order.product === 'qing-class' ? await finalizeClassWelcome(sql, reference) : {}
     return { ...publicStatus(order), ...welcome }
   }
@@ -123,11 +125,14 @@ export async function confirmPayment(reference, mode = environment()) {
     UPDATE payment_orders SET status='paid',paid_at=COALESCE(paid_at,now()),updated_at=now()
     WHERE reference=${reference} AND environment=${mode} AND status='pending'
     RETURNING reference, product, environment, customer_name, customer_email, customer_whatsapp,
-              amount_kobo, quote_total_kobo, payment_mode, configuration, status
+              business_name, amount_kobo, quote_total_kobo, payment_mode, configuration, status, paid_at
   `
   const paidOrder = confirmed[0] || (await sql`
     SELECT * FROM payment_orders WHERE reference=${reference} AND environment=${mode} LIMIT 1
   `)[0] || order
+  if (order.product === 'december-website') {
+    await notifyVerifiedProjectPayment(sql, paidOrder, { create: confirmed.length > 0 })
+  }
   const welcome = order.product === 'qing-class' ? await finalizeClassWelcome(sql, reference) : {}
   return { ...publicStatus(paidOrder), ...welcome }
 }
