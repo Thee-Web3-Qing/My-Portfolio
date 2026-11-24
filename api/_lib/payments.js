@@ -102,6 +102,10 @@ export async function confirmPayment(reference, mode = environment()) {
     found:true, paid:false, reference,
     status:transaction.status === 'success' ? 'unverified' : 'pending',
     failedChecks:Object.entries(checks).filter(([,passed])=>!passed).map(([name])=>name),
+    amountCheck:checks.amount ? undefined : {
+      receivedKobo:Number(transaction?.amount),
+      expectedKobo:Number(order.amount_kobo),
+    },
   }
   if (order.product === 'qing-class') {
     const info = safeMetadata(order.configuration)
