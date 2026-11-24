@@ -70,3 +70,121 @@
 @media(max-width:830px){.stx-masthead,.stx-editorial .stx-masthead,.stx-catalogue .stx-masthead,.stx-adventure .stx-masthead,.stx-minimal .stx-masthead,.stx-architect .stx-masthead{display:flex;flex-direction:column;min-height:0}.stx-intro,.stx-minimal .stx-intro,.stx-architect .stx-intro{padding:42px 28px}.stx-masthead-image{height:400px;min-height:0}.stx-catalogue .stx-masthead-image{transform:none}.stx-editorial .stx-masthead-image{padding:0 25px 25px}.stx-minimal .stx-masthead-image{padding:0 25px 25px}.stx-architect .stx-masthead-image{padding:0 25px 25px}.stx-altitude{width:100%}.stx-search-form{grid-template-columns:repeat(2,minmax(0,1fr))}.stx-detail-content,.stx-enquiry,.stx-contact-area,.stx-faq{grid-template-columns:1fr}.stx-request-card{position:static}.stx-story-opening{grid-template-columns:1fr 1fr}.stx-story-opening span{grid-column:1/-1}.stx-feature-orizon,.stx-feature-pigma,.stx-feature-apex{grid-template-columns:1fr}.stx-feature-orizon img,.stx-feature-pigma img,.stx-feature-apex img{height:350px}.stx-feature-orizon>div,.stx-feature-pigma>div,.stx-feature-apex>div{padding:35px}.stx-nepal-routes{grid-template-columns:1fr 1fr}.stx-feature-visa .stx-visa-stamp{width:70px;height:70px;font-size:.6rem}.stx-place-text>p{min-height:0}.stx-architect .stx-place-photo{height:350px}}
 @media(max-width:590px){.stx-page h1{font-size:clamp(2.8rem,11vw,4.4rem)}.stx-page h2{font-size:clamp(2.2rem,9vw,3.7rem)}.stx-intro,.stx-minimal .stx-intro,.stx-architect .stx-intro{padding:33px 18px;gap:19px}.stx-overline{flex-direction:column;gap:3px}.stx-masthead-image{height:310px}.stx-masthead-image>span{left:15px;bottom:15px}.stx-search-zone,.stx-more,.stx-story,.stx-story-footer,.stx-contact-area,.stx-faq,.stx-enquiry{padding:40px 16px}.stx-search-heading,.stx-more>div:first-child{display:block;margin-bottom:25px}.stx-search-heading>p{margin-top:15px}.stx-search-form{grid-template-columns:1fr 1fr;gap:5px;padding:6px}.stx-search-form label{padding:10px;font-size:.58rem}.stx-search-form label:nth-child(4),.stx-search-form label:nth-child(5){min-width:0}.stx-search-form button{grid-column:1/-1}.stx-search-tools{gap:10px}.stx-search-tools label:first-child{flex-basis:100%;max-width:none}.stx-search-tools .stx-saved-filter{padding:10px 0}.stx-place-grid,.stx-catalogue .stx-place-grid,.stx-architect .stx-place-grid{grid-template-columns:1fr;gap:20px}.stx-place-photo,.stx-editorial .stx-place-photo,.stx-adventure .stx-place-photo,.stx-minimal .stx-place-photo,.stx-architect .stx-place-photo{height:330px}.stx-catalogue .stx-place:nth-child(2),.stx-minimal .stx-place:nth-child(2){transform:none}.stx-architect .stx-place-text{display:block}.stx-feature{margin:0 16px 40px}.stx-feature-nepal,.stx-feature-visa{padding:35px 20px}.stx-nepal-routes{grid-template-columns:1fr 1fr;gap:10px}.stx-visa-vignettes img{height:135px}.stx-detail-shell{padding:20px 16px 45px}.stx-detail-head{display:block}.stx-detail-head h1{font-size:clamp(3rem,10vw,4.7rem)}.stx-detail-head>button{margin-top:22px}.stx-detail-gallery{grid-template-columns:1fr 1fr;grid-template-rows:310px 150px;gap:8px}.stx-detail-gallery img:first-child{grid-column:1/-1;grid-row:1}.stx-detail-content{margin-top:35px}.stx-detail-facts{grid-template-columns:1fr 1fr}.stx-detail-content>div h2{font-size:clamp(2.2rem,8vw,3.9rem)}.stx-amenities{grid-template-columns:1fr 1fr}.stx-request-card{padding:25px 18px}.stx-story-opening{grid-template-columns:1fr}.stx-story-opening span{grid-column:auto}.stx-story-images{height:auto;grid-template-columns:1fr 1fr;gap:8px}.stx-story-images img{height:260px}.stx-values{grid-template-columns:1fr;gap:25px}.stx-contact-area form,.stx-enquiry form{padding:25px 18px}.stx-form-pair{grid-template-columns:1fr}.stx-faq button{font-size:.99rem}.stx-feature-nepal h2{font-size:clamp(2.5rem,10vw,4rem)}}
 @media(max-width:380px){.stx-search-form{grid-template-columns:1fr}.stx-page h1{font-size:2.75rem}.stx-masthead-image{height:275px}.stx-amenities{grid-template-columns:1fr}.stx-detail-gallery{grid-template-rows:245px 120px}.stx-altitude{flex-wrap:wrap}.stx-nepal-routes{grid-template-columns:1fr}}
+
+
+/* Reference-matched architectural and travel interiors. */
+.stx-page{font-family:Manrope,Arial,sans-serif}
+.stx-editorial{--stx-paper:#e8e7e4;--stx-ink:#24243b;--stx-surface:#e8e8f4;--stx-accent:#302264;background:#e8e7e4}
+.stx-editorial .stx-masthead{margin:30px 4% 0;border:5px solid #fff;border-radius:70px;overflow:hidden;min-height:620px;display:block;isolation:isolate;color:#fff;background:#657b95}
+.stx-editorial .stx-masthead-image{position:absolute;inset:0;z-index:-1;padding:0}
+.stx-editorial .stx-masthead-image img{border-radius:0}
+.stx-editorial .stx-masthead-image:after{inset:0;background:linear-gradient(90deg,#171c3b90,transparent 95%)}
+.stx-editorial .stx-intro{min-height:620px;max-width:800px;padding:55px 6%;background:none}
+.stx-editorial .stx-overline{border-color:#fff8}
+.stx-editorial .stx-intro-links>a:first-child,.stx-editorial .stx-primary{border-radius:40px;background:#f3f2fa;color:#302264}
+.stx-editorial .stx-place{border:1px solid #fff;background:#f1f0f7;border-radius:30px;overflow:hidden}
+.stx-editorial .stx-place-photo{border-radius:0;height:320px}
+.stx-editorial .stx-place-text{padding:22px}
+.stx-editorial .stx-search-form,.stx-editorial .stx-request-card{border:1px solid #fff;background:#f2f0f8;border-radius:28px;overflow:hidden;box-shadow:0 8px 30px #3a375a12}
+.stx-editorial .stx-search-form label{border-radius:12px}
+.stx-editorial .stx-search-form button{border-radius:20px}
+.stx-editorial .stx-detail-gallery img{border-radius:24px}
+.stx-editorial .stx-detail-gallery img:first-child{border-radius:45px 45px 20px 20px}
+.stx-editorial .stx-feature-orizon{background:#deddec;color:#292642;border-radius:40px;overflow:hidden}
+.stx-editorial .stx-masthead-contact,.stx-editorial .stx-masthead-faq,.stx-editorial .stx-masthead-saved{min-height:380px}
+.stx-editorial .stx-masthead-contact .stx-intro,.stx-editorial .stx-masthead-faq .stx-intro,.stx-editorial .stx-masthead-saved .stx-intro{min-height:380px}
+.stx-catalogue{--stx-paper:#f8f8f8;--stx-ink:#171717;--stx-surface:#eeeeed;--stx-accent:#151515;font-family:Manrope,Arial,sans-serif}
+.stx-catalogue .stx-masthead{display:block;min-height:590px;isolation:isolate;color:#fff;background:#323a33}
+.stx-catalogue .stx-masthead-image{position:absolute;inset:0;padding:0;transform:none;z-index:-1}
+.stx-catalogue .stx-masthead-image img{border:0;box-shadow:none}
+.stx-catalogue .stx-masthead-image:after{inset:0;background:#101a2455}
+.stx-catalogue .stx-intro{min-height:590px;max-width:1000px;margin:auto;text-align:center;align-items:center}
+.stx-catalogue .stx-overline{width:100%;border-color:#fff8}
+.stx-catalogue .stx-masthead h1{font-family:Manrope,Arial,sans-serif;font-style:normal;font-weight:500;letter-spacing:-.06em}
+.stx-catalogue .stx-intro-links>a:first-child{background:white;color:#111;border-radius:15px}
+.stx-catalogue .stx-place{background:#fff;border-radius:20px;padding:10px}
+.stx-catalogue .stx-place-photo{border:0;box-shadow:none;border-radius:16px}
+.stx-catalogue .stx-place:nth-child(2){transform:none}
+.stx-catalogue .stx-place-text{padding:18px 8px}
+.stx-catalogue .stx-place-text h3,.stx-catalogue .stx-detail-head h1{font-family:Manrope,Arial,sans-serif;font-style:normal;font-weight:600}
+.stx-catalogue .stx-search-form{border:0;border-radius:18px;background:#fff;box-shadow:0 5px 24px #0000000c}
+.stx-catalogue .stx-search-form button,.stx-catalogue .stx-primary{border-radius:12px}
+.stx-catalogue .stx-request-card{border:0;border-radius:24px}
+.stx-catalogue .stx-feature-visa{background:#fff;border-radius:25px}
+.stx-catalogue .stx-feature-visa .stx-visa-stamp{border-color:#2278a5;color:#2278a5}
+.stx-catalogue .stx-visa-vignettes img{border-radius:18px}
+.stx-catalogue .stx-masthead-contact,.stx-catalogue .stx-masthead-faq,.stx-catalogue .stx-masthead-saved{min-height:370px}
+.stx-catalogue .stx-masthead-contact .stx-intro,.stx-catalogue .stx-masthead-faq .stx-intro,.stx-catalogue .stx-masthead-saved .stx-intro{min-height:370px}
+.stx-adventure{--stx-paper:#fff;--stx-ink:#141b29;--stx-surface:#f3f5f8;--stx-accent:#152b4e}
+.stx-adventure .stx-masthead{display:block;min-height:590px;isolation:isolate;background:#294c70}
+.stx-adventure .stx-masthead-image{position:absolute;inset:0;z-index:-1}
+.stx-adventure .stx-masthead-image:after{inset:0;background:linear-gradient(0deg,#071328b0,#14283d12)}
+.stx-adventure .stx-intro{max-width:1050px;margin:auto;min-height:590px;text-align:center;align-items:center}
+.stx-adventure .stx-overline{width:100%;border-color:#fff8}
+.stx-adventure .stx-masthead h1{font-family:Manrope,Arial,sans-serif;text-transform:none;font-weight:500;letter-spacing:-.06em}
+.stx-adventure .stx-intro-links>a:first-child,.stx-adventure .stx-primary{border-radius:100px}
+.stx-adventure .stx-altitude{position:relative;background:#111b2d}
+.stx-adventure .stx-place{border-radius:22px;background:#fff;box-shadow:0 3px 18px #10203815;overflow:hidden}
+.stx-adventure .stx-place-photo{clip-path:none;border-radius:22px 22px 0 0}
+.stx-adventure .stx-place-text{padding:19px}
+.stx-adventure .stx-place-text h3,.stx-adventure .stx-detail-head h1{text-transform:none;font-weight:600}
+.stx-adventure .stx-search-form{background:#eef1f6;border-radius:22px}
+.stx-adventure .stx-search-form button{border-radius:30px}
+.stx-adventure .stx-feature-nepal{background:#0b1529;border-radius:24px}
+.stx-adventure .stx-feature-nepal h2{text-transform:none;font-family:Georgia,serif;font-style:italic;font-weight:500}
+.stx-adventure .stx-request-card{border:0;border-radius:24px}
+.stx-minimal{--stx-paper:#f1efe5;--stx-ink:#293523;--stx-surface:#e2e3d4;--stx-accent:#596b3d;font-family:'Cormorant Garamond',Georgia,serif}
+.stx-minimal .stx-masthead{display:flex;flex-direction:column;min-height:0;margin:20px 3% 0;border:0;border-radius:30px;background:#f1efe5;padding:35px 4%}
+.stx-minimal .stx-intro{align-items:center;text-align:center;padding:12px 3% 30px;gap:20px}
+.stx-minimal .stx-overline{width:100%;font-family:Manrope,Arial,sans-serif}
+.stx-minimal .stx-masthead h1{font-weight:500;font-size:clamp(46px,7.3vw,105px);text-transform:uppercase;line-height:.92}
+.stx-minimal .stx-masthead-image{padding:0;min-height:0;height:clamp(280px,43vw,570px);border-radius:25% 17% 23% 16% / 17% 25% 15% 23%;overflow:hidden}
+.stx-minimal .stx-masthead-image img{border-radius:0}
+.stx-minimal .stx-intro-links>a:first-child,.stx-minimal .stx-primary,.stx-minimal .stx-search-form button{border-radius:50px}
+.stx-minimal .stx-place{background:#e5e5d9;border-radius:22px;overflow:hidden}
+.stx-minimal .stx-place-photo{border-radius:20px;height:280px}
+.stx-minimal .stx-place-text{padding:20px}
+.stx-minimal .stx-place:nth-child(2){transform:none}
+.stx-minimal .stx-feature-pigma{background:#35402a;color:#f8f5eb;border-radius:28px;overflow:hidden}
+.stx-minimal .stx-request-card,.stx-minimal .stx-contact-area form,.stx-minimal .stx-enquiry form{border-radius:25px}
+.stx-minimal .stx-masthead-contact .stx-masthead-image,.stx-minimal .stx-masthead-faq .stx-masthead-image,.stx-minimal .stx-masthead-saved .stx-masthead-image{height:290px}
+.stx-architect{--stx-paper:#fff;--stx-ink:#242424;--stx-surface:#f0f0ef;--stx-accent:#242424;background:#fff}
+.stx-architect .stx-masthead{margin:20px 5% 0;border-radius:28px;overflow:hidden;display:block;min-height:500px;isolation:isolate;background:#252926;color:white;border:0}
+.stx-architect .stx-masthead-image{position:absolute;inset:0;padding:0;z-index:-1}
+.stx-architect .stx-masthead-image img,.stx-architect .stx-place-photo img,.stx-architect .stx-detail-gallery img{filter:none}
+.stx-architect .stx-masthead-image:after{inset:0;background:linear-gradient(90deg,#1119,transparent 95%)}
+.stx-architect .stx-intro{min-height:500px;max-width:750px;justify-content:flex-end;padding:40px}
+.stx-architect .stx-overline{border-color:#fff8}
+.stx-architect .stx-masthead h1{font-size:clamp(35px,4.8vw,70px);letter-spacing:-.04em}
+.stx-architect .stx-intro-links>a:first-child,.stx-architect .stx-primary,.stx-architect .stx-search-form button{border-radius:40px}
+.stx-architect .stx-place-photo{border-radius:23px}
+.stx-architect .stx-place-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.stx-architect .stx-place:nth-child(3n+1) .stx-place-photo{height:380px}
+.stx-architect .stx-place:nth-child(3n+2) .stx-place-photo{height:270px}
+.stx-architect .stx-place:nth-child(3n+3) .stx-place-photo{height:450px}
+.stx-architect .stx-place-text{display:block;border:0}
+.stx-architect .stx-feature-apex{border-radius:25px;overflow:hidden}
+.stx-architect .stx-detail-gallery img{border-radius:20px}
+.stx-architect .stx-request-card{border-radius:22px}
+.stx-architect .stx-masthead-contact,.stx-architect .stx-masthead-faq,.stx-architect .stx-masthead-saved,.stx-architect .stx-masthead-enquire{min-height:360px}
+.stx-architect .stx-masthead-contact .stx-intro,.stx-architect .stx-masthead-faq .stx-intro,.stx-architect .stx-masthead-saved .stx-intro,.stx-architect .stx-masthead-enquire .stx-intro{min-height:360px}
+@media(max-width:830px){
+.stx-editorial .stx-masthead,.stx-catalogue .stx-masthead,.stx-adventure .stx-masthead,.stx-architect .stx-masthead{display:block}
+.stx-editorial .stx-masthead{border-radius:35px;margin:15px 10px 0}
+.stx-editorial .stx-intro,.stx-catalogue .stx-intro,.stx-adventure .stx-intro,.stx-architect .stx-intro{padding:35px 22px;min-height:480px}
+.stx-editorial .stx-masthead-image,.stx-catalogue .stx-masthead-image,.stx-adventure .stx-masthead-image,.stx-architect .stx-masthead-image{height:100%;padding:0}
+.stx-editorial .stx-masthead,.stx-catalogue .stx-masthead,.stx-adventure .stx-masthead,.stx-architect .stx-masthead{min-height:480px}
+.stx-architect .stx-place-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.stx-minimal .stx-masthead{margin:10px;padding:20px 10px}
+.stx-minimal .stx-masthead h1{font-size:clamp(40px,10vw,72px)}
+.stx-minimal .stx-intro{padding:15px}
+}
+@media(max-width:590px){
+.stx-editorial .stx-masthead h1,.stx-adventure .stx-masthead h1,.stx-catalogue .stx-masthead h1{font-size:clamp(40px,10vw,64px)}
+.stx-architect .stx-place-grid{grid-template-columns:1fr}
+.stx-architect .stx-place:nth-child(n) .stx-place-photo{height:310px}
+.stx-editorial .stx-place-photo,.stx-minimal .stx-place-photo{height:280px}
+.stx-catalogue .stx-place-photo{height:260px}
+.stx-architect .stx-masthead{margin:12px}
+.stx-minimal .stx-masthead-image{height:280px}
+}
