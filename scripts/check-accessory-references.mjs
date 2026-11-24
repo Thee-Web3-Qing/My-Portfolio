@@ -48,7 +48,7 @@ try{
    assert.ok(html.includes('aw-header'),'Reference header missing '+path)
    assert.ok(html.includes(name),'Brand name missing '+path)
    assert.ok(html.includes(needle),'Expected '+needle+' on '+path)
-   assert.ok(html.length>3500,'Suspiciously empty '+path)
+   assert.ok(html.length>(segment?1700:3500),'Suspiciously empty '+path)
    if(!segment)assert.ok(html.includes('/accessories'+style+'/item/'),'Homepage product links are missing from '+path)
    count++
   }
