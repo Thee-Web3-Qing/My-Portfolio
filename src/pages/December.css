@@ -856,3 +856,29 @@
   .december-page .dec-industry-help-text p{font-size:.75rem}
   .december-page .dec-industry-help-button{width:100%;min-height:45px}
 }
+
+/* Six equally weighted, independently art-directed accessories previews */
+.december-page .dec-layout-choices-accessories{grid-template-columns:repeat(3,minmax(0,1fr))}
+.december-page .dec-layout-choices-accessories .dec-layout-option{min-width:0}
+.december-page .dec-layout-choices-accessories .dec-layout-option strong{font-size:1.12rem;line-height:1.18}
+.december-page .dec-layout-choices-accessories .dec-layout-option small{line-height:1.35}
+@media(max-width:700px){
+ .december-page .dec-layout-choices-accessories{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .december-page .dec-layout-choices-accessories .dec-layout-option,
+ .december-page .dec-layout-choices-accessories .dec-layout-option:last-child{
+   display:flex;flex-direction:column;align-items:stretch;min-height:125px;gap:7px;
+   padding:12px;grid-column:auto
+ }
+ .december-page .dec-layout-choices-accessories .dec-layout-option .dec-layout-doodle,
+ .december-page .dec-layout-choices-accessories .dec-layout-option:last-child .dec-layout-doodle{
+   grid-column:auto;grid-row:auto;width:100%;height:48px
+ }
+ .december-page .dec-layout-choices-accessories .dec-layout-option strong,
+ .december-page .dec-layout-choices-accessories .dec-layout-option:last-child strong{
+   grid-column:auto;grid-row:auto;align-self:stretch;font-size:1.0rem
+ }
+ .december-page .dec-layout-choices-accessories .dec-layout-option small,
+ .december-page .dec-layout-choices-accessories .dec-layout-option:last-child small{
+   grid-column:auto;grid-row:auto;align-self:stretch;font-size:.63rem
+ }
+}

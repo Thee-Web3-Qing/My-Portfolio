@@ -31,7 +31,15 @@ export const EVENT_LAYOUTS = [
   {id:'minimal',label:'Creative Portfolio',description:'Bold illustrated motion design studio with showreel, projects and playful graphics.'},
   {id:'playful',label:'Creative Festival',description:'Retro creative gathering with winding ribbons, original illustrations, workshop agenda and passes.'},
 ]
-export const getLayoutsForIndustry = industry => industry==='beauty' ? BEAUTY_LAYOUTS : industry==='events' ? EVENT_LAYOUTS : LAYOUTS
+export const ACCESSORY_LAYOUTS = [
+ {id:'editorial',label:'Eyewear Atelier',description:'Split photographic hero, sculptural eyewear and design studio.'},
+ {id:'tech',label:'Smart Glasses',description:'Full-screen campaign, smart eyewear variants and technology.'},
+ {id:'catalogue',label:'Sneaker Store',description:'Clean sports catalogue, category imagery and footwear products.'},
+ {id:'playful',label:'Designer Bags',description:'Pink bag editorial, new arrivals and layered visual story.'},
+ {id:'market',label:'Lifestyle Store',description:'Full general store with categories, promotions and products.'},
+ {id:'minimal',label:'Fine Jewellery',description:'Black jewellery collection, horizontal editorial and golden accents.'},
+]
+export const getLayoutsForIndustry = industry => industry==='beauty' ? BEAUTY_LAYOUTS : industry==='events' ? EVENT_LAYOUTS : industry==='accessories' ? ACCESSORY_LAYOUTS : LAYOUTS
 
 // These change the scope of the website job, not the basic functionality.
 // Standard product browsing, WhatsApp ordering and routine enquiries are included.
