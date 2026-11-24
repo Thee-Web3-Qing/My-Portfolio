@@ -78,7 +78,10 @@ export function paymentVerificationChecks(transaction,order,reference,mode){
     status:transaction?.status==='success',
     environment:transaction?.domain===mode,
     currency:transaction?.currency==='NGN',
-    amount:Number.isFinite(amount) && amount>0 && amount===Number(order.amount_kobo),
+    // Paystack can add its processing fee to the amount charged when fees are
+    // passed to the customer. Accept the exact order total plus up to 5%.
+    amount:Number.isFinite(amount) && amount>=Number(order.amount_kobo) &&
+      amount<=Math.ceil(Number(order.amount_kobo)*1.05),
     customerEmail:!!transaction?.customer?.email &&
       String(transaction.customer.email).trim().toLowerCase()===String(order.customer_email).trim().toLowerCase(),
   }
