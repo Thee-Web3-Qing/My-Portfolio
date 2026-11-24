@@ -1,6 +1,7 @@
 import { neon } from '@neondatabase/serverless'
 import { calculateDecemberQuote } from '../../src/data/december.js'
 import { randomUUID, createHmac, timingSafeEqual } from 'node:crypto'
+import { finalizeClassWelcome } from './classWelcome.js'
 
 export const PAYSTACK_ORIGIN = 'https://api.paystack.co'
 export const environment = () => process.env.VERCEL_ENV === 'production' ? 'live' : 'test'
@@ -88,7 +89,10 @@ export async function confirmPayment(reference, mode = environment()) {
   const orders = await sql`SELECT * FROM payment_orders WHERE reference = ${reference} AND environment = ${mode} LIMIT 1`
   if (!orders.length) return { found:false, paid:false, reference }
   const order = orders[0]
-  if (order.status === 'paid') return publicStatus(order)
+  if (order.status === 'paid') {
+    const welcome = order.product === 'qing-class' ? await finalizeClassWelcome(sql, reference) : {}
+    return { ...publicStatus(order), ...welcome }
+  }
   const transaction = await paystackGet('/transaction/verify/' + encodeURIComponent(reference), mode)
   const checks=paymentVerificationChecks(transaction,order,reference,mode)
   const valid=Object.values(checks).every(Boolean)
@@ -110,7 +114,7 @@ export async function confirmPayment(reference, mode = environment()) {
          ${reason}, ${String(details.reasonCategory || 'Other')},
          ${String(details.mentorship || 'Not answered')}, ${Number(order.amount_kobo)/100},
          'NGN', 'Paystack', ${reference}, ${reference}, 100, 'verified',
-         ${JSON.stringify({provider:'paystack',environment:mode,verified:true})}::jsonb, 'pending')
+         ${JSON.stringify({provider:'paystack',environment:mode,verified:true})}::jsonb, 'confirmed')
       ON CONFLICT DO NOTHING
     `
   }
@@ -121,9 +125,11 @@ export async function confirmPayment(reference, mode = environment()) {
     RETURNING reference, product, environment, customer_name, customer_email, customer_whatsapp,
               amount_kobo, quote_total_kobo, payment_mode, configuration, status
   `
-  const paidOrder = confirmed[0] || order
-  // Receiving payment never issues a classroom access code; approval remains separate.
-  return publicStatus(paidOrder)
+  const paidOrder = confirmed[0] || (await sql`
+    SELECT * FROM payment_orders WHERE reference=${reference} AND environment=${mode} LIMIT 1
+  `)[0] || order
+  const welcome = order.product === 'qing-class' ? await finalizeClassWelcome(sql, reference) : {}
+  return { ...publicStatus(paidOrder), ...welcome }
 }
 export function publicStatus(order) {
   const paid = order.status === 'paid'

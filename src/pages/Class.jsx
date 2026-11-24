@@ -225,7 +225,7 @@ export default function Class() {
           <ClayCard tone="cream" className="clay-subscription">
             <form onSubmit={submit} className="clay-enrollment-form">
               <h3>Secure your spot.</h3>
-              <p>Complete your registration details, then continue to Paystack to pay {formatNaira(pricing.price)} securely. Your Classroom access code is issued after payment verification and registration approval.</p>
+              <p>Complete your registration details, then continue to Paystack to pay {formatNaira(pricing.price)} securely. After Paystack verifies your payment, your Classroom code and group details are sent to your email.</p>
               <p className="clay-paystack-note">Paystack is the only payment method for this class. You will return to this website after Paystack verifies your payment.</p>
               <label>Full name<input name="fullName" required minLength={3} value={form.fullName} onChange={update} /></label>
               <label>WhatsApp number<input name="whatsapp" required value={form.whatsapp} onChange={update} /></label>

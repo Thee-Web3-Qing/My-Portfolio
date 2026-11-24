@@ -44,7 +44,9 @@ export default function PaymentCallback(){
   <p className="dec-callback-kicker">QING THE CREATOR / PAYMENT STATUS</p>
   <h1>{error?'We couldn’t check your payment.':checking&&!data?'Checking your payment…':data?.paid?'Payment confirmed.': 'Payment not confirmed yet.'}</h1>
   <p className="dec-callback-intro">{data?.paid
-    ?isClass?'Your class fee has been received. Access codes are issued only after the class registration is approved.'
+    ?isClass?(data.welcomeEmailSent
+      ?'Your class fee has been received. We sent your access code, Classroom link and Telegram group details to your payment email.'
+      :'Your class fee has been received and your access is ready. We are preparing your welcome email. Check your inbox and spam folder shortly, then use the button below to check again if needed.')
     :'Your December website payment is verified. The next step is to complete your business information and provide your product photos, logo and resources.'
     :'Your payment has not yet been verified. If you completed the checkout, keep your reference and try the verification button again. Never pay twice without checking your transaction first.'}</p>
   {error&&<p className="dec-callback-error" role="alert">{error}</p>}
@@ -53,6 +55,7 @@ export default function PaymentCallback(){
   {data?.paid&&<div className="dec-callback-amount"><span>Amount verified</span><strong>{naira(data.amount/100)}</strong>{data.balance>0&&<span>Balance before launch: <b>{naira(data.balance)}</b></span>}</div>}
   {data?.paid&&!isClass&&<div className="dec-callback-next"><span>YOUR NEXT STEP</span><h2>Tell us about your business.</h2><p>Complete the business information form with your product/service catalogue, brand logo, contact number, image folder and December specials. The website is delivered in approximately <b>3–7 days after all required assets have been reviewed and confirmed complete.</b></p><Link to={'/december/details?reference='+encodeURIComponent(reference)}>Complete business information ↗</Link></div>}
   <div className="dec-callback-links">
+   {data?.paid&&isClass&&!data.welcomeEmailSent&&<button onClick={check} disabled={checking}>{checking?'Checking email…':'Check welcome email status ↗'}</button>}
    {!data?.paid&&<button onClick={check} disabled={checking}>{checking?'Checking status…':'Check payment status again ↗'}</button>}
    <Link to={back}>Back to {isClass?'class registration':'December sale'} ↗</Link>
    <a href={'mailto:qinglidah@gmail.com?subject='+encodeURIComponent('Paystack transaction '+reference)}>Contact Qing ↗</a>
