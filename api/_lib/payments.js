@@ -98,7 +98,11 @@ export async function confirmPayment(reference, mode = environment()) {
   const transaction = await paystackGet('/transaction/verify/' + encodeURIComponent(reference), mode)
   const checks=paymentVerificationChecks(transaction,order,reference,mode)
   const valid=Object.values(checks).every(Boolean)
-  if (!valid) return { found:true, paid:false, reference, status:transaction.status === 'success' ? 'unverified' : 'pending' }
+  if (!valid) return {
+    found:true, paid:false, reference,
+    status:transaction.status === 'success' ? 'unverified' : 'pending',
+    failedChecks:Object.entries(checks).filter(([,passed])=>!passed).map(([name])=>name),
+  }
   if (order.product === 'qing-class') {
     const info = safeMetadata(order.configuration)
     const details = info.registration || {}
