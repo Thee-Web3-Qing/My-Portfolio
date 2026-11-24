@@ -39,7 +39,7 @@ try{
  check('accessories','editorial','cart','ix-cart')
  check('accessories','catalogue','item/vortex','ix-details')
  check('hospitality','catalogue','search?guests=2&area=Ikoyi','ix-catalogue')
- check('hospitality','minimal','enquire?item=the-studio','ix-inquiry')
- check('hospitality','minimal','item/the-studio','ix-details')
+ check('hospitality','minimal','enquire?item=pigma-coastal','ix-inquiry')
+ check('hospitality','minimal','item/pigma-coastal','ix-details')
  console.log('Rendered '+total+' website pages, including five independent stay concepts and their business workflows.')
 }finally{await vite.close()}
