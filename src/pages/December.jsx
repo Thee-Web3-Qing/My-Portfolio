@@ -200,6 +200,13 @@ export default function December() {
         <div className="dec-builder-main">
           <section className="dec-builder-step">
             <div className="dec-step-title"><span>01</span><div><p className="dec-kicker">PICK YOUR INDUSTRY</p><h2>What do you sell?</h2></div></div>
+            <div className="dec-industry-help">
+              <div className="dec-industry-help-text">
+                <strong>Not sure which option is right for you?</strong>
+                <p>Message me directly. I can help you choose a website before you pay.</p>
+              </div>
+              <a className="dec-industry-help-button" href="https://wa.me/2348124320659?text=Hi%2C%20I%27m%20interested%20in%20your%20December%20website%20offer%20and%20need%20help%20choosing%20the%20right%20option." target="_blank" rel="noopener noreferrer" aria-label="Chat with me directly on WhatsApp about the December website offer">Chat with me on WhatsApp</a>
+            </div>
             <div className="dec-industry-grid">
               {INDUSTRIES.map((item, index) => <button type="button" key={item.id} className={'dec-industry-card' + (industryId === item.id ? ' is-active' : '')} onClick={() => { if(item.id!==industryId)trackDecemberEvent('preview_selected',{industry:item.id,layout:layoutId}); setIndustryId(item.id); if (item.id !== 'beauty' && layoutId === 'botanical') setLayoutId('editorial') }} style={{ '--dec-card-accent': item.colour, '--dec-card-bg': item.backdrop }} aria-pressed={industryId === item.id}>
                 <span className="dec-industry-number">0{index + 1}</span>
