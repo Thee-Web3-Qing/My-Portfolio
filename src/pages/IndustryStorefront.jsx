@@ -6,6 +6,8 @@ import { STAY_STYLES,stayStore } from './stayWorldData.js'
 import { StayHome,StayHeader,StayFooter } from './StayReferenceHome.jsx'
 import { ACCESSORY_STYLES,accessoryStore } from './accessoryWorldData.js'
 import { AccessoryHome,AccessoryHeader,AccessoryFooter } from './AccessoriesReferenceHome.jsx'
+import AccessoryInnerWorld from './AccessoryInnerWorld.jsx'
+import StayInnerWorld from './StayInnerWorld.jsx'
 
 const to=(ctx,part='')=>ctx.root+(part?'/'+part:'')
 const imageFallback=(ctx)=>ctx.store.secondary||ctx.store.hero
@@ -240,7 +242,9 @@ function Core({ctx}) {
  const [section,id]=sub.split('/')
  const Home=HOMES[ctx.store.slug][ctx.style]
  const Page=!section?(ctx.store.slug==='accessories'?<AccessoryHome ctx={ctx} shop={shop}/>:ctx.store.slug==='hospitality'?<StayHome ctx={ctx} shop={shop}/>:<Home ctx={ctx} shop={shop}/>)
- :section==='explore'||(section==='search'&&ctx.store.slug==='hospitality')?<Catalogue key={location.search} ctx={ctx} shop={shop} isSearch={section==='search'}/>
+ :ctx.store.slug==='accessories'?<AccessoryInnerWorld ctx={ctx} shop={shop} section={section} id={id}/>
+  :ctx.store.slug==='hospitality'?<StayInnerWorld ctx={ctx} shop={shop} section={section} id={id}/>
+  :section==='explore'||(section==='search'&&ctx.store.slug==='hospitality')?<Catalogue key={location.search} ctx={ctx} shop={shop} isSearch={section==='search'}/>
  :section==='item'?<Details key={id} ctx={ctx} shop={shop} id={id}/>
  :['book','plan','enquire'].includes(section)?<Inquiry key={location.search} ctx={ctx} type={section}/>
  :section==='style-kit'&&ctx.store.slug==='accessories'?<StyleKit ctx={ctx} shop={shop}/>
