@@ -3,7 +3,7 @@ import { dirname, join } from 'node:path'
 import { buildSchema, getSeoForPath, publicPaths, SITE_URL, SOCIAL_IMAGE } from '../src/seo.js'
 import { fashionInventory, fashionLooks } from '../src/pages/fashionInventory.js'
 import { giftProducts, giftBrands } from '../src/pages/giftStoreData.js'
-import { allPaths as industryPaths,storeData as industryData } from '../src/pages/industryStoreData.js'
+import { allPaths as industryPaths,storeData as industryData,getBrand as getIndustryBrand } from '../src/pages/industryStoreData.js'
 import { beautyCollections } from '../src/pages/beautySiteContent.js'
 import {eventOffers} from '../src/pages/eventsReferenceData.js'
 
@@ -214,7 +214,7 @@ for(const pathname of industryPaths){
  const segments=pathname.slice(1).split('/')
  const prefix=segments[0]
  const category=Object.keys(industryData).find(k=>prefix.startsWith(k))||'industry'
- const brand=industryData[category].brands[prefix.slice(category.length)]?.name||industryData[category].label
+ const brand=getIndustryBrand(industryData[category],prefix.slice(category.length))?.name||industryData[category].label
  const title=(segments.slice(1).join(' · ')||'Home')+' | '+brand+' | December Website Preview'
  const html=cleanedTemplate.replace('</head>','<title>'+escapeHtml(title)+'</title><meta name="description" content="Independent multi-page '+escapeHtml(category)+' website concept with an interactive sample customer journey." /><meta name="robots" content="noindex, nofollow" />\n  </head>')
  const output=outputPathForRoute(pathname)
