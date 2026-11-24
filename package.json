@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs && node scripts/check-hobby-api.mjs && node scripts/check-industry-render.mjs && node scripts/check-private-pages.mjs && node scripts/check-preview-widths.mjs && node scripts/check-beauty-references.mjs && node scripts/check-events-references.mjs && node scripts/check-distinct-fashion-events.mjs && node scripts/check-december-project-email.mjs && node scripts/check-accessory-references.mjs",
+    "build": "vite build && node scripts/prerender.mjs && node scripts/check-hobby-api.mjs && node scripts/check-industry-render.mjs && node scripts/check-private-pages.mjs && node scripts/check-preview-widths.mjs && node scripts/check-beauty-references.mjs && node scripts/check-events-references.mjs && node scripts/check-distinct-fashion-events.mjs && node scripts/check-december-project-email.mjs && node scripts/check-accessory-references.mjs && node scripts/check-stay-references.mjs",
     "preview": "vite preview"
   },
   "dependencies": {

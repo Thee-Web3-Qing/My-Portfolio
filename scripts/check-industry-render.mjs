@@ -16,7 +16,7 @@ try{
   const path='/'+industry+style+(segment?'/'+segment:'')
   const tree=React.createElement(StaticRouter,{location:path},React.createElement(IndustryStorefront,{industry,style}))
   const html=renderToStaticMarkup(tree)
-  if(!html.includes('ix-store-'+industry)||!html.includes('ix-'+industry+'-'+style)||!html.includes(industry==='accessories'?'aw-nav':'ix-nav-links')){
+  if(!html.includes('ix-store-'+industry)||!html.includes('ix-'+industry+'-'+style)||!html.includes(industry==='accessories'?'aw-nav':industry==='hospitality'?'st-header':'ix-nav-links')){
    throw new Error('Store identity or navigation missing for '+path)
   }
   if(marker&&!html.includes(marker)){
@@ -26,8 +26,8 @@ try{
   total++
  }
  for(const category of categories){
-  for(const style of styles){
-   check(category,style,'',category==='accessories'?'aw-page':'ix-home')
+  for(const style of (category==='hospitality'?['editorial','catalogue','adventure','minimal','architect']:styles)){
+   check(category,style,'',category==='accessories'?'aw-page':category==='hospitality'?'st-page':'ix-home')
    check(category,style,'explore','ix-catalogue')
   }
  }
@@ -39,7 +39,7 @@ try{
  check('accessories','editorial','cart','ix-cart')
  check('accessories','catalogue','item/vortex','ix-details')
  check('hospitality','catalogue','search?guests=2&area=Ikoyi','ix-catalogue')
- check('hospitality','minimal','enquire?item=the-studio','ix-inquiry')
- check('hospitality','minimal','item/the-studio','ix-details')
- console.log('Rendered '+total+' website pages, covering 12 independent homepages and each business workflow.')
+ check('hospitality','minimal','enquire?item=pigma-coastal','ix-inquiry')
+ check('hospitality','minimal','item/pigma-coastal','ix-details')
+ console.log('Rendered '+total+' website pages, including five independent stay concepts and their business workflows.')
 }finally{await vite.close()}

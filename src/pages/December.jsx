@@ -225,9 +225,9 @@ export default function December() {
           </section>
 
           <section className="dec-builder-step" id="dec-designs">
-            <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>{industryId==='accessories'?'Six distinct directions.':'One brand. Three directions.'}</h2></div></div>
+            <div className="dec-step-title"><span>02</span><div><p className="dec-kicker">CHOOSE YOUR LOOK</p><h2>{industryId==='accessories'?'Six distinct directions.':industryId==='hospitality'?'Five completely different worlds.':'One brand. Three directions.'}</h2></div></div>
             <p className="dec-section-description">All {layoutChoices.length} starting layouts are included in the ₦100,000 website price. Select Custom homepage design below only if you want a completely different homepage arrangement.</p>
-            <div className={"dec-layout-choices" + (industryId === "beauty" ? " dec-layout-choices-beauty" : industryId === "accessories" ? " dec-layout-choices-accessories" : "")}>
+            <div className={"dec-layout-choices" + (industryId === "beauty" ? " dec-layout-choices-beauty" : industryId === "accessories" ? " dec-layout-choices-accessories" : industryId === "hospitality" ? " dec-layout-choices-hospitality" : "")}>
               {layoutChoices.map((item, index) => <button type="button" key={item.id} className={'dec-layout-option' + (layoutId === item.id ? ' is-active' : '')} onClick={() => { if(item.id!==layoutId)trackDecemberEvent('preview_selected',{industry:industryId,layout:item.id}); setLayoutId(item.id) }} aria-pressed={layoutId === item.id}>
                 <span className={'dec-layout-doodle dec-layout-doodle-' + item.id}><i /><i /><i /></span>
                 <strong>{item.label} <span>{String(index + 1).padStart(2, '0')}</span></strong>

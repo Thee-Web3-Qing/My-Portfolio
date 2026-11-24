@@ -39,7 +39,14 @@ export const ACCESSORY_LAYOUTS = [
  {id:'market',label:'Lifestyle Store',description:'Full general store with categories, promotions and products.'},
  {id:'minimal',label:'Fine Jewellery',description:'Black jewellery collection, horizontal editorial and golden accents.'},
 ]
-export const getLayoutsForIndustry = industry => industry==='beauty' ? BEAUTY_LAYOUTS : industry==='events' ? EVENT_LAYOUTS : industry==='accessories' ? ACCESSORY_LAYOUTS : LAYOUTS
+export const HOSPITALITY_LAYOUTS=[
+ {id:'editorial',label:'Future Living',description:'Futuristic property finder with sculpted glass cards, mountain backdrop and interactive villa spotlight.'},
+ {id:'catalogue',label:'Travel Retreats',description:'Panoramic travel hero, photo-led journeys and interactive destination search.'},
+ {id:'adventure',label:'Adventure Tours',description:'Himalayan campaign, overlapping destination cards and selectable tour experiences.'},
+ {id:'minimal',label:'Sustainable Villas',description:'Editorial ivory-and-olive villa collection with organic image masks and destinations.'},
+ {id:'architect',label:'Architectural Stays',description:'Architectural photography, services carousel and carefully composed property portfolio.'},
+]
+export const getLayoutsForIndustry = industry => industry==='beauty' ? BEAUTY_LAYOUTS : industry==='events' ? EVENT_LAYOUTS : industry==='accessories' ? ACCESSORY_LAYOUTS : industry==='hospitality'? HOSPITALITY_LAYOUTS : LAYOUTS
 
 // These change the scope of the website job, not the basic functionality.
 // Standard product browsing, WhatsApp ordering and routine enquiries are included.
