@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import StorefrontPreviewGallery from '../components/StorefrontPreviewGallery.jsx'
 import './QingRecognitionHero.css'
@@ -26,13 +27,45 @@ function Arrow() {
 }
 
 export default function Home() {
+  const heroRef = useRef(null)
+  const bannerRef = useRef(null)
+  const [desktopHeroWidth, setDesktopHeroWidth] = useState(null)
+
+  useEffect(() => {
+    const hero = heroRef.current
+    if (!hero) return
+    const desktop = window.matchMedia('(min-width: 821px)')
+    const fitHero = () => {
+      if (!desktop.matches) {
+        setDesktopHeroWidth(null)
+        return
+      }
+      // Keep the original artwork ratio, including every overlay, within the first viewport.
+      const heroTop = hero.getBoundingClientRect().top + window.scrollY
+      const availableHeight = Math.max(260, document.documentElement.clientHeight - heroTop - 4)
+      setDesktopHeroWidth(Math.floor(availableHeight * 1536 / 807))
+    }
+    fitHero()
+    window.addEventListener('resize', fitHero)
+    desktop.addEventListener('change', fitHero)
+    const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(fitHero) : null
+    const header = hero.closest('.portfolio-clay')?.querySelector('.portfolio-nav')
+    if (header) observer?.observe(header)
+    if (bannerRef.current) observer?.observe(bannerRef.current)
+    return () => {
+      window.removeEventListener('resize', fitHero)
+      desktop.removeEventListener('change', fitHero)
+      observer?.disconnect()
+    }
+  }, [])
+
   return (
     <div className="portfolio-home editorial-home">
-      <div className="editorial-december-banner" role="region" aria-label="December website sale">
+      <div ref={bannerRef} className="editorial-december-banner" role="region" aria-label="December website sale">
         <div><span className="editorial-december-tag">THE DECEMBER EDIT 2026 ✳</span><p>Your brand deserves a beautiful place to sell this season. <strong>Websites from ₦100,000.</strong></p></div>
         <Link to="/december" className="editorial-december-button">December sales <span aria-hidden="true">↗</span></Link>
       </div>
-      <section className="qing-recognition-hero" aria-labelledby="qing-hero-title">
+      <section ref={heroRef} className="qing-recognition-hero" aria-labelledby="qing-hero-title" style={desktopHeroWidth === null ? undefined : { maxWidth: `min(100%, ${desktopHeroWidth}px)`, marginInline: 'auto' }}>
         <div className="qing-recognition-stage">
           <h1 id="qing-hero-title" className="qing-recognition-sr">Qing builds ideas people remember.</h1>
           <picture className="qing-recognition-lettering" aria-hidden="true">
@@ -43,7 +76,7 @@ export default function Home() {
           <p className="qing-recognition-role">Creative developer &amp; designer</p>
           <p className="qing-recognition-product">AI product builder<span className="qing-recognition-desktop-dot"> · </span></p>
           <p className="qing-recognition-story">Storyteller</p>
-          <p className="qing-recognition-founder">Founder, BountyPilot</p>
+          <p className="qing-recognition-founder">Founder, Gigga</p>
           <p className="qing-recognition-desktop-intro">Digital products, brands<br />and experiences.</p>
           <Link to="/products" className="qing-recognition-desktop-work">See my work <Arrow /></Link>
         </div>
