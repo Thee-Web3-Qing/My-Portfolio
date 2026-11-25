@@ -158,17 +158,6 @@ import { createPortal } from 'react-dom'
       },
     },
     {
-      name: 'Jacha Advisory',
-      tagline: 'A finance, AI and professional-learning platform that helps professionals and organisations understand their finances, build practical capability and use intelligent tools with confidence.',
-      tags: ['Financial Advisory', 'Professional Learning', 'AI in Finance'],
-      status: 'Spotlight',
-      spotlight: true,
-      links: {
-        demo: 'https://jachaadvisory.com/',
-        repo: null,
-      },
-    },
-    {
       name: 'Tab',
       tagline: 'A social spending app for friends, couples, roommates, travel groups and teams. Tab records who paid and who benefited, keeps the running debit and credit clear, calculates the final net balances, and lets everyone settle once.',
       tags: ['Shared Spending', 'Group Expenses', 'Product Design'],
