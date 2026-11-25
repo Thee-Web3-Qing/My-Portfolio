@@ -1,0 +1,20 @@
+.dec-reminder{margin-top:28px;padding:clamp(18px,3vw,32px);background:#fffefa;border:1px solid #d8d2ca;border-radius:20px;color:#111}
+.dec-reminder h3{font:700 clamp(1.4rem,3vw,2rem)/1.1 Georgia,serif;margin:7px 0 10px;letter-spacing:-.035em}
+.dec-reminder p:not(.dec-kicker){font-size:.86rem;line-height:1.55;color:#625d58;margin:9px 0 14px}
+.dec-reminder form{display:grid;gap:12px;justify-items:start}
+.dec-reminder-email{width:min(100%,380px);display:grid;gap:6px;font-size:.8rem;font-weight:700}
+.dec-reminder-email input{width:100%;min-width:0;padding:11px;border:1px solid #d8d2ca;border-radius:9px;background:white;color:#111;font:inherit}
+.dec-reminder-consent{display:flex;align-items:flex-start;gap:9px;max-width:49ch;font-size:.79rem;line-height:1.5}
+.dec-reminder-consent input{width:1rem;height:1rem;accent-color:#e51c24;flex:none;margin-top:2px}
+.da-reminder{margin:24px 0;padding:clamp(16px,3vw,28px);background:#fffefa;border:1px solid #e3d9cc;border-radius:16px;color:#251e19}
+.da-reminder h2{font:700 clamp(1.55rem,3vw,2rem)/1.1 Georgia,serif;margin:4px 0 8px}
+.da-reminder p,.da-reminder small{font-size:.84rem;line-height:1.45}
+.da-reminder-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.da-reminder button{padding:8px 12px;border:1px solid #aa9684;border-radius:9px;background:#f5ede5;color:#201812;font:inherit;font-size:.79rem;cursor:pointer}
+.da-reminder button:disabled{opacity:.5;cursor:not-allowed}
+.da-reminder-list{list-style:none;margin:10px 0;padding:0}
+.da-reminder-list li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;padding:11px 0;border-top:1px solid #eee1d5;overflow-wrap:anywhere}
+.da-reminder-list strong,.da-reminder-list small{display:block}
+.da-reminder-list li>span{font-size:.8rem}
+.da-reminder-review{margin-top:12px;padding:12px 16px;background:#faf1e8;border:1px solid #eee1d5;border-radius:10px}
+@media(max-width:530px){.da-reminder-list li{grid-template-columns:1fr auto}.da-reminder-list li>div{grid-column:1/-1}}

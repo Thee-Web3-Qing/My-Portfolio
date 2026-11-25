@@ -19,6 +19,10 @@
       "destination": "/api/december?operation=progress"
     },
     {
+      "source": "/api/december/reminders",
+      "destination": "/api/december?operation=reminders"
+    },
+    {
       "source": "/api/december/status",
       "destination": "/api/december?operation=status"
     },

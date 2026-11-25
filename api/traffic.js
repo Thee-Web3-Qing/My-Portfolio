@@ -9,7 +9,7 @@ import { needAdmin } from './_lib/decemberAdmin.js'
  * Public POST records allowed events; protected GET provides aggregated data.
  * One extra Vercel Function, keeping the site below the Hobby limit of 12.
  */
-const allowedEvents=new Set(['page_view','preview_selected','checkout_started','payment_redirect'])
+const allowedEvents=new Set(['page_view','preview_selected','checkout_started','payment_redirect','whatsapp_clicked','reminder_signup'])
 const clean=(value,n)=>typeof value==='string'?value.toLowerCase().trim().replace(/[^a-z0-9._-]/g,'').slice(0,n):''
 const isId=x=>typeof x==='string'&&/^[a-zA-Z0-9-]{8,80}$/.test(x)
 let schemaReady
@@ -91,7 +91,9 @@ export default async function handler(req,res){
       (count(DISTINCT session_id) FILTER(WHERE event_type='page_view' AND page_path='/december'))::int AS landing_sessions,
       (count(*) FILTER(WHERE event_type='preview_selected'))::int AS preview_selections,
       (count(*) FILTER(WHERE event_type='checkout_started'))::int AS checkout_attempts,
-      (count(*) FILTER(WHERE event_type='payment_redirect'))::int AS payment_redirects
+      (count(*) FILTER(WHERE event_type='payment_redirect'))::int AS payment_redirects,
+      (count(*) FILTER(WHERE event_type='whatsapp_clicked'))::int AS whatsapp_clicks,
+      (count(*) FILTER(WHERE event_type='reminder_signup'))::int AS reminder_signup_events
      FROM december_analytics_events WHERE occurred_at >= ${since}::timestamptz`,
     sql`SELECT source,medium,campaign,count(*)::int AS views,count(DISTINCT visitor_id)::int AS visitors
       FROM december_analytics_events

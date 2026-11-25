@@ -8,8 +8,9 @@ import progress from '../server/december/progress.js'
 import status from '../server/december/status.js'
 import upload from '../server/december/upload.js'
 import verify from '../server/december/verify.js'
+import { publicDecemberReminders as reminders } from './_lib/decemberReminders.js'
 
-const routes = Object.freeze({ image, initialize, intake, progress, status, upload, verify })
+const routes = Object.freeze({ image, initialize, intake, progress, status, upload, verify, reminders })
 
 export default async function handler(req,res) {
   const operation = req.query?.operation

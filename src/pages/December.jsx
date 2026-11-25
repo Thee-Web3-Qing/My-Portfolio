@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { INDUSTRIES, LAYOUTS, getLayoutsForIndustry, calculateDecemberQuote, getIndustryGroups, getSharedGroups, money } from '../data/december.js'
+import { DecemberReminderSignup } from '../components/DecemberReminders.jsx'
 import ScaledWebsitePreview from '../components/ScaledWebsitePreview.jsx'
 import { trackDecemberEvent } from '../components/DecemberTrafficTracker.jsx'
 import './December.css'
@@ -206,7 +207,7 @@ export default function December() {
                 <strong>Not sure which option is right for you?</strong>
                 <p>Message me directly. I can help you choose a website before you pay.</p>
               </div>
-              <a className="dec-industry-help-button" href="https://wa.me/2348124320659?text=Hi%2C%20I%27m%20interested%20in%20your%20December%20website%20offer%20and%20need%20help%20choosing%20the%20right%20option." target="_blank" rel="noopener noreferrer" aria-label="Chat with me directly on WhatsApp about the December website offer">Chat with me on WhatsApp</a>
+              <a className="dec-industry-help-button" onClick={()=>trackDecemberEvent('whatsapp_clicked',{industry:industryId,layout:layoutId})} href="https://wa.me/2348124320659?text=Hi%2C%20I%27m%20interested%20in%20your%20December%20website%20offer%20and%20need%20help%20choosing%20the%20right%20option." target="_blank" rel="noopener noreferrer" aria-label="Chat with me directly on WhatsApp about the December website offer">Chat with me on WhatsApp</a>
             </div>
             <div className="dec-industry-grid">
               {INDUSTRIES.map((item, index) => <button type="button" key={item.id} className={'dec-industry-card' + (industryId === item.id ? ' is-active' : '')} onClick={() => {
@@ -328,6 +329,7 @@ export default function December() {
               <p className="dec-checkout-nextstep">AFTER PAYMENT: Keep your Paystack transaction reference. You will need it, alongside your payment email, to submit business information and product assets.</p>
               <p className="dec-form-fineprint">Your selected total covers the website build and chosen extras. Domain registration, hosting, third-party charges and maintenance are quoted separately. A 60% deposit reserves your slot; the balance is due before launch. Build time is approximately 3–7 days after we confirm all required product images, information and other resources are complete.</p>
             </form>
+            <DecemberReminderSignup industry={industryId} layout={layoutId} />
           </section>
         </div>
         <aside className={"dec-sidebar"+(builderVisible?" is-visible":"")} aria-label="Your website price and selected features"><div className="dec-sidebar-sticky"><Summary quote={quote} paymentMode={paymentMode} setPaymentMode={setPaymentMode} /><a href="#dec-checkout" className="dec-btn dec-btn-dark">Continue to checkout</a><p>All prices are quoted in NGN. No hidden industry fees.</p></div></aside>

@@ -50,6 +50,8 @@ export default function DecemberTrafficPanel({orders=[]}){
     <Card name="PREVIEW SELECTIONS" value={loading&&!data?'…':n(totals.preview_selections)} note="Category or design selections"/>
     <Card name="CHECKOUT STARTS" value={loading&&!data?'…':n(totals.checkout_attempts)} note="Visitors pressing Pay with Paystack"/>
     <Card name="PAYSTACK REDIRECTS" value={loading&&!data?'…':n(totals.payment_redirects)} note="Secure payment page opened"/>
+    <Card name="WHATSAPP CLICKS" value={loading&&!data?'…':n(totals.whatsapp_clicks)} note="People opening the chat link; not confirmed enquiries"/>
+    <Card name="REMINDER SIGN-UP EVENTS" value={loading&&!data?'…':n(totals.reminder_signup_events)} note="Successful form submissions; unique contacts appear below"/>
     <Card name="VERIFIED LIVE PAYMENTS" value={n(livePayments)} note="Confirmed by Paystack"/>
     <Card name="VISITOR TO PAID CONVERSION" value={paymentRate} note="Verified live clients / estimated visitors"/>
     <Card name="ALL WEBSITE PAGE VIEWS" value={loading&&!data?'…':n(totals.all_views)} note="All public pages, excluding iframe previews"/>

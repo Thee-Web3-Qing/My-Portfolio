@@ -20,7 +20,7 @@ if (filePaths.length > 12) throw new Error('Vercel Hobby API count exceeded: '+f
 if (filePaths.length!==10) throw new Error('Expected ten API functions including traffic analytics; found '+filePaths.length)
 
 const vercel=JSON.parse(await readFile(join(root,'vercel.json'),'utf8'))
-const operations = {image:'POST',initialize:'GET',intake:'GET',progress:'POST',status:'POST',upload:'GET',verify:'POST'}
+const operations = {image:'POST',initialize:'GET',intake:'GET',progress:'POST',reminders:'DELETE',status:'POST',upload:'GET',verify:'POST'}
 for (const [operation,method] of Object.entries(operations)) {
  const source='/api/december/'+operation
  const rewrite=vercel.rewrites?.find(entry=>entry.source===source)
@@ -42,4 +42,4 @@ const missing={method:'GET',query:{operation:'unknown'},headers:{}}
 const unknown={code:0,setHeader(){return this},status(code){this.code=code;return this},json(){return this}}
 await december(missing,unknown)
 if(unknown.code!==404) throw new Error('Unknown API operations must fail closed')
-console.log('Verified '+filePaths.length+' serverless API routes, all seven December rewrites, and handler method checks.')
+console.log('Verified '+filePaths.length+' serverless API routes, all eight December rewrites, and handler method checks.')
