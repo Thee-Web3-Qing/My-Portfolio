@@ -106,7 +106,7 @@
 .aw-footer-minimal .aw-footer-grid .aw-footer-main>a{font:500 43px 'Cormorant Garamond',Georgia,serif}
 /* 1 / OSSIA / split photography and tightly merchandised gallery */
 .aw-ossia{background:#f5f4f1;padding:30px 4.7% 55px;color:#141414;font-family:'Manrope',sans-serif}
-.aw-ossia-hero{display:grid;grid-template-columns:1.28fr 1fr;gap:2px;min-height:575px}
+.aw-ossia-hero{display:grid;grid-template-columns:1.28fr 1fr;gap:2px;min-height:clamp(470px,52vw,760px)}
 .aw-ossia-lead{position:relative;overflow:hidden;min-height:575px;background:#4a3933;color:#fff}
 .aw-ossia-lead>img{position:absolute;inset:0;object-position:center 28%;filter:brightness(.7)}
 .aw-ossia-lead>div{position:absolute;bottom:40px;left:38px;right:26px;z-index:2}
@@ -117,8 +117,8 @@
 .aw-ossia-lead .aw-cta{background:#f9f7f5;color:#121212!important;font-size:10px}
 .aw-ossia-lead .aw-cta svg{display:none}
 .aw-ossia-lead>div>div>a:not(.aw-cta){font:750 10px 'Manrope',sans-serif;text-decoration:underline;text-underline-offset:5px}
-.aw-ossia-side{display:grid;grid-template-rows:1fr 1fr;gap:2px;min-height:575px}
-.aw-ossia-side>img{min-height:0;max-height:287px;object-fit:cover;object-position:center}
+.aw-ossia-side{display:grid;grid-template-rows:1fr 1fr;gap:2px;min-height:clamp(470px,52vw,760px)}
+.aw-ossia-side>img{min-height:0;object-fit:cover;object-position:center}
 .aw-ossia-edit{padding:47px 0}
 .aw-ossia-edit>header{display:flex;justify-content:space-between;align-items:center;gap:25px;margin-bottom:30px}
 .aw-ossia-edit>header>div:first-child{display:flex;align-items:center;gap:21px}
@@ -147,8 +147,8 @@
 .aw-ossia-designer small{font:650 9px 'Manrope',sans-serif;letter-spacing:.05em;color:#c9c2bd;margin-top:auto}
 /* 2 / VYRA / full-bleed cover and tech collection */
 .aw-tech{color:#111;background:#ebebeb}
-.aw-tech-hero{height:min(830px,73vw);min-height:605px;position:relative;color:#fff;overflow:hidden}
-.aw-tech-hero>img{position:absolute;inset:0;filter:brightness(.59);object-position:center 43%}
+.aw-tech-hero{height:clamp(595px,57vw,950px);min-height:0;position:relative;color:#fff;overflow:hidden}
+.aw-tech-hero>img{position:absolute;inset:0;object-position:62% center}
 .aw-tech-shade{position:absolute;inset:0;background:linear-gradient(90deg,#141414ac 0%,#33333342 48%,transparent 82%)}
 .aw-tech-hero-content{position:absolute;left:4%;top:29%;width:62%;z-index:2}
 .aw-tech-hero-content>span{font:650 12px/1.5 'Manrope',sans-serif;letter-spacing:.39em}
@@ -175,7 +175,7 @@
 .aw-tech-features h3{font:800 12px 'Manrope',sans-serif;letter-spacing:.07em}
 .aw-tech-features p{font:450 12px/1.5 'Manrope',sans-serif;margin-top:8px!important;color:#666}
 .aw-tech-community{height:500px;position:relative;color:#fff;overflow:hidden}
-.aw-tech-community>img{position:absolute;inset:0;filter:brightness(.44);object-position:center 36%}
+.aw-tech-community>img{position:absolute;inset:0;filter:brightness(.7);object-position:38% center}
 .aw-tech-community>div{position:absolute;right:6%;top:15%;width:42%}
 .aw-tech-community h2{font:930 clamp(45px,5.4vw,90px)/.91 'Manrope',sans-serif;letter-spacing:-.065em}
 .aw-tech-community>div>p{font:450 16px/1.6 'Manrope',sans-serif;max-width:400px;margin:15px 0!important}
@@ -188,14 +188,14 @@
 /* 3 / AERO / airy sports marketplace */
 .aw-aero{padding:24px 3.7% 60px;color:#1f231e;background:#f9faf7}
 .aw-aero-hero{min-height:550px;background:#f1f2ec;border-radius:29px;display:grid;grid-template-columns:51% 49%;position:relative;overflow:hidden}
-.aw-aero-copy{z-index:2;padding:68px 0 60px 5%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+.aw-aero-copy{position:relative;z-index:1;z-index:2;padding:68px 0 60px 5%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
 .aw-aero-copy>span{font:800 10px 'Manrope',sans-serif;letter-spacing:.06em;background:#e6e9df;padding:10px 15px;border-radius:60px;margin-bottom:23px}
 .aw-aero-copy h1{font:950 clamp(43px,4.9vw,85px)/.93 'Manrope',sans-serif;letter-spacing:-.073em}
 .aw-aero-copy>p{font:500 13px/1.7 'Manrope',sans-serif;max-width:410px;margin:20px 0!important;color:#5e625b}
 .aw-aero-copy>div{display:flex;gap:12px;align-items:center}
 .aw-aero .aw-cta{border-radius:35px;background:#4b5840;color:#fff!important}
 .aw-aero-copy>div>a:not(.aw-cta){display:inline-flex;padding:13px 20px;background:#e3e7de;border-radius:35px;font:800 10px 'Manrope',sans-serif}
-.aw-aero-hero>img{height:100%;min-height:550px;object-fit:cover;object-position:60% center;mix-blend-mode:multiply}
+.aw-aero-hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% center}
 .aw-aero-floating{position:absolute;right:3%;top:14%;display:grid;gap:10px;width:165px}
 .aw-aero-floating span{display:block;padding:15px;background:#ffffffe9;border-radius:16px;box-shadow:0 7px 15px #00000008;font:800 9px/1.5 'Manrope',sans-serif;text-align:center;color:#586055}
 .aw-aero-search{display:flex;align-items:center;gap:12px;margin:28px 0 12px;background:#fff;border:1px solid #e4e7de;border-radius:35px;padding:7px 9px 7px 20px;max-width:690px}
@@ -246,7 +246,7 @@
 .aw-hush-hero{position:relative;min-height:630px;padding:20px 5% 0;overflow:hidden}
 .aw-hush-hero-kicker{position:absolute;left:5%;top:14px;font:650 10px 'Outfit',sans-serif;letter-spacing:.18em;color:#d787a5}
 .aw-hush-bigword{position:absolute;top:90px;left:-2%;right:-2%;font:500 clamp(120px,20vw,335px)/1 'Outfit',sans-serif;letter-spacing:-.105em;white-space:nowrap;text-align:center;z-index:0}
-.aw-hush-hero>img{position:absolute;width:53%;height:360px;object-fit:contain;left:24%;top:55px;z-index:2;mix-blend-mode:multiply;filter:saturate(.7) sepia(.12)}
+.aw-hush-hero>img{position:absolute;width:53%;height:360px;object-fit:cover;left:24%;top:55px;z-index:2;mix-blend-mode:multiply;border-radius:50%}
 .aw-hush-silver{position:absolute;left:26%;top:100px;font-size:160px;transform:rotate(-25deg);color:#9f9f9f;opacity:.37}
 .aw-hush-intro{position:absolute;bottom:54px;left:5%;right:5%;display:flex;justify-content:space-between;align-items:start;gap:30px}
 .aw-hush-intro>div:first-child span{font:450 12px 'Outfit',sans-serif;color:#8c8288}
@@ -281,18 +281,15 @@
 .aw-product-hush-more .aw-product-photo{aspect-ratio:1;border-radius:30px;background:#f3e5eb}
 /* 5 / NOVA / general ecommerce with utility bars, promotions and dense cards */
 .aw-market{background:#fff;color:#182437;font-family:'Manrope',sans-serif;padding:0 3.8% 50px}
-.aw-market-hero{display:grid;grid-template-columns:50% 50%;align-items:center;min-height:420px;background:#f4f4f5;overflow:hidden}
-.aw-market-hero>div:first-child{padding:50px 4%}
+.aw-market-hero{display:grid;grid-template-columns:46% 54%;align-items:stretch;min-height:420px;background:#f4f4f5;overflow:hidden}
+.aw-market-hero>div:first-child{padding:clamp(28px,4.5vw,76px) 5% clamp(28px,4.5vw,76px) 10%;align-self:center}
 .aw-market-hero>div:first-child>span{font:800 11px 'Manrope',sans-serif;letter-spacing:.2em;display:block;margin-bottom:20px;color:#243148}
 .aw-market-hero h1{font:900 clamp(43px,4.5vw,76px)/1.06 'Manrope',sans-serif;letter-spacing:-.065em;max-width:600px}
 .aw-market-hero p{font:450 14px/1.6 'Manrope',sans-serif;max-width:400px;margin:20px 0!important}
 .aw-market-hero>div:first-child>div{display:flex;gap:10px}
 .aw-market .aw-cta{background:#b65b25;color:#fff!important;border-radius:5px}
 .aw-market-hero>div:first-child>div>a:not(.aw-cta){padding:13px 17px;border:1px solid #17263b;border-radius:5px;font:800 11px 'Manrope',sans-serif}
-.aw-market-still{position:relative;height:420px;overflow:hidden;background:radial-gradient(circle,#b86a39 0 43%,#f4f4f5 44%)}
-.aw-market-still>img{height:100%;width:100%;object-fit:cover;object-position:50% 45%;mix-blend-mode:multiply}
-.aw-market-still>div{position:absolute;bottom:11px;left:0;right:0;display:flex;justify-content:center;gap:8px}
-.aw-market-still>div>img{width:23%;height:105px;object-fit:cover;background:#f3eeee;border-radius:10px;box-shadow:0 4px 16px #0001}
+.aw-market-still{width:100%;height:100%;min-height:420px;object-fit:cover;object-position:83% center}
 .aw-market-benefits{display:grid;grid-template-columns:repeat(4,1fr);padding:29px 0;border-bottom:1px solid #e6e8e9}
 .aw-market-benefits>div{display:flex;align-items:center;justify-content:center;gap:13px;padding:5px 14px;border-right:1px solid #e1e4e7}
 .aw-market-benefits>div:last-child{border:0}
@@ -356,7 +353,7 @@
 .aw-veloura-box{min-height:470px;display:grid;grid-template-columns:1fr 1.25fr 1fr;align-items:center;gap:15px;padding:45px 6%}
 .aw-veloura-box>div>span{font:650 9px 'Manrope',sans-serif;letter-spacing:.12em;color:#ae895d}
 .aw-veloura-box h2{color:#c3a267;font:500 clamp(39px,4vw,70px)/1.1 'Cormorant Garamond',Georgia,serif;margin-top:11px!important}
-.aw-veloura-box>img{height:360px;object-fit:cover;object-position:center;background:#21120f;mix-blend-mode:screen}
+.aw-veloura-box>img{height:360px;object-fit:cover;object-position:center;background:#080507;mix-blend-mode:screen}
 .aw-veloura-box>b{text-align:center;font:500 54px 'Cormorant Garamond',Georgia,serif;color:#cba966}
 .aw-veloura-about{display:grid;grid-template-columns:1fr 2.5fr;gap:26px;align-items:stretch;padding:0 4%;margin-top:30px}
 .aw-veloura-about>img{height:350px;object-fit:cover;filter:grayscale(1);border-radius:20px}
@@ -380,7 +377,6 @@
  .aw-header-market .aw-header-actions form{display:none}
  .aw-ossia-hero{min-height:470px}
  .aw-ossia-lead,.aw-ossia-side{min-height:470px}
- .aw-ossia-side>img{max-height:235px}
  .aw-ossia-lead h1{font-size:clamp(46px,5vw,70px)}
  .aw-ossia-edit>header{flex-wrap:wrap}
  .aw-tech-heading h2{font-size:clamp(53px,7.5vw,92px)}
@@ -476,7 +472,7 @@
  .aw-aero-copy h1{font-size:clamp(38px,10vw,60px)}
  .aw-aero-copy p{font-size:12px}
  .aw-aero-copy>div>a{padding:11px 14px!important;font-size:9px!important}
- .aw-aero-hero>img{height:280px;min-height:280px;object-position:center}
+ .aw-aero-hero>img{position:static;height:280px;min-height:280px;object-position:76% center}
  .aw-aero-floating{top:auto;bottom:25px;right:15px;width:130px;gap:5px}
  .aw-aero-floating span{font-size:8px;padding:8px}
  .aw-aero-pills{flex-wrap:nowrap;overflow-x:auto;padding-bottom:22px}
@@ -527,8 +523,7 @@
  .aw-market-hero h1{font-size:35px}
  .aw-market-hero>div:first-child>span{font-size:9px}
  .aw-market-hero>div:first-child>div a{font-size:10px}
- .aw-market-still{height:280px}
- .aw-market-still>div>img{height:65px}
+ .aw-market-still{height:250px;min-height:0;object-position:79% center}
  .aw-market-benefits{grid-template-columns:1fr 1fr;gap:13px;padding:22px 0}
  .aw-market-benefits>div{justify-content:flex-start;padding:0;border:0}
  .aw-market-benefits b{font-size:10px}
@@ -598,4 +593,18 @@
 .ix-accessories.ix-minimal .ix-inner .ix-detail-info,
 .ix-accessories.ix-minimal .ix-inner .ix-cart-layout>aside{
  color:#2a241f;
+}
+
+/* Keep catalogue photography intact in narrower preview frames. */
+:is(.aw-product-tech,.aw-product-ossia,.aw-product-aero,.aw-product-veloura) .aw-product-photo img[src^="/december-art/"] {
+ object-fit:contain;
+}
+@media(max-width:720px) {
+ .aw-tech-hero>img {object-position:69% center}
+ .aw-veloura-gallery {
+  grid-template-columns:repeat(5,minmax(126px,1fr));
+  overflow-x:auto;
+  scroll-snap-type:x proximity;
+ }
+ .aw-veloura-slide {scroll-snap-align:center}
 }

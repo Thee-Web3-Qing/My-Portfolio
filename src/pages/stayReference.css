@@ -102,7 +102,7 @@
 .st-or-expanded{position:relative;z-index:4;padding:12px;background:#cbd5f5}
 .st-or-expanded .st-search{box-shadow:none}
 .st-or-world{min-height:705px;position:relative;border-radius:10px 10px 57px 57px;overflow:hidden;background:#8c97bf}
-.st-or-world>img{position:absolute;inset:0;object-position:center 49%;filter:saturate(1.1) hue-rotate(7deg)}
+.st-or-world>img{position:absolute;inset:0;object-position:center 54%}
 .st-or-overlay{position:absolute;inset:0;background:linear-gradient(180deg,#2c4d76b8 0%,#5269a633 37%,#1c254366 100%)}
 .st-or-side{position:absolute;left:17px;top:60px;z-index:3;display:flex;flex-direction:column;gap:5px;align-items:center;background:#f4f5fcdb;border-radius:55px;padding:12px 7px;backdrop-filter:blur(14px)}
 .st-or-side :is(button,a){width:42px;height:42px;border:0;display:grid;place-items:center;background:transparent;border-radius:50%;color:#37416a}
@@ -159,9 +159,10 @@
 .st-visa-split>div:first-child>span{font:800 10px 'Manrope',sans-serif;letter-spacing:.1em;color:#5a8188}
 .st-visa-split h3{font:600 clamp(35px,4vw,67px)/1.07 'Manrope',sans-serif;letter-spacing:-.075em;margin:19px 0!important}
 .st-visa-split p{font:450 14px/1.8 'Manrope',sans-serif;max-width:320px;margin-bottom:27px!important;color:#657477}
-.st-visa-photo-row{display:grid;grid-template-columns:1fr .82fr;gap:15px;align-items:center;position:relative;padding-bottom:38px}
+.st-visa-photo-row{display:grid;grid-template-columns:1.22fr .94fr .94fr;gap:15px;align-items:center;position:relative;padding-bottom:38px}
 .st-visa-photo-row>a{height:330px;position:relative;display:block;border-radius:25px;overflow:hidden}
-.st-visa-photo-row>a:nth-child(2){height:245px}
+.st-visa-photo-row>a:nth-child(2){height:245px;transform:translateY(20px)}
+.st-visa-photo-row>a:nth-child(3){height:270px}
 .st-visa-photo-row>a:after{content:'';position:absolute;inset:50% 0 0;background:linear-gradient(0deg,#111a,transparent)}
 .st-visa-photo-row>a span{position:absolute;left:17px;bottom:18px;z-index:2;color:#fff;font:800 12px 'Manrope',sans-serif}
 .st-visa-slider{display:flex;gap:9px;position:absolute;right:0;bottom:-6px}
@@ -250,7 +251,13 @@
 .st-pigma-properties>header p{max-width:310px;font:450 12px/1.7 'DM Sans',sans-serif}
 .st-pigma-properties>header a{display:flex;align-items:center;gap:8px;font:700 11px 'DM Sans',sans-serif;white-space:nowrap}
 .st-pigma-property-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.st-pigma-property-grid>a{height:275px;border-radius:22px;overflow:hidden}
+.st-pigma-residence{display:grid;grid-template-columns:1fr 1fr;min-width:0;gap:10px}
+.st-pigma-residence:nth-child(n+3) .st-pigma-copy-tile{order:2}
+.st-pigma-residence>:is(div,a){min-height:210px;border-radius:20px;overflow:hidden}
+.st-pigma-residence .st-pigma-copy-tile>a{margin-top:auto}
+.st-pigma-residence .st-pigma-copy-tile h3{font-size:clamp(25px,2.6vw,42px)}
+.st-pigma-residence .st-pigma-image-tile img{position:absolute;inset:0}
+
 .st-pigma-copy-tile{background:#e4e6d8;padding:25px 28px;display:flex;flex-direction:column;align-items:flex-start}
 .st-pigma-copy-tile span{font:800 9px 'DM Sans',sans-serif;letter-spacing:.12em}
 .st-pigma-copy-tile h3{font:600 clamp(28px,3vw,49px)/1.06 'Cormorant Garamond',Georgia,serif;margin:12px 0!important}
@@ -436,7 +443,10 @@
  .st-visa-split h3{font-size:36px}
  .st-visa-split p{font-size:12px}
  .st-visa-photo-row>a{height:230px}
- .st-visa-photo-row>a:nth-child(2){height:175px}
+ .st-visa-photo-row{gap:7px}
+ .st-visa-photo-row>a:nth-child(2){height:175px;transform:none}
+ .st-visa-photo-row>a:nth-child(3){height:198px}
+ .st-visa-photo-row>a span{left:7px;bottom:10px;font-size:10px}
  .st-visa-places{padding:57px 19px 70px}
  .st-visa-places>header{display:block}
  .st-visa-places h2{font-size:50px}
@@ -487,7 +497,9 @@
  .st-pigma-properties>header p{font-size:11px;max-width:100%}
  .st-pigma-properties>header a{font-size:10px}
  .st-pigma-property-grid{grid-template-columns:1fr;gap:10px}
- .st-pigma-property-grid>a{height:240px;border-radius:17px}
+ .st-pigma-residence>:is(div,a){min-height:200px;border-radius:17px}
+ .st-pigma-residence:nth-child(2n) .st-pigma-copy-tile{order:2}
+ .st-pigma-residence:nth-child(2n+1) .st-pigma-copy-tile{order:0}
  .st-pigma-copy-tile{padding:20px}
  .st-pigma-copy-tile h3{font-size:39px}
  .st-pigma-copy-tile p{font-size:10px}

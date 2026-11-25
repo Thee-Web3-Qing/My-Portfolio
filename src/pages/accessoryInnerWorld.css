@@ -186,3 +186,13 @@
 .awx-page.awx-catalogue .awx-stage h1,.awx-market .awx-stage h1{font-size:clamp(37px,9vw,60px)}
 }
 @media(max-width:390px){.awx-page .awx-item-info p{display:block;font-size:11px;line-height:1.4}.awx-tech .awx-stage-copy{min-height:490px}.awx-editorial .awx-stage h1{font-size:39px}.awx-minimal .awx-story-grid>div{padding:20px}}
+
+.awx-page :is(.awx-item-photo,.awx-detail-hero) img[src^="/december-art/"] {
+ object-fit:contain;
+}
+.awx-tech .awx-stage-visual img {
+ object-position:65% center;
+}
+.awx-minimal .awx-stage-visual img[src^="/december-art/"] {
+ object-position:center;
+}
