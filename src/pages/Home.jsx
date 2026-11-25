@@ -39,7 +39,7 @@ export default function Home() {
             <source media="(max-width: 820px)" srcSet="/qing-final-lettering-mobile.png" />
             <img src="/qing-final-lettering-desktop.png" alt="" fetchPriority="high" />
           </picture>
-          <img className="qing-recognition-portrait" src="/qing-final-portrait.png" alt="Qing in a white blazer with a blonde bob" width="850" height="1090" fetchPriority="high" />
+          <img className="qing-recognition-portrait" src="/qing-hero-balanced-portrait.png" alt="Qing in a white blazer with a blonde bob" width="1128" height="1394" fetchPriority="high" />
           <p className="qing-recognition-role">Creative developer &amp; designer</p>
           <p className="qing-recognition-product">AI product builder<span className="qing-recognition-desktop-dot"> · </span></p>
           <p className="qing-recognition-story">Storyteller</p>
