@@ -10,7 +10,6 @@ const websiteId = `${SITE_URL}/#website`
 const productWork = [
   { '@type': 'SoftwareApplication', name: 'Tab', applicationCategory: 'FinanceApplication', url: 'https://clearyourtab.xyz/' },
   { '@type': 'SoftwareApplication', name: 'Gigga', applicationCategory: 'BusinessApplication', url: 'https://get-gigga.vercel.app/' },
-  { '@type': 'WebApplication', name: 'Think Tank Circle', applicationCategory: 'EducationalApplication', url: 'https://think-tank-circle.vercel.app/' },
   { '@type': 'SoftwareApplication', name: 'Beauty by 3lle', applicationCategory: 'BusinessApplication', url: 'https://beauty-by3ll3.vercel.app/' },
   { '@type': 'SoftwareApplication', name: 'Moment', applicationCategory: 'BusinessApplication', url: 'https://moment-blush.vercel.app/' },
   { '@type': 'SoftwareApplication', name: 'The Authors Room', applicationCategory: 'BusinessApplication', url: 'https://the-authors-room.vercel.app/' },
@@ -85,7 +84,7 @@ const staticRoutes = {
     label: 'Product portfolio',
     heading: 'Websites, AI products and digital platforms built for real goals.',
     paragraphs: [
-      'Spotlight work includes Bookie, Man of Ubuntu, The Dragon Universe, Gigga and Tab, alongside Think Tank Circle, Beauty by 3lle, Moment, The Authors Room, 22Energy and AssetDNA.',
+      'Spotlight work includes Bookie, Man of Ubuntu, The Dragon Universe, Gigga and Tab, alongside Beauty by 3lle, Moment, The Authors Room, 22Energy and AssetDNA.',
       'Each case study explains what the client wanted, what Qing built, the product features and the live deployment.',
     ],
     type: 'CollectionPage',

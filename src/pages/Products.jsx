@@ -3,18 +3,6 @@ import { createPortal } from 'react-dom'
 
   const recentClientBuilds = [
     {
-      name: "Think Tank Circle",
-      clientWanted: "A distinctive platform that could bring people, ideas and institutions together around clearer thinking, responsible leadership, practical learning and real-world progress.",
-      delivered: "I designed and built an editorial, responsive platform with programme discovery, The Thinking Room, The Thinking Human, ideas and perspectives, partnership journeys, registration pathways, and a connected AI-powered THINK NOW product.",
-      tags: ["Learning Platform", "Editorial Website", "Programme Discovery"],
-      status: "Live Client Build",
-      image: "/project-thumbs/think-tank-circle-interface.webp",
-      links: {
-        demo: "https://think-tank-circle.vercel.app/",
-        repo: null,
-      },
-    },
-    {
       name: "Africa Money AI",
       clientWanted: "An Africa-focused platform that could make AI literacy practical, accessible and culturally relevant while bringing learning, communities and institutional programmes into one clear experience.",
       delivered: "I designed and built a responsive editorial platform with Academy pathways, an interactive AI Fluency Check, community journeys, a National AI Literacy Programme, insights and case studies, partnership and lead forms, and a curated AI Guide.",
