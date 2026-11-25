@@ -65,7 +65,7 @@ export default function Home() {
         <div><span className="editorial-december-tag">THE DECEMBER EDIT 2026 ✳</span><p>Your brand deserves a beautiful place to sell this season. <strong>Websites from ₦100,000.</strong></p></div>
         <Link to="/december" className="editorial-december-button">December sales <span aria-hidden="true">↗</span></Link>
       </div>
-      <section ref={heroRef} className="qing-recognition-hero" aria-labelledby="qing-hero-title" style={desktopHeroWidth === null ? undefined : { maxWidth: `min(100%, ${desktopHeroWidth}px)`, marginInline: 'auto' }}>
+      <section ref={heroRef} className="qing-recognition-hero" aria-labelledby="qing-hero-title" style={desktopHeroWidth === null ? undefined : { '--recognition-stage-max': `${desktopHeroWidth}px` }}>
         <div className="qing-recognition-stage">
           <h1 id="qing-hero-title" className="qing-recognition-sr">Qing builds ideas people remember.</h1>
           <picture className="qing-recognition-lettering" aria-hidden="true">

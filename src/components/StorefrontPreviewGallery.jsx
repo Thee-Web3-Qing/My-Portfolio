@@ -35,11 +35,16 @@ export const STOREFRONT_PREVIEWS = [
  { id:'hospitalityarchitect',category:'Stays',label:'APEX ARC',style:'Architectural Stays',summary:'Sharp architectural portfolio, project photography grid and functional service carousel.',url:'/hospitalityarchitect',accent:'#535653',number:'27' },
 ]
 
-function GalleryCard({site,device}){
+// The homepage is a curated introduction; the December page retains every design.
+const HOME_PREVIEWS = STOREFRONT_PREVIEWS.filter((site, index, all) =>
+  all.findIndex(candidate => candidate.category === site.category) === index
+).map((site, index) => ({ ...site, number: String(index + 1).padStart(2, '0') }))
+
+function GalleryCard({site,device,total}){
  const [interactive,setInteractive]=useState(false)
  return <article className="site-preview-card" style={{'--site-preview-accent':site.accent}}>
   <div className="site-preview-card-top">
-   <span className="site-preview-count">{site.number} / {String(STOREFRONT_PREVIEWS.length).padStart(2,'0')}</span>
+   <span className="site-preview-count">{site.number} / {String(total).padStart(2,'0')}</span>
    <span className="site-preview-category">{site.category} <i/> {site.style}</span>
   </div>
   <div className="site-preview-browser">
@@ -64,12 +69,14 @@ function GalleryCard({site,device}){
 export default function StorefrontPreviewGallery({placement='december'}){
  const [category,setCategory]=useState('All')
  const [device,setDevice]=useState('desktop')
- const shown=STOREFRONT_PREVIEWS.filter(site=>category==='All'||site.category===category)
+ const isHome=placement==='home'
+ const previews=isHome?HOME_PREVIEWS:STOREFRONT_PREVIEWS
+ const shown=previews.filter(site=>category==='All'||site.category===category)
  return <section className={'site-preview-gallery site-preview-gallery-'+placement} id="website-previews" aria-labelledby="site-preview-gallery-title">
-  <header className="site-preview-intro"><div><p>DECEMBER / LIVE WEBSITE DEMONSTRATIONS</p><h2 id="site-preview-gallery-title">Twenty-seven websites.<br/><em>Twenty-seven ways to stand out.</em></h2><span>Explore real, multi-page fashion, food, gifting, beauty, events, accessories and hospitality storefronts. Browse each website inside its preview, from the homepage to its products, menus and sample checkout.</span></div><strong>{String(STOREFRONT_PREVIEWS.length).padStart(2,'0')} / LIVE CONCEPTS</strong></header>
-  <div className="site-preview-filters"><div aria-label="Filter website previews">{['All','Fashion','Food','Gifts','Beauty','Events','Accessories','Stays'].map(item=><button key={item} onClick={()=>setCategory(item)} className={category===item?'active':''} aria-pressed={category===item}>{item} <span>{String(item==='All'?STOREFRONT_PREVIEWS.length:STOREFRONT_PREVIEWS.filter(site=>site.category===item).length).padStart(2,'0')}</span></button>)}</div><div className="site-preview-device" aria-label="Preview size"><button className={device==='desktop'?'active':''} onClick={()=>setDevice('desktop')} aria-pressed={device==='desktop'}>Desktop</button><button className={device==='mobile'?'active':''} onClick={()=>setDevice('mobile')} aria-pressed={device==='mobile'}>Mobile</button></div></div>
+  <header className="site-preview-intro"><div><p>DECEMBER / LIVE WEBSITE DEMONSTRATIONS</p><h2 id="site-preview-gallery-title">{isHome?'Seven categories.':'Twenty-seven websites.'}<br/><em>{isHome?'Find a style for your business.':'Twenty-seven ways to stand out.'}</em></h2><span>{isHome?'Explore one interactive website from each category. Choose a website style and see pricing to discover the full collection of designs for your business.':'Explore real, multi-page fashion, food, gifting, beauty, events, accessories and hospitality storefronts. Browse each website inside its preview, from the homepage to its products, menus and sample checkout.'}</span></div><strong>{String(previews.length).padStart(2,'0')} / {isHome?'FEATURED CONCEPTS':'LIVE CONCEPTS'}</strong></header>
+  <div className="site-preview-filters"><div aria-label="Filter website previews">{['All','Fashion','Food','Gifts','Beauty','Events','Accessories','Stays'].map(item=><button key={item} onClick={()=>setCategory(item)} className={category===item?'active':''} aria-pressed={category===item}>{item} <span>{String(item==='All'?previews.length:previews.filter(site=>site.category===item).length).padStart(2,'0')}</span></button>)}</div><div className="site-preview-device" aria-label="Preview size"><button className={device==='desktop'?'active':''} onClick={()=>setDevice('desktop')} aria-pressed={device==='desktop'}>Desktop</button><button className={device==='mobile'?'active':''} onClick={()=>setDevice('mobile')} aria-pressed={device==='mobile'}>Mobile</button></div></div>
   <p className="site-preview-swipe-hint">Swipe to see more website designs →</p>
-  <div className="site-preview-grid">{shown.map(site=><GalleryCard key={site.id} site={site} device={device}/>)}</div>
+  <div className="site-preview-grid">{shown.map(site=><GalleryCard key={site.id} site={site} device={device} total={previews.length}/>)}</div>
   <p className="site-preview-footnote">These are demonstration stores. Sample product prices, imagery, availability and customer information are illustrative. Shopping and booking interfaces do not collect real payments or confirm reservations.</p>
   {placement==='home'&&<a className="site-preview-home-cta" href="/december#dec-designs">Choose a website style and see pricing</a>}
  </section>
