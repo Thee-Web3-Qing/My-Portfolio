@@ -1190,7 +1190,7 @@
   margin-bottom:1.25rem;
 }
 .portfolio-clay .portfolio-client-card:first-child .products-browser-screen {
-  aspect-ratio:265 / 195;
+  aspect-ratio:16 / 10;
 }
 /* Keep the creator and editor profile visuals aligned with the desktop artwork. */
 .desktop-on-phone .content-hero-profiles {
@@ -2070,4 +2070,18 @@
     aspect-ratio:16/10;
     max-height:none;
   }
+}
+
+/* Keep project browser frames measurable even when the first card changes. */
+.portfolio-clay .portfolio-client-card > .products-browser {
+  width:100%;
+  min-width:0;
+  flex:0 0 auto;
+  align-self:stretch;
+}
+.portfolio-clay .portfolio-client-card .products-browser-screen {
+  width:100%;
+  min-width:0;
+  height:auto;
+  aspect-ratio:16 / 10;
 }

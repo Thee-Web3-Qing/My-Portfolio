@@ -78,21 +78,23 @@ import { createPortal } from 'react-dom'
     useEffect(() => {
       if (!iframeRef.current || !screenRef.current) return undefined
 
+      const screen = screenRef.current
       const fitDesktopPreview = () => {
-        const width = screenRef.current?.clientWidth || 0
-        const scale = width / 1440
-        screenRef.current.style.height = `${900 * scale}px`
-        iframeRef.current.style.width = '1440px'
-        iframeRef.current.style.height = '900px'
-        iframeRef.current.style.minWidth = '1440px'
-        iframeRef.current.style.maxWidth = 'none'
-        iframeRef.current.style.transform = `scale(${scale})`
+        const frame = iframeRef.current
+        const width = screen.getBoundingClientRect().width
+        if (!frame || width <= 0) return
+        // CSS owns the preview height; an initially hidden card must never collapse it.
+        frame.style.transform = `scale(${width / 1440})`
       }
 
       fitDesktopPreview()
-      const observer = new ResizeObserver(fitDesktopPreview)
-      observer.observe(screenRef.current)
-      return () => observer.disconnect()
+      const observer = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(fitDesktopPreview) : null
+      observer?.observe(screen)
+      window.addEventListener('resize', fitDesktopPreview)
+      return () => {
+        observer?.disconnect()
+        window.removeEventListener('resize', fitDesktopPreview)
+      }
     }, [url, image, interactive])
 
     if (!url) return null
