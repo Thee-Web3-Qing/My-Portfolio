@@ -1,0 +1,159 @@
+/* Home hero only. All navigation, banners and subsequent sections retain their existing styles. */
+.portfolio-clay .qing-recognition-hero {
+  --recognition-red: #74101b;
+  --recognition-cream: #fff1d8;
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  container-type: inline-size;
+  color: var(--recognition-red);
+  font-family: Inter, Arial, sans-serif;
+  isolation: isolate;
+}
+.qing-recognition-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1536 / 807;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    radial-gradient(ellipse at 50% 87%, #ded4c7 0%, transparent 57%),
+    linear-gradient(150deg, #aaa39b 0%, #c5b8ad 51%, #d7cbbd 100%);
+}
+.qing-recognition-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .13;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.83' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' opacity='.28' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.qing-recognition-sr {
+  position: absolute!important;
+  width: 1px!important; height: 1px!important;
+  padding: 0!important; margin: -1px!important;
+  overflow: hidden!important;
+  clip: rect(0, 0, 0, 0)!important;
+  white-space: nowrap!important; border: 0!important;
+}
+.qing-recognition-lettering {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.qing-recognition-lettering img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: fill;
+}
+.qing-recognition-stage .qing-recognition-portrait {
+  position: absolute;
+  z-index: 2;
+  top: 18.6%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42%;
+  max-width: none;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  border-radius: 0;
+  filter: none;
+}
+.qing-recognition-stage p {
+  position: absolute;
+  z-index: 3;
+  margin: 0;
+  color: var(--recognition-red);
+  font-family: Inter, Arial, sans-serif;
+  overflow-wrap: normal;
+  line-height: 1.03;
+}
+.qing-recognition-stage .qing-recognition-role,
+.qing-recognition-stage .qing-recognition-product,
+.qing-recognition-stage .qing-recognition-story {
+  font-size: 2.65cqw;
+  font-weight: 800;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+}
+.qing-recognition-stage .qing-recognition-role { left: 5.2%; top: 58%; width: 25%; }
+.qing-recognition-stage .qing-recognition-product { left: 70.2%; top: 61.5%; white-space: nowrap; }
+.qing-recognition-stage .qing-recognition-story { left: 70.2%; top: 66.3%; }
+.qing-recognition-stage .qing-recognition-founder { right: 2.4%; bottom: 6.6%; font-size: 1.35cqw; text-transform: uppercase; font-weight: 600; letter-spacing: -.015em; }
+.qing-recognition-stage .qing-recognition-desktop-intro { left: 5.3%; top: 75.7%; font-size: 1.88cqw; line-height: 1.25; font-weight: 400; font-style: italic; }
+.qing-recognition-stage .qing-recognition-desktop-work {
+  position: absolute;
+  z-index: 4;
+  left: 4%;
+  bottom: 4.5%;
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+  padding: 0 0 .2em;
+  color: var(--recognition-red);
+  border-bottom: 1px solid currentColor;
+  font-size: 1.8cqw;
+  font-weight: 650;
+  line-height: 1.1;
+  transition: color .2s ease;
+}
+.qing-recognition-stage .qing-recognition-desktop-work:hover { color: #ac192b; }
+.qing-recognition-mobile-footer { display: none; }
+@media (max-width: 820px) {
+  .qing-recognition-stage {
+    aspect-ratio: 864 / 1237;
+    background: radial-gradient(ellipse at 53% 84%, #e3d9ca 0%, transparent 62%), linear-gradient(145deg,#aaa39b,#c9bdb0 55%,#d7cab9);
+  }
+  .qing-recognition-stage .qing-recognition-portrait { top: 42%; width: 81%; left: 50%; }
+  .qing-recognition-stage .qing-recognition-role {
+    top: 2.2%;
+    left: 3%; width: 94%;
+    font-size: 3.55cqw;
+    text-align: center;
+    white-space: nowrap;
+    letter-spacing: .015em;
+  }
+  .qing-recognition-stage .qing-recognition-product,
+  .qing-recognition-stage .qing-recognition-story { top: 63%; font-size: 3.65cqw; letter-spacing: -.035em; }
+  .qing-recognition-stage .qing-recognition-product { left: 5.5%; width: 25%; white-space: normal; }
+  .qing-recognition-stage .qing-recognition-story { left: auto; right: 4.2%; top: 64.4%; }
+  .qing-recognition-stage .qing-recognition-product::after,
+  .qing-recognition-stage .qing-recognition-story::after {
+    content: "";
+    display: block;
+    width: 75%; height: 4.8cqw; margin: .45em auto 0;
+    background: center / contain no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 170 35'%3E%3Cpath d='M3 29C35 10 77 0 82 6S60 26 73 23C97 16 137 3 167 6' stroke='%2391101c' stroke-width='3.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
+  }
+  .qing-recognition-desktop-dot,
+  .qing-recognition-stage .qing-recognition-founder,
+  .qing-recognition-stage .qing-recognition-desktop-intro,
+  .qing-recognition-stage .qing-recognition-desktop-work { display: none; }
+  .qing-recognition-mobile-footer {
+    display: block;
+    background: var(--recognition-cream);
+    color: var(--recognition-red);
+    padding: 4.2cqw 5.8cqw 3.2cqw;
+    text-align: center;
+  }
+  .qing-recognition-mobile-footer p {
+    margin: 0 0 4.5cqw;
+    font: italic 400 4.1cqw/1.25 Inter, Arial, sans-serif;
+    color: var(--recognition-red);
+    overflow-wrap: normal;
+  }
+  .qing-recognition-mobile-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 3.2cqw; }
+  .qing-recognition-mobile-actions a {
+    display: flex; align-items: center; justify-content: center; gap: .4em;
+    min-height: 44px; padding: 2.5cqw 1.5cqw;
+    font-size: 3.75cqw; line-height: 1.1; font-weight: 750;
+    border: 1.5px solid var(--recognition-red);
+    border-radius: 999px; color: var(--recognition-red);
+    background: transparent; white-space: nowrap;
+  }
+  .qing-recognition-mobile-actions a:last-child { background: var(--recognition-red); color: var(--recognition-cream); }
+  .qing-recognition-mobile-actions a:active { opacity: .83; }
+}

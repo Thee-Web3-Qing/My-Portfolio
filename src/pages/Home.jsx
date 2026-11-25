@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import StorefrontPreviewGallery from '../components/StorefrontPreviewGallery.jsx'
+import './QingRecognitionHero.css'
 
 const WHATSAPP_URL = 'https://askbookie.xyz/store/qingthecreator'
 
@@ -31,29 +32,28 @@ export default function Home() {
         <div><span className="editorial-december-tag">THE DECEMBER EDIT 2026 ✳</span><p>Your brand deserves a beautiful place to sell this season. <strong>Websites from ₦100,000.</strong></p></div>
         <Link to="/december" className="editorial-december-button">December sales <span aria-hidden="true">↗</span></Link>
       </div>
-      <section className="editorial-hero">
-        <div className="editorial-hero-copy">
-          <p className="editorial-eyebrow"><span /> Creative developer &amp; designer</p>
-          <h1>Qing builds ideas<br />people <em>remember.</em></h1>
-          <p className="editorial-intro">Digital products, brands and experiences<br />{' '}with real people at the centre.</p>
-          <div className="editorial-actions">
-            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="editorial-primary">Book a project <Arrow /></a>
-            <Link to="/products" className="editorial-secondary">See my work <Arrow /></Link>
+      <section className="qing-recognition-hero" aria-labelledby="qing-hero-title">
+        <div className="qing-recognition-stage">
+          <h1 id="qing-hero-title" className="qing-recognition-sr">Qing builds ideas people remember.</h1>
+          <picture className="qing-recognition-lettering" aria-hidden="true">
+            <source media="(max-width: 820px)" srcSet="/qing-final-lettering-mobile.png" />
+            <img src="/qing-final-lettering-desktop.png" alt="" fetchPriority="high" />
+          </picture>
+          <img className="qing-recognition-portrait" src="/qing-final-portrait.png" alt="Qing in a white blazer with a blonde bob" width="850" height="1090" fetchPriority="high" />
+          <p className="qing-recognition-role">Creative developer &amp; designer</p>
+          <p className="qing-recognition-product">AI product builder<span className="qing-recognition-desktop-dot"> · </span></p>
+          <p className="qing-recognition-story">Storyteller</p>
+          <p className="qing-recognition-founder">Founder, BountyPilot</p>
+          <p className="qing-recognition-desktop-intro">Digital products, brands<br />and experiences.</p>
+          <Link to="/products" className="qing-recognition-desktop-work">See my work <Arrow /></Link>
+        </div>
+        <div className="qing-recognition-mobile-footer">
+          <p>Digital products, brands and experiences.</p>
+          <div className="qing-recognition-mobile-actions">
+            <Link to="/products">See my work <Arrow /></Link>
+            <a href={WHATSAPP_URL} target="_blank" rel="noreferrer">Book a project <Arrow /></a>
           </div>
         </div>
-
-        <div className="editorial-portrait-wrap" aria-label="Portrait of Qing">
-          <span className="editorial-orbit orbit-one" />
-          <span className="editorial-orbit orbit-two" />
-          <span className="editorial-orbit-dot dot-one" />
-          <span className="editorial-orbit-dot dot-two" />
-          <span className="editorial-spark">✦</span>
-          <div className="editorial-grid" />
-          <img src="/qing-studio-cutout.webp" alt="Qing, creative developer and storyteller" />
-          <p className="editorial-note">Ideas.<br />Products.<br />Stories.</p>
-        </div>
-
-        <div className="editorial-scroll" aria-hidden="true"><span>Scroll</span><i /></div>
       </section>
 
       <section className="editorial-section editorial-builds">
