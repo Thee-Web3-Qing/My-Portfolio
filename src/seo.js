@@ -105,7 +105,7 @@ const staticRoutes = {
     description: 'Purchase video editing and script writing workflows, including corporate, technology and Vox-style editing, with secure Paystack checkout.',
     label: 'Creative workflows',
     heading: 'Video editing and script writing workflows.',
-    paragraphs: ['Choose from four creative workflows: Finance / Corporate, Tech videos with motion design and illustration, Script writing, and Vox.', 'Pay securely through Paystack.'],
+    paragraphs: ['Choose from five creative workflows: Finance / Corporate, Tech videos with motion design and illustration, Script writing, Motion Explainers, and Vox.', 'Pay securely through Paystack.'],
     type: 'CollectionPage',
   },
   '/experience': {
