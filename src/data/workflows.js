@@ -1,0 +1,8 @@
+// Sample URLs are intentionally empty until Qing supplies the actual examples.
+export const WORKFLOWS = Object.freeze([
+  {id:'finance-corporate',name:'Finance / Corporate',category:'Video editing',price:15000,number:'01',theme:'corporate',description:'A structured editing workflow for finance explainers, corporate announcements and professional talking-head videos.',details:['Clean cuts and pacing','Professional typography and graphics','Clear visual hierarchy'],samples:[]},
+  {id:'tech-motion',name:'Tech videos with motion design and illustration',category:'Video editing',price:30000,number:'02',theme:'tech',description:'A workflow for technical explainers that brings complex ideas to life through motion design and illustration.',details:['Motion graphics and illustrated concepts','Visual storytelling for technical topics','Animated typography and transitions'],samples:[]},
+  {id:'script-writing',name:'Script writing skill',category:'Writing',price:10000,number:'03',theme:'script',description:'A writing workflow for turning an idea into a clear, engaging video script.',details:['Story structure and hooks','Natural spoken delivery','Clear narrative and calls to action'],samples:[]},
+  {id:'vox',name:'Vox',category:'Video editing',price:50000,number:'04',theme:'vox',description:'An editorial explainer workflow inspired by documentary storytelling, with visual evidence, context and motion design.',details:['Narrative-led explainer structure','Editorial graphics and visual evidence','Illustration and motion design'],samples:[]},
+])
+export const workflowMoney = amount => '₦'+Number(amount).toLocaleString('en-NG')

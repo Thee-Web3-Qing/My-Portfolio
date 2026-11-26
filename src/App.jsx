@@ -17,6 +17,7 @@ import DecemberTrafficTracker from './components/DecemberTrafficTracker.jsx'
   import Hire from './pages/Hire.jsx'
   import Experience from './pages/Experience.jsx'
   import Class from './pages/Class.jsx'
+  import Workflow from './pages/Workflow.jsx'
   import Service from './pages/Service.jsx'
   import FashionPlatform from './pages/FashionPlatform.jsx'
   import FoodStorefront from './pages/FoodStorefront.jsx'
@@ -67,6 +68,7 @@ import DecemberTrafficTracker from './components/DecemberTrafficTracker.jsx'
                   <Route path="/hire" element={<Hire />} />
                   <Route path="/experience" element={<Experience />} />
                   <Route path="/class" element={<Class />} />
+                  <Route path="/workflow" element={<Workflow />} />
                   <Route path="/december" element={<December />} />
                   <Route path="/december/:industry/:stage?" element={<DecemberShortcut />} />
                   <Route path="/december/demo/:industry" element={<DecemberDemo />} />

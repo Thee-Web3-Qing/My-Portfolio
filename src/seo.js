@@ -100,6 +100,14 @@ const staticRoutes = {
     ],
     type: 'ContactPage',
   },
+  '/workflow': {
+    title: 'Creative AI Workflows | Qing The Creator',
+    description: 'Purchase video editing and script writing workflows, including corporate, technology and Vox-style editing, with secure Paystack checkout.',
+    label: 'Creative workflows',
+    heading: 'Video editing and script writing workflows.',
+    paragraphs: ['Choose from four creative workflows: Finance / Corporate, Tech videos with motion design and illustration, Script writing, and Vox.', 'Pay securely through Paystack.'],
+    type: 'CollectionPage',
+  },
   '/experience': {
     title: 'Experience and Selected Recognition | Qing The Creator',
     description: 'Explore Qing The Creator’s experience across Web3 content, community, conference hosting, product building and creative direction.',
@@ -137,7 +145,7 @@ const staticRoutes = {
   },
   '/payment/callback': {
     title: 'Payment Verification | Qing The Creator',
-    description: 'Verify the status of a Paystack payment for the December website sale or Qing’s Vibecoding Class.',
+    description: 'Verify the status of a Paystack payment for the December website sale, Qing’s Vibecoding Class or creative workflows.',
     label: 'Payment status',
     heading: 'Secure payment verification.',
     paragraphs: ['Your payment status is verified directly with Paystack.'],

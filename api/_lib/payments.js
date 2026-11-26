@@ -3,6 +3,7 @@ import { calculateDecemberQuote } from '../../src/data/december.js'
 import { randomUUID, createHmac, timingSafeEqual } from 'node:crypto'
 import { finalizeClassWelcome } from './classWelcome.js'
 import { finalizeDecemberProjectEmail } from './decemberProjectEmail.js'
+import { finalizeWorkflowEmail } from './workflowEmail.js'
 
 export const PAYSTACK_ORIGIN = 'https://api.paystack.co'
 export const environment = () => process.env.VERCEL_ENV === 'production' ? 'live' : 'test'
@@ -31,7 +32,7 @@ export function callbackUrl() {
   return 'https://' + hostname + '/payment/callback'
 }
 export function makeReference(product) {
-  return (product === 'qing-class' ? 'QCLASS' : 'QDEC') + '-' + randomUUID().replace(/-/g, '')
+  return (product === 'qing-class' ? 'QCLASS' : product === 'qing-workflow' ? 'QWORK' : 'QDEC') + '-' + randomUUID().replace(/-/g, '')
 }
 export function safeMetadata(value) {
   try { return typeof value === 'string' ? JSON.parse(value) : (value || {}) } catch { return {} }
@@ -90,6 +91,21 @@ export function paymentVerificationChecks(transaction,order,reference,mode){
 export async function confirmPayment(reference, mode = environment()) {
   if (!/^[A-Za-z0-9._-]{6,120}$/.test(reference)) throw new Error('Invalid payment reference')
   const sql = dbForMode(mode)
+  if (reference.startsWith('QWORK-')) {
+    const rows = await sql`SELECT * FROM workflow_orders WHERE reference=${reference} AND environment=${mode} LIMIT 1`
+    if (!rows.length) return {found:false, paid:false, reference}
+    let order = rows[0]
+    if (order.status !== 'paid') {
+      const transaction = await paystackGet('/transaction/verify/' + encodeURIComponent(reference), mode)
+      const checks = paymentVerificationChecks(transaction, order, reference, mode)
+      if (!Object.values(checks).every(Boolean)) return {found:true,paid:false,reference,product:'qing-workflow',status:'pending'}
+      const updated = await sql`UPDATE workflow_orders SET status='paid',paid_at=COALESCE(paid_at,now()),updated_at=now()
+        WHERE reference=${reference} AND environment=${mode} AND status='pending' RETURNING *`
+      order = updated[0] || (await sql`SELECT * FROM workflow_orders WHERE reference=${reference} AND environment=${mode} LIMIT 1`)[0] || order
+    }
+    const receipt = order.status === 'paid' ? await finalizeWorkflowEmail(sql,order,mode) : {}
+    return {...publicStatus(order), ...receipt}
+  }
   const orders = await sql`SELECT * FROM payment_orders WHERE reference = ${reference} AND environment = ${mode} LIMIT 1`
   if (!orders.length) return { found:false, paid:false, reference }
   const order = orders[0]
@@ -162,7 +178,7 @@ export function publicStatus(order) {
         ...(quote?.selectedAddons || []).map(x=>({name:x.name,price:x.price})),
         ...(quote?.images>0?[{name:quote.images+' AI product images × ₦'+quote.imageUnitPrice,price:quote.imagesSubtotal}]:[]),
       ]
-    : [{name:'Vibecoding Starter Class',price:Number(order.quote_total_kobo)/100}]
+    : order.product==='qing-workflow' ? orderSnapshot : [{name:'Vibecoding Starter Class',price:Number(order.quote_total_kobo)/100}]
   return { items, industry:quote?.industry.label || null, layout:quote?.layout.label || null,
     found:true, paid, reference:order.reference, product:order.product,
     amount:paid ? Number(order.amount_kobo) : 0,

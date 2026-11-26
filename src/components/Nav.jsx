@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom'
     { to: '/hire', label: 'Hire Me' },
     { to: '/experience', label: 'Experience' },
     { to: '/class', label: 'Class' },
+    { to: '/workflow', label: 'Workflow' },
     { to: '/december', label: 'December Sale' },
   ]
   export default function Nav() {
