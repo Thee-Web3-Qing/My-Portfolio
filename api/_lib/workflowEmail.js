@@ -2,8 +2,10 @@ const OWNER='qinglidah@gmail.com'
 export async function finalizeWorkflowEmail(sql,order,mode) {
   const configuration=typeof order.configuration==='string'?JSON.parse(order.configuration):order.configuration||{}
   const ids=Array.isArray(configuration.workflow_ids)?configuration.workflow_ids:[]
-  const qutlineDeliveryRequired=mode==='live'&&order.environment==='live'&&order.status==='paid'&&ids.includes('qutline')
-  const workflowManualDeliveryRequired=ids.some(id=>id!=='qutline')
+  const digitalIds=['qutline','qutline-motion'].filter(id=>ids.includes(id))
+  const productNames=digitalIds.map(id=>id==='qutline'?'Qutline':'Qutline Motion').join(' + ')
+  const qutlineDeliveryRequired=mode==='live'&&order.environment==='live'&&order.status==='paid'&&digitalIds.length>0
+  const workflowManualDeliveryRequired=ids.some(id=>!['qutline','qutline-motion'].includes(id))
   const qutlineDeliverySent=Boolean(order.qutline_delivery_sent_at)
   const status={qutlineDeliveryRequired,qutlineDeliverySent,workflowManualDeliveryRequired}
   if(mode!=='live'||order.environment!=='live'||order.status!=='paid'||!process.env.RESEND_API_KEY) return {workflowReceiptSent:false,...status}
@@ -27,22 +29,25 @@ export async function finalizeWorkflowEmail(sql,order,mode) {
   }catch(error){console.error('Workflow owner notification failed',error?.message)}
   try {
     if(!buyerSent){
-      await send('buyer',order.customer_email,'Your Qing workflow payment is confirmed','Hi '+order.customer_name+',\n\nYour Paystack payment is confirmed.\n\n'+body+'\n\n'+(qutlineDeliveryRequired?'Your Qutline installation files will arrive in a separate access email. Check your spam folder if necessary.\n\n':'')+(workflowManualDeliveryRequired?'Reply to this email with your reference to arrange delivery of your other selected workflows.\n\n':'')+'QingTheCreator')
+      await send('buyer',order.customer_email,'Your Qing workflow payment is confirmed','Hi '+order.customer_name+',\n\nYour Paystack payment is confirmed.\n\n'+body+'\n\n'+(qutlineDeliveryRequired?'Your '+productNames+' installation files will arrive in a separate access email. Check your spam folder if necessary.\n\n':'')+(workflowManualDeliveryRequired?'Reply to this email with your reference to arrange delivery of your other selected workflows.\n\n':'')+'QingTheCreator')
       await sql`UPDATE workflow_orders SET buyer_email_sent_at=COALESCE(buyer_email_sent_at,now()) WHERE reference=${order.reference}`
       buyerSent=true
     }
   }catch(error){console.error('Workflow receipt failed',error?.message)}
   try {
     if(qutlineDeliveryRequired&&!delivered){
-      const files=await sql`SELECT platform,version,filename,encode(contents,'base64') AS content FROM public.workflow_delivery_files WHERE product_id='qutline' ORDER BY platform`
-      const expected=['chatgpt','claude']
-      if(files.length!==2||!expected.every(platform=>files.some(f=>f.platform===platform))||new Set(files.map(f=>f.version)).size!==1)throw Error('Qutline files are incomplete')
-      const attachments=files.map(f=>{
-        const content=String(f.content||'').replace(/\s/g,'')
-        if(!/^qutline-[\d.]+-(chatgpt|claude)\.zip$/.test(f.filename)||!content.startsWith('UEsDB')||content.length<100)throw Error('Invalid Qutline archive')
-        return {filename:f.filename,content}
-      })
-      await send('qutline',order.customer_email,'Your Qutline access is ready | QingTheCreator','Hi '+order.customer_name+',\n\nYour payment is confirmed. Your Qutline installation ZIPs for ChatGPT and Claude are attached. Choose the one for your platform.\n\nChatGPT: import the plugin archive through Plugin Creator on supported accounts, or use the standalone skill ZIP in the Skills upload interface if available.\nClaude: open Customize > Skills, upload the Claude ZIP and enable Qutline.\n\nUpload your footage and say: Edit my video using Qutline. You can customize the fonts and colours. If the video includes a follow CTA, supply your social media profile screenshot.\n\nVideo rendering, image generation and transcription require compatible tools on your account. Keep these files for your personal use and do not redistribute them.\n\nPayment reference: '+order.reference+'\n\nQingTheCreator',attachments)
+      const attachments=[]
+      for(const product of digitalIds){
+        const files=await sql`SELECT platform,version,filename,encode(contents,'base64') AS content FROM public.workflow_delivery_files WHERE product_id=${product} ORDER BY platform`
+        const expected=['chatgpt','claude']
+        if(files.length!==2||!expected.every(platform=>files.some(f=>f.platform===platform))||new Set(files.map(f=>f.version)).size!==1)throw Error('Skill files are incomplete')
+        for(const f of files){
+          const content=String(f.content||'').replace(/\s/g,'')
+          if(!f.filename.startsWith(product+'-')||!new RegExp('^'+product+'-[\\d.]+-'+f.platform+'\\.zip$').test(f.filename)||!content.startsWith('UEsDB')||content.length<100)throw Error('Invalid skill archive')
+          attachments.push({filename:f.filename,content})
+        }
+      }
+      await send('qutline',order.customer_email,'Your '+productNames+' access is ready | QingTheCreator','Hi '+order.customer_name+',\n\nYour payment is confirmed. The installation ZIPs for '+productNames+' are attached for ChatGPT and Claude. Choose the appropriate package for your platform.\n\nChatGPT: import the plugin archive through Plugin Creator on supported accounts, or use the standalone skill ZIP in the Skills upload interface if available.\nClaude: open Plugins / Customize > Skills, upload the Claude ZIP and enable the skill.\n\n'+(digitalIds.includes('qutline')?'Qutline: upload your footage and say “Edit my video using Qutline.” Customize fonts and colours if desired; provide a profile screenshot for social CTAs.\n\n':'')+(digitalIds.includes('qutline-motion')?'Qutline Motion: upload footage or screenshots of the interface you want to demonstrate and say “Use Qutline Motion to animate this explanation.” Use it on its own or alongside Qutline.\n\n':'')+'Video rendering, image generation and transcription require compatible tools on your account. Keep these files for your personal use and do not redistribute them.\n\nPayment reference: '+order.reference+'\n\nQingTheCreator',attachments)
       await sql`UPDATE workflow_orders SET qutline_delivery_sent_at=COALESCE(qutline_delivery_sent_at,now()) WHERE reference=${order.reference} AND environment='live' AND status='paid'`
       delivered=true
     }

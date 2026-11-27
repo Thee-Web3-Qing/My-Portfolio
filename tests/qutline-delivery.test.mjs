@@ -6,10 +6,10 @@ test('Qutline delivery only after live paid order, separate idempotent attachmen
  process.env.RESEND_API_KEY='mock-key'
  const calls=[],updates=[]
  let fail=false,missing=false
- const content=Buffer.from('PK\\x03\\x04'+'a'.repeat(150),'latin1').toString('base64')
+ const content=Buffer.concat([Buffer.from([80,75,3,4]),Buffer.alloc(150,97)]).toString('base64')
  const sql=async(strings,...values)=>{
   const query=strings.join('?')
-  if(query.includes('SELECT platform'))return missing?[]:['chatgpt','claude'].map(platform=>({platform,version:'3.2.0',filename:'qutline-3.2-'+platform+'.zip',content}))
+  if(query.includes('SELECT platform'))return missing?[]:['chatgpt','claude'].map(platform=>({platform,version:'3.2.0',filename:values[0]+'-3.2-'+platform+'.zip',content}))
   updates.push(query);return []
  }
  globalThis.fetch=async(url,options)=>{const payload=JSON.parse(options.body);calls.push({payload,key:options.headers['Idempotency-Key']});return {ok:!(fail&&payload.attachments),status:503}}
@@ -31,5 +31,9 @@ test('Qutline delivery only after live paid order, separate idempotent attachmen
   assert.equal(calls[1].payload.attachments.length,2)
   assert.ok(updates[0].includes('qutline_delivery_sent_at'))
   await finalizeWorkflowEmail(sql,{...order,qutline_delivery_sent_at:'already'},'live');assert.equal(calls.length,2)
+  const motion=await finalizeWorkflowEmail(sql,{...order,reference:'QWORK-motion',configuration:{workflow_ids:['qutline-motion']}},'live')
+  assert.equal(motion.qutlineDeliverySent,true);assert.equal(calls.at(-1).payload.attachments.length,2);assert.ok(calls.at(-1).payload.attachments.every(f=>f.filename.startsWith('qutline-motion-')))
+  const both=await finalizeWorkflowEmail(sql,{...order,reference:'QWORK-both',configuration:{workflow_ids:['qutline','qutline-motion']}},'live')
+  assert.equal(both.qutlineDeliverySent,true);assert.equal(calls.at(-1).payload.attachments.length,4)
  }finally{globalThis.fetch=original;if(prev===undefined)delete process.env.RESEND_API_KEY;else process.env.RESEND_API_KEY=prev}
 })
