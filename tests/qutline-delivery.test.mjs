@@ -35,5 +35,9 @@ test('Qutline delivery only after live paid order, separate idempotent attachmen
   assert.equal(motion.qutlineDeliverySent,true);assert.equal(calls.at(-1).payload.attachments.length,2);assert.ok(calls.at(-1).payload.attachments.every(f=>f.filename.startsWith('qutline-motion-')))
   const both=await finalizeWorkflowEmail(sql,{...order,reference:'QWORK-both',configuration:{workflow_ids:['qutline','qutline-motion']}},'live')
   assert.equal(both.qutlineDeliverySent,true);assert.equal(calls.at(-1).payload.attachments.length,4)
+  const launch=await finalizeWorkflowEmail(sql,{...order,reference:'QWORK-launch',configuration:{workflow_ids:['qutline-launch']}},'live')
+  assert.equal(launch.qutlineDeliverySent,true);assert.equal(launch.workflowManualDeliveryRequired,false);assert.equal(calls.at(-1).payload.attachments.length,2);assert.ok(calls.at(-1).payload.attachments.every(f=>f.filename.startsWith('qutline-launch-')));assert.match(calls.at(-1).payload.text,/Voice generation requires/)
+  const all=await finalizeWorkflowEmail(sql,{...order,reference:'QWORK-all',configuration:{workflow_ids:['qutline','qutline-motion','qutline-launch']}},'live')
+  assert.equal(all.qutlineDeliverySent,true);assert.equal(calls.at(-1).payload.attachments.length,6)
  }finally{globalThis.fetch=original;if(prev===undefined)delete process.env.RESEND_API_KEY;else process.env.RESEND_API_KEY=prev}
 })

@@ -27,9 +27,9 @@ export default async function handler(req,res) {
   const configuration={product:'qing-workflow',reference,workflow_ids:selected.map(w=>w.id),line_items,total_ngn:amount}
   try {
     const sql=db()
-    if(environment()==='live'&&ids.some(id=>['qutline','qutline-motion'].includes(id))){
+    if(environment()==='live'&&ids.some(id=>['qutline','qutline-motion','qutline-launch'].includes(id))){
       if(!process.env.RESEND_API_KEY)return res.status(503).json({error:'Qutline email delivery is temporarily unavailable.'})
-      for(const product of ids.filter(id=>['qutline','qutline-motion'].includes(id))){
+      for(const product of ids.filter(id=>['qutline','qutline-motion','qutline-launch'].includes(id))){
         const files=await sql`SELECT count(*)::int AS count FROM public.workflow_delivery_files WHERE product_id=${product} AND platform IN ('chatgpt','claude')`
         if(Number(files[0]?.count)!==2)return res.status(503).json({error:'Skill email delivery is temporarily unavailable.'})
       }
