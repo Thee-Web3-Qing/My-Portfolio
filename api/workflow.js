@@ -22,6 +22,11 @@ export default async function handler(req,res) {
   const configuration={product:'qing-workflow',reference,workflow_ids:selected.map(w=>w.id),line_items,total_ngn:amount}
   try {
     const sql=db()
+    if(environment()==='live'&&ids.includes('qutline')){
+      if(!process.env.RESEND_API_KEY)return res.status(503).json({error:'Qutline email delivery is temporarily unavailable.'})
+      const files=await sql`SELECT count(*)::int AS count FROM public.workflow_delivery_files WHERE product_id='qutline' AND platform IN ('chatgpt','claude')`
+      if(Number(files[0]?.count)!==2)return res.status(503).json({error:'Qutline email delivery is temporarily unavailable.'})
+    }
     await sql`INSERT INTO workflow_orders(reference,product,environment,customer_name,customer_email,customer_whatsapp,amount_kobo,quote_total_kobo,payment_mode,configuration)
       VALUES(${reference},'qing-workflow',${environment()},${name},${email},${phone||null},${amount*100},${amount*100},'full',${JSON.stringify(configuration)}::jsonb)`
     const authorization_url=await initializePayment({reference,email,amountKobo:amount*100,metadata:configuration})

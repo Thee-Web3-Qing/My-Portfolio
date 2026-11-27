@@ -35,6 +35,7 @@ export default async function handler(req,res) {
     const result=await confirmPayment(reference,mode)
     if(!result.found) return res.status(200).json({received:true,matched:false})
     if(!result.paid) return res.status(409).json({received:false,verified:false})
+    if(result.qutlineDeliveryRequired&&!result.qutlineDeliverySent) return res.status(503).json({received:false,verified:true,deliveryPending:true})
     return res.status(200).json({received:true})
   } catch (err) {
     console.error('Paystack webhook verification failed',err?.message)
