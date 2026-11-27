@@ -5,7 +5,7 @@ export const VIDEO_GROUPS=[{id:'showcase',name:'Editorial showcase'},...WORKFLOW
 export const DEFAULT_VIDEOS={
  showcase:[{id:'dFaD9_hj_kk',title:'Tinubu: The Price of Reform'},{id:'CdsfK2FDrzE',title:'Peter Obi: The Man Behind the Movement'}],
  qutline:[editorial,promo],
- 'qutline-motion':[promo]
+ 'qutline-motion':[promo,{id:'N5M08AA-pAI',title:'Claude Desktop / TakeSort demo',aspect:'16:9'}]
 }
 export function youtubeId(value){
  if(typeof value!=='string')return null
@@ -30,7 +30,7 @@ export function validateVideos(videos){
  for(const item of videos){
   const id=youtubeId(item?.id),title=typeof item?.title==='string'?item.title.trim():''
   if(!id||!title||title.length>120||seen.has(id))return null
-  seen.add(id);result.push({id,title})
+  seen.add(id);result.push({id,title,aspect:item.aspect==='16:9'?'16:9':'9:16'})
  }
  return result
 }
