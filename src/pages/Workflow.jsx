@@ -4,6 +4,18 @@ import './Workflow.css'
 import { DEFAULT_VIDEOS } from '../data/workflowVideos.js'
 import WorkflowVideoPlayer from '../components/WorkflowVideoPlayer.jsx'
 
+const qutlineLaunchAd = {id:'kmfdt33pQ9w',title:'Qutline & Qutline Motion | Launch Ad',aspect:'9:16'}
+const featuredVideos = {
+  qutline:qutlineLaunchAd,
+  'qutline-motion':qutlineLaunchAd,
+  'qutline-launch':{id:'5P2f8rUQMGY',title:'On My Way | Qutline Launch Product Demo',aspect:'16:9'},
+}
+// Feature these portfolio samples without replacing the admin-managed list.
+function workflowSamples(group, list = []) {
+  const featured=featuredVideos[group]
+  return featured?[featured,...list.filter(video=>video.id!==featured.id)]:list
+}
+
 const artwork = {
   vox:[538,814,285,128],
 }
@@ -58,7 +70,7 @@ export default function Workflow(){
     <section id="workflow-library" className="wf-library">
       <header><div><p className="wf-kicker">01 / THE WORKFLOW LIBRARY</p><h2>Choose your <em>craft.</em></h2></div><p>Explore the sample videos, pick a workflow and add it to your selection. Each is sold separately.</p></header>
       <div className="wf-shop">
-        <div className="wf-grid">{SHOWCASE_WORKFLOWS.map((w,index)=><article className={'wf-card'+(selected.includes(w.id)?' wf-selected':'')} key={w.id}><Sample workflow={w} index={index}/><div className="wf-card-body"><p className="wf-kicker">{w.category} / {w.theme==='qutline-launch'?'AI promo editor':w.theme==='qutline-motion'?'AI motion editor':w.theme==='qutline'?'AI video editor':'Documentary'}</p><h3>{w.name}</h3><p>{w.description}</p>{w.compatibilityLabel&&<div className="wf-compatibility"><strong>{w.compatibilityLabel}</strong><p>{w.compatibilityNote}</p></div>}{!!videos[w.id]?.length&&<div className="wf-card-videos"><p className="wf-kicker">WATCH THE EDIT</p>{renderVideos(w.id,videos[w.id])}</div>}<div className="wf-sample-links">{w.samples.length?w.samples.map((s,i)=><a key={s.url} href={s.url} target="_blank" rel="noreferrer"><span aria-hidden="true">▶</span> {s.label||'Sample '+(i+1)}</a>):<span>{w.category==='AI skill'?'Installation ZIPs included':'Samples coming soon'}</span>}</div><div className="wf-card-bottom"><strong>{workflowMoney(w.price)}</strong><button type="button" disabled={busy} aria-pressed={selected.includes(w.id)} aria-label={(selected.includes(w.id)?'Remove ':'Select ')+w.name} onClick={()=>toggle(w.id)} className="wf-select"><span>{selected.includes(w.id)?'Selected':'Add'}</span><b aria-hidden="true">{selected.includes(w.id)?'✓':'+'}</b></button></div></div></article>)}</div>
+        <div className="wf-grid">{SHOWCASE_WORKFLOWS.map((w,index)=>{const samples=workflowSamples(w.id,videos[w.id]);return <article className={'wf-card'+(selected.includes(w.id)?' wf-selected':'')} key={w.id}><Sample workflow={w} index={index}/><div className="wf-card-body"><p className="wf-kicker">{w.category} / {w.theme==='qutline-launch'?'AI promo editor':w.theme==='qutline-motion'?'AI motion editor':w.theme==='qutline'?'AI video editor':'Documentary'}</p><h3>{w.name}</h3><p>{w.description}</p>{w.compatibilityLabel&&<div className="wf-compatibility"><strong>{w.compatibilityLabel}</strong><p>{w.compatibilityNote}</p></div>}{!!samples.length&&<div className="wf-card-videos"><p className="wf-kicker">WATCH THE EDIT</p>{renderVideos(w.id,samples)}</div>}<div className="wf-sample-links">{w.samples.length?w.samples.map((s,i)=><a key={s.url} href={s.url} target="_blank" rel="noreferrer"><span aria-hidden="true">▶</span> {s.label||'Sample '+(i+1)}</a>):<span>{w.category==='AI skill'?'Installation ZIPs included':'Samples coming soon'}</span>}</div><div className="wf-card-bottom"><strong>{workflowMoney(w.price)}</strong><button type="button" disabled={busy} aria-pressed={selected.includes(w.id)} aria-label={(selected.includes(w.id)?'Remove ':'Select ')+w.name} onClick={()=>toggle(w.id)} className="wf-select"><span>{selected.includes(w.id)?'Selected':'Add'}</span><b aria-hidden="true">{selected.includes(w.id)?'✓':'+'}</b></button></div></div></article>})}</div>
         <aside className="wf-summary" id="workflow-checkout"><div className="wf-summary-head"><div><p className="wf-kicker">02 / CHECKOUT</p><h3>Your selection.</h3></div><span className="wf-count">{chosen.length}</span></div>
           {chosen.length?chosen.map(w=><div className="wf-summary-row" key={w.id}><div className="wf-mini"><Artwork workflow={w}/></div><div><span>{w.name}</span><b>{workflowMoney(w.price)}</b></div><button type="button" aria-label={'Remove '+w.name} disabled={busy} onClick={()=>toggle(w.id)}>×</button></div>):<p className="wf-empty">Your selection is empty. Add a workflow to begin.</p>}
           <div className="wf-total"><span>Total</span><strong>{workflowMoney(total)}</strong></div>
