@@ -1,9 +1,14 @@
+import { getWorkflowVideos } from './_lib/workflowVideos.js'
 import { WORKFLOWS } from '../src/data/workflows.js'
 import { configuredKey, db, environment, initializePayment, makeReference } from './_lib/payments.js'
 
 export default async function handler(req,res) {
   res.setHeader('Cache-Control','no-store')
-  if (req.method === 'GET') return res.status(200).json({available:Boolean(configuredKey() && process.env.DATABASE_URL),mode:environment()})
+  if (req.method === 'GET') {
+    let videos
+    try{videos=await getWorkflowVideos()}catch(error){console.error('Workflow video lookup failed',error?.message)}
+    return res.status(200).json({available:Boolean(configuredKey() && process.env.DATABASE_URL),mode:environment(),videos})
+  }
   if (req.method !== 'POST') return res.status(405).json({error:'Method not allowed'})
   if (!configuredKey() || !process.env.DATABASE_URL) return res.status(503).json({error:'Workflow checkout is temporarily unavailable.'})
   const b = req.body && typeof req.body==='object' ? req.body : {}

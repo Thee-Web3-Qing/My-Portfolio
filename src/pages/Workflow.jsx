@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { WORKFLOWS, workflowMoney } from '../data/workflows.js'
 import './Workflow.css'
+import { DEFAULT_VIDEOS } from '../data/workflowVideos.js'
+import WorkflowVideoPlayer from '../components/WorkflowVideoPlayer.jsx'
 
 const artwork = {
   tech:[394,461,315,175],
@@ -25,6 +27,9 @@ function Sample({workflow}) {
 
 export default function Workflow(){
   const [selected,setSelected]=useState([])
+  const [videos,setVideos]=useState(DEFAULT_VIDEOS)
+  const [playing,setPlaying]=useState('')
+  const renderVideos=(group,list)=><div className="wf-video-grid">{list.map(video=>{const key=group+':'+video.id;return <WorkflowVideoPlayer key={key} video={video} active={playing===key} onPlay={(play=true)=>setPlaying(play?key:'')}/>})}</div>
   const [customer,setCustomer]=useState({name:'',email:'',phone:''})
   const [available,setAvailable]=useState(null)
   const [mode,setMode]=useState('')
@@ -32,7 +37,7 @@ export default function Workflow(){
   const [error,setError]=useState('')
   const chosen=WORKFLOWS.filter(w=>selected.includes(w.id))
   const total=chosen.reduce((sum,w)=>sum+w.price,0)
-  useEffect(()=>{let active=true;fetch('/api/workflow',{cache:'no-store'}).then(r=>r.json()).then(r=>{if(active){setAvailable(r.available===true);setMode(r.mode||'')}}).catch(()=>{if(active)setAvailable(false)});return()=>{active=false}},[])
+  useEffect(()=>{let active=true;fetch('/api/workflow',{cache:'no-store'}).then(r=>r.json()).then(r=>{if(active){setAvailable(r.available===true);setMode(r.mode||'');if(r.videos&&typeof r.videos==='object')setVideos(r.videos)}}).catch(()=>{if(active)setAvailable(false)});return()=>{active=false}},[])
   const toggle=id=>setSelected(list=>list.includes(id)?list.filter(x=>x!==id):[...list,id])
   async function checkout(e){
     e.preventDefault()
@@ -52,10 +57,11 @@ export default function Workflow(){
       <div className="wf-hero-copy"><p className="wf-kicker">QING THE CREATOR / THE CREATIVE WORKFLOW LIBRARY</p><h1>Creative workflows for <em>videos, motion</em> and writing.</h1><p className="wf-lead">Buy my creative process, not just the final video. Explore the workflows behind my editing, motion design, illustration and scripts, and find the one that fits your work.</p><div className="wf-hero-actions"><a href="#workflow-library" className="wf-primary">Choose a workflow ↗</a><a href="#workflow-checkout" className="wf-secondary">Pay with Paystack</a></div></div>
       <div className="wf-hero-image"><svg viewBox="757 58 690 298" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><image href="/workflow-assets/editorial.png" width="1448" height="1086"/></svg><div className="wf-edition"><span>THE CREATIVE EDIT</span><b>01 / {String(WORKFLOWS.length).padStart(2,'0')}</b></div></div>
     </section>
+    {!!videos.showcase?.length&&<section className="wf-showcase"><header><p className="wf-kicker">SELECTED WORK / EDITORIAL</p><h2>See the <em>finished work.</em></h2><p>Watch my editorial video samples directly here.</p></header>{renderVideos('showcase',videos.showcase)}</section>}
     <section id="workflow-library" className="wf-library">
       <header><div><p className="wf-kicker">01 / THE WORKFLOW LIBRARY</p><h2>Choose your <em>craft.</em></h2></div><p>Explore the sample videos, pick a workflow and add it to your selection. Each is sold separately.</p></header>
       <div className="wf-shop">
-        <div className="wf-grid">{WORKFLOWS.map(w=><article className={'wf-card'+(selected.includes(w.id)?' wf-selected':'')} key={w.id}><Sample workflow={w}/><div className="wf-card-body"><p className="wf-kicker">{w.category} / {w.theme==='qutline-motion'?'AI motion editor':w.theme==='qutline'?'AI video editor':w.theme==='tech'?'Illustration':w.theme==='motion'?'Motion design':w.theme==='corporate'?'Corporate':w.theme==='script'?'Storytelling':'Documentary'}</p><h3>{w.name}</h3><p>{w.description}</p>{w.compatibilityLabel&&<div className="wf-compatibility"><strong>{w.compatibilityLabel}</strong><p>{w.compatibilityNote}</p></div>}<div className="wf-sample-links">{w.samples.length?w.samples.map((s,i)=><a key={s.url} href={s.url} target="_blank" rel="noreferrer"><span aria-hidden="true">▶</span> {s.label||'Sample '+(i+1)}</a>):<span>{w.category==='AI skill'?'Installation ZIPs included':'Samples coming soon'}</span>}</div><div className="wf-card-bottom"><strong>{workflowMoney(w.price)}</strong><button type="button" disabled={busy} aria-pressed={selected.includes(w.id)} aria-label={(selected.includes(w.id)?'Remove ':'Select ')+w.name} onClick={()=>toggle(w.id)} className="wf-select"><span>{selected.includes(w.id)?'Selected':'Add'}</span><b aria-hidden="true">{selected.includes(w.id)?'✓':'+'}</b></button></div></div></article>)}</div>
+        <div className="wf-grid">{WORKFLOWS.map(w=><article className={'wf-card'+(selected.includes(w.id)?' wf-selected':'')} key={w.id}><Sample workflow={w}/><div className="wf-card-body"><p className="wf-kicker">{w.category} / {w.theme==='qutline-motion'?'AI motion editor':w.theme==='qutline'?'AI video editor':w.theme==='tech'?'Illustration':w.theme==='motion'?'Motion design':w.theme==='corporate'?'Corporate':w.theme==='script'?'Storytelling':'Documentary'}</p><h3>{w.name}</h3><p>{w.description}</p>{w.compatibilityLabel&&<div className="wf-compatibility"><strong>{w.compatibilityLabel}</strong><p>{w.compatibilityNote}</p></div>}{!!videos[w.id]?.length&&<div className="wf-card-videos"><p className="wf-kicker">WATCH THE EDIT</p>{renderVideos(w.id,videos[w.id])}</div>}<div className="wf-sample-links">{w.samples.length?w.samples.map((s,i)=><a key={s.url} href={s.url} target="_blank" rel="noreferrer"><span aria-hidden="true">▶</span> {s.label||'Sample '+(i+1)}</a>):<span>{w.category==='AI skill'?'Installation ZIPs included':'Samples coming soon'}</span>}</div><div className="wf-card-bottom"><strong>{workflowMoney(w.price)}</strong><button type="button" disabled={busy} aria-pressed={selected.includes(w.id)} aria-label={(selected.includes(w.id)?'Remove ':'Select ')+w.name} onClick={()=>toggle(w.id)} className="wf-select"><span>{selected.includes(w.id)?'Selected':'Add'}</span><b aria-hidden="true">{selected.includes(w.id)?'✓':'+'}</b></button></div></div></article>)}</div>
         <aside className="wf-summary" id="workflow-checkout"><div className="wf-summary-head"><div><p className="wf-kicker">02 / CHECKOUT</p><h3>Your selection.</h3></div><span className="wf-count">{chosen.length}</span></div>
           {chosen.length?chosen.map(w=><div className="wf-summary-row" key={w.id}><div className="wf-mini"><Artwork workflow={w}/></div><div><span>{w.name}</span><b>{workflowMoney(w.price)}</b></div><button type="button" aria-label={'Remove '+w.name} disabled={busy} onClick={()=>toggle(w.id)}>×</button></div>):<p className="wf-empty">Your selection is empty. Add a workflow to begin.</p>}
           <div className="wf-total"><span>Total</span><strong>{workflowMoney(total)}</strong></div>
