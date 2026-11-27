@@ -102,10 +102,10 @@ const staticRoutes = {
   },
   '/workflow': {
     title: 'Creative AI Workflows | Qing The Creator',
-    description: 'Purchase video editing and script writing workflows, including corporate, technology and Vox-style editing, with secure Paystack checkout.',
+    description: 'Explore Qing’s four editing workflows for talking-head videos, motion illustrations, ads and documentary explainers, with secure Paystack checkout.',
     label: 'Creative workflows',
-    heading: 'Video editing and script writing workflows.',
-    paragraphs: ['Choose from five creative workflows: Finance / Corporate, Tech videos with motion design and illustration, Script writing, Motion Explainers, and Vox.', 'Pay securely through Paystack.'],
+    heading: 'Creative workflows for video and motion.',
+    paragraphs: ['Choose Qutline for talking-head editing, Qutline Motion for animated illustrations, Qutline Launch for ads, or Qutline Vox for documentary explainers.', 'Pay securely through Paystack.'],
     type: 'CollectionPage',
   },
   '/experience': {

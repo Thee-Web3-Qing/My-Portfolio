@@ -3,7 +3,8 @@ const editorial={id:'GhFWPw7bYNU',title:'The Editorial Edit That Built Qutline'}
 const promo={id:'kglhSvLNpjo',title:'Qutline: From Raw Footage to Finished Edit'}
 export const VIDEO_GROUPS=[{id:'showcase',name:'Editorial showcase'},...WORKFLOWS.map(({id,name})=>({id,name}))]
 export const DEFAULT_VIDEOS={
- showcase:[{id:'dFaD9_hj_kk',title:'Tinubu: The Price of Reform'},{id:'CdsfK2FDrzE',title:'Peter Obi: The Man Behind the Movement'}],
+ showcase:[],
+ vox:[{id:'dFaD9_hj_kk',title:'Tinubu: The Price of Reform'},{id:'CdsfK2FDrzE',title:'Peter Obi: The Man Behind the Movement'}],
  qutline:[editorial,promo],
  'qutline-motion':[promo,{id:'N5M08AA-pAI',title:'Claude Desktop / TakeSort demo',aspect:'16:9'}]
 }
